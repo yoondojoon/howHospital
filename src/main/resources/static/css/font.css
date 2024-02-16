@@ -1,0 +1,15 @@
+@charset "UTF-8";
+
+@font-face {
+    font-family: 'Noto Sans KR';
+    font-style: normal;
+    font-weight: normal;
+    src: url(/font/Noto_Sans_KR/static/NotoSansKR-Regular.ttf);
+}
+
+@font-face {
+    font-family: 'Noto Sans KR';
+    font-style: normal;
+    font-weight: bold;
+    src: url(/font/Noto_Sans_KR/static/NotoSansKR-Bold.ttf);
+}

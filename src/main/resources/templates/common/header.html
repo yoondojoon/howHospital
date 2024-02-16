@@ -1,0 +1,40 @@
+<!-- header -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>병원어때</title>
+<link rel="stylesheet" href="/css/font.css">
+<link rel="stylesheet" href="/css/reset.css">
+<link rel="stylesheet" href="/css/common.css">
+<script src="/js/lib/jquery-3.7.1.js"></script>
+</head>
+<body>
+
+    <header id="header">
+        <div class="header_top_area">
+            <div class="inner_wrap">
+                <h1 class="logo"><a href="/">병원어때</a></h1>
+                <form class="main_search_form" action="/searchHospital" method="get">
+                    <div class="input_item">
+                        <input type="search" name="keyword" placeholder="지역, 진료과 또는 병명을 입력해보세요">
+                    </div>
+                    <button type="submit" class="btn_search"><span class="blind">검색</span></button>
+                </form>
+                <div class="user_menu_area">
+                    <ul class="user_menu_list">
+                        <li><a href="#" class="mypage"><span class="blind">마이페이지</span></a></li>
+                    </ul>
+                </div>
+                <div class="link_area">
+                    <ul class="link_list">
+                        <li><a href="#">회원가입</a></li>
+                        <li><a href="#">로그인</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </header>
+
+</html>
+<!--// header -->
