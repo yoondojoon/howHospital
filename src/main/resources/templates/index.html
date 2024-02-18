@@ -4,23 +4,19 @@
 
 <th:block th:include="common/header"></th:block>
 
-	<div class="wrap">
+	<!-- container -->
+    <main id="container" class="container">
 
 		<!-- contents -->
-        <main class="contents main">
-            <section>
+        <section id="contents" class="contents main">
+            <div class="inner_wrap">
                 <h2>페이지 타이틀</h2>
-            </section>
-
-            <section>
-                <div class="inner_wrap">
-                    <h2>페이지 타이틀</h2>
-                </div>
-            </section>
-        </main>
-        <!--// contents -->
-
-	</div>
+            </div>
+        </section>
+	    <!--// contents -->
+        
+    </main>
+    <!--// container -->
 	
 <th:block th:include="common/footer"></th:block>
 </body>
