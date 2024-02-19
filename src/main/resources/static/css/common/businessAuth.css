@@ -1,0 +1,196 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Noto Sans KR", sans-serif;
+  font-weight: 600;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.wrapper {
+  max-width: 800px;
+  width: 100%;
+  background: #fff;
+  padding: 34px;
+  border-radius: 6px;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+}
+
+.wrapper h2 {
+  font-size: 26px;
+  color: #333;
+  text-align: center;
+  font-weight: 800;
+}
+
+.wrapper form {
+  margin-top: 30px;
+}
+
+.wrapper form .input-box {
+  height: 52px;
+  margin-bottom: 26px;
+}
+
+form .input-box input {
+  height: 100%;
+  width: 100%;
+  outline: none;
+  padding: 0 15px;
+  font-size: 17px;
+  font-weight: 400;
+  border-radius: 6px;
+  border: 1px solid rgb(216, 216, 216);
+}
+
+
+form .input-box input:focus {
+  border: 1px solid black;
+
+}
+
+#nextbtn:hover {
+  background-color: #3057c7;
+  /* 호버 시 배경색 변경 */
+}
+
+.file-button:hover {
+  background-color: #045bde;
+}
+
+.businessAuth_lable {
+  font-size: 18px;
+  font-optical-sizing: auto;
+  font-weight: 500;
+  font-style: normal;
+  margin-top: 0px;
+  margin-bottom: 10px;
+}
+
+.businessAuth_description {
+  font-size: 12px;
+  color: #C7BEBE;
+  margin-bottom: 10px;
+}
+
+form h3 {
+  color: #707070;
+  font-size: 14px;
+  font-weight: 500;
+  margin-left: 10px;
+}
+
+.input-box.button input {
+  color: #fff;
+  letter-spacing: 1px;
+  border: none;
+  background: #4070f4;
+  cursor: pointer;
+}
+
+form .text h3 {
+  color: #333;
+  width: 100%;
+  text-align: center;
+}
+
+form .text h3 a {
+  color: #4070f4;
+  text-decoration: none;
+}
+
+form .text h3 a:hover {
+  text-decoration: underline;
+}
+
+.multiple_file {
+  margin-bottom: 10px;
+
+}
+
+.file-button {
+  display: inline-block;
+  background-color: #4070f4;
+  color: #fff;
+  cursor: pointer;
+  font-size: 14px;
+  display: inline-block;
+  text-align: center;
+  line-height: 30px;
+  width: 80px;
+  height: 30px;
+  border-radius: 5px;
+
+}
+
+.multiple_file {
+  width: 100%;
+  /* 부모 요소에 대한 고정된 너비 설정 */
+  overflow: hidden;
+}
+
+.file-upload input[type='file'] {
+  position: absolute;
+  left: -9999px;
+}
+
+#fileList {
+  list-style: none;
+  padding: 0;
+  text-align: left;
+  /* 목록 요소 왼쪽 정렬 */
+}
+
+#fileList li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  /* 파일명과 이미지가 동시에 가운데로 정렬되도록 함 */
+  margin: 5px 0;
+  font-size: 14px;
+}
+
+#fileList span {
+  font-size: 12px;
+  display: inline-block;
+  width: calc(50% - 40px);
+  /* 남은 공간의 절반에서 40px(삭제 버튼의 너비)를 뺀 크기 */
+  text-align: left;
+  overflow: hidden;
+  /* 넘치는 내용 숨김 */
+  text-overflow: ellipsis;
+  /* 넘치는 내용을 생략 부호(...)로 표시 */
+  white-space: nowrap;
+  /* 공백 문자 제거 */
+}
+
+#fileList li button {
+  background-color: #4070f4;
+  border-style: none;
+  padding: 0;
+  width: 40px;
+  /* 삭제 버튼의 너비 */
+  height: 30px;
+  cursor: pointer;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#fileList img {
+  width: calc(50% - 40px);
+  /* 남은 공간의 절반에서 40px(삭제 버튼의 너비)를 뺀 크기 */
+  margin: 0 10px;
+  cursor: pointer;
+}
+
+#fileCount {
+  font-size: 12px;
+}
