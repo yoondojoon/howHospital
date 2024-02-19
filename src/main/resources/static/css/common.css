@@ -48,14 +48,15 @@ h5{margin-bottom:8px; font-size:14px; font-weight:bold; line-height:1.5;}
 #header .header_bottom_area{position:relative; z-index:1;}
 #header .blur{position:absolute; left:0; right:0; top:0; height:100%; backdrop-filter: blur(8px);}
 #header .header_top_area .inner_wrap{position:relative; display:flex; justify-content:space-between; align-items:center; gap:24px; padding:12px 60px;}
-#header .logo>a{display:block; color:var(--main_01); font-size:28px; font-weight:bold; line-height:48px;}
+#header .logo>a{display:block; width:200px; height:48px; margin-left:-15px; background:url(/images/logo.png) no-repeat center left / auto 48px; color:var(--main_01); font-size:28px; font-weight:bold; line-height:48px;}
 #header .main_search_form{flex:1; max-width:360px; display:flex; border-bottom:1px solid var(--main_01); overflow:hidden;}
 #header .main_search_form .input_item{width:calc(100% - 40px);}
 #header .main_search_form .input_item input{background-color:transparent !important; border:none;}
 #header .main_search_form .input_item input::placeholder{color:rgba(47,96,130,0.6);}
 #header .main_search_form .btn_search{width:40px; height:40px; background:url(/images/icon_search.svg) no-repeat center / 20px 20px;}
 
-#header .user_menu_area>ul{display:flex;}
+#header .user_menu_area{width:200px;}
+#header .user_menu_area>ul{display:flex; justify-content:flex-end;}
 #header .user_menu_area>ul>li+li{position:relative;}
 #header .user_menu_area>ul>li+li::before{content:''; display:block; position:absolute; top:15px; left:0; width:1px; height:10px; background-color:var(--main_03);}
 #header .user_menu_area a{display:block; padding:10px 12px; color:var(--main_03); font-size:13px; line-height:19px;}
@@ -68,7 +69,7 @@ h5{margin-bottom:8px; font-size:14px; font-weight:bold; line-height:1.5;}
 /* footer */
 #footer {margin-top:55px; border-top:1px solid rgba(67,137,186,0.4); background-color:#fff;}
 #footer .inner_wrap{position:relative;}
-#footer .logo>a{display:block; color:var(--main_01); font-size:28px; font-weight:bold; line-height:48px;}
+#footer .logo>a{display:block; width:200px; height:48px; margin-left:-15px; background:url(/images/logo.png) no-repeat center left / auto 48px; color:var(--main_01); font-size:28px; font-weight:bold; line-height:48px;}
 #footer .footer_main_area{padding:36px 0 48px;}
 #footer .footer_menu_list{display:flex; gap:20px; margin-top:16px; }
 #footer .footer_menu_list a{color:var(--gray_02); font-size:14px; font-weight:bold; line-height:21px;}
