@@ -16,4 +16,9 @@ public class HomeController {
 		return "ref";
 	}
 	
+	@GetMapping(value="/template")
+	public String template() {
+		return "template";
+	}
+	
 }
