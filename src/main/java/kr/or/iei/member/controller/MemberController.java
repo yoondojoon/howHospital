@@ -18,4 +18,14 @@ public class MemberController {
 		
 	}
 	
+	
+	@PostMapping(value="/signInFrm")
+	public String signInFrm() {
+		
+		
+		return "member/signInFrm";
+		
+	}
+	
+	
 }
