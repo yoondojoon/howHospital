@@ -26,6 +26,7 @@ time, mark, audio, video {
 	padding:0;
 	border:0;
 	font-family:'Noto Sans KR', sans-serif;
+	font-style:normal;
 	vertical-align:baseline;
 }
 article, aside, details, figcaption, figure, 
