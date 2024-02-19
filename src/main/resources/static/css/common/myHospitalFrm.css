@@ -14,7 +14,7 @@ body {
 }
 
 .wrapper {
-  max-width: 680px;
+  max-width: 1200px;
   width: 100%;
   background: #fff;
   padding: 34px;
@@ -196,3 +196,19 @@ tr *{
 }
 
 
+
+
+/*myHospitalMain CSS 작업*/
+ .hospital_wrap{
+ 	display: flex;
+  	width: 1200px;
+ }
+ 
+ .left_wrap {
+  flex: 0 0 400px;
+}
+
+.right_wrap {
+  flex: 0 0 800px;
+}
+ 

@@ -8,9 +8,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping(value="/hospital")
 public class HospitalController {
 	
-	@GetMapping(value="/businessAuth")
-	public String businessAuth() {
-		return "hospital/businessAuth";
+	@GetMapping(value="/myHospitalMain")
+	public String myHospitalMain() {
+		return "hospital/myHospitalMain";
 	}
 	
+	@GetMapping(value="/myHospitalFrm")
+	public String myHospitalFrm() {
+		return "hospital/myHospitalFrm";
+	}
+	
+	
+	
 }
+
+
+
