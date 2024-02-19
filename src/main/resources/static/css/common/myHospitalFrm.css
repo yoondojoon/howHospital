@@ -1,0 +1,198 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Noto Sans KR", sans-serif;
+  font-weight: 600;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.wrapper {
+  max-width: 680px;
+  width: 100%;
+  background: #fff;
+  padding: 34px;
+  border-radius: 6px;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+}
+
+.wrapper h2 {
+  font-size: 26px;
+  color: #333;
+  text-align: center;
+  font-weight: 800;
+}
+
+.wrapper form {
+  margin-top: 30px;
+}
+
+.wrapper form .input-box {
+  height: 52px;
+  margin-bottom: 26px;
+}
+
+form .input-box input {
+  height: 100%;
+  width: 100%;
+  outline: none;
+  padding: 0 15px;
+  font-size: 17px;
+  font-weight: 400;
+  border-radius: 6px;
+  border: 1px solid rgb(216, 216, 216);
+}
+
+form textarea{
+  width:100%;
+  height:150px;
+  border: 1px solid rgb(216, 216, 216);
+  margin-bottom: 26px;
+  padding: 0 15px;
+  font-size: 14px;
+  font-weight: 400;
+  border-radius: 6px;
+}
+
+form textarea:focus{
+  border: 1px solid black;
+}
+
+#nextbtn:hover {
+  background-color: #3057c7;
+  /* 호버 시 배경색 변경 */
+}
+
+
+.hospital_info {
+  display: flex;
+  align-items: center;
+  font-size: 18px;
+  font-optical-sizing: auto;
+  font-weight: 500;
+  margin-bottom: 10px;
+}
+
+
+
+.input-box.button input {
+  color: #fff;
+  letter-spacing: 1px;
+  border: none;
+  background: #4070f4;
+  cursor: pointer;
+}
+
+
+
+
+/*진료시간 테이블*/
+.business_hour{
+  margin-bottom: 26px;
+}
+tr *{
+  font-size: 14px;
+  font-weight: 400;  
+}
+
+.business_hour th{
+  text-align: left;
+  width: 30%;
+}
+
+.doctor_info {
+  display: flex;
+  align-items: center;
+  margin-bottom: 26px;
+  border:1px solid rgb(203, 203, 203);
+}
+
+/*좌측*/
+.doctor_img {
+  display: flex;
+  align-items: center; /* 세로 정렬 */
+  justify-content: center;
+  width:20%;
+  padding:10px;
+}
+
+.doctor_img img {
+  width: 100%; /* 너비를 80%로 줄임 */
+}
+
+/*우측*/
+.doctor_detail h3 {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+
+#addDoctorBtn {
+  font-size: 12px;
+  border:1px solid rgb(192, 192, 192);
+  padding:0 5px;
+  background-color: #4070f4;
+  color:white;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+.doctors input {
+  border-style: none;
+  background-color: #f4f4f4;
+
+  margin-bottom: 5px;
+}
+
+.doctor_detail{
+  flex-grow: 1; /* 남은 공간을 모두 차지하도록 설정 */
+}
+
+.doctors {
+  width:100%;
+ 
+}
+
+.doctors input{
+  width:80%;
+  padding:5px;
+}
+
+.deleteDoctorBtn{
+  border-style: none;
+  padding:5px;
+}
+
+.hospital_cost{
+  margin-bottom: 26px;
+}
+
+.business_hour,
+.hospital_cost {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.business_hour th,
+.business_hour td,
+.hospital_cost th,
+.hospital_cost td
+{
+  padding: 8px;
+  border-bottom: 1px solid #ddd;
+}
+
+.hospital_cost input{
+  border-style: none;
+  background-color: #f4f4f4;
+  padding-left: 5px;
+  width: 100%;
+}
+
+
