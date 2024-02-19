@@ -1,5 +1,5 @@
 $(function(){
-	const contents = $("#contents>.inner_wrap");
+	const contents = $("#contents");
 	const headerH = $("#header").outerHeight();
 	const footerH = $("#footer").outerHeight();
 	const contentsH = "calc(100vh - "+(headerH+footerH)+"px)";
