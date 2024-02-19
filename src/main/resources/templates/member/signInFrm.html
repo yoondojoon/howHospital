@@ -1,35 +1,65 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <!-- <link rel="stylesheet" href=""> 이 자리에 자기 css 넣기-->
+<link rel="stylesheet" href="/css/common/signInfrm.css">
 
+<main id="container" class="container">
 <th:block th:include="common/header"></th:block>
 	
-	  <div class="wrap"> 
+	
+	<div id="contents" class="contents ref">
+	  	<div class="inner_wrap"> 
+	  	
+	  	
         <h2>3초 로그인으로<br>
             764,895개 리뷰를 확인하세요.</h2>
+        
     <form action="/member/signIn" method="post" id="signInFrm">
-        <div>
-            <input type="text" name="memberEmail" id="memberEmail" placeholder="이메일주소입력">
-        </div>
-        <div>
-            <input type="text" name="memberPassword" id="memberPassword" placeholder="비밀번호입력">
-        </div>
+        
+        
+        
+        <div class="input_wrap">	
+			<div class="input_item">
+				<input type="text" name="memberEmail" id="memberEmail" placeholder="이메일을 입력하세요">
+			</div>
+		</div>
+        
+        
+        
+	
+		<div class="input_wrap">	
+			<div class="input_item">
+				<input type="password" name="memberPassword" id="memberPassword" placeholder="비밀번호를 입력하세요">
+			</div>
+		</div>
+	
+	
+	
 	
 
-        <button type="submit">로그인</button>
+        	<button type="submit" class="btn_primary lg">로그인</button>
+        </form>
         <div>
-        <a href="#">이메일주소찾기</a>
-        <a href="#">비밀번호찾기</a>
+        	<a href="#">이메일주소찾기</a>
+        	<a href="#">비밀번호찾기</a>
         </div>
-    </form>
+        <div>
+        	<h4>병원어때가 처음이신가요? <a href="/member/signUpFrm">회원가입</a></h4>
+        
+        
+        </div>
+    
+	
 
-
+    	</div>
     </div>
 	
 	
 	
 	
 <th:block th:include="common/footer"></th:block>
+</main>
 <!-- js 링크 -->
+
 </body>
 </html>
