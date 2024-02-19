@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>병원정보 입력</title>
+
+	<!-- Load jQuery -->
+	<script src="https://code.jquery.com/jquery-3.2.1.min.js" ></script>
+	<!-- Load Bootstrap -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" >
+	<!-- Load the plugin bundle. -->
+	<link rel="stylesheet" href="/css/filter_multi_select.css" />
+	<script src="/js/filter-multi-select-bundle.js"></script>
+	<link rel="stylesheet" href="/css/common/myHospitalFrm.css">
+
+</head>
+<body>
+  <div class="wrapper">
+
+    <!--병원정보 입력-->
+    <h2>병원정보 입력</h2>
+    <form id="uploadForm" action="/member/happy" method="get" enctype="multipart/form-data">
+
+      <!--병원이름 입력-->
+      <div class="hospital_info">병원이름</div>
+        <div class="input-box">
+          <input type="text" name="hospital_name" placeholder="예시: 위편한내과" required>
+        </div>
+
+        <!--소개 입력-->
+      <div class="hospital_info">소개</div>
+        <textarea name="hospital_info" id="hospital_info" placeholder="대한민국 위 치료, 자신있으면 나와봐!&#10;아래의 약력으로 소개를 대신합니다.&#10;- 30년 경력 내시경 전문의 상주&#10;- 영양학 국내탑 전문의 상주" required></textarea>
+    
+      <!--진료과목 입력-->
+      <div class="hospital_info">진료과목</div>
+      <select multiple name="medical_subject" id="medical_subject" class="filter-multi-select">
+
+        <option value="1">내과</option>
+        <option value="2">신경과</option>
+        <option value="3">정신건강의학과</option>
+        <option value="4">외과</option>
+        <option value="5">정형외과</option>
+        <option value="6">신경외과</option>
+        <option value="7">심장혈관흉부외과</option>
+        <option value="8">성형외과</option>
+        <option value="9">마취통증의학과</option>
+        <option value="10">산부인과</option>
+        <option value="11">소아청소년과</option>
+        <option value="12">안과</option>
+        <option value="13">이비인후과</option>
+        <option value="14">피부과</option>
+        <option value="15">비뇨의학과</option>
+        <option value="16">영상의학과</option>
+        <option value="17">방사선종양학과</option>
+        <option value="18">병리과</option>
+        <option value="19">진단검사의학과</option>
+        <option value="20">재활의학과</option>
+        <option value="21">결핵과</option>
+        <option value="22">예방의학과</option>
+        <option value="23">가정의학과</option>
+        <option value="24">핵의학과</option>
+        <option value="25">직업환경의학과</option>
+        <option value="26">응급의학과</option>
+        <option value="27">구강안악면외과</option>
+        <option value="28">치과</option>
+        <option value="29">한의원</option>
+      </select>
+  
+
+      <!--진료시간 입력-->
+      <div class="hospital_info">진료시간</div>
+      <table class="business_hour" border="1">
+        <tr>
+          <th>평일</th>
+          <td>09:10 ~ 13:00</td>
+        </tr>
+        <tr>
+          <th>토요일</th>
+          <td>09:10 ~ 13:00</td>
+        </tr>
+        <tr>
+          <th>휴무일</th>
+          <td>월, 화, 수, 목, 금, 토, 일</td>
+        </tr>
+        <tr>
+          <th>점심시간</th>
+          <td>09:10 ~ 14:00</td>
+        </tr>
+      </table>
+
+
+      <!--병원주소-->
+      <div class="hospital_info">병원주소</div>
+      <div class="input-box hospital_tel">
+        <input type="text" name="hospital_address" placeholder="예시: 서울" required>
+      </div>
+
+
+      <!--전화번호-->
+      <div class="hospital_info">전화번호</div>
+      <div class="input-box hospitalTel">
+        <input type="text" name="hospital_tel" id="hospital_tel" placeholder="예시: 02-1547-5158" required>
+      </div>
+
+
+      <!--의사정보-->
+      <div class="hospital_info">
+        의사정보
+        <button type="button" id="addDoctorBtn">추가</button>
+      </div>
+      
+      <div id="doctorContainer"></div>
+  
+
+      <!--진료비용-->
+      <div class="hospital_info">진료비용</div>
+      <div class="hospital_cost_container">
+      <table border="1" class="hospital_cost">
+        <tr>
+          <th>상담비</th>
+          <td><input type="text" placeholder="비용을 입력하세요." required></td>
+        </tr>
+        <tr>
+          <th>초진비</th>
+          <td><input type="text" placeholder="비용을 입력하세요." required></td>
+        </tr>
+        <tr>
+          <th>수술비</th>
+          <td><input type="text" placeholder="비용을 입력하세요." required></td>
+        </tr>
+      </table>
+      </div>
+
+
+
+
+      <div class="input-box button">
+        <input type="Submit" name="nextbtn" id="nextbtn" value="등록">
+      </div>
+
+    </form>
+  </div>
+    
+
+
+  <script src="/js/myHospitalFrm.js"></script>
+
+</body>
+</html>
