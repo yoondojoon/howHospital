@@ -33,7 +33,7 @@ html{height:100%; scroll-behavior:smooth;}
 body{background-color:var(--bg_01); color:#222;}
 .blind{position:absolute; left:-9999%; font-size:0; line-height:0; text-indent:-9999%; overflow:hidden;}
 .scroll_fixed{overflow-y:hidden;}
-.wrap{display:flex; flex-direction:column; min-height:100vh;}
+/* .wrap{display:flex; flex-direction:column; min-height:100vh;} */
 .container{flex-grow:1; padding-top:121px;}
 .inner_wrap{width:100%; max-width:1320px; margin:0 auto; padding:0 60px; overflow:hidden;}
 #contents>.inner_wrap{padding:60px; background-color:#fff;}
