@@ -45,7 +45,8 @@ h5{margin-bottom:8px; font-size:14px; font-weight:bold; line-height:1.5;}
 /* header */
 #header{z-index:1000; position:fixed; top:0; left:0; right:0; border-bottom:1px solid rgba(67,137,186,0.4);}
 #header .header_top_area{position:relative; z-index:1;}
-#header .header_bottom_area{position:relative; z-index:1;}
+#header .header_bottom_area{display:block; position:relative; z-index:1;}
+#header.fixed .header_bottom_area{display:none;}
 #header .blur{position:absolute; left:0; right:0; top:0; height:100%; backdrop-filter: blur(8px);}
 #header .header_top_area .inner_wrap{position:relative; display:flex; justify-content:space-between; align-items:center; gap:24px; padding:12px 60px;}
 #header .logo{margin-left:-15px;}
@@ -63,9 +64,16 @@ h5{margin-bottom:8px; font-size:14px; font-weight:bold; line-height:1.5;}
 #header .user_menu_area a{display:block; padding:10px 12px; color:var(--main_03); font-size:13px; line-height:19px;}
 #header .user_menu_area .mypage{display:block; padding:10px 12px 10px 24px; background:url(/images/icon_account.svg) no-repeat left center / 20px 20px;}
 
-#header .header_bottom_area{padding:16px 0;}
+#header .header_bottom_area{}
 #header .gnb_area .gnb_list{display:flex; justify-content:center; align-items:center;}
-#header .gnb_area .gnb_list a {display:block; padding:12px 20px; color:var(--main_03); font-size:16px; font-weight:bold; line-height:24px;}
+#header .gnb_area .gnb_list a {display:block; padding:12px 20px; color:var(--main_03); font-size:16px; font-weight:bold; line-height:24px; text-align:center;}
+#header .gnb_area .gnb_list>li>a{min-width:132px;}
+#header .gnb_area .gnb_list>li:hover>a{border-radius:12px 12px 0 0; background-color:rgba(67,137,186,0.2);}
+#header .gnb_area .gnb_list>li:hover a+.sub_menu{display:block;}
+#header .gnb_area .gnb_list .sub_menu{display:none; position:absolute; border-radius:0 0 12px 12px; background-color:rgba(255,255,255,0.6); overflow:hidden;}
+#header .gnb_area .gnb_list .sub_menu a{min-width:132px;}
+#header .gnb_area .gnb_list .sub_menu a:hover{background-color:rgba(67,137,186,0.2);}
+
 
 /* footer */
 #footer {margin-top:55px; border-top:1px solid rgba(67,137,186,0.4); background-color:#fff;}
