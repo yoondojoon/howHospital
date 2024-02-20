@@ -1,7 +1,13 @@
 package kr.or.iei.member.model.service;
 
+import java.io.UnsupportedEncodingException;
+import java.util.Date;
+import java.util.Random;
+
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import kr.or.iei.member.model.dao.MemberDao;
 import kr.or.iei.member.model.dto.Member;
@@ -22,5 +28,9 @@ public class MemberService {
 		
 		return member;
 	}
+	
+
+
+	
 
 }
