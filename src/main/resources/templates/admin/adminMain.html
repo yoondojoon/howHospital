@@ -22,6 +22,14 @@
         			<th style="width:15%;">작성자</th>
         			<th style="width:15%;">조회수</th>
         		</tr>
+        		<tr class="tr-1" th:each="board : ${boardList}">
+					<td th:text="${board.boardNo}"></td>
+					<td><a th:href="@{/board/view(boardNo=${board.boardNo})}" th:text="${board.boardTitle}"></a></td>
+					<td th:text="${board.boardWriter}"></td>
+					<td th:text="${board.readCount}"></td>
+					<td th:text="${board.recommendCount}"></td>
+					<td th:text="${board.regDate}"></td>
+				</tr>
         	</table>
         </div>
     </main>
