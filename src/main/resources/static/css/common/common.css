@@ -51,10 +51,10 @@ h5{margin-bottom:8px; font-size:14px; font-weight:bold; line-height:1.5;}
 #header .header_top_area .inner_wrap{position:relative; display:flex; justify-content:space-between; align-items:center; gap:24px; padding:12px 60px;}
 #header .logo{margin-left:-15px;}
 #header .logo>a{display:block; width:200px; height:48px; background:url(/images/logo.png) no-repeat center left / auto 48px; color:var(--main_01); font-size:28px; font-weight:bold; line-height:48px;}
-#header .main_search_form{flex:1; max-width:360px; border-bottom:1px solid var(--main_01); overflow:hidden;}
-#header .main_search_form .input_item input{background-color:transparent !important; border:none;}
-#header .main_search_form .input_item input::placeholder{color:rgba(47,96,130,0.6);}
-#header .main_search_form .btn_search{width:40px; height:40px; background:url(/images/icon_search_blue.svg) no-repeat center / 20px 20px;}
+#header .header_search_form{flex:1; max-width:360px; border-bottom:1px solid var(--main_01); overflow:hidden;}
+#header .header_search_form .input_item input{background-color:transparent !important; border:none;}
+#header .header_search_form .input_item input::placeholder{color:rgba(47,96,130,0.6);}
+#header .header_search_form .btn_search{width:40px; height:40px; background:url(/images/icon_search_blue.svg) no-repeat center / 20px 20px;}
 
 #header .user_menu_area{width:185px;}
 #header .user_menu_area>ul{display:flex; justify-content:flex-end;}
@@ -130,3 +130,8 @@ input:not([type=radio]):-internal-autofill-selected {background-color:#fff!impor
 .badge_area .name{display:inline-block; padding:0 8px; color:var(--gray_03); font-size:12px; line-height:20px;}
 .badge+.name{position:relative;}
 .badge+.name::before{content:''; display:block; position:absolute; left:0; top:5px; bottom:5px; width:1px; background-color:var(--gray_05);}
+
+/* no_data */
+.no_data_wrap{display:flex; flex-direction:column; justify-content:center; align-items:center; gap:12px; height:100%; padding:10% 0; color:var(--gray_04); font-size:16px; font-weight:bold; line-height:1.5; text-align:center;}
+.no_data_wrap .icon{width:72px; height:72px;}
+.no_data_wrap .icon.no_data{background:url(/images/icon_warning_gray.svg) no-repeat center / contain;}
