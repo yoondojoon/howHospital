@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<!-- <link rel="stylesheet" href=""> 이 자리에 자기 css 넣기-->
+<link rel="stylesheet" href="/css/searchHospital.css">
 
 <th:block th:include="common/header"></th:block>
 
@@ -9,8 +9,127 @@
 
 		<!-- contents -->
         <section id="contents" class="contents searchHospital">
-            <div class="inner_wrap">
-                <h2>병원 찾기</h2>
+            <h2>병원 찾기</h2>
+            <div class="search_area">
+            	<div class="list_area">
+            		<form class="search_form" action="/service/searchHospital" method="get">
+	                    <div class="input_item">
+	                        <input type="search" name="keyword" placeholder="지역, 진료과 또는 병명을 입력해보세요">
+		                    <button type="submit" class="btn_search"><span class="blind">검색</span></button>
+	                    </div>
+	                </form>
+	                <div class="list_wrap">
+	                	<h3 class="blind">병원 검색 리스트</h3>
+	                	<div class="total_count">총 <span></span>개의 병원이 검색되었습니다.</div>
+	                	<div class="hospital_list_wrap">
+		                	<ul class="hospital_list">
+		                		<li>
+		                			<a href="#">
+			                			<div class="row_wrap">
+			                				<strong class="title_info">강서송도병원</strong>
+			                				<strong class="status_info open">진료중</strong>
+			                				<strong class="time_info">09:00~19:00</strong>
+			                			</div>
+										<div class="row_wrap">
+											<span>대장/항문과</span>
+											<div class="row">
+				                				<span>3.3km</span>
+				                				<span>서울특별시 강서구 등촌동</span>
+											</div>
+			                			</div>
+			                			<div class="row_wrap">
+			                				<span class="keyword">키워드</span>
+			                				<span class="keyword">키워드</span>
+			                			</div>
+		                			</a>
+		                		</li>
+		                		<li>
+		                			<a href="#">
+			                			<div class="row_wrap">
+			                				<strong class="title_info">강서송도병원</strong>
+			                				<strong class="status_info open">진료중</strong>
+			                				<strong class="time_info">09:00~19:00</strong>
+			                			</div>
+										<div class="row_wrap">
+											<span>대장/항문과</span>
+											<div class="row">
+				                				<span>3.3km</span>
+				                				<span>서울특별시 강서구 등촌동</span>
+											</div>
+			                			</div>
+			                			<div class="row_wrap">
+			                				<span class="keyword">키워드</span>
+			                				<span class="keyword">키워드</span>
+			                			</div>
+		                			</a>
+		                		</li>
+		                		<li>
+		                			<a href="#">
+			                			<div class="row_wrap">
+			                				<strong class="title_info">강서송도병원</strong>
+			                				<strong class="status_info open">진료중</strong>
+			                				<strong class="time_info">09:00~19:00</strong>
+			                			</div>
+										<div class="row_wrap">
+											<span>대장/항문과</span>
+											<div class="row">
+				                				<span>3.3km</span>
+				                				<span>서울특별시 강서구 등촌동</span>
+											</div>
+			                			</div>
+			                			<div class="row_wrap">
+			                				<span class="keyword">키워드</span>
+			                				<span class="keyword">키워드</span>
+			                			</div>
+		                			</a>
+		                		</li>
+		                		<li>
+		                			<a href="#">
+			                			<div class="row_wrap">
+			                				<strong class="title_info">강서송도병원</strong>
+			                				<strong class="status_info open">진료중</strong>
+			                				<strong class="time_info">09:00~19:00</strong>
+			                			</div>
+										<div class="row_wrap">
+											<span>대장/항문과</span>
+											<div class="row">
+				                				<span>3.3km</span>
+				                				<span>서울특별시 강서구 등촌동</span>
+											</div>
+			                			</div>
+			                			<div class="row_wrap">
+			                				<span class="keyword">키워드</span>
+			                				<span class="keyword">키워드</span>
+			                			</div>
+		                			</a>
+		                		</li>
+		                		<li>
+		                			<a href="#">
+			                			<div class="row_wrap">
+			                				<strong class="title_info">강서송도병원</strong>
+			                				<strong class="status_info open">진료중</strong>
+			                				<strong class="time_info">09:00~19:00</strong>
+			                			</div>
+										<div class="row_wrap">
+											<span>대장/항문과</span>
+											<div class="row">
+				                				<span>3.3km</span>
+				                				<span>서울특별시 강서구 등촌동</span>
+											</div>
+			                			</div>
+			                			<div class="row_wrap">
+			                				<span class="keyword">키워드</span>
+			                				<span class="keyword">키워드</span>
+			                			</div>
+		                			</a>
+		                		</li>
+		                	</ul>
+	                	</div>
+	                </div>
+            	</div>
+            	<div class="api_area">
+            	
+            	</div>
             </div>
         </section>
 	    <!--// contents -->
