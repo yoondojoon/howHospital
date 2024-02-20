@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<link rel="stylesheet" href="/css/member/signUpfrm.css">
+<link rel="stylesheet" href="/css/member/signUpFrm.css">
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 
 <th:block th:include="common/header"></th:block>
 
@@ -13,22 +14,55 @@
 			</h2>
 			<form action="/member/signUp" method="post" id="signUpFrm">
 				<h4>가입유형</h4>
-				<div class="select">
-					<select>
+				<div class="select" id="select">
+					<select name="memberType">
 						<option>선택하세요</option>
 						<option value="1">회원</option>
 						<option value="2">병원관계자</option>
 					</select>
 				</div>
+				
+				
+				
+				
+				
+				
 				<div class="input_wrap">
+				
 					<div class="input_title">
-						<label for="memberPassword">이메일</label>
+						<label for="memberEmail">이메일</label>
+				
 					</div>
+				
+				
+				
 					<div class="input_item">
-						<input type="text" name="memberEmail" id="memberEmail"
-							placeholder="이메일을 입력하세요">
-						<button class="btn_primary" id="sendBtn">이메일 인증</button>
+						
+						<input type="text" name="memberEmail" id="memberEmail" placeholder="이메일을 입력하세요">
+						
+						<button type="button" class="btn_primary" id="sendBtn">이메일 인증</button>
+							
 					</div>
+					
+				</div>
+				<div class="input_wrap" id="auth" style="display:none;"> 
+				
+				
+				
+					<div class="input_title">
+						<label for="authCode">이메일 인증</label>
+					</div>
+				
+				
+					<div class="input_item">
+						
+						<input type="text" id="authCode" placeholder="인증번호를 입력하세요">
+						
+						<button class="btn_primary" id="authBtn">인증하기</button>
+						<span id="timeZone"></span>
+						<span id="authMsg"></span>		
+					</div>
+					
 				</div>
 				<div class="input_wrap">
 					<div class="input_title">
@@ -37,6 +71,16 @@
 					<div class="input_item">
 						<input type="password" name="memberPassword" id="memberPassword"
 							placeholder="비밀번호를 입력하세요">
+					</div>
+					
+				</div>
+				<div class="input_wrap">
+					<div class="input_title">
+						<label for="reMemberPassword">비밀번호</label>
+					</div>
+					<div class="input_item">
+						<input type="password" name="reMemberPassword" id="reMemberPassword"
+							placeholder="비밀번호를 재입력하세요">
 					</div>
 				</div>
 				<div class="input_wrap">
@@ -53,18 +97,26 @@
 						<label for="memberRrn">주민번호</label>
 					</div>
 					<div class="input_item">
-						<input type="number" name="memberRrn" id="memberRrn"
-							placeholder="주민등록번호 뒷1자리까지 입력하세요">
+						<input type="number" name="memberRrn" id="memberRrn" placeholder="주민등록번호 뒷1자리까지 입력하세요">
 					</div>
 				</div>
-
+		
 				<div class="input_wrap">
 					<div class="input_title">
 						<label for="memberAddrress">주소</label>
 					</div>
-					<input type="text" name="memberAddrress" id="memberAddrress"
-						placeholder="주소입력">
-					<!-- api -->
+					
+						<input type="text" name="postcode" id="postcode" readonly placeholder="우편번호">
+						<button type="button" class="btn_primary" onclick="searchAddr();" >주소찾기</button>
+					
+					<div class="input_item">	
+						<input type="text" class="btn_primary" name="address" id="address" readonly style="color:#222222; font-family:Noto Sans KR, sans-serif; font-style: normal;" placeholder="도로명" >
+					</div>	
+					<div class="input_item">	
+						<input type="text" class="btn_primary" name="detailAddress" id="detailAddress" style="color:#222222; font-family:Noto Sans KR, sans-serif; font-style: normal;" placeholder="상세주소를 입력해주세요">
+					</div>
+										
+					
 				</div>
 				<div class="input_wrap">
 					<div class="input_title">
@@ -77,31 +129,23 @@
 				</div>
 				<div class="agree">
 					<div>
-						<label> <input type="checkbox" name="agreeAll"
-							id="agreeAll"> 전체 동의
-						</label>
+						<label> <input type="checkbox" name="agreeAll" id="agreeAll"> 전체 동의</label>
 					</div>
 					<hr>
 					<div class="checkbox">
 						<div>
-							<label> <input type="checkbox" name="agreeService"
-								id="agreeService"> 서비스 이용 약관 동의
-							</label>
+							<label> <input type="checkbox" name="agreeService" id="agreeService"> 서비스 이용 약관 동의</label>
 						</div>
 						<div>
-							<label> <input type="checkbox" name="agreeLocation"
-								id="agreeLocation"> 위치기반 서비스 이용 동의
-							</label>
+							<label> <input type="checkbox" name="agreeLocation" id="agreeLocation"> 위치기반 서비스 이용 동의</label>
 						</div>
 						<div>
-							<label> <input type="checkbox" name="agreeAge"
-								id="agreeAge"> 만 14세 이상 동의
-							</label>
+							<label> <input type="checkbox" name="agreeAge" id="agreeAge"> 만 14세 이상 동의</label>
 						</div>
 					</div>
 				</div>
 				<div>
-					<button type="submit" class="btn_primary lg">회원가입</button>
+					<button  type="submit" class="btn_primary lg" id="signUpBtn">회원가입</button>
 				</div>
 			</form>
 		</div>
@@ -111,5 +155,6 @@
 
 <!-- js 링크 -->
 <script src="/js/common/signUpFrm.js"></script>
+
 </body>
 </html>

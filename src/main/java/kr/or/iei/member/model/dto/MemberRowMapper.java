@@ -16,7 +16,7 @@ public class MemberRowMapper implements RowMapper<Member>{
 		
 		Member member = new Member();
 		
-		member.setMemberAddrress(rs.getString("member_addrress"));
+		member.setMemberAddress(rs.getString("member_address"));
 		member.setEnrollDate(rs.getString("enroll_date"));
 		member.setMemberEmail(rs.getString("member_email"));
 		member.setMemberName(rs.getString("member_name"));

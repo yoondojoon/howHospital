@@ -16,7 +16,7 @@ import kr.or.iei.member.model.dto.Member;
 public class MemberService {
 	
 	@Autowired
-	public MemberDao memberDao;
+	private MemberDao memberDao;
 
 	public Member signIn(String memberEmail, String memberPassword) {
 		
@@ -28,7 +28,19 @@ public class MemberService {
 		
 		return member;
 	}
-	
+
+	@Transactional
+	public int signUp(Member member) {
+		
+		
+		int result = memberDao.signUp(member);
+		
+		
+		return result;
+		
+		
+		
+	}
 
 
 	

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<link rel="stylesheet" href="/css/member/successSignUp.css">
+
 
 <th:block th:include="common/header"></th:block>
 
@@ -10,8 +10,25 @@
 		<!-- contents -->
         <section id="contents" class="contents successSignUp">
             <div class="inner_wrap">
-                <h2>회원가입 성공</h2>
+                <span th:if="session.memberName"></span>><h2>님의 회원 가입이완료되었습니다.</h2>
+                
+                <div class="ref_section">
+                회원이름 : 
+               	<br>이메일 : 
+               	<br>전화번호 :
+               	<br>주소 :
+                </div>
+            
+            
+            <a href="/"><button class="btn_primary lg">확인</button></a>
+                
             </div>
+            
+            
+            
+            
+            
+            
         </section>
 	    <!--// contents -->
         
