@@ -1,15 +1,31 @@
 package kr.or.iei.admin.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import kr.or.iei.admin.model.dto.NoticeListData;
+import kr.or.iei.admin.model.service.AdminService;
 
 @Controller
 @RequestMapping(value="/admin")
 public class AdminController {
 	
+	@Autowired
+	private AdminService adminService;
+	
 	@GetMapping(value="/adminMain")
 	public String adminMain() {
 		return "/admin/adminMain";
+	}
+	
+	@GetMapping(value="/noticeList")
+	public String noticeList(int reqPage, Model model) {
+		NoticeListData nld = adminService.selectAllNotice(reqPage); 
+		model.addAttribute("noticeList", nld.getList());
+		model.addAttribute("pageNavi", nld.getPageNavi());
+		return "admin/noticeList";
 	}
 }

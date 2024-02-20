@@ -16,5 +16,10 @@
 	background-color: rgba(57, 62, 70, 0.15);
 	height : 30px;
 	line-height:30px;
-	text-align-center;
+	text-align:center;
+}
+
+.tr-content{
+	background-color: white;
+	text-align:center;
 }
