@@ -24,16 +24,19 @@ public class EtcController {
 	
 	@ResponseBody
 	@GetMapping("/pharmacyInfo")
-	public List pharmacyInfo(String pageNo) {
+	public List pharmacyInfo(String pageNo, String sidoCode, String sigoonCode, String pharmName) {
 		String url = "https://apis.data.go.kr/B552657/ErmctInsttInfoInqireService/getParmacyListInfoInqire";
 		String serviceKey = "LxQKysMvvVlGF+KIGwFiZBiZMmIHlq8evNwirB1BUJ/2EXczsoGjLsX4u41ITvSzySrmEvTrQ443KgTEL9JOSQ==";
-		String numOfRows = "8";
+		String numOfRows = "10";
 		String resultType = "xml";
 		ArrayList<Pharmacy> list = new ArrayList<Pharmacy>();
 		
 		try {
 			Document document = Jsoup.connect(url)
 				.data("serviceKey", serviceKey)
+				.data("Q0",sidoCode)
+				.data("Q1",sigoonCode)
+				.data("QN",pharmName)
 				.data("pageNo",pageNo)
 				.data("numOfRows",numOfRows)
 				.data("resultType",resultType)
