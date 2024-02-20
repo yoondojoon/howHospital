@@ -16,7 +16,7 @@ public class Member {
 	private String memberName;
 	private String memberPhone;
 	private int memberRrn;
-	private String memberAddrress;
+	private String memberAddress;
 	private String enrollDate;
 	private int memberStatus;
 	private int reportCount;

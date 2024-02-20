@@ -31,6 +31,26 @@ $("#agreeService").on("click",function(){
 
 });
 
+
+
+//주소
+function searchAddr(){
+    new daum.Postcode({
+        oncomplete: function(data) {
+            $("#postcode").val(data.zonecode);
+            $("#address").val(data.address);
+            $("#detailAddress").focus();
+        }
+    }).open();
+    
+    
+    
+    
+};
+
+
+
+
 $("#agreeLocation").on("click",function(){
 
     const isChecked = $(this).is(":checked");
@@ -70,38 +90,162 @@ $("#agreeService, #agreeLocation, #agreeAge").on("click",function(){
 
 });
 
+let mailCode = null;
 
-	// 회원가입 확인
-	function signUp() {
-    // 모든 약관 동의 체크 확인
-    var agreeService = document.getElementById("agreeService").checked;
-    var agreeLocation = document.getElementById("agreeLocation").checked;
-    var agreeAge = document.getElementById("agreeAge").checked;
+$("#sendBtn").on("click",function(){
 
-    // 모든 입력 필드 값 확인
-    var memberEmail = document.getElementById("memberEmail").value;
-    var memberPassword = document.getElementById("memberPassword").value;
-    var memberName = document.getElementById("memberName").value;
-    var memberRrn = document.getElementById("memberRrn").value;
-    var memberAddrress = document.getElementById("memberAddrress").value;
-    var memberPhone = document.getElementById("memberPhone").value;
-
-    // 모든 약관 동의가 체크되어 있는지 확인
-    if (!agreeService || !agreeLocation || !agreeAge) {
-        alert("약관에 동의해주세요.");
-        return; // 약관 동의가 모두 되어 있지 않으면 함수 종료
-    }
-
-    // 입력 필드의 값이 모두 채워져 있는지 확인
-    if (memberEmail === "" || memberPassword === "" || memberName === "" || memberRrn === "" || memberAddrress === "" || memberPhone === "") {
-        alert("모든 입력 필드를 채워주세요.");
-        return; // 입력 필드의 값이 모두 채워져 있지 않으면 함수 종료
-    }
+	const memberEmail = $("#memberEmail").val();
+	
+	$.ajax({
+		url : "/member/sendCode",
+		data : {memberEmail : memberEmail},
+		type : "post",
+		success : function(data){
+			console.log(data);
+			mailCode = data;
+			
+			$("#auth").show();
+		},
+		error : function(){
+			console.log("에러");
+		}
+	});
+	
+});
 
 
-    document.getElementById("signUpFrm").submit();
-}
 
+		let intervalId;
+		
+		function authTime(){
+			$("#timeZone").html("<span id='min'>3</span> : <span id='sec'>00</span>");
+			intervalId = window.setInterval(function(){
+				timeCount();
+			},1000);
+			
+		}
+		
+		function timeCount(){
+			const min = $("#min"). text();
+			const sec = $("#sec"). text ();
+			if(sec == "00" ){
+				if(min == "0"){
+					window.clearInterval(intervalId);
+					mailCode = null;
+					$("#authMsg").text("인증 시간이 만료되었습니다.");
+					$("#authMsg").css("color","red");
+				}else{
+					const newMin = Number(min) - 1;
+					$("#min").text(newMin);
+					$("#sec"). text (59);		
+				}
+			
+			}else{
+			const newsec = Number (sec) - 1;
+			if(newsec < 10){
+				$ ("#sec"). text("0"+newsec);
+				}else{
+				$("#sec"). text(newsec) ;
+				}
+			}
+		}
+		
+
+
+
+
+
+
+
+
+
+
+	$("#authBtn").on("click",function(){
+			
+			
+			
+				if(mailCode != null){
+					const authCode = $("#authCode").val();
+					if(authCode == mailCode){
+					$("#authMsg").text("인증완료");
+					$("#authMsg").css("color","blue");
+					window.clearInterval(intervalId);
+					
+					
+					$("#memberEmail").prop("disabled",true);
+					$("#sendBtn").prop("disabled",true); 
+					$("#authCode").prop("disabled",true); 
+					$("#authBtn").prop("disabled",true);
+					//시간을 화면에서 삭제
+					$("#timeZone").remove();
+					
+					}else{
+						$("#authMsg").text("인증번호를 확인하세요");
+						$("#authMsg").css("color","red");
+					
+					}
+				
+			}	
+		});
+
+
+
+
+//회원가입 버튼
+$("#signUpBtn").on("click",function(){
+	
+	//가입유형
+	const selectType = $("select[name=select]").val();
+	
+	//이메일
+	const memberEmail = $("#memberEmail").val();
+	
+	
+	
+	//비밀번호
+	const memberPassword = $("#memberPassword").val();
+	
+	const rePassword = $("#reMemberPassword").val();
+	
+	//이름
+	const memberName = $("#memberName").val();
+	
+	
+	
+	//주민번호
+	const memberRrn = $("#memberRrn").val();
+	
+	
+	
+	//주소
+	const postcode = $("#postcode").val();
+	const address = $("#address").val();
+	const detailAddress = $("#detailAddress").val();
+	
+	
+	//console.log(postcode+" "+address+detailAddress);
+	
+	
+	//전화번호
+	const memberPhone = $("#memberPhone").val();
+	
+	
+	
+	//console.log(selectType, memberEmail, memberPassword, memberName, memberRrn, postcode, address, detailAddress);
+
+	
+	
+	if((selectType, memberEmail, memberPassword, memberName, memberRrn, postcode, address, detailAddress) == null){
+		
+		
+		
+		
+		
+		
+	};
+	
+	
+});
 
 
 

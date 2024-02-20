@@ -1,0 +1,43 @@
+@charset "UTF-8";
+
+
+.hospital_reservation_wrap{
+	border: 1px solid #ccc;
+	border-radius: 10px;
+	box-sizing: border-box;
+	width: 100%;
+	padding: 40px 60px;
+}
+
+.hospital_reservation{
+	margin: 20px auto;
+	border: 1px solid #222;
+	border-radius: 10px;
+	box-sizing: border-box;
+	padding: 20px 20px;
+	position: relative;
+}
+.hospital_reservation>.select{
+	position: absolute;
+	top : 40px;
+	right : 30px;
+	width: 120px;
+}
+.top>*{
+	margin-right: 3px;
+}
+.top>.reg_reservation{
+	font-size: 12px;
+	color: #ccc;
+}
+.midle{
+	margin-top: 5px;
+}
+.midle>.reservationName{
+	font-weight: bold;
+	font-size: 20px;
+}
+.bottom>.chargeDoctor{
+	font-size: 12px;
+}
+
