@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import kr.or.iei.etc.model.dto.Pharmacy;
+
 @Controller
 @RequestMapping("/etc")
 public class EtcController {

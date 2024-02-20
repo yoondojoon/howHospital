@@ -18,7 +18,10 @@ public class HospitalController {
 		return "hospital/myHospitalFrm";
 	}
 	
-	
+	@GetMapping("/myHospitalReservation")
+	public String myHospitalReservation() {
+		return "hospital/myHospitalReservationList";
+	}
 	
 }
 
