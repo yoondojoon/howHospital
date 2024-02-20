@@ -1,11 +1,13 @@
 @charset "UTF-8";
 
+.pharmacy-section{
+	display:flex;
+	height:100%;
+}
 .lt_section{
-	float:left;
 	width:500px;
 }
 .rt_section{
-	float:right;
 	width:calc(100% - 500px);
 }
 
@@ -37,13 +39,28 @@
 	font-weight: bold; 
 	font-size:20px;
 	margin-bottom: 5px;
+	margin-top: 30px;
 	cursor: pointer;
 }
 .pharmacyTel{
-	margin-bottom: 30px;
 	border-bottom: 2px solid #ccc;
 	font-size: 14px;
 }
 .pharmacyAddr{
 	font-size: 15px;
+}
+.lt_section{
+	box-sizing: border-box;
+}
+.rt_section{
+	box-sizing: border-box;
+	padding-left: 10px;
+}
+.msgDiv{
+	font-size: 16px;
+	font-weight: bold;
+}
+.main>.inner_wrap{
+	padding: 0 15px;
+	max-width: none;
 }
