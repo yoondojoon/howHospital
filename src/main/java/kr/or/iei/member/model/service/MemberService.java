@@ -33,12 +33,24 @@ public class MemberService {
 	public int signUp(Member member) {
 		
 		
+		if(member.getMemberType()==2) {
+			
+			int memberStatus = 2;
+			
+			member.setMemberStatus(memberStatus);
+		}else if(member.getMemberType()==1) {
+			
+			int memberStatus = 1 ;
+			
+			member.setMemberStatus(memberStatus);
+			
+		}
+		
+		
 		int result = memberDao.signUp(member);
 		
 		
 		return result;
-		
-		
 		
 	}
 

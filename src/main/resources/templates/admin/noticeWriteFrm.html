@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<link rel="stylesheet" href="/css/admin/adminMain.css">
+
+	<th:block th:include="common/header"></th:block>
+
+	<script src="/summernote/summernote-lite.js"></script>
+	<script src="/summernote/lang/summernote-ko-KR.js"></script>
+	<link rel="stylesheet" href="/summernote/summernote-lite.css">
+
+	<!-- container -->
+    <main id="container" class="container">
+
+		<!-- contents -->
+        <section id="contents" class="contents adminMain">
+            <div class="inner_wrap">
+                <h2>공지사항 작성</h2>
+            </div>
+	        <div class="inner_wrap">
+	        	<form action="/admin/writeNotice" method="get" id="writeFrm">
+		        	<table class="btl">
+		        		<tr class="tr-header">
+		        			<th style="width:20%;">제목</th>
+		        			<th style="width:80%;">
+		        				<input style="width:90%;" type="text" id="input-form" name="noticeTitle">
+		        			</th>
+		        		</tr>
+		        		<tr class="tr-header">
+		        			<th style="width:20%">작성자</th>
+		        			<th style="width:80%; text-align:left;">
+		        				<span th:text="${session.member.memberName}"></span>
+		        				<input type="hidden" name="memberNo" th:value="${session.member.memberNo}">
+		        			</th>
+		        		</tr>
+		        		<tr>
+		        			<td colspan="2" style="text-align:left;">
+			        			<textarea id="noticeContent" name="noticeContent">
+			        			</textarea>		        			
+		        			</td>
+		        		</tr>
+		        	</table>
+		        	<div class="btn_area">
+		        		<button type="submit" class="btn_primary lg">등록하기</button>
+		        	</div>
+		        </form>
+	        </div>
+        </section>
+	    <!--// contents -->
+    </main>
+    <!--// container -->
+    
+	<th:block th:include="common/footer"></th:block>
+	
+    <script>
+    $("#noticeContent").summernote({
+  	  height: 600,
+  	  lang: "ko-KR",
+  	  disableResize : true,
+  	  disableResizeEditor : true,
+  	  resize:false
+  	});
+    </script>
+</html>

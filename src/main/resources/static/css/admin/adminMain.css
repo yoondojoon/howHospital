@@ -46,6 +46,7 @@
 
 .tr-header{
 	background-color: rgba(57, 62, 70, 0.15);
+	border-top: 3px solid #008cba;
 	border-bottom: 3px solid #008cba;
 }
 

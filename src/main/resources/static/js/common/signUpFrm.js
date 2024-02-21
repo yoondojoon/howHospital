@@ -238,10 +238,6 @@ $("#signUpBtn").on("click",function(){
 	if((selectType, memberEmail, memberPassword, memberName, memberRrn, postcode, address, detailAddress) == null){
 		
 		
-		
-		
-		
-		
 	};
 	
 	

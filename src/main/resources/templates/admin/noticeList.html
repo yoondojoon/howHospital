@@ -15,6 +15,7 @@
                 <h2>공지사항</h2>
             </div>
             <div class="inner_wrap">
+            <a id="write-btn" class="write-btn" th:if="${session.member != null && session.member.memberType == 3}" href="/admin/noticeWriteFrm">작성하기</a>
         	<form action="/admin/searchNotice" method="get" id="searchFrm">				
 				<th:block th:switch="${type}">
 				<select class="form-select" th:case="writer" name="type">
@@ -25,9 +26,10 @@
 					<option value="title" selected>제목</option>
 					<option value="writer">작성자</option>
 				</select>
-			</th:block>
+				</th:block>
 				<div id="search">
 					<input type="text" id="input-form" name="keyword" placeholder="검색어 입력" th:value="${keyword}">
+					<input type="hidden" name="reqPage" value="1">
 					<button type="submit" id="check" class="btn bc1" onclick="return checkKeyword();">
 						<span class="material-icons">search</span>
 					</button>
@@ -36,15 +38,19 @@
         	<table class="btl">
         		<tr class="tr-header">
         			<th style="width:15%;">번호</th>
-        			<th style="width:50%;">제목</th>
+        			<th style="width:35%;">제목</th>
+        			<th style="width:15%;">작성자</th>
         			<th style="width:15%;">조회수</th>
         			<th style="width:20%;">등록일</th>
         		</tr>
         		<tr class="tr-content" th:each="notice : ${noticeList}">
-					<td id="no" th:text="${notice.noticeNo}"></td>
-					<td id="title" th:text="${notice.noticeTitle}"></td>
-					<td id="readCount" th:text="${notice.readCount}"></td>
-					<td id="reqDate" th:text="${notice.reqDate}"></td>
+					<td name="noticeNo" th:text="${notice.noticeNo}"></td>
+					<td name="noticeTitle">
+						<a th:href="@{/admin/noticeDetail(noticeNo=${notice.noticeNo})}" th:text="${notice.noticeTitle}"></a>
+					</td>
+					<td name="memberName" th:text="${notice.memberName}"></td>
+					<td name="readCount" th:text="${notice.readCount}"></td>
+					<td name="reqDate" th:text="${notice.reqDate}"></td>
 				</tr>
         	</table>
         	
@@ -55,16 +61,16 @@
         
     </main>
     <!--// container -->
+	
+<th:block th:include="common/footer"></th:block>
+<!-- js 링크 -->
     <script>
 	    function checkKeyword(){
-			const keyword = $("[name=keyword]").val();
+			const keyword = $("#input-form").val();
 			if(keyword == ""){
 				alert("검색어를 입력하세요.");
 				return false;
 			}
 		}	
 	</script>
-	
-<th:block th:include="common/footer"></th:block>
-<!-- js 링크 -->
 </body>

@@ -14,6 +14,7 @@ public class NoticeRowMapper implements RowMapper<Notice> {
 		n.setNoticeNo(rs.getInt("notice_no"));
 		n.setMemberNo(rs.getInt("member_no"));
 		n.setNoticeTitle(rs.getString("notice_title"));
+		n.setNoticeContent(rs.getString("notice_content"));
 		n.setReadCount(rs.getInt("read_count"));
 		n.setReqDate(rs.getString("req_date"));
 		n.setMemberName(rs.getString("member_name"));

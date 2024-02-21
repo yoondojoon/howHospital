@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import kr.or.iei.admin.model.dto.Notice;
 import kr.or.iei.admin.model.dto.NoticeListData;
 import kr.or.iei.admin.model.dto.NoticeRowMapper;
 
@@ -18,7 +19,7 @@ public class AdminDao {
 	private NoticeRowMapper noticeRowMapper;
 
 	public List selectAllNotice(int start, int end) {
-		String query = "SELECT  * FROM (SELECT ROWNUM AS RNUM, N.* FROM (SELECT * FROM MEMBER_TBL FULL JOIN NOTICE_TBL ON MEMBER_TBL.MEMBER_NO = NOTICE_TBL.MEMBER_NO ORDER BY 1 DESC)N) WHERE RNUM BETWEEN ? AND ?";
+		String query = "SELECT  * FROM (SELECT ROWNUM AS RNUM, N.* FROM (SELECT NOTICE_NO, MEMBER_TBL.MEMBER_NO, NOTICE_TITLE, NOTICE_CONTENT, READ_COUNT, REQ_DATE, MEMBER_NAME FROM MEMBER_TBL RIGHT OUTER JOIN NOTICE_TBL ON MEMBER_TBL.MEMBER_NO = NOTICE_TBL.MEMBER_NO ORDER BY NOTICE_NO DESC)N) WHERE RNUM BETWEEN ? AND ?";
 		Object[] params = {start, end};
 		List list = jdbc.query(query, noticeRowMapper, params);
 		return list;
@@ -31,14 +32,14 @@ public class AdminDao {
 	}
 
 	public List selectSearchTitle(int start, int end, String keyword) {
-		String query = "SELECT  * FROM (SELECT ROWNUM AS RNUM, N.* FROM (SELECT * FROM MEMBER_TBL FULL JOIN NOTICE_TBL ON MEMBER_TBL.MEMBER_NO = NOTICE_TBL.MEMBER_NO where notice_title like '%'||?||'%' ORDER BY 1 DESC)N) WHERE RNUM BETWEEN ? AND ?";
+		String query = "SELECT  * FROM (SELECT ROWNUM AS RNUM, N.* FROM (SELECT NOTICE_NO, MEMBER_TBL.MEMBER_NO, NOTICE_TITLE, NOTICE_CONTENT, READ_COUNT, REQ_DATE, MEMBER_NAME FROM MEMBER_TBL RIGHT OUTER JOIN NOTICE_TBL ON MEMBER_TBL.MEMBER_NO = NOTICE_TBL.MEMBER_NO where NOTICE_TITLE like '%'||?||'%' ORDER BY NOTICE_NO DESC)N) WHERE RNUM BETWEEN ? AND ?";
 		Object[] params = {keyword, start, end};
 		List list = jdbc.query(query, noticeRowMapper, params);
 		return list;
 	}
 
 	public List selectSearchWriter(int start, int end, String keyword) {
-		String query = "SELECT  * FROM (SELECT ROWNUM AS RNUM, N.* FROM (SELECT * FROM MEMBER_TBL FULL JOIN NOTICE_TBL ON MEMBER_TBL.MEMBER_NO = NOTICE_TBL.MEMBER_NO where member_name like '%'||?||'%' ORDER BY 1 DESC)N) WHERE RNUM BETWEEN ? AND ?";
+		String query = "SELECT  * FROM (SELECT ROWNUM AS RNUM, N.* FROM (SELECT NOTICE_NO, MEMBER_TBL.MEMBER_NO, NOTICE_TITLE, NOTICE_CONTENT, READ_COUNT, REQ_DATE, MEMBER_NAME FROM MEMBER_TBL RIGHT OUTER JOIN NOTICE_TBL ON MEMBER_TBL.MEMBER_NO = NOTICE_TBL.MEMBER_NO where MEMBER_NAME like '%'||?||'%' ORDER BY NOTICE_NO DESC)N) WHERE RNUM BETWEEN ? AND ?";
 		Object[] params = {keyword, start, end};
 		List list = jdbc.query(query, noticeRowMapper, params);
 		return list;
@@ -52,9 +53,16 @@ public class AdminDao {
 	}
 
 	public int writerTotalCount(String keyword) {
-		String query = "SELECT COUNT(*) FROM (SELECT * FROM MEMBER_TBL FULL JOIN NOTICE_TBL ON MEMBER_TBL.MEMBER_NO = NOTICE_TBL.MEMBER_NO) WHERE MEMBER_NAME LIKE '%'||?||'%'";
+		String query = "SELECT COUNT(*) FROM (SELECT NOTICE_NO, MEMBER_TBL.MEMBER_NO, NOTICE_TITLE, NOTICE_CONTENT, READ_COUNT, REQ_DATE, MEMBER_NAME FROM MEMBER_TBL RIGHT OUTER JOIN NOTICE_TBL ON MEMBER_TBL.MEMBER_NO = NOTICE_TBL.MEMBER_NO) WHERE MEMBER_NAME LIKE '%'||?||'%'";
 		Object[] params = {keyword};
 		int totalCount = jdbc.queryForObject(query, Integer.class,params);
 		return totalCount;
+	}
+
+	public int insertNotice(Notice n) {
+		String query = "insert into notice_tbl values (notice_seq.nextval,?,?,?,0,to_char(sysdate,'yyyy-mm-dd'))";
+		Object[] params = {n.getMemberNo(), n.getNoticeTitle(),n.getNoticeContent()};
+		int result = jdbc.update(query,params);
+		return result;
 	}
 }
