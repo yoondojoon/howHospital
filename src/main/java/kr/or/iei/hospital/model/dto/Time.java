@@ -7,7 +7,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class Subject {
-	private int subjectNo;
-	private String subjectName;
+public class Time {
+	private int hospitalNo;
+	private String dayHour;
+	private String weekendHour;
+	private String lunchHour;
+	private int holiday;
 }

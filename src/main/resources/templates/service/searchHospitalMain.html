@@ -129,7 +129,7 @@ function searchHospital(obj){
 				const titleInfo = $("<strong class='title_info'>");
 				const statusInfo = $("<strong class='status_info'>");
 				const row = $("<div class='row'>");
-				//const distance = $("<span>");
+				const tel = $("<span>");
 				const address = $("<span>");
 				//병원이름
 				titleInfo.text(item.hospitalName);
@@ -148,8 +148,9 @@ function searchHospital(obj){
 					span.text(obj.subjectName);
 					rowWrap2.append(span);
 				})
-				//거리
-				//row.append(distance);
+				//전화번호
+				tel.text(item.hospitalTel);
+				row.append(tel);
 				//주소
 				address.text(item.hospitalAddress);
 				row.append(address);				
@@ -180,7 +181,7 @@ function searchHospital(obj){
 					"	<div class='row_wrap'>"+rowWrap1.html()+"</div>",
 					"	<div class='row_wrap'>"+rowWrap2.html()+"</div>",
 					"	<div class='row_wrap'>"+rowWrap3.html(),
-					"		<a href='/service/hospitalDetail' class='btn_primary sm'>예약하기</a>",						
+					"		<a href='/service/hospitalDetail?hospitalNo="+item.hospitalNo+"' class='btn_primary sm'>예약하기</a>",						
 					"	</div>",
 					"</div>"
 				].join("");
