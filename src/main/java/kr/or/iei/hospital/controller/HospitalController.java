@@ -40,7 +40,7 @@ public class HospitalController {
 		return "hospital/myHospitalMain";
 	}
 	
-	@GetMapping(value="/myHospitalFrm")
+	@PostMapping(value="/myHospitalFrm")
 	public String myHospitalFrm() {
 		return "hospital/myHospitalFrm";
 	}
