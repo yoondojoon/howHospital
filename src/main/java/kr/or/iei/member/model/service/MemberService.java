@@ -2,6 +2,7 @@ package kr.or.iei.member.model.service;
 
 import java.io.UnsupportedEncodingException;
 import java.util.Date;
+import java.util.List;
 import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,13 +54,5 @@ public class MemberService {
 		return result;
 		
 	}
-
-	public Member selectMember() {
-		Member member = memberDao.selectMember();
-		return member;
-	}
-
-
-	
 
 }
