@@ -1,10 +1,10 @@
-package kr.or.iei.test.dao;
+package kr.or.iei.hospital.model.dao;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
+import kr.or.iei.hospital.model.dto.SubjectRowMapper;
 
-import kr.or.iei.test.dto.SubjectRowMapper;
 
 @Repository
 public class SubjectDao {
