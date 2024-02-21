@@ -61,13 +61,16 @@ function updateFileCount() {
 }
 
 
-document.getElementById('nextbtn').addEventListener('click', function() {
+document.getElementById('enroll_btn').addEventListener('click', function(event) {
   // 대표자명 입력란
-  const representativeInput = document.querySelector('input[name="representative"]');
+  const representativeInput = document.querySelector('input[name="representative_name"]');
   // 사업자등록번호 입력란
-  const representativeNoInput = document.getElementById('businessNumberInput');
+  const representativeNoInput = document.getElementById('representative_no');
   const fileList = document.getElementById('fileList');
   const fileCount = fileList.getElementsByTagName('li').length;
+  const nextMessage = $(".no_check").next("p").text();
+
+
 
   // 파일 개수가 2개 미만인 경우에 경고창 표시
   if (representativeInput.value.trim() === '' || representativeNoInput.value.trim() === '') {
@@ -76,26 +79,36 @@ document.getElementById('nextbtn').addEventListener('click', function() {
    
   if (fileCount < 2) {
     alert('최소 2개의 파일을 업로드해야 합니다.');
-    event.preventDefault(); 
+    event.preventDefault(); // 이벤트의 기본 동작을 취소합니다.
   }
+  
+    if (representativeNoInput.value.trim() === '' || nextMessage === "정보 조회에 실패했습니다.") {
+    alert('사업자 등록번호를 다시 확인하세요.');
+        event.preventDefault(); // 이벤트의 기본 동작을 취소합니다.
+    
+    }
+  
+  
+  
 });
-
 
 
 
 
 // 사업자 등록번호 입력 필드에 자동으로 하이픈 추가하고 입력 제한 구현
-const businessNumberInput = document.getElementById('businessNumberInput');
-businessNumberInput.addEventListener('input', function () {
+const representative_no = document.getElementById('representative_no');
+representative_no.addEventListener('input', function () {
   let trimmedValue = this.value.replace(/[^0-9]/g, ''); // 숫자 이외의 문자 제거
+
+  // 입력 길이가 10자 이상이면 잘라냄
   if (trimmedValue.length > 10) {
-    trimmedValue = trimmedValue.slice(0, 10); // 길이 제한
+    trimmedValue = trimmedValue.slice(0, 10);
   }
-  if (trimmedValue.length >= 3 && trimmedValue.length < 6) {
-    this.value = trimmedValue.replace(/^(\d{3})/, '$1-'); // 3글자 입력 후 하이픈 추가
-  } else if (trimmedValue.length >= 6) {
-    this.value = trimmedValue.replace(/^(\d{3})(\d{2})/, '$1-$2-'); // 5글자 입력 후 하이픈 추가
-  } else {
-    this.value = trimmedValue;
-  }
+
+  this.value = trimmedValue; // 최종값을 입력 필드에 설정
 });
+
+
+function goBack() {
+  window.history.back();
+}

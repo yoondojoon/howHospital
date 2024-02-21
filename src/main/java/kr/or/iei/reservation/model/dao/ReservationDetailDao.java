@@ -1,4 +1,4 @@
-package kr.or.iei.test.dao;
+package kr.or.iei.reservation.model.dao;
 
 import java.util.List;
 
@@ -6,8 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import kr.or.iei.test.dto.ReservationDetail;
-import kr.or.iei.test.dto.ReservationDetailRowMapper;
+import kr.or.iei.reservation.model.dto.ReservationDetail;
+import kr.or.iei.reservation.model.dto.ReservationDetailRowMapper;
 
 @Repository
 public class ReservationDetailDao {
