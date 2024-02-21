@@ -74,6 +74,7 @@
 let map = new naver.maps.Map("map");
 
 let markerArr = [];
+let infoWindowArr = [];
 function searchHospital(obj){
 	const keyword = $(obj).prev("input").val();
 	
@@ -93,6 +94,10 @@ function searchHospital(obj){
 				item.setMap(null);
 			})
 			markerArr = [];
+			$(infoWindowArr).each(function(index, item){
+				item.close();
+			})
+			infoWindowArr = [];
 			
 			if(hospitalList.length == 0){
 				$(".total_count").hide();
@@ -183,6 +188,7 @@ function searchHospital(obj){
 				const infoWindow = new naver.maps.InfoWindow({
 					content: contentString
 				});
+				infoWindowArr.push(infoWindow);
 
 				naver.maps.Event.addListener(marker,"click",function(e){
 					map.setCenter(e.coord);					
@@ -202,98 +208,6 @@ function searchHospital(obj){
 		}
 	});
 }
-
-/*
-function checkKeyword(obj){	
-	if($(obj).prev("input").val() == ""){
-		alert("검색어를 입력하세요");
-		return false;
-	}
-}
-
-const hospitalList = [[${hospitalList}]];
-console.log(hospitalList);
-
-$(hospitalList).each(function(index, item){
-	$(window).scrollTop($(".search_area").offset().top - 72);
-	
-	const latlng = new naver.maps.LatLng(hospitalList[0].lat, hospitalList[0].lng);
-	map.setCenter(latlng);
-	
-	beforeLat = hospitalList[0].lat;
-	beforeLng = hospitalList[0].lng;
-	
-	const marker = new naver.maps.Marker({
-		position: new naver.maps.LatLng(item.lat, item.lng),
-	    map: map
-	});
-	console.log(item.lat);
-	
-	//영업여부 추출
-	let statusDiv = $("<div>");
-	const strong = $ ("<strong>");
-	strong.addClass("status_info");
-	if(item.openStatus == '진료중'){
-		strong.addClass("open");
-	}else{
-		strong.addClass("closed");
-	}
-	strong.text(item.openStatus);
-	statusDiv.append(strong);
-	
-	
-	//진료과목명 추출
-	const subjectList = item.subjectList;
-	let sbjDiv = $("<div>");
-	$(subjectList).each(function(i, obj){
-		const span = $("<span>");
-		span.text(obj.subjectName);
-		sbjDiv.append(span);
-	})
-	
-	//키워드 추출
-	const keywordList = item.keywordList;
-	let keywordDiv = $("<div>");
-	$(keywordList).each(function(i, obj){
-		const span = $("<span>");
-		span.addClass("keyword");
-		span.text(obj.keyword);
-		keywordDiv.append(span);
-	})
-	
-	let contentString = [
-		"<div class='info_window'>",
-		"	<div class='row_wrap'>",
-		"		<strong class='title_info'>"+item.hospitalName+"</strong>",
-		statusDiv.html(),
-		"	</div>",
-		"	<div class='row_wrap'>",
-		sbjDiv.html(),
-		"		<div class='row'>",
-		"			<span>3.3km</span>",
-		"			<span>"+item.hospitalAddress+"</span>",
-		"		</div>",
-		"	</div>",
-		"	<div class='row_wrap'>",
-		keywordDiv.html(),
-		"		<a href='/service/hospitalDetail' class='btn_primary sm'>예약하기</a>",
-		"	</div>",
-		"</div>"
-		
-	].join("");
-	
-	let infoWindow = new naver.maps.InfoWindow();
-
-	naver.maps.Event.addListener(marker,"click",function(e){
-		map.setCenter(e.coord);
-		infoWindow = new naver.maps.InfoWindow({
-			content: contentString
-		});
-		infoWindow.open(map, marker);
-	});
-});
-*/
-
 </script>
 </body>
 </html>
