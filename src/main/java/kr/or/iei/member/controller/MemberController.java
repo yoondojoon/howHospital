@@ -63,6 +63,13 @@ public class MemberController {
 			return "member/signInFail";
 		}else {
 			
+			if(member.getMemberType()==2) {
+				
+				return "hospital/businessAuth";
+				
+			}
+			
+			
 			session.setAttribute("member", member);
 			
 			return "redirect:/";
