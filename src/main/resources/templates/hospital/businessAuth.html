@@ -11,21 +11,22 @@
 		<div class="hospital_wrap">
 			<div class="main_content">
 				<h2>사업자 인증</h2>
-				<form id="uploadForm" action="/hospital/myHospitalFrm" method="post"
+				<form id="uploadForm" action="/hospital/businessAuthEnroll" method="post"
 					enctype="multipart/form-data">
 
 					<div class="input_wrap">
 						<div class="input_title"><label for="id">대표자명</label></div>
 						<div class="input_item">
-							<input type="text" name="representative_name" id="representative_name"  th:value="${session.member.memberName}" disabled>
+							<input type="text" id="representative_name"  th:value="${session.member.memberName}" disabled>
 						</div>
 					</div>
+						<input type="hidden" name="memberNo" th:value="${session.member.memberNo}"></td>
 
 
 					<div class="input_wrap">
 						<div class="input_title"><label for="id">사업자등록번호</label></div>
 						<div class="input_item no_check">
-							<input type="text" name="representative_no" id="representative_no" placeholder="사업자등록번호를 입력하세요." required>
+							<input type="text" name="representativeNo" id="representative_no" placeholder="사업자등록번호를 입력하세요." required>
 							<button type="button" class="btn_primary" id="search_btn">상태조회</button>
 						</div>
 					</div>
@@ -37,7 +38,7 @@
 
 					<div class="multiple_file">
 						<label class="file-upload"> <input type="file"
-							name="files" id="fileInput" multiple> <span
+							name="upfile" id="upfile" multiple> <span
 							class="file-button">파일 선택</span>
 						</label> <span id="fileCount">0개 파일 선택됨</span>
 						<ul id="fileList"></ul>

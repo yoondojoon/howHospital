@@ -17,30 +17,20 @@ public class ReservationDao {
 	private JdbcTemplate jdbc;
 	@Autowired
 	private H_ReservationRowMapper h_ReservationRowMapper;
-	public List selectReservation() {
-		String query="SELECT \r\n" + 
+	public List selectReservation(int startPage, int endPage) {
+		String query = "select * from\r\n" + 
+				"(select rownum as rnum, res.* from\r\n" + 
+				"(select \r\n" + 
 				"    reservation_no,\r\n" + 
-				"    reservation_status,\r\n" + 
-				"    reg_reservation,\r\n" + 
+				"    reservation_status,reg_reservation,\r\n" + 
 				"    RESERVATION_TIME,\r\n" + 
 				"    (select member_name from member_tbl where member_no=r.member_no) as member_name,\r\n" + 
 				"    (select DOCTOR_NAME from DOCTOR_TBL where doctor_no = (select doctor_no from reservation_detail_tbl where reservation_no=r.reservation_no)) as doctor_name\r\n" + 
-				"FROM \r\n" + 
-				"    reservation_tbl r";
-		/*
-		String query = "SELECT \r\n" + 
-				"    (SELECT doctor_name FROM doctor_tbl WHERE doctor_tbl.doctor_no = reservation_detail_tbl.doctor_no) AS doctor_name,\r\n" + 
-				"    reservation_status,\r\n" + 
-				"    reg_reservation,\r\n" + 
-				"    member_name\r\n" + 
-				"FROM \r\n" + 
-				"    reservation_tbl\r\n" + 
-				"JOIN \r\n" + 
-				"    member_tbl ON reservation_tbl.member_no = member_tbl.member_no\r\n" + 
-				"JOIN \r\n" + 
-				"    reservation_detail_tbl ON reservation_tbl.reservation_no = reservation_detail_tbl.reservation_no";
-				*/
-		List list = jdbc.query(query, h_ReservationRowMapper);
+				"FROM\r\n" + 
+				"    reservation_tbl r\r\n" + 
+				"ORDER BY 1 DESC)RES) WHERE ROWNUM BETWEEN ? AND ?";
+		Object[] params = {startPage, endPage};
+		List list = jdbc.query(query, h_ReservationRowMapper, params);
 		return list;
 	}
 
@@ -49,6 +39,12 @@ public class ReservationDao {
 		Object[] params = {selectValue, reservationNo};
 		int result = jdbc.update(query, params);
 		return result;
+	}
+
+	public int selectAllReservationCount() {
+		String query = "select count(*) from reservation_tbl";
+		int totalCount = jdbc.queryForObject(query, Integer.class);
+		return totalCount;
 	}
 	
 }
