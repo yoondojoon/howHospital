@@ -16,15 +16,17 @@
         <div class="header_top_area">
             <div class="inner_wrap">
                 <h1 class="logo"><a href="/"><span class="blind">병원어때</span></a></h1>
-                <form class="main_search_form" action="/service/searchHospital" method="get">
+                <form class="header_search_form" action="/community/searchAll" method="get">
                     <div class="input_item">
-                        <input type="search" name="keyword" placeholder="지역, 진료과 또는 병명을 입력해보세요">
+                        <input type="search" name="keyword" placeholder="손목이 아파요, 허리가 나갔어요">
 	                    <button type="submit" class="btn_search"><span class="blind">검색</span></button>
                     </div>
                 </form>
                 <div class="user_menu_area">
                     <ul>
                         <li><a href="#" class="mypage">마이페이지</a></li>
+                        <!-- 밑에 이거 지울거에요!! 테스트용입니다. -->
+                        <li><a href="/hospital/myHospitalReservation">병원예약조회</a></li>
                         <li><a href="#">로그아웃</a></li>
                     </ul>
                     <ul style="display:none;">
@@ -37,7 +39,7 @@
         <div class="header_bottom_area">
             <nav class="gnb_area">
                 <ul class="gnb_list">
-                    <li><a href="/service/searchHospital">병원찾기</a></li>
+                    <li><a href="/service/searchHospitalMain">병원찾기</a></li>
                     <li><a href="#">커뮤니티</a></li>
                     <li><a href="/etc/pharmacy">약국찾기</a></li>
                     <li>

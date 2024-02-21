@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<link rel="stylesheet" href="/css/service/searchHospital.css">
+
+<th:block th:include="common/header"></th:block>
+
+	<!-- container -->
+    <main id="container" class="container">
+
+		<!-- contents -->
+        <section id="contents" class="contents searchHospital">
+            <h2>병원 찾기</h2>
+            <div class="search_area">
+            	<div class="list_area">
+            		<form class="search_form" action="/service/searchHospital" method="get">
+	                    <div class="input_item">
+	                        <input type="search" name="keyword" placeholder="지역, 진료과 또는 병명을 입력해보세요" th:value="${keyword}">
+		                    <button type="submit" class="btn_search" onclick="return checkKeyword(this);"><span class="blind">검색</span></button>
+	                    </div>
+	                </form>
+	                <div class="list_wrap">
+	                	<h3 class="blind">병원 검색 리스트</h3>
+	                	
+	                	<div class="total_count" th:if="${listSize != null}">총 <strong th:text="${listSize}"></strong>개의 병원이 검색되었습니다.</div>
+	                	
+	                	<div class="hospital_list_wrap">
+	                	
+		                	<div class="no_data_wrap" th:if="${hospitalList == null}">
+		                		<i class="icon no_data"></i>
+		                		<p>검색 결과가 없습니다.</p>
+		                	</div>
+		                	
+		                	<ul class="hospital_list" th:if="${hospitalList != null}">
+		                		<li th:each="h : ${hospitalList}">
+		                			<a href="javascript:void(0);" onclick="listClickFunc();">
+			                			<div class="row_wrap">
+			                				<strong class="title_info" th:text="${h.hospitalName}"></strong>
+			                				<th:block th:switch="${h.openStatus}">
+				                				<strong th:case="'진료중'" class="status_info open" th:text="${h.openStatus}"></strong>
+				                				<strong th:case="'진료종료'" class="status_info closed" th:text="${h.openStatus}"></strong>
+			                				</th:block>
+			                			</div>
+										<div class="row_wrap">
+											<span th:each="s : ${h.subjectList}" th:text="${s.subjectName}"></span>
+											<div class="row">
+				                				<span>3.3km</span>
+				                				<span th:text="${h.hospitalAddress}"></span>
+											</div>
+			                			</div>
+			                			<div class="row_wrap">
+			                				<span class="keyword" th:each="k : ${h.keywordList}" th:text="${k.keyword}"></span>
+			                			</div>
+		                			</a>
+		                		</li>
+		                	</ul>
+		                	
+	                	</div>
+	                </div>
+            	</div>
+            	<div id="map" class="api_area"></div>
+            </div>
+        </section>
+	    <!--// contents -->
+        
+    </main>
+    <!--// container -->
+	
+<th:block th:include="common/footer"></th:block>
+<!-- js 링크 -->
+<script type="text/javascript" src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=bizfvb77ie"></script>
+<script th:inline="javascript">
+let beforeLat = "37.5666612";
+let beforeLng = "126.9783785";
+//session에 저장해서 가져오자
+
+let map = new naver.maps.Map("map", {
+	center: new naver.maps.LatLng(beforeLat, beforeLng)
+});
+
+function checkKeyword(obj){	
+	if($(obj).prev("input").val() == ""){
+		alert("검색어를 입력하세요");
+		return false;
+	}
+}
+
+const hospitalList = [[${hospitalList}]];
+
+$(hospitalList).each(function(index, item){
+	$(window).scrollTop($(".search_area").offset().top - 72);
+	
+	map = new naver.maps.Map("map", {
+		center: new naver.maps.LatLng(hospitalList[0].lat, hospitalList[0].lng)
+	});
+	
+	beforeLat = hospitalList[0].lat;
+	beforeLng = hospitalList[0].lng;
+	
+	const marker = new naver.maps.Marker({
+		position: new naver.maps.LatLng(item.lat, item.lng),
+	    map: map
+	});
+	
+	//영업여부 추출
+	let statusDiv = $("<div>");
+	const strong = $ ("<strong>");
+	strong.addClass("status_info");
+	if(item.openStatus == '진료중'){
+		strong.addClass("open");
+	}else{
+		strong.addClass("closed");
+	}
+	strong.text(item.openStatus);
+	statusDiv.append(strong);
+	
+	
+	//진료과목명 추출
+	const subjectList = item.subjectList;
+	let sbjDiv = $("<div>");
+	$(subjectList).each(function(i, obj){
+		const span = $("<span>");
+		span.text(obj.subjectName);
+		sbjDiv.append(span);
+	})
+	
+	//키워드 추출
+	const keywordList = item.keywordList;
+	let keywordDiv = $("<div>");
+	$(keywordList).each(function(i, obj){
+		const span = $("<span>");
+		span.addClass("keyword");
+		span.text(obj.keyword);
+		keywordDiv.append(span);
+	})
+	
+	let contentString = [
+		"<div class='info_window'>",
+		"	<div class='row_wrap'>",
+		"		<strong class='title_info'>"+item.hospitalName+"</strong>",
+		statusDiv.html(),
+		"	</div>",
+		"	<div class='row_wrap'>",
+		sbjDiv.html(),
+		"		<div class='row'>",
+		"			<span>3.3km</span>",
+		"			<span>"+item.hospitalAddress+"</span>",
+		"		</div>",
+		"	</div>",
+		"	<div class='row_wrap'>",
+		keywordDiv.html(),
+		"		<a href='/service/hospitalDetail' class='btn_primary sm'>예약하기</a>",
+		"	</div>",
+		"</div>"
+		
+	].join("");
+	
+	let infoWindow = new naver.maps.InfoWindow();
+
+	naver.maps.Event.addListener(marker,"click",function(e){
+		map.setCenter(e.coord);
+		infoWindow = new naver.maps.InfoWindow({
+			content: contentString
+		});
+		infoWindow.open(map, marker);
+	});
+});
+
+</script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

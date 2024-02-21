@@ -1,4 +1,4 @@
-package kr.or.iei.etc.controller;
+package kr.or.iei.etc.model.dto;
 
 import lombok.Data;
 import lombok.AllArgsConstructor;

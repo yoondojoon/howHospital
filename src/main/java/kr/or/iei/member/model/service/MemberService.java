@@ -42,6 +42,11 @@ public class MemberService {
 		
 	}
 
+	public Member selectMember() {
+		Member member = memberDao.selectMember();
+		return member;
+	}
+
 
 	
 

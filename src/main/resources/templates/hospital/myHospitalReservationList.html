@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<link rel="stylesheet" href="/css/hospital/myHospitalReservationList.css">
+<th:block th:include="common/header"></th:block>
+<!-- container -->
+    <main id="container" class="container">
+		<!-- contents -->
+        <section id="contents" class="contents main">
+            <div class="inner_wrap">
+            	<div class="reservation_title">
+            		<h2>내 병원 예약</h2>
+            	</div>
+	            <div class="hospital_reservation_wrap">
+		            <div class="hospital_reservation">
+		            	<div class="reservation_wrap_content top">
+		            		<span class="badge blue outline" th:value="${reservation[0].reservationStatus}" th:text="접수대기"></span>
+		            		<span class="reg_reservation" th:text="${reservation[0].regReservation}"></span>
+		            	</div>
+		            	<div class="reservation_wrap_content midle">
+		            		<span class="reservationName" th:text="${member.memberName}"></span>
+		            	</div>
+		            	<div class="reservation_wrap_content bottom">
+		            		<span class="chargeDoctor">진료선생님</span>
+		            		<span class="chargeDoctorName" th:text="${doctorName}"></span>
+		            	</div>
+		            	<div class="select">
+							<select id="hospital_reservation_type">
+								<option>예약거부</option>
+								<option>예약확정</option>
+								<option>진료완료</option>
+							</select>
+						</div>
+		            </div>		
+	            </div>
+            </div>
+        </section>
+	    <!--// contents -->
+        
+    </main>
+    <!--// container -->
+<th:block th:include="common/footer"></th:block>
+</html>
