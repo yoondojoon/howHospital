@@ -7,6 +7,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import kr.or.iei.hospital.model.dto.BusinessAuth;
+import kr.or.iei.hospital.model.dto.BusinessAuthFile;
 import kr.or.iei.admin.model.dto.ReviewRowMapper;
 import kr.or.iei.hospital.model.dto.DoctorRowMapper;
 import kr.or.iei.hospital.model.dto.Hospital;
@@ -87,16 +88,6 @@ public class HospitalDao {
 		return list;
 	}
 
-	// public int insertBusinessAuth(BusinessAuth ba, int memberNo) {
-	// 	String query = "insert 
-	// 	Object[] params = {hospitalNo};
-	// 	List list = jdbc.query(query, keywordRowMapper, params);
-	// 	return list;
-	// 	return 0;
-	// }
-	
-	
-	
 	public Hospital searchHospitalDetail(int hospitalNo) {
 		String query = "select hospital_no, hospital_name, hospital_tel, hospital_address, cost_one, cost_two,\r\n" + 
 				"nvl((select avg(review_rating) from review_tbl where reservation_no in(select reservation_no from reservation_tbl where hospital_no=h.hospital_no)),0) rating_avg,\r\n" + 
@@ -155,6 +146,27 @@ public class HospitalDao {
 		Object[] params = {hospitalNo};
 		List list = jdbc.query(query, reviewRowMapper, params);
 		return list;
+	}
+	
+	public int selectBusinessAuthNo() {
+		String query = "select max(businessauth_no) from businessauth_tbl";
+		int noticeNo = jdbc.queryForObject(query, Integer.class);
+		return noticeNo;
+	}
+
+	public int insertBusinessAuthFile(BusinessAuthFile businessAuthFile) {
+		String query = "insert into businessauth_file_tbl values(businessauth_file_seq.nextval,?,?,?)";
+		Object[] params = {businessAuthFile.getBusinessAuthNo(), businessAuthFile.getFilename(), businessAuthFile.getFilepath()};
+		int result = jdbc.update(query, params);
+		return result;
+	}
+
+	//수정필요
+	public int insertBusinessAuth(BusinessAuth ba) {
+		String query = "insert into notice values(business.nextval, ?,?,?,0,to_char(sysdate,'yyyy-mm-dd'))";
+		Object[] params = {1,2,3};
+		int result = jdbc.update(query, params);
+		return result;
 	}
 	
 }

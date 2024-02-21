@@ -1,4 +1,4 @@
-document.getElementById('fileInput').addEventListener('change', handleFileSelect);
+document.getElementById('upfile').addEventListener('change', handleFileSelect);
 
 function handleFileSelect(event) {
   const files = event.target.files;
@@ -54,9 +54,9 @@ function updateFileCount() {
 
   // 파일 개수가 2개 이상이면 파일 선택 버튼을 비활성화합니다.
   if (fileCount >= 2) {
-    document.getElementById('fileInput').disabled = true;
+    document.getElementById('upfile').disabled = true;
   } else {
-    document.getElementById('fileInput').disabled = false;
+    document.getElementById('upfile').disabled = false;
   }
 }
 

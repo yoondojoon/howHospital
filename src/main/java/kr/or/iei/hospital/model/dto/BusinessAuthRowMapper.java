@@ -13,10 +13,10 @@ public class BusinessAuthRowMapper implements RowMapper<BusinessAuth>{
 	@Override
 	public BusinessAuth mapRow(ResultSet rs, int rowNum) throws SQLException {
 		BusinessAuth ba = new BusinessAuth();
+		ba.setBusinessAuthNo(rs.getInt("businessauth_no"));
 		ba.setMemberNo(rs.getInt("member_no"));
 		ba.setRepresentativeNo(rs.getInt("representative_no"));
-		ba.setBusinessCertificate(rs.getString("business_certificate"));
-		ba.setDoctorCertificate(rs.getNString("doctor_certificate"));
+		ba.setRegDate(rs.getString("reg_date"));
 		return ba;
 	}
 
