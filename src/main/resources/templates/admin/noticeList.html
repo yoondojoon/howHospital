@@ -26,6 +26,7 @@
 					<option value="title" selected>제목</option>
 					<option value="writer">작성자</option>
 				</select>
+				</th:block>
 				<div id="search">
 					<input type="text" id="input-form" name="keyword" placeholder="검색어 입력" th:value="${keyword}">
 					<input type="hidden" name="reqPage" value="1">
@@ -33,7 +34,6 @@
 						<span class="material-icons">search</span>
 					</button>
 				</div>
-				</th:block>
 			</form>
         	<table class="btl">
         		<tr class="tr-header">
@@ -59,6 +59,9 @@
         
     </main>
     <!--// container -->
+	
+<th:block th:include="common/footer"></th:block>
+<!-- js 링크 -->
     <script>
 	    function checkKeyword(){
 			const keyword = $("#input-form").val();
@@ -68,7 +71,4 @@
 			}
 		}	
 	</script>
-	
-<th:block th:include="common/footer"></th:block>
-<!-- js 링크 -->
 </body>

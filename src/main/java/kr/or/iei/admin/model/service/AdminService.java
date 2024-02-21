@@ -4,8 +4,10 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import kr.or.iei.admin.model.dao.AdminDao;
+import kr.or.iei.admin.model.dto.Notice;
 import kr.or.iei.admin.model.dto.NoticeListData;
 
 @Service
@@ -156,6 +158,12 @@ public class AdminService {
 		
 		NoticeListData nld = new NoticeListData(list, pageNavi);
 		return nld;
+	}
+
+	@Transactional
+	public int insertNotice(Notice n) {
+		int result = adminDao.insertNotice(n);
+		return result;
 	}
 	
 
