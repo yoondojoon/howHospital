@@ -107,23 +107,17 @@ public class MemberController {
 		String memberAddress = postcode+" "+address+" "+detailAddress;
 		
 		System.out.println(memberAddress);
-		
 		member.setMemberAddress(memberAddress);
 		
+		
+		int	result = memberService.signUp(member);
+			
+		
 				
-		int result = memberService.signUp(member);
 		
 		if(result > 0 ) {
 			
-			 
-			
-			if(member.getMemberType() == 2) {
-				
-				return "hospital/businessAuth";
-			}else {
-				return "member/successSignUp";
-			}
-			
+			return "member/successSignUp";
 			
 		}else {
 			

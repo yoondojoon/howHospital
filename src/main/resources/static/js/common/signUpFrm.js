@@ -244,18 +244,6 @@ $("#signUpBtn").on("click",function(){
 });
 
 
-//이메일 정규식
-$("#memberEmail").on("keyup",function(){
-	
-	const memberEmail = $(this).val();
-	
-	cosnt email.
-	
-	
-	
-});
-
-
 
 
 
