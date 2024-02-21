@@ -1,10 +1,10 @@
-package kr.or.iei.test.controller;
+package kr.or.iei.hospital.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import kr.or.iei.test.service.DoctorService;
+import kr.or.iei.hospital.model.service.DoctorService;
 
 @Controller
 @RequestMapping("/doctor")

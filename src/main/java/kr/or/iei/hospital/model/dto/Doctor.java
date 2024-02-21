@@ -1,4 +1,4 @@
-package kr.or.iei.test.dto;
+package kr.or.iei.hospital.model.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

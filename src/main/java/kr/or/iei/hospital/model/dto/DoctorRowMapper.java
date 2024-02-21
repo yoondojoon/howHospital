@@ -1,4 +1,4 @@
-package kr.or.iei.test.dto;
+package kr.or.iei.hospital.model.dto;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

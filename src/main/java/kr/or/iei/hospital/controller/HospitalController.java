@@ -8,12 +8,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import kr.or.iei.hospital.model.service.DoctorService;
 import kr.or.iei.member.model.dto.Member;
 import kr.or.iei.member.model.service.MemberService;
-import kr.or.iei.test.dto.Doctor;
 import kr.or.iei.test.dto.ReservationDetail;
-import kr.or.iei.test.service.DoctorService;
-import kr.or.iei.test.service.HospitalService;
+import kr.or.iei.hospital.model.service.HospitalService;
 import kr.or.iei.test.service.ReservationDetailService;
 import kr.or.iei.test.service.ReservationService;
 
@@ -21,7 +20,7 @@ import kr.or.iei.test.service.ReservationService;
 @RequestMapping(value="/hospital")
 public class HospitalController {
 	@Autowired
-	private HospitalService HospitalService;
+	private HospitalService hospitalService;
 	@Autowired
 	private ReservationService reservationService;
 	@Autowired
