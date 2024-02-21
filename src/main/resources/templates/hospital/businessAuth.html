@@ -1,47 +1,99 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html xmlns:th="http://www.thymeleaf.org">
+<link rel="stylesheet" href="/css/hospital/businessAuth.css">
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>사업자 인증</title>
-  <link rel="stylesheet" href="/css/hospital/businessAuth.css">
+<th:block th:include="common/header"></th:block>
 
-</head>
+<!-- container -->
+<main id="container" class="container">
+	<!-- contents -->
+	<section id="contents" class="contents main">
+		<div class="hospital_wrap">
+			<div class="main_content">
+				<h2>사업자 인증</h2>
+				<form id="uploadForm" action="/hospital/myHospitalFrm" method="post"
+					enctype="multipart/form-data">
 
 
-<body>
-  <div class="wrapper">
-    <h2>사업자 인증</h2>
-    <form id="uploadForm" action="/member/happy" method="post" enctype="multipart/form-data">
+					<div class="input_wrap">
+						<div class="input_title"><label for="id">대표자명</label></div>
+						<div class="input_item">
+							<input type="text" name="representative_name" id="representative_name" placeholder="가입폼 이름 불러오기" required>
+						</div>
+					</div>
 
-      <div class="businessAuth_lable">대표자명</div>
-      <div class="input-box">
-        <input type="text" name="representative" placeholder="가입폼 이름 불러오기" required>
-      </div>
 
-      <div class="businessAuth_lable">사업자등록번호</div>
-      <div class="input-box">
-        <input type="text" name="representative_no" id="businessNumberInput" placeholder="OOO-OO-OOOOO" required>
-      </div>
+					<div class="input_wrap">
+						<div class="input_title"><label for="id">사업자등록번호</label></div>
+						<div class="input_item no_check">
+							<input type="text" name="representative_no" id="representative_no" placeholder="사업자등록번호를 입력하세요." required>
+							<button type="button" class="btn_primary" id="search_btn">상태조회</button>
+						</div>
+					</div>
 
-      <div class="businessAuth_lable">사업자등록증 및 의사면허증</div>
-      <p class="businessAuth_description">사업자등록증 및 의사 면허증을 업로드해주세요. (*2개 파일 업로드 제한)</p>
 
-      <div class="multiple_file">
-        <label class="file-upload">
-          <input type="file" name="files" id="fileInput" multiple>
-          <span class="file-button">파일 선택</span>
-        </label>
-        <span id="fileCount">0개 파일 선택됨</span>
-        <ul id="fileList"></ul>
-      </div>
+					<div class="businessAuth_lable">사업자등록증 및 의사면허증</div>
+					<p class="businessAuth_description">사업자등록증 및 의사 면허증을 업로드해주세요.
+						(*2개 파일 업로드 제한)</p>
 
-      <div class="input-box button">
-        <input type="Submit" name="nextbtn" id="nextbtn" value="다음">
-      </div>
-    </form>
-  </div>
-  <script src="/js/businessAuth.js"></script>
+					<div class="multiple_file">
+						<label class="file-upload"> <input type="file"
+							name="files" id="fileInput" multiple> <span
+							class="file-button">파일 선택</span>
+						</label> <span id="fileCount">0개 파일 선택됨</span>
+						<ul id="fileList"></ul>
+					</div>
+
+					<div class="btn_area">
+						<button type="button" class="btn_secondary lg" onclick="goBack()">이전</button>
+						<button type="submit" class="btn_primary lg" id="enroll_btn">등록</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</section>
+	<!--// contents -->
+</main>
+<!--// container -->
+
+
+<script src="/js/common/businessAuth.js"></script>
+
+<script>
+$("#search_btn").on("click", async function() {
+	  let representativeNo = $("#representative_no").val();
+	  var data = {
+	    "b_no": [representativeNo] // 사업자번호 "xxxxxxx" 로 조회 시,
+	  };
+	  $.ajax({
+	    url: "https://api.odcloud.kr/api/nts-businessman/v1/status?serviceKey=LYwyMLoRsjjpbQnMxPjkRjfcBDZSyBT8kX%2B5eUe%2BGzOstpDBQxojDsd9wg%2FK0fDcgo%2F12RKWXUttts6z8AA5YA%3D%3D", // serviceKey 값을 xxxxxx에 입력
+	    type: "POST",
+	    data: JSON.stringify(data), // json 을 string으로 변환하여 전송
+	    dataType: "JSON",
+	    contentType: "application/json",
+	    accept: "application/json",
+	    success: function(result) {
+	      $(".no_check").nextAll().remove(); // no_check div 바로 다음에 추가된 모든 요소를 삭제
+	      for (let item of result.data) {
+	        if (item.b_stt === "계속사업자") {
+	          $(".no_check").after('<p class="msg success">정상 조회되었습니다.</p>');
+	        } else {
+	          $(".no_check").after('<p class="msg warning">정보 조회에 실패했습니다.</p>');
+	        }
+	      }
+	    },
+	    error: function(result) {
+	      console.log(result.responseText); //responseText의 에러메세지 확인
+	    }
+	  });
+	});
+	
+</script>
+
+
+<th:block th:include="common/footer"></th:block>
+<!-- js 링크 -->
+
+
 </body>
 </html>

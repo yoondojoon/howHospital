@@ -14,4 +14,5 @@ public class Notice {
 	private String noticeContent;
 	private int readCount;
 	private String ReqDate;
+	private String memberName;
 }

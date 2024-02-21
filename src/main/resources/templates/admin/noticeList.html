@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link rel="stylesheet" href="/css/admin/bootstrap.css">
 <link rel="stylesheet" href="/css/admin/adminMain.css">
 
 <th:block th:include="common/header"></th:block>
@@ -13,31 +14,24 @@
             <div class="inner_wrap">
                 <h2>공지사항</h2>
             </div>
-        </section>
-	    <!--// contents -->
-        <div class="inner_wrap">
-        	<form action="/admin/searchNotice" method="get" id="searchFrm">
-				<th:block th:switch="${searchType}">
-					<select th:case="title" name="searchType">
-						<option value="title" selected>제목</option>
-						<option value="content">내용</option>
-						<option value="writer">작성자</option>
-					</select>
-					<select th:case="content" name="searchType">
-						<option value="title">제목</option>
-						<option value="content" selected>내용</option>
-						<option value="writer">작성자</option>
-					</select>
-					<select th:case="writer" name="searchType">
-						<option value="title" selected>제목</option>
-						<option value="content">내용</option>
-						<option value="writer" selected>작성자</option>
-					</select>
-				</th:block>
-				<div class="search">
-					<input type="text" class="input-form" name="keyword" placeholder="검색어 입력" th:value="${keyword}">
+            <div class="inner_wrap">
+        	<form action="/admin/searchNotice" method="get" id="searchFrm">				
+				<th:block th:switch="${type}">
+				<select class="form-select" th:case="writer" name="type">
+					<option value="title">제목</option>
+					<option value="writer" selected>작성자</option>
+				</select>
+				<select class="form-select" th:case="*" name="type">
+					<option value="title" selected>제목</option>
+					<option value="writer">작성자</option>
+				</select>
+			</th:block>
+				<div id="search">
+					<input type="text" id="input-form" name="keyword" placeholder="검색어 입력" th:value="${keyword}">
+					<button type="submit" id="check" class="btn bc1" onclick="return checkKeyword();">
+						<span class="material-icons">search</span>
+					</button>
 				</div>
-				<button type="submit" class="btn bc1" onclick="return checkKeyword();">검색</button>
 			</form>
         	<table class="btl">
         		<tr class="tr-header">
@@ -56,8 +50,20 @@
         	
         	<div id="pageNavi" class="pagination" th:utext="${pageNavi}"></div>
         </div>
+        </section>
+	    <!--// contents -->
+        
     </main>
     <!--// container -->
+    <script>
+	    function checkKeyword(){
+			const keyword = $("[name=keyword]").val();
+			if(keyword == ""){
+				alert("검색어를 입력하세요.");
+				return false;
+			}
+		}	
+	</script>
 	
 <th:block th:include="common/footer"></th:block>
 <!-- js 링크 -->

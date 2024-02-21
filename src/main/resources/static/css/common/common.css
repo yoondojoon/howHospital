@@ -56,7 +56,7 @@ h5{margin-bottom:8px; font-size:14px; font-weight:bold; line-height:1.5;}
 #header .header_search_form .input_item input::placeholder{color:rgba(47,96,130,0.6);}
 #header .header_search_form .btn_search{width:40px; height:40px; background:url(/images/icon_search_blue.svg) no-repeat center / 20px 20px;}
 
-#header .user_menu_area{width:185px;}
+/*#header .user_menu_area{width:185px;}*/
 #header .user_menu_area>ul{display:flex; justify-content:flex-end;}
 #header .user_menu_area>ul>li+li{position:relative;}
 #header .user_menu_area>ul>li+li::before{content:''; display:block; position:absolute; top:15px; left:0; width:1px; height:10px; background-color:var(--main_03);}
