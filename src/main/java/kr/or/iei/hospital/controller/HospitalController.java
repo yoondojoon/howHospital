@@ -11,13 +11,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.google.gson.JsonObject;
 
 import jakarta.servlet.http.HttpSession;
 import kr.or.iei.hospital.model.dto.BusinessAuth;
 import kr.or.iei.hospital.model.service.DoctorService;
 import kr.or.iei.member.model.dto.Member;
 import kr.or.iei.member.model.service.MemberService;
+import kr.or.iei.reservation.model.dto.H_Reservation;
 import kr.or.iei.reservation.model.dto.ReservationDetail;
 import kr.or.iei.reservation.model.service.ReservationDetailService;
 import kr.or.iei.reservation.model.service.ReservationService;
@@ -65,22 +65,23 @@ public class HospitalController {
 	public String myHospitalReservation(Model model) {
 		//병원 예약 조회해오기
 		List list = reservationService.selectReservation();
+		System.out.println(list);
 		model.addAttribute("reservation", list);
-		//예약한 환자 조회
-		Member m = memberService.selectMember();
-		if(m != null) {
-			model.addAttribute("member", m);
-		}
-		//예약 상세 조회(의사 번호)
-		String doctorName = reservationDetailService.selectDoctor();
-		System.out.println(doctorName);
-		model.addAttribute("doctorName", doctorName);
 		return "hospital/myHospitalReservationList";
 	}
-	
-	
-	
-	
+
+	@ResponseBody
+	@GetMapping("/changeReservationType")
+	public int changeReservationType(int selectValue, int reservationNo) {
+		//병원 예약 업데이트
+		int result = reservationService.updateReservation(selectValue, reservationNo);
+		if(result > 0) {
+			return 1;
+		}else {
+			return 0;
+		}
+	}
+
 	
 }
 

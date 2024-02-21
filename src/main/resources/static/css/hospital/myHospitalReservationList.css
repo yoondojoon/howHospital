@@ -1,6 +1,5 @@
 @charset "UTF-8";
 
-
 .hospital_reservation_wrap{
 	border: 1px solid #ccc;
 	border-radius: 10px;
@@ -17,17 +16,17 @@
 	padding: 20px 20px;
 	position: relative;
 }
-.hospital_reservation>.select{
+.hospital_reservation>.select,.btn_wrap{
 	position: absolute;
 	top : 40px;
 	right : 30px;
-	width: 120px;
+	width: 130px;
 }
 .top>*{
 	margin-right: 3px;
 }
 .top>.reg_reservation{
-	font-size: 12px;
+	font-size: 14px;
 	color: #ccc;
 }
 .midle{
@@ -40,4 +39,3 @@
 .bottom>.chargeDoctor{
 	font-size: 12px;
 }
-

@@ -11,32 +11,85 @@
             		<h2>내 병원 예약</h2>
             	</div>
 	            <div class="hospital_reservation_wrap">
+	            <th:block th:each="reservation : ${reservation}">
 		            <div class="hospital_reservation">
 		            	<div class="reservation_wrap_content top">
-		            		<span class="badge blue outline" th:value="${reservation[0].reservationStatus}" th:text="접수대기"></span>
-		            		<span class="reg_reservation" th:text="${reservation[0].regReservation}"></span>
+		            	<th:block th:switch="${reservation.reservationStatus}">
+		            		<span th:case="1" class="badge blue outline">접수대기</span>
+		            		<span th:case="2" class="badge red outline">예약취소</span>
+		            		<span th:case="3" class="badge blue">예약확정</span>
+		            		<span th:case="4" class="badge gray">진료완료</span>
+		            	</th:block>
+		            		<span class="reg_reservation" th:text="${reservation.reservationTime}"></span>
 		            	</div>
 		            	<div class="reservation_wrap_content midle">
-		            		<span class="reservationName" th:text="${member.memberName}"></span>
+		            		<span class="reservationName" th:text="${reservation.memberName}"></span>
 		            	</div>
 		            	<div class="reservation_wrap_content bottom">
 		            		<span class="chargeDoctor">진료선생님</span>
-		            		<span class="chargeDoctorName" th:text="${doctorName}"></span>
+		            		<span class="chargeDoctorName" th:text="${reservation.doctorName}"></span>
 		            	</div>
-		            	<div class="select">
-							<select id="hospital_reservation_type">
-								<option>예약거부</option>
-								<option>예약확정</option>
-								<option>진료완료</option>
+		            	<th:block th:switch="${reservation.reservationStatus}">
+		            	<div class="select" th:case="1">
+		            		<select class="hospital_reservation_type">
+		            			<option>선택</option>
+								<option value="2" th:selected="${reservation.reservationStatus == 2}">예약거부</option>
+								<option value="3" th:selected="${reservation.reservationStatus == 3}">예약확정</option>
+								<option value="4" th:selected="${reservation.reservationStatus == 4}">진료완료</option>
 							</select>
 						</div>
-		            </div>		
+						
+						<div class="btn_wrap" th:case="3">
+							<button type="button" class="btn_primary hospital_reservation_type">예약확정</button>
+						</div>
+						<div class="prescription_btn btn_wrap" th:case="4">
+							<button type="button" class="btn_secondary hospital_reservation_type">처방전 등록</button>
+						</div>
+						</th:block>	
+		            </div>
+		            <input type="hidden" id="reservationNo" name="reservationNo" class="reservationNo" th:value="${reservation.reservationNo}">
+	            </th:block>		
 	            </div>
             </div>
         </section>
 	    <!--// contents -->
-        
     </main>
     <!--// container -->
 <th:block th:include="common/footer"></th:block>
+<script>
+	$(".hospital_reservation_type").on("change",function(){
+		const index = $(".hospital_reservation_type").index(this); 
+		const obj = $(this);
+		const selectValue = $(this).val();
+		const reservationNo = $(this).parent().parent().next().val();
+		console.log(selectValue)
+		console.log(reservationNo)
+		$.ajax({
+			url:"/hospital/changeReservationType",
+			type:"get",
+			data:{selectValue : selectValue, reservationNo : reservationNo},
+			success : function(data){
+				if(data == 1){
+					if(selectValue == 2){
+						obj.parent().parent().find(".badge").eq(0).text("예약취소");
+						obj.parent().parent().find(".badge").eq(0).attr("class","badge red outline");
+						obj.parent().remove();
+					}else if (selectValue == 3){
+						obj.parent().parent().find(".badge").eq(0).text("예약확정");
+						obj.parent().parent().find(".badge").eq(0).attr("class","badge blue");
+						obj.parent().remove();
+						obj.
+					}else if (selectValue == 4){
+						
+					}
+					//location.reload();
+				}
+				console.log(data)
+			},
+			error : function(){
+				console.log("에러발생");
+			}
+		});
+	});
+</script>
 </html>

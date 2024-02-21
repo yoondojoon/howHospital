@@ -117,7 +117,7 @@ public class MemberController {
 		
 		String memberAddress = postcode+" "+address+" "+detailAddress;
 		
-		System.out.println(memberAddress);
+		
 		member.setMemberAddress(memberAddress);
 		
 		

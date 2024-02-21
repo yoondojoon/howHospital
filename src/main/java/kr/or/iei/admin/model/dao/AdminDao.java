@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import kr.or.iei.admin.model.dto.Notice;
 import kr.or.iei.admin.model.dto.NoticeListData;
 import kr.or.iei.admin.model.dto.NoticeRowMapper;
 
@@ -56,5 +57,12 @@ public class AdminDao {
 		Object[] params = {keyword};
 		int totalCount = jdbc.queryForObject(query, Integer.class,params);
 		return totalCount;
+	}
+
+	public int insertNotice(Notice n) {
+		String query = "insert into notice_tbl values (notice_seq.nextval,?,?,?,0,to_char(sysdate,'yyyy-mm-dd'))";
+		Object[] params = {n.getMemberNo(), n.getNoticeTitle(),n.getNoticeContent()};
+		int result = jdbc.update(query,params);
+		return result;
 	}
 }

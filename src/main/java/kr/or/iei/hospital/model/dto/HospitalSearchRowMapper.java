@@ -14,9 +14,10 @@ public class HospitalSearchRowMapper implements RowMapper<Hospital> {
 		Hospital h = new Hospital();
 		h.setHospitalNo(rs.getInt("hospital_no"));
 		h.setHospitalName(rs.getString("hospital_name"));
+		h.setHospitalTel(rs.getString("hospital_tel"));
 		h.setHospitalAddress(rs.getString("hospital_address"));
-		h.setLat(rs.getNString("lat"));
-		h.setLng(rs.getNString("lng"));
+		h.setLat(rs.getString("lat"));
+		h.setLng(rs.getString("lng"));
 		h.setOpenStatus(rs.getString("open_status"));
 		return h;
 	}
