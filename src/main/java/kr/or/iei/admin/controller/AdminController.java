@@ -34,8 +34,6 @@ public class AdminController {
 		NoticeListData nld = adminService.searchNoitce(reqPage,type,keyword);
 		model.addAttribute("noticeList", nld.getList());
 		model.addAttribute("pageNavi",nld.getPageNavi());
-		model.addAttribute("type", type);
-		model.addAttribute("keyword", keyword);
 		return "admin/noticeList";
 	}
 }

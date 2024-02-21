@@ -15,6 +15,7 @@
                 <h2>공지사항</h2>
             </div>
             <div class="inner_wrap">
+            <a id="write-btn" class="write-btn" th:if="${session.member != null && session.member.memberType == 3}" href="/admin/noticeWriteFrm">작성하기</a>
         	<form action="/admin/searchNotice" method="get" id="searchFrm">				
 				<th:block th:switch="${type}">
 				<select class="form-select" th:case="writer" name="type">
@@ -25,13 +26,14 @@
 					<option value="title" selected>제목</option>
 					<option value="writer">작성자</option>
 				</select>
-			</th:block>
 				<div id="search">
 					<input type="text" id="input-form" name="keyword" placeholder="검색어 입력" th:value="${keyword}">
-					<button type="submit" id="check" class="btn bc1" onclick="checkKeyword();">
+					<input type="hidden" name="reqPage" value="1">
+					<button type="submit" id="check" class="btn bc1" onclick="return checkKeyword();">
 						<span class="material-icons">search</span>
 					</button>
 				</div>
+				</th:block>
 			</form>
         	<table class="btl">
         		<tr class="tr-header">
@@ -59,7 +61,7 @@
     <!--// container -->
     <script>
 	    function checkKeyword(){
-			const keyword = $("[name=keyword]").val();
+			const keyword = $("#input-form").val();
 			if(keyword == ""){
 				alert("검색어를 입력하세요.");
 				return false;
