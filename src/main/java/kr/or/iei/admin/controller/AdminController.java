@@ -6,6 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import kr.or.iei.admin.model.dto.Notice;
 import kr.or.iei.admin.model.dto.NoticeListData;
 import kr.or.iei.admin.model.service.AdminService;
 
@@ -35,5 +36,16 @@ public class AdminController {
 		model.addAttribute("noticeList", nld.getList());
 		model.addAttribute("pageNavi",nld.getPageNavi());
 		return "admin/noticeList";
+	}
+	
+	@GetMapping(value="/noticeWriteFrm")
+	public String noticeWriteFrm() {
+		return "/admin/noticeWriteFrm";
+	}
+	
+	@GetMapping(value="/writeNotice")
+	public String writeNotice(Notice n, Model model) {
+		int result = adminService.insertNotice(n);
+		return "redirect:/admin/noticeList?reqPage=1";
 	}
 }
