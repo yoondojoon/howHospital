@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import kr.or.iei.hospital.model.dto.BusinessAuth;
 import kr.or.iei.hospital.model.dto.HospitalRowMapper;
 import kr.or.iei.hospital.model.dto.HospitalSearchRowMapper;
 import kr.or.iei.hospital.model.dto.KeywordRowMapper;
@@ -74,5 +75,16 @@ public class HospitalDao {
 		List list = jdbc.query(query, keywordRowMapper, params);
 		return list;
 	}
+
+//	public int insertBusinessAuth(BusinessAuth ba, int memberNo) {
+//		String query = "insert 
+//		Object[] params = {hospitalNo};
+//		List list = jdbc.query(query, keywordRowMapper, params);
+//		return list;
+//		return 0;
+//	}
+	
+	
+	
 	
 }

@@ -14,11 +14,10 @@
 				<form id="uploadForm" action="/hospital/myHospitalFrm" method="post"
 					enctype="multipart/form-data">
 
-
 					<div class="input_wrap">
 						<div class="input_title"><label for="id">대표자명</label></div>
 						<div class="input_item">
-							<input type="text" name="representative_name" id="representative_name" placeholder="가입폼 이름 불러오기" required>
+							<input type="text" name="representative_name" id="representative_name"  th:value="${session.member.memberName}" disabled>
 						</div>
 					</div>
 

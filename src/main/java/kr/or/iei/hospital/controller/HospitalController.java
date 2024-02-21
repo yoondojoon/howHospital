@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.JsonObject;
 
+import jakarta.servlet.http.HttpSession;
+import kr.or.iei.hospital.model.dto.BusinessAuth;
 import kr.or.iei.hospital.model.service.DoctorService;
 import kr.or.iei.member.model.dto.Member;
 import kr.or.iei.member.model.service.MemberService;
@@ -41,12 +43,20 @@ public class HospitalController {
 	}
 	
 	@PostMapping(value="/myHospitalFrm")
-	public String myHospitalFrm() {
+	public String myHospitalFrm(BusinessAuth ba, HttpSession session) {
+		Member member = (Member)session.getAttribute("member");
+
+		//1.사업자정보 insert
+//		int result = hospitalService.insertBusinessAuth(ba, member.getMemberNo());
+		
+		//2. 성공하면 병원정보 폼
+		
 		return "hospital/myHospitalFrm";
 	}
 	
 	@GetMapping(value="/businessAuth")
-	public String businessAuth() {
+	public String businessAuth(Model model, HttpSession session) {
+		
 		return "hospital/businessAuth";
 	}
 	
