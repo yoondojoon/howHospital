@@ -48,4 +48,10 @@ public class AdminController {
 		int result = adminService.insertNotice(n);
 		return "redirect:/admin/noticeList?reqPage=1";
 	}
+	
+	@GetMapping(value="/noticeDetail")
+	public String noticeDetail(Notice n, Model model) {
+		int result = adminService.insertNotice(n);
+		return "redirect:/admin/noticeList?reqPage=1";
+	}
 }

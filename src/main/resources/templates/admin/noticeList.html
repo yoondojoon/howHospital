@@ -44,11 +44,13 @@
         			<th style="width:20%;">등록일</th>
         		</tr>
         		<tr class="tr-content" th:each="notice : ${noticeList}">
-					<td id="no" th:text="${notice.noticeNo}"></td>
-					<td id="title" th:text="${notice.noticeTitle}"></td>
-					<td id="name" th:text="${notice.memberName}"></td>
-					<td id="readCount" th:text="${notice.readCount}"></td>
-					<td id="reqDate" th:text="${notice.reqDate}"></td>
+					<td name="noticeNo" th:text="${notice.noticeNo}"></td>
+					<td name="noticeTitle">
+						<a th:href="@{/admin/noticeDetail(noticeNo=${notice.noticeNo})}" th:text="${notice.noticeTitle}"></a>
+					</td>
+					<td name="memberName" th:text="${notice.memberName}"></td>
+					<td name="readCount" th:text="${notice.readCount}"></td>
+					<td name="reqDate" th:text="${notice.reqDate}"></td>
 				</tr>
         	</table>
         	
