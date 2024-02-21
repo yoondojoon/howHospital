@@ -76,14 +76,14 @@ public class HospitalController {
 		int result = hospitalService.insertBusinessAuth(ba, fileList);
 		
 		
-		// insert 성공은 Notice 테이블 결과(1) + 파일 테이블 결과(파일갯수)
+		// insert 성공  테이블 결과(1) + 파일 테이블 결과(파일갯수)
 		if (result == (fileList.size() + 1)) { // notice 테이블 1 포함
 			model.addAttribute("title", "성공");
-			model.addAttribute("msg", "공지사항 작성에 성공했습니다.");
+			model.addAttribute("msg", "사업자 정보 등록에 성공했습니다.");
 			model.addAttribute("icon", "success");
 		} else {
 			model.addAttribute("title", "실패");
-			model.addAttribute("msg", "공지사항 작성에 실패했습니다.");
+			model.addAttribute("msg", "사업자 정보 등록에 실패하였습니다.");
 			model.addAttribute("icon", "error");
 		}
 		model.addAttribute("loc", "/");
@@ -95,7 +95,6 @@ public class HospitalController {
 	
 	@GetMapping(value="/businessAuth")
 	public String businessAuth(Model model, HttpSession session) {
-		
 		return "hospital/businessAuth";
 	}
 	

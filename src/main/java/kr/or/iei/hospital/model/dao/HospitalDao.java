@@ -150,8 +150,8 @@ public class HospitalDao {
 	
 	public int selectBusinessAuthNo() {
 		String query = "select max(businessauth_no) from businessauth_tbl";
-		int noticeNo = jdbc.queryForObject(query, Integer.class);
-		return noticeNo;
+		int businessAuthNo = jdbc.queryForObject(query, Integer.class);
+		return businessAuthNo;
 	}
 
 	public int insertBusinessAuthFile(BusinessAuthFile businessAuthFile) {
@@ -161,10 +161,10 @@ public class HospitalDao {
 		return result;
 	}
 
-	//수정필요
+	//사업자등록
 	public int insertBusinessAuth(BusinessAuth ba) {
-		String query = "insert into notice values(business.nextval, ?,?,?,0,to_char(sysdate,'yyyy-mm-dd'))";
-		Object[] params = {1,2,3};
+		String query = "insert into businessauth_tbl values(businessauth_seq.nextval, ?,?, to_char(sysdate,'yyyy-mm-dd'))";
+		Object[] params = {ba.getMemberNo(), ba.getRepresentativeNo()};
 		int result = jdbc.update(query, params);
 		return result;
 	}
