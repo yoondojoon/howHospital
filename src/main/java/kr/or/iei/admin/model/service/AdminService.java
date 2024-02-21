@@ -128,12 +128,12 @@ public class AdminService {
 		for(int i = 0;i<pageNaviSize;i++) {
 			if(pageNo == reqPage) {
 				pageNavi += "<li>";
-				pageNavi += "<a class='active' href='/admin/noticeList?reqPage="+ (pageNo) +"'>";
+				pageNavi += "<a class='active' href='/admin/searchNoitce?reqPage="+ (pageNo-1) +"&type="+type+"&keyword="+keyword+"'>";
 				pageNavi += pageNo;
 				pageNavi += "</a></li>";
 			}else {				
 				pageNavi += "<li>";
-				pageNavi += "<a href='/admin/noticeList?reqPage="+ (pageNo) +"'>";
+				pageNavi += "<a href='/admin/searchNotice?reqPage="+ (pageNo-1) +"&type="+type+"&keyword="+keyword+"'>";
 				pageNavi += pageNo;
 				pageNavi += "</a></li>";
 			}
@@ -147,7 +147,7 @@ public class AdminService {
 		
 		if(pageNo <= totalPage) {
 			pageNavi += "<li>";
-			pageNavi += "<a class='page-item' href='/admin/noticeList?reqPage="+ (pageNo) +"'>";
+			pageNavi += "<a class='page-item' href='/admin/searchNotice?reqPage="+ (pageNo-1) +"&type="+type+"&keyword="+keyword+"'>";
 			pageNavi += "<span class='material-icons'>chevron_right</span>";
 			pageNavi += "</a></li>";
 		}
