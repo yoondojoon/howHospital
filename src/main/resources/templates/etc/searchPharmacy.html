@@ -159,7 +159,7 @@
 		const sidoCode = $("#sido_code>option:selected").text();	//select태그 안 option 태그에서 선택된 값
 		const sigoonCode = $("#sigoon_code>option:selected").text();
 		const pharmName= $("#searchPharmacy").val();
-		findPharm(sidoCode, sigoonCode, pharmName);
+		findPharm(sidoCode, sigoonCode, pharmName);	
 	});
 	let pageNo = 1;
 	function findPharm(sidoCode, sigoonCode, pharmName){
@@ -173,9 +173,15 @@
 					const pharmacyInfo = $(".pharmacyInfo");
 					
 					const msgDiv = $("<div>");
-					msgDiv.attr("class", "msgDiv");
-					msgDiv.text("죄송합니다. "+pharmName+" 약국을 찾을 수 없습니다.");
+					msgDiv.attr("class", "no_data_wrap");
 					
+					const i = $("<i>");
+					i.attr("class","icon no_data");
+					
+					const pMsg = $("<p>");
+					pMsg.text("검색 결과가 없습니다.");
+					
+					msgDiv.append(i).append(pMsg);
 					pharmacyInfo.append(msgDiv);
 				}
 				for(let i=0; i<data.length;i++){
@@ -220,9 +226,7 @@
 								position: new naver.maps.LatLng(data[i].lat, data[i].lng),
 								map : map
 							});
-							
-							
-							
+
 							//maker에 클릭 이벤트 추가
 							naver.maps.Event.addListener(marker,"click",function(e){
 								//infoWindow 객체에 문자열 추가
