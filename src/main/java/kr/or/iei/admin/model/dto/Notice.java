@@ -15,4 +15,8 @@ public class Notice {
 	private int readCount;
 	private String ReqDate;
 	private String memberName;
+	
+	public String getNoticeContentBr() {
+		return noticeContent.replaceAll("\r\n", "<br>");
+	}
 }

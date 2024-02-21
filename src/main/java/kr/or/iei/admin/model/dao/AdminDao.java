@@ -65,4 +65,18 @@ public class AdminDao {
 		int result = jdbc.update(query,params);
 		return result;
 	}
+
+	public Notice searchNoticeDetail(int noticeNo) {
+		String query = "SELECT NOTICE_NO, MEMBER_TBL.MEMBER_NO, NOTICE_TITLE, NOTICE_CONTENT, READ_COUNT, REQ_DATE, MEMBER_NAME FROM MEMBER_TBL RIGHT OUTER JOIN NOTICE_TBL ON MEMBER_TBL.MEMBER_NO = NOTICE_TBL.MEMBER_NO where notice_no=?";
+		Object[] params = {noticeNo};
+		Notice n = jdbc.queryForObject(query, noticeRowMapper, params);
+		return n;
+	}
+
+	public int deleteNotice(int noticeNo) {
+		String query = "delete from notice_tbl where notice_no =?";
+		Object[] params = {noticeNo};
+		int result = jdbc.queryForObject(query, Integer.class);
+		return result;
+	}
 }

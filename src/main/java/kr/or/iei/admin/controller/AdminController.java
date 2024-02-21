@@ -50,8 +50,15 @@ public class AdminController {
 	}
 	
 	@GetMapping(value="/noticeDetail")
-	public String noticeDetail(Notice n, Model model) {
-		int result = adminService.insertNotice(n);
+	public String noticeDetail(int noticeNo, Model model) {
+		Notice n = adminService.searchNoticeDetail(noticeNo);
+		model.addAttribute("n",n);
+		return "redirect:/admin/noticeDetail?noticeNo=";
+	}
+	
+	@GetMapping(value="/noticeDelete")
+	public String noticeDelete(int noticeNo) {
+		int result = adminService.deleteNotice(noticeNo);
 		return "redirect:/admin/noticeList?reqPage=1";
 	}
 }

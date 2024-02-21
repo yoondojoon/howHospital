@@ -165,6 +165,18 @@ public class AdminService {
 		int result = adminDao.insertNotice(n);
 		return result;
 	}
+
+
+	public Notice searchNoticeDetail(int noticeNo) {
+		Notice n = adminDao.searchNoticeDetail(noticeNo);
+		return n;
+	}
+
+	@Transactional
+	public int deleteNotice(int noticeNo) {
+		int result = adminDao.deleteNotice(noticeNo);
+		return result;
+	}
 	
 
 }

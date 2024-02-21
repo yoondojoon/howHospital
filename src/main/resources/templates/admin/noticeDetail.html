@@ -1,10 +1,55 @@
 <!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
+<html xmlns:th="http://www.thymeleaf.org">
+<link rel="stylesheet" href="/css/admin/adminMain.css">
 
-</body>
+	<th:block th:include="common/header"></th:block>
+
+	<!-- container -->
+    <main id="container" class="container">
+
+		<!-- contents -->
+        <section id="contents" class="contents adminMain">
+            <div class="inner_wrap">
+                <h2>공지사항 보기</h2>
+            </div>
+	        <div class="inner_wrap">
+	        	<table class="btl">
+	        		<tr class="tr-header">
+	        			<th style="width:20%;">제목</th>
+	        			<th style="width:80%;">
+	        				<input style="width:90%;" type="text" id="input-form" name="noticeTitle" disabled>
+	        			</th>
+	        		</tr>
+	        		<tr class="tr-header">
+	        			<th style="width:20%">작성자</th>
+	        			<th style="width:80%; text-align:left;">
+	        				<span th:text="${n.getMemberName}"></span>
+	        			</th>
+	        		</tr>
+	        		<tr>
+	        			<td colspan="2" style="text-align:left;">
+		        			<textarea id="noticeContent" name="noticeContent" th:text="${n.getNoticeContent}" disabled>
+		        			</textarea>		        			
+	        			</td>
+	        		</tr>
+	        	</table>
+	        	<div class="btn_area">
+		        		<button type="button" class="btn_primary lg" th:onclick="noticeDelete([[${n.noticeNo}]]);">삭제하기</button>
+		        		<button type="button" class="btn_primary lg">수정하기</button>
+	        	</div>	        	
+	        </div>
+        </section>
+	    <!--// contents -->
+    </main>
+    <!--// container -->
+    
+	<th:block th:include="common/footer"></th:block>
+	
+	<script>
+	function noticeDelete(noticeNo){
+		if(confirm("게시글을 삭제하시겠습니까?")){
+			location.href="/notice/delete?noticeNo="+noticeNo;
+		}
+	}
+	</script>
 </html>
