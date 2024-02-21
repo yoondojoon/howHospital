@@ -25,10 +25,8 @@ public class HospitalService {
 				h.setSubjectList(subjectList);
 				h.setKeywordList(keywordList);
 			}
-			return hospitalList;
-		}else {
-			return null;
 		}
+		return hospitalList;
 	}
 	
 }

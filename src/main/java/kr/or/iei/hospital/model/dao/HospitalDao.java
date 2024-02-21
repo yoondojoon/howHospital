@@ -32,7 +32,10 @@ public class HospitalDao {
 	public List searchHospital(String keyword) {	
 		String query = "select hospital_no, hospital_name, hospital_address, lat, lng,\r\n" + 
 				"(select distinct\r\n" + 
-				"    case when to_char(sysdate,'dy') in ('월','화','수','목','금')\r\n" + 
+				"    case\r\n" + 
+				"    when to_char(sysdate,'d') in (select holiday from time_tbl where hospital_no=h.hospital_no)\r\n" + 
+				"    then '진료종료'\r\n" + 
+				"    when to_char(sysdate,'dy') in ('월','화','수','목','금')"+ 
 				"    then\r\n" + 
 				"        case\r\n" + 
 				"            when to_char(sysdate,'hh24:mm') between (select substr(day_hour,1,instr(day_hour,'~',1,1)-1) opening_time from time_tbl where hospital_no=h.hospital_no) and (select substr(day_hour,instr(day_hour,'~',1,1)+1) closing_time from time_tbl where hospital_no=h.hospital_no)\r\n" + 
