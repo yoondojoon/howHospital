@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<head>
+<meta charset="UTF-8">
+
+</head>
+<body>
+<th:block th:include="common/header"></th:block>
+	<main id="container" class="container">
+	<!-- contents -->
+        <section id="contents" class="contents myPage">
+            <div class="inner_wrap">
+             
+             <th:block th:include="member/myPageMenu">
+             
+			 <span class="material-icons">portrait</span>
+			
+			
+	
+	
+	
+	
+			</th:block>
+			</div>
+        </section>
+	    <!--// contents -->
+    </main>
+    <!--// container -->
+<th:block th:include="common/footer"></th:block>
+</body>
+</html>

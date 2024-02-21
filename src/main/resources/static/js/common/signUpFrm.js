@@ -238,11 +238,19 @@ $("#signUpBtn").on("click",function(){
 	if((selectType, memberEmail, memberPassword, memberName, memberRrn, postcode, address, detailAddress) == null){
 		
 		
-		
-		
-		
-		
 	};
+	
+	
+});
+
+
+//이메일 정규식
+$("#memberEmail").on("keyup",function(){
+	
+	const memberEmail = $(this).val();
+	
+	cosnt email.
+	
 	
 	
 });

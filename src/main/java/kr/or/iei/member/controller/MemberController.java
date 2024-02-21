@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttribute;
 
 import jakarta.servlet.http.HttpSession;
 import kr.or.iei.EmailSender;
@@ -25,7 +26,7 @@ public class MemberController {
 	
 	
 	
-	
+	//회원가입 페이지
 	@GetMapping(value="/signUpFrm")
 	public String signUpFrm() {
 		
@@ -34,7 +35,7 @@ public class MemberController {
 		
 	}
 	
-	
+	//로그인 페이지
 	@GetMapping(value="/signInFrm")
 	public String signInFrm() {
 		
@@ -43,13 +44,14 @@ public class MemberController {
 		
 	}
 	
-	
+	//로그인 실패 페이지
 	@GetMapping(value="/signInFail")
 	public String signInFail() {
 		
 		return "member/signInFail";
 	}
 	
+	//로그인 	
 	@PostMapping(value="/signIn")
 	public String signIn(String memberEmail, String memberPassword, HttpSession session) {
 		
@@ -59,12 +61,17 @@ public class MemberController {
 		if(member == null) {
 			
 			return "member/signInFail";
+		}else {
+			
+			session.setAttribute("member", member);
+			
+			return "redirect:/";
+			
 		}
-		
-		return "redirect:/";
 		
 	}
 	
+	//이메일 인증
 	@ResponseBody
 	@PostMapping(value="/sendCode")
 	public String sendCode(String memberEmail) {
@@ -74,7 +81,7 @@ public class MemberController {
 		
 	}
 		
-		
+	//회원가입 성공 페이지
 	@GetMapping(value="/successSignUp")
 	public String successSignUp() {
 		
@@ -83,6 +90,7 @@ public class MemberController {
 		
 	}
 	
+	//회원가입 실패 페이지
 	@GetMapping(value="/failSignUp")
 	public String failSignUp() {
 		
@@ -91,6 +99,8 @@ public class MemberController {
 		
 	}
 	
+	
+	//회원가입
 	@PostMapping(value="/signUp")
 	public String signUp(Member member, String postcode, String address, String detailAddress) {
 		
@@ -105,7 +115,15 @@ public class MemberController {
 		
 		if(result > 0 ) {
 			
-			return "member/successSignUp"; 
+			 
+			
+			if(member.getMemberType() == 2) {
+				
+				return "hospital/businessAuth";
+			}else {
+				return "member/successSignUp";
+			}
+			
 			
 		}else {
 			
@@ -113,6 +131,44 @@ public class MemberController {
 		}
 	}
 	
+	//로그아웃
+	@GetMapping(value="/logout")
+	public String logout(HttpSession session) {
+		
+		session.invalidate();
+		
+				
+		
+		return "redirect:/";
+	}
+	
+	//마이페이지
+	@GetMapping(value="/myInfo")
+	public String myPage() {
+		
+		return "member/myInfo";
+		
+		
+	}
+	
+	//회원탈퇴(아직 안끝남)
+	@GetMapping(value="/delete")
+	public String delete(@SessionAttribute(required = false) Member member) {
+		
+		
+		
+		return "redirect:/";
+	}
+	
+	
+	
 	
 	
 }
+
+
+
+
+
+
+
