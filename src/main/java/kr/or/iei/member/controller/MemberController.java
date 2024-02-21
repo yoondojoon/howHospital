@@ -53,7 +53,7 @@ public class MemberController {
 	
 	//로그인 	
 	@PostMapping(value="/signIn")
-	public String signIn(String memberEmail, String memberPassword, HttpSession session) {
+	public String signIn(String memberEmail, String memberPassword, HttpSession session, Model model) {
 		
 		
 		Member member = memberService.signIn(memberEmail,memberPassword);
@@ -63,7 +63,11 @@ public class MemberController {
 			return "member/signInFail";
 		}else {
 			
-			if(member.getMemberType()==2) {
+			if(member.getMemberStatus()==2) {
+				
+				
+				session.setAttribute("member", member);
+				
 				
 				return "hospital/businessAuth";
 				
