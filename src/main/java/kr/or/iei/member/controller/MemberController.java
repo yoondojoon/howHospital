@@ -63,7 +63,7 @@ public class MemberController {
 			return "member/signInFail";
 		}else {
 			
-			if(member.getMemberStatus()==2) {
+			if(member.getMemberType()==2) {
 				
 				return "hospital/businessAuth";
 				
