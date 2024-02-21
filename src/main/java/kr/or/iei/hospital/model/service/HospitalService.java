@@ -56,10 +56,10 @@ public class HospitalService {
 		// file은 insert안할 것이므로 ba만 보내면 됨
 		int result = hospitalDao.insertBusinessAuth(ba); //DTO에 FileList 추가하여 통으로 전달
 		if (result > 0) {
-			// 방금 insert 한  BusinessAuth 테이블의 데이터의 businessauth_no가 필요 -> 외래키 사용
+			//  insert 한  BusinessAuth 테이블의 데이터의 businessauth_no가 필요 -> 외래키 사용
 			int businessAuthNo = hospitalDao.selectBusinessAuthNo();
 			
-			// 2. Notice_file테이블에 insert
+			// 2. BusinessAuth_file테이블에 insert
 			for (BusinessAuthFile businessAuthFile : fileList) {
 				businessAuthFile.setBusinessAuthNo(businessAuthNo);
 				result += hospitalDao.insertBusinessAuthFile(businessAuthFile);
