@@ -53,13 +53,5 @@ public class MemberDao {
 		
 		
 	}
-
-	public Member selectMember() {
-		String query = "select * from member_tbl where member_no = 36";
-		List list = jdbc.query(query, memberRowMapper);
-		return (Member)list.get(0);
-	}
-
-
 	
 }
