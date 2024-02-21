@@ -18,6 +18,7 @@ import kr.or.iei.hospital.model.dto.SubjectRowMapper;
 import kr.or.iei.hospital.model.dto.Time;
 import kr.or.iei.hospital.model.dto.TimeRowMapper;
 
+
 @Repository
 public class HospitalDao {
 	@Autowired
