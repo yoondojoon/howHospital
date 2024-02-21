@@ -18,7 +18,7 @@ public class AdminDao {
 	private NoticeRowMapper noticeRowMapper;
 
 	public List selectAllNotice(int start, int end) {
-		String query = "SELECT  * FROM (SELECT ROWNUM AS RNUM, N.* FROM (SELECT * FROM notice_tbl ORDER BY 1 DESC)N) WHERE RNUM BETWEEN ? AND ?";
+		String query = "SELECT  * FROM (SELECT ROWNUM AS RNUM, N.* FROM (SELECT * FROM MEMBER_TBL FULL JOIN NOTICE_TBL ON MEMBER_TBL.MEMBER_NO = NOTICE_TBL.MEMBER_NO ORDER BY 1 DESC)N) WHERE RNUM BETWEEN ? AND ?";
 		Object[] params = {start, end};
 		List list = jdbc.query(query, noticeRowMapper, params);
 		return list;
@@ -31,22 +31,30 @@ public class AdminDao {
 	}
 
 	public List selectSearchTitle(int start, int end, String keyword) {
-		// TODO Auto-generated method stub
-		return null;
+		String query = "SELECT  * FROM (SELECT ROWNUM AS RNUM, N.* FROM (SELECT * FROM MEMBER_TBL FULL JOIN NOTICE_TBL ON MEMBER_TBL.MEMBER_NO = NOTICE_TBL.MEMBER_NO where notice_title like '%'||?||'%' ORDER BY 1 DESC)N) WHERE RNUM BETWEEN ? AND ?";
+		Object[] params = {keyword, start, end};
+		List list = jdbc.query(query, noticeRowMapper, params);
+		return list;
 	}
 
 	public List selectSearchWriter(int start, int end, String keyword) {
-		// TODO Auto-generated method stub
-		return null;
+		String query = "SELECT  * FROM (SELECT ROWNUM AS RNUM, N.* FROM (SELECT * FROM MEMBER_TBL FULL JOIN NOTICE_TBL ON MEMBER_TBL.MEMBER_NO = NOTICE_TBL.MEMBER_NO where member_name like '%'||?||'%' ORDER BY 1 DESC)N) WHERE RNUM BETWEEN ? AND ?";
+		Object[] params = {keyword, start, end};
+		List list = jdbc.query(query, noticeRowMapper, params);
+		return list;
 	}
 
 	public int titleTotalCount(String keyword) {
-		// TODO Auto-generated method stub
-		return 0;
+		String query = "SELECT COUNT(*) FROM NOTICE_TBL WHERE NOTICE_TITLE LIKE '%'||?||'%'";
+		Object[] params = {keyword};
+		int totalCount = jdbc.queryForObject(query, Integer.class,params);
+		return totalCount;
 	}
 
 	public int writerTotalCount(String keyword) {
-		// TODO Auto-generated method stub
-		return 0;
+		String query = "SELECT COUNT(*) FROM (SELECT * FROM MEMBER_TBL FULL JOIN NOTICE_TBL ON MEMBER_TBL.MEMBER_NO = NOTICE_TBL.MEMBER_NO) WHERE MEMBER_NAME LIKE '%'||?||'%'";
+		Object[] params = {keyword};
+		int totalCount = jdbc.queryForObject(query, Integer.class,params);
+		return totalCount;
 	}
 }
