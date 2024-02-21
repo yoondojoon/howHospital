@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import kr.or.iei.hospital.model.dto.BusinessAuth;
 import kr.or.iei.admin.model.dto.ReviewRowMapper;
 import kr.or.iei.hospital.model.dto.DoctorRowMapper;
 import kr.or.iei.hospital.model.dto.Hospital;
@@ -16,6 +17,8 @@ import kr.or.iei.hospital.model.dto.KeywordRowMapper;
 import kr.or.iei.hospital.model.dto.SubjectRowMapper;
 import kr.or.iei.hospital.model.dto.Time;
 import kr.or.iei.hospital.model.dto.TimeRowMapper;
+
+
 
 @Repository
 public class HospitalDao {
@@ -84,6 +87,16 @@ public class HospitalDao {
 		return list;
 	}
 
+	// public int insertBusinessAuth(BusinessAuth ba, int memberNo) {
+	// 	String query = "insert 
+	// 	Object[] params = {hospitalNo};
+	// 	List list = jdbc.query(query, keywordRowMapper, params);
+	// 	return list;
+	// 	return 0;
+	// }
+	
+	
+	
 	public Hospital searchHospitalDetail(int hospitalNo) {
 		String query = "select hospital_no, hospital_name, hospital_tel, hospital_address, cost_one, cost_two,\r\n" + 
 				"nvl((select avg(review_rating) from review_tbl where reservation_no in(select reservation_no from reservation_tbl where hospital_no=h.hospital_no)),0) rating_avg,\r\n" + 

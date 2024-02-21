@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kr.or.iei.hospital.model.dao.HospitalDao;
+import kr.or.iei.hospital.model.dto.BusinessAuth;
 import kr.or.iei.hospital.model.dto.Hospital;
 import kr.or.iei.hospital.model.dto.Subject;
 import kr.or.iei.hospital.model.dto.Time;
@@ -30,6 +31,12 @@ public class HospitalService {
 		return hospitalList;
 	}
 
+//	public int insertBusinessAuth(BusinessAuth ba, int memberNo) {
+//		int result = hospitalDao.insertBusinessAuth(ba, memberNo);
+//		
+//		return 0;
+//	}
+//	
 	public Hospital searchHospitalDetail(int hospitalNo) {
 		Hospital h = hospitalDao.searchHospitalDetail(hospitalNo);
 		if(h != null) {
