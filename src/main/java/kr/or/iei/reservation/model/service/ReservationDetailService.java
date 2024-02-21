@@ -1,10 +1,10 @@
-package kr.or.iei.test.service;
+package kr.or.iei.reservation.model.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import kr.or.iei.test.dao.ReservationDetailDao;
-import kr.or.iei.test.dto.ReservationDetail;
+import kr.or.iei.reservation.model.dao.ReservationDetailDao;
+import kr.or.iei.reservation.model.dto.ReservationDetail;
 
 @Service
 public class ReservationDetailService {

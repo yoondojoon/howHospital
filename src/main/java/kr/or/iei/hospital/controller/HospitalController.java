@@ -11,10 +11,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import kr.or.iei.hospital.model.service.DoctorService;
 import kr.or.iei.member.model.dto.Member;
 import kr.or.iei.member.model.service.MemberService;
-import kr.or.iei.test.dto.ReservationDetail;
+import kr.or.iei.reservation.model.dto.ReservationDetail;
+import kr.or.iei.reservation.model.service.ReservationDetailService;
+import kr.or.iei.reservation.model.service.ReservationService;
 import kr.or.iei.hospital.model.service.HospitalService;
-import kr.or.iei.test.service.ReservationDetailService;
-import kr.or.iei.test.service.ReservationService;
 
 @Controller
 @RequestMapping(value="/hospital")
