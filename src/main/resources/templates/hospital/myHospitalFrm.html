@@ -1,169 +1,203 @@
 <!DOCTYPE html>
-<html>
-<!-- <link rel="stylesheet" href="/css/common/myHospitalFrm.css"> 이 자리에 자기 css 넣기-->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-<link rel="stylesheet" href="/css/common/filter_multi_select.css" />
-<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-<script src="/js/common/filter-multi-select-bundle.js"></script>
+<html xmlns:th="http://www.thymeleaf.org">
 <link rel="stylesheet" href="/css/hospital/myHospitalFrm.css">
-
 <th:block th:include="common/header"></th:block>
 
-<style>
-	.contents.ref{max-width:800px; margin:0 auto;}
-	.ref_section{padding:20px; border:1px solid var(--line_02); border-radius:12px; background-color:#fff;}
-	.ref_section+.ref_section{margin-top:48px;}
-	h3~h3{margin-top:48px;}
-	h4~h4{margin-top:48px;}
-	h5~h5{margin-top:24px;}
-	h4>span{margin-left:4px; color:var(--gray_04); font-size:14px; font-weight:normal;}
-	.layout_sample div{padding:12px; background-color:rgba(0,0,0,0.1); color:#000; font-size:12px;}
-</style>
 
-
-<!-- container -->
+    <!-- container -->
 <main id="container" class="container">
+    <!-- contents -->
+<section id="contents" class="contents main">
+    <div id="hospital_wrap">
+        <div class="side_menu">
+            <ul class="side_list">
+                <li><a href="#">병원정보</a></li>
+                <li><a href="#">예약관리</a></li>
+                <li><a href="#">리뷰관리</a></li>
+            </ul>
+        </div>
+        <div class="main_content">
+            <div class="hospital_info_form">
+               <!-- 병원정보 입력 -->
+       <h2>병원정보 입력</h2>
+       <form id="uploadForm" action="/hospital/business" method="get" enctype="multipart/form-data">
+           <!-- 병원이름 입력 -->
+           <div class="input_wrap">
+               <div class="input_title"><label for="hospital_name">병원이름</label></div>
+               <div class="input_item">
+                   <input type="text" name="hospital_name" id="hospital_name" placeholder="병원이름을 입력하세요" required>
+               </div>
+               
+           </div>
 
-	<!-- contents -->
-	<section id="contents" class="contents myHospitalMain">
-		<div class="hospital_wrap">
-			<div class="left_wrap">Left content</div>
-			<div class="right_wrap">
-				<div class="hospital_info_wrap">
-					<!--병원정보 입력-->
-					<h2>병원정보 입력</h2>
-					<form id="uploadForm" action="/member/happy" method="get"
-						enctype="multipart/form-data">
-
-						<!--병원이름 입력-->
-						<div class="hospital_info">병원이름</div>
-						<div class="input-box">
-							<input type="text" name="hospital_name" placeholder="예시: 위편한내과"
-								required>
-						</div>
-
-						<!--소개 입력-->
-						<div class="hospital_info">소개</div>
-						<textarea name="hospital_info" id="hospital_info"
-							placeholder="대한민국 위 치료, 자신있으면 나와봐!&#10;아래의 약력으로 소개를 대신합니다.&#10;- 30년 경력 내시경 전문의 상주&#10;- 영양학 국내탑 전문의 상주"
-							required></textarea>
-
-						<!--진료과목 입력-->
-						<div class="hospital_info">진료과목</div>
-						<select multiple name="medical_subject" id="medical_subject" class="filter-multi-select">
-							<option value="1">내과</option>
-							<option value="2">신경과</option>
-							<option value="3">정신건강의학과</option>
-							<option value="4">외과</option>
-							<option value="5">정형외과</option>
-							<option value="6">신경외과</option>
-							<option value="7">심장혈관흉부외과</option>
-							<option value="8">성형외과</option>
-							<option value="9">마취통증의학과</option>
-							<option value="10">산부인과</option>
-							<option value="11">소아청소년과</option>
-							<option value="12">안과</option>
-							<option value="13">이비인후과</option>
-							<option value="14">피부과</option>
-							<option value="15">비뇨의학과</option>
-							<option value="16">영상의학과</option>
-							<option value="17">방사선종양학과</option>
-							<option value="18">병리과</option>
-							<option value="19">진단검사의학과</option>
-							<option value="20">재활의학과</option>
-							<option value="21">결핵과</option>
-							<option value="22">예방의학과</option>
-							<option value="23">가정의학과</option>
-							<option value="24">핵의학과</option>
-							<option value="25">직업환경의학과</option>
-							<option value="26">응급의학과</option>
-							<option value="27">구강안악면외과</option>
-							<option value="28">치과</option>
-							<option value="29">한의원</option>
-						</select>
+           <!-- 병원소개 입력 -->
+           <div class="input_wrap">
+               <div class="input_title">병원소개<em>(Hooking Point)</em></div>
+               <div class="textarea">
+                   <textarea name="hospital_intro" placeholder="증상을 입력해주세요(최대 120자)"  required></textarea>
+               </div>
+           </div>
 
 
-						<!--진료시간 입력-->
-						<div class="hospital_info">진료시간</div>
-						<table class="business_hour" border="1">
-							<tr>
-								<th>평일</th>
-								<td>09:10 ~ 13:00</td>
-							</tr>
-							<tr>
-								<th>토요일</th>
-								<td>09:10 ~ 13:00</td>
-							</tr>
-							<tr>
-								<th>휴무일</th>
-								<td>월, 화, 수, 목, 금, 토, 일</td>
-							</tr>
-							<tr>
-								<th>점심시간</th>
-								<td>09:10 ~ 14:00</td>
-							</tr>
-						</table>
+
+           <!-- 병원주소 입력 -->
+           <div class="input_wrap">
+               <div class="input_title">병원주소</div>
+               <div class="input_item">
+					<input type="text" name="post_code" id="post_code" disabled>
+					<button type="button" class="btn_primary">주소찾기</button>
+			   </div>
+			   <div class="input_item">
+					<input type="text" name="id" id="hospital_addr_main" disabled>
+			   </div>
+   			   <div class="input_item">
+					<input type="text" name="id" id="hospital_addr_sub" placeholder="상세주소를 입력하세요"  required>
+			   </div>
+           </div>
 
 
-						<!--병원주소-->
-						<div class="hospital_info">병원주소</div>
-						<div class="input-box hospital_tel">
-							<input type="text" name="hospital_address" placeholder="예시: 서울"
-								required>
-						</div>
+           <!-- 진료시간 입력 -->
+           <div class="input_wrap">
+               <div class="input_title"><label for="time_table">진료시간</label></div>
+               <div class="input_item">
+                   <div class="time_table"><label for="select">평일</label></div>
+                   <div class="select">
+                       <select id="select_dayopen_hour">
+                           <option selected disabled>시작시간</option>
+                       </select>
+                   </div>
+                   <div class="time_table">~</div>
+                   <div class="select">
+                       <select id="select_dayclose_hour"></select>
+                   </div>
+               </div>
+    
+
+           <!-- 주말시간 -->
+                
+                        <div class="input_item time_zone">
+                            <div class="time_table"><label for="select">주말</label></div>
+                            <div class="select">
+                                <select id="select_weekendopen_hour">
+                                    <option selected disabled>시작 시간</option>
+                                </select>
+                            </div>
+                            <div class="time_table">~</div>
+                            <div class="select">
+                                <select id="select_weekendclose_hour">
+                                </select>
+                            </div>
+                        </div>
+              
+
+           <!-- 점심 시간 -->
+                  
+                        <div class="input_item time_zone">
+                            <div class="time_table"><label for="select">점심</label></div>
+                            <div class="select">
+                                <select id="select_lunchopen_hour">
+                                    <option selected disabled>시작 시간</option>
+                                </select>
+                            </div>
+                            <div class="time_table">~</div>
+                            <div class="select">
+                                <select id="select_lunchclose_hour">
+                                </select>
+                            </div>
+                        </div>
+                    </div>
 
 
-						<!--전화번호-->
-						<div class="hospital_info">전화번호</div>
-						<div class="input-box hospitalTel">
-							<input type="text" name="hospital_tel" id="hospital_tel"
-								placeholder="예시: 02-1547-5158" required>
-						</div>
-
-
-						<!--의사정보-->
-						<div class="hospital_info">
-							의사정보
-							<button type="button" id="addDoctorBtn">추가</button>
-						</div>
-
-						<div id="doctorContainer"></div>
-
-
-						<!--진료비용-->
-						<div class="hospital_info">진료비용</div>
-						<div class="hospital_cost_container">
-							<table border="1" class="hospital_cost">
-								<tr>
-									<th>상담비</th>
-									<td><input type="text" placeholder="비용을 입력하세요." required></td>
-								</tr>
-								<tr>
-									<th>초진비</th>
-									<td><input type="text" placeholder="비용을 입력하세요." required></td>
-								</tr>
-								<tr>
-									<th>수술비</th>
-									<td><input type="text" placeholder="비용을 입력하세요." required></td>
-								</tr>
-							</table>
-						</div>
-						<div class="input-box button">
-							<input type="Submit" name="nextbtn" id="nextbtn" value="등록">
-						</div>
-
-					</form>
-				</div>
+     <div class="input_wrap">
+			<div class="input_title">휴무일</div>
+			<div class="input_item">
+			 <label><input type="checkbox" name="holiday" value="2" checked> 월</label>
+     		 <label><input type="checkbox" name="holiday" value="3"> 화</label>
+     		 <label><input type="checkbox" name="holiday" value="4"> 수</label>
+     		 <label><input type="checkbox" name="holiday" value="5"> 목</label>
+     		 <label><input type="checkbox" name="holiday" value="6"> 금</label>
+     		 <label><input type="checkbox" name="holiday" value="7"> 토</label>
+     		 <label><input type="checkbox" name="holiday" value="1"> 일</label>
 			</div>
-		</div>
-	</section>
-	<!--// contents -->
+	</div>
 
+
+        <!-- 전화번호 입력 -->
+         <div class="input_wrap">
+               <div class="input_title">전화번호</div>
+               <div class="input_item">
+				  <select name="hospital_tel_first" id="hospital_tel_first">
+				    <option value="0">국번없음</option>
+				    <option value="02">02</option>
+				    <option value="032">032</option>
+				    <option value="031">031</option>
+				    <option value="041">041</option>
+				    <option value="042">042</option>
+				    <option value="043">043</option>
+				    <option value="051">051</option>
+				    <option value="052">052</option>
+				    <option value="053">053</option>
+				    <option value="054">054</option>
+				    <option value="055">055</option>
+				    <option value="061">061</option>
+				    <option value="062">062</option>
+				    <option value="063">063</option>
+				    <option value="064">064</option>
+				  </select>
+					<input type="text" name="hospital_tel_last" id="phoneNumber" placeholder="전화번호를 입력하세요."  required>	
+					</div>
+           </div>
+        	
+        	
+
+        <!-- 의사정보 등록  -->
+	<div class="input_wrap">
+		    <div id="doctorContainer">
+        <!-- 의사 정보 추가 버튼 -->
+        <div class="input_wrap">
+            <div class="input_title">의사정보
+                <button type="button" class="btn_primary sm addDoctorBtn">추가</button>
+            </div>
+        </div>
+    </div>
+	</div>
+
+
+
+<!-- 진료비용 -->
+			<div class="input_wrap">
+               <div class="input_title">진료비용</div>
+               <div class="input_item">	
+	           <table id="hospital_cost">
+				  <tr>
+				    <th>상담비</th>
+				    <td><input class="cost" type="text" placeholder="비용을 입력하세요." required></td>
+				  </tr>
+				  <tr>
+				    <th>시술비</th>
+				    <td><input class="cost" type="text" placeholder="비용을 입력하세요." required></td>
+				  </tr>
+				</table>
+               </div>
+             </div>
+               
+               
+               <div class="btn_area">
+						<button type="submit" class="btn_secondary lg hospital_enroll_cancel">취소</button>
+						<button type="submit" class="btn_primary lg hospital_enroll">등록</button>
+				</div>
+             
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+<!--// contents -->
 </main>
 <!--// container -->
 
-<th:block th:include="common/footer"></th:block>
-<!-- js 링크 -->
-<script src="/js/common/myHospitalFrm.js"></script>
+    <script src="/js/common/myHospitalFrm.js"></script>
+    <th:block th:include="common/footer"></th:block>
 </body>
 </html>
+

@@ -1,39 +1,37 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: "Noto Sans KR", sans-serif;
-  font-weight: 600;
+#contents{
+	padding:0 !important;
+	display:flex;
+	justify-content: center; /* 가로 가운데 정렬 */
+
 }
 
-body {
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.hospital_wrap{
+	width:1200px;
+	display:flex;
+	justify-content: center; /* 가로 가운데 정렬 */
+	padding: 50px 0;
 }
 
-.wrapper {
-  max-width: 800px;
-  width: 100%;
+.main_content {
+  width:60%;
   background: #fff;
   padding: 34px;
   border-radius: 6px;
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
 }
 
-.wrapper h2 {
+.main_content h2 {
   font-size: 26px;
   color: #333;
   text-align: center;
   font-weight: 800;
 }
 
-.wrapper form {
+.main_content form {
   margin-top: 30px;
 }
 
-.wrapper form .input-box {
+.main_content form .input-box {
   height: 52px;
   margin-bottom: 26px;
 }
@@ -141,6 +139,7 @@ form .text h3 a:hover {
 }
 
 #fileList {
+
   list-style: none;
   padding: 0;
   text-align: left;
@@ -159,13 +158,10 @@ form .text h3 a:hover {
 #fileList span {
   font-size: 12px;
   display: inline-block;
-  width: calc(50% - 40px);
+  width: 20%;
   /* 남은 공간의 절반에서 40px(삭제 버튼의 너비)를 뺀 크기 */
   text-align: left;
   overflow: hidden;
-  /* 넘치는 내용 숨김 */
-  text-overflow: ellipsis;
-  /* 넘치는 내용을 생략 부호(...)로 표시 */
   white-space: nowrap;
   /* 공백 문자 제거 */
 }
@@ -174,7 +170,7 @@ form .text h3 a:hover {
   background-color: #4070f4;
   border-style: none;
   padding: 0;
-  width: 40px;
+  width: 10%;
   /* 삭제 버튼의 너비 */
   height: 30px;
   cursor: pointer;
@@ -185,12 +181,16 @@ form .text h3 a:hover {
 }
 
 #fileList img {
-  width: calc(50% - 40px);
+  width: 50%;
   /* 남은 공간의 절반에서 40px(삭제 버튼의 너비)를 뺀 크기 */
-  margin: 0 10px;
   cursor: pointer;
 }
 
 #fileCount {
   font-size: 12px;
+}
+
+
+#representative_no{
+	border_bottom: 0.5px solid var(--line_02);
 }
