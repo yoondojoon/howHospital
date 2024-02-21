@@ -23,9 +23,9 @@
        <form id="uploadForm" action="/hospital/business" method="get" enctype="multipart/form-data">
            <!-- 병원이름 입력 -->
            <div class="input_wrap">
-               <div class="input_title"><label for="hospital_name">병원이름</label></div>
+               <div class="input_title"><label for="hospital_name">병원이름</label></div>  
                <div class="input_item">
-                   <input type="text" name="hospital_name" id="hospital_name" placeholder="병원이름을 입력하세요" required>
+                   <input type="text" name="hospitalName" id="hospital_name" placeholder="병원이름을 입력하세요" required>
                </div>
                
            </div>
@@ -34,7 +34,7 @@
            <div class="input_wrap">
                <div class="input_title">병원소개<em>(Hooking Point)</em></div>
                <div class="textarea">
-                   <textarea name="hospital_intro" placeholder="증상을 입력해주세요(최대 120자)"  required></textarea>
+                   <textarea name="hospitalIntro" placeholder="증상을 입력해주세요(최대 120자)"  required></textarea>
                </div>
            </div>
 
@@ -44,14 +44,14 @@
            <div class="input_wrap">
                <div class="input_title">병원주소</div>
                <div class="input_item">
-					<input type="text" name="post_code" id="post_code" disabled>
+					<input type="text" name="postCode" id="post_code" disabled>
 					<button type="button" class="btn_primary">주소찾기</button>
 			   </div>
 			   <div class="input_item">
-					<input type="text" name="id" id="hospital_addr_main" disabled>
+					<input type="text" name="hospitalAddrMain" id="hospital_addr_main" disabled>
 			   </div>
    			   <div class="input_item">
-					<input type="text" name="id" id="hospital_addr_sub" placeholder="상세주소를 입력하세요"  required>
+					<input type="text" name="hospitalAddrSub" id="hospital_addr_sub" placeholder="상세주소를 입력하세요"  required>
 			   </div>
            </div>
 
@@ -62,13 +62,13 @@
                <div class="input_item">
                    <div class="time_table"><label for="select">평일</label></div>
                    <div class="select">
-                       <select id="select_dayopen_hour">
+                       <select name="dayOpenHour" id="select_dayopen_hour">
                            <option selected disabled>시작시간</option>
                        </select>
                    </div>
                    <div class="time_table">~</div>
                    <div class="select">
-                       <select id="select_dayclose_hour"></select>
+                       <select name="dayCloseHour" id="select_dayclose_hour"></select>
                    </div>
                </div>
     
@@ -78,13 +78,13 @@
                         <div class="input_item time_zone">
                             <div class="time_table"><label for="select">주말</label></div>
                             <div class="select">
-                                <select id="select_weekendopen_hour">
+                                <select name="weekendOpenHour" id="select_weekendopen_hour">
                                     <option selected disabled>시작 시간</option>
                                 </select>
                             </div>
                             <div class="time_table">~</div>
                             <div class="select">
-                                <select id="select_weekendclose_hour">
+                                <select name="weekendCloseHour" id="select_weekendclose_hour">
                                 </select>
                             </div>
                         </div>
@@ -95,13 +95,13 @@
                         <div class="input_item time_zone">
                             <div class="time_table"><label for="select">점심</label></div>
                             <div class="select">
-                                <select id="select_lunchopen_hour">
+                                <select name="lunchOpenHour" id="select_lunchopen_hour">
                                     <option selected disabled>시작 시간</option>
                                 </select>
                             </div>
                             <div class="time_table">~</div>
                             <div class="select">
-                                <select id="select_lunchclose_hour">
+                                <select name="lunchCloseHour" id="select_lunchclose_hour">
                                 </select>
                             </div>
                         </div>
@@ -126,7 +126,7 @@
          <div class="input_wrap">
                <div class="input_title">전화번호</div>
                <div class="input_item">
-				  <select name="hospital_tel_first" id="hospital_tel_first">
+				  <select name="hospitalTelFirst" id="hospital_tel_first">
 				    <option value="0">국번없음</option>
 				    <option value="02">02</option>
 				    <option value="032">032</option>
@@ -144,7 +144,7 @@
 				    <option value="063">063</option>
 				    <option value="064">064</option>
 				  </select>
-					<input type="text" name="hospital_tel_last" id="phoneNumber" placeholder="전화번호를 입력하세요."  required>	
+					<input type="text" name="hospitalTelLast" id="phoneNumber" placeholder="전화번호를 입력하세요."  required>	
 					</div>
            </div>
         	
@@ -171,11 +171,11 @@
 	           <table id="hospital_cost">
 				  <tr>
 				    <th>상담비</th>
-				    <td><input class="cost" type="text" placeholder="비용을 입력하세요." required></td>
+				    <td><input name="costOne" class="cost" type="text" placeholder="비용을 입력하세요." required></td>
 				  </tr>
 				  <tr>
 				    <th>시술비</th>
-				    <td><input class="cost" type="text" placeholder="비용을 입력하세요." required></td>
+				    <td><input class="costTwo" type="text" placeholder="비용을 입력하세요." required></td>
 				  </tr>
 				</table>
                </div>
