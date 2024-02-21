@@ -62,10 +62,9 @@ public class HospitalController {
 	
 	
 	@GetMapping("/myHospitalReservation")
-	public String myHospitalReservation(Model model) {
+	public String myHospitalReservation(int reqPage, Model model) {
 		//병원 예약 조회해오기
-		List list = reservationService.selectReservation();
-		System.out.println(list);
+		List list = reservationService.selectReservation(reqPage);
 		model.addAttribute("reservation", list);
 		return "hospital/myHospitalReservationList";
 	}

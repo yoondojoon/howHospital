@@ -8,7 +8,7 @@
         <section id="contents" class="contents main">
             <div class="inner_wrap">
             	<div class="reservation_title">
-            		<h2>내 병원 예약</h2>
+            		<h2>내 병원 예약목록</h2>
             	</div>
 	            <div class="hospital_reservation_wrap">
 	            <th:block th:each="reservation : ${reservation}">
@@ -32,23 +32,25 @@
 		            	<th:block th:switch="${reservation.reservationStatus}">
 		            	<div class="select" th:case="1">
 		            		<select class="hospital_reservation_type">
-		            			<option>선택</option>
+		            			<option value="1" th:selected="${reservation.reservationStatus == 1}">선택</option>
 								<option value="2" th:selected="${reservation.reservationStatus == 2}">예약거부</option>
 								<option value="3" th:selected="${reservation.reservationStatus == 3}">예약확정</option>
 								<option value="4" th:selected="${reservation.reservationStatus == 4}">진료완료</option>
 							</select>
 						</div>
-						
-						<div class="btn_wrap" th:case="3">
+						<!-- 
+						<div class="success_btn btn_wrap" th:case="3">
 							<button type="button" class="btn_primary hospital_reservation_type">예약확정</button>
 						</div>
+						 -->
 						<div class="prescription_btn btn_wrap" th:case="4">
 							<button type="button" class="btn_secondary hospital_reservation_type">처방전 등록</button>
 						</div>
 						</th:block>	
 		            </div>
 		            <input type="hidden" id="reservationNo" name="reservationNo" class="reservationNo" th:value="${reservation.reservationNo}">
-	            </th:block>		
+	            </th:block>	
+	            	
 	            </div>
             </div>
         </section>
@@ -58,12 +60,10 @@
 <th:block th:include="common/footer"></th:block>
 <script>
 	$(".hospital_reservation_type").on("change",function(){
-		const index = $(".hospital_reservation_type").index(this); 
+		const index = $(".hospital_reservation_type").index(this);
 		const obj = $(this);
 		const selectValue = $(this).val();
 		const reservationNo = $(this).parent().parent().next().val();
-		console.log(selectValue)
-		console.log(reservationNo)
 		$.ajax({
 			url:"/hospital/changeReservationType",
 			type:"get",
@@ -78,18 +78,24 @@
 						obj.parent().parent().find(".badge").eq(0).text("예약확정");
 						obj.parent().parent().find(".badge").eq(0).attr("class","badge blue");
 						obj.parent().remove();
-						obj.
 					}else if (selectValue == 4){
-						
+						obj.parent().parent().find(".badge").eq(0).text("진료완료");
+						obj.parent().parent().find(".badge").eq(0).attr("class","badge gray");
+						obj.parent().remove();
+						const newBtnWrap = $("<div class='prescription_btn btn_wrap'>");
+						const newBtn = $("<button type='button' class='btn_secondary hospital_reservation_type'>");
+						newBtn.text("처방전 등록");
+						newBtnWrap.append(newBtn);
+						$(".hospital_reservation").eq(index).append(newBtnWrap);
 					}
-					//location.reload();
 				}
-				console.log(data)
 			},
 			error : function(){
 				console.log("에러발생");
 			}
 		});
 	});
+	
+	
 </script>
 </html>

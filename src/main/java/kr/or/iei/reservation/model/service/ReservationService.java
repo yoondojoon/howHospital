@@ -13,7 +13,7 @@ public class ReservationService {
 	@Autowired
 	private ReservationDao reservationDao;
 
-	public List selectReservation() {
+	public List selectReservation(int reqPage) {
 		List list = reservationDao.selectReservation();
 		return list;
 	}

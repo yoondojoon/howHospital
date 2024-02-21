@@ -1,7 +1,7 @@
 @charset "UTF-8";
 
 .hospital_reservation_wrap{
-	border: 1px solid #ccc;
+	border: 1px solid rgba(30, 30, 30, 0.3);
 	border-radius: 10px;
 	box-sizing: border-box;
 	width: 100%;
@@ -10,7 +10,7 @@
 
 .hospital_reservation{
 	margin: 20px auto;
-	border: 1px solid #222;
+	border: 1px solid rgba(30, 30, 30, 0.7);
 	border-radius: 10px;
 	box-sizing: border-box;
 	padding: 20px 20px;
