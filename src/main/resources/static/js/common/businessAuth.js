@@ -68,6 +68,9 @@ document.getElementById('enroll_btn').addEventListener('click', function(event) 
   const representativeNoInput = document.getElementById('representative_no');
   const fileList = document.getElementById('fileList');
   const fileCount = fileList.getElementsByTagName('li').length;
+  const nextMessage = $(".no_check").next("p").text();
+
+
 
   // 파일 개수가 2개 미만인 경우에 경고창 표시
   if (representativeInput.value.trim() === '' || representativeNoInput.value.trim() === '') {
@@ -78,6 +81,15 @@ document.getElementById('enroll_btn').addEventListener('click', function(event) 
     alert('최소 2개의 파일을 업로드해야 합니다.');
     event.preventDefault(); // 이벤트의 기본 동작을 취소합니다.
   }
+  
+    if (representativeNoInput.value.trim() === '' || nextMessage === "정보 조회에 실패했습니다.") {
+    alert('사업자 등록번호를 다시 확인하세요.');
+        event.preventDefault(); // 이벤트의 기본 동작을 취소합니다.
+    
+    }
+  
+  
+  
 });
 
 

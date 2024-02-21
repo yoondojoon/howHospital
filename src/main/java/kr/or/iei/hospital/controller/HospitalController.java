@@ -70,39 +70,6 @@ public class HospitalController {
 	
 	
 	
-	//BizNo API
-	@ResponseBody
-	@PostMapping(value="/bizApi")
-	public String bizApi(String representativeNo) {
-	    String url = "https://api.odcloud.kr/api/nts-businessman/v1/status";
-		String serviceKey = "LYwyMLoRsjjpbQnMxPjkRjfcBDZSyBT8kX+5eUe+GzOstpDBQxojDsd9wg/K0fDcgo/12RKWXUttts6z8AA5YA==";
-	       // JSON 요청 데이터 생성
-        JsonObject requestData = new JsonObject();
-        requestData.addProperty("b_no", representativeNo);
-
-        try {
-            // API 요청
-            String result = Jsoup.connect(url)
-                .data("serviceKey", serviceKey)
-                .data("b_no", representativeNo)
-                .ignoreContentType(true)
-                .post()
-                .text();
-            
-            // API 응답을 JSON 객체로 파싱
-            JsonObject responseJson = JsonParser.parseString(result).getAsJsonObject();
-            
-            // API 응답 반환
-            return ResponseEntity.ok().body(responseJson.toString());
-        } catch (Exception e) {
-            // API 요청 실패 시 에러 응답 반환
-            e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("API 요청 실패");
-        }
-    }
-
-}
-	
 	
 	
 }

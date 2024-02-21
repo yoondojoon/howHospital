@@ -67,7 +67,7 @@ form .input-box input:focus {
   font-optical-sizing: auto;
   font-weight: 500;
   font-style: normal;
-  margin-top: 0px;
+  margin-top: 20px;
   margin-bottom: 10px;
 }
 
@@ -193,4 +193,10 @@ form .text h3 a:hover {
 
 #representative_no{
 	border_bottom: 0.5px solid var(--line_02);
+}
+
+
+
+.input_wrap{
+	margin-top:30px;
 }
