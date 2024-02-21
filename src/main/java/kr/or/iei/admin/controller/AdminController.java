@@ -28,4 +28,14 @@ public class AdminController {
 		model.addAttribute("pageNavi", nld.getPageNavi());
 		return "admin/noticeList";
 	}
+	
+	@GetMapping(value="/searchNotice")
+	public String search(int reqPage, String type, String keyword, Model model) {
+		NoticeListData nld = adminService.searchNoitce(reqPage,type,keyword);
+		model.addAttribute("noticeList", nld.getList());
+		model.addAttribute("pageNavi",nld.getPageNavi());
+		model.addAttribute("type", type);
+		model.addAttribute("keyword", keyword);
+		return "admin/noticeList";
+	}
 }

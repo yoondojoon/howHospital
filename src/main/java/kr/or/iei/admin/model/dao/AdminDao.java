@@ -29,4 +29,24 @@ public class AdminDao {
 		int totalCount = jdbc.queryForObject(query, Integer.class);
 		return totalCount;
 	}
+
+	public List selectSearchTitle(int start, int end, String keyword) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public List selectSearchWriter(int start, int end, String keyword) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public int titleTotalCount(String keyword) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	public int writerTotalCount(String keyword) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 }
