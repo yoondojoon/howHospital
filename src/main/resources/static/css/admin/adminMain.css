@@ -5,18 +5,30 @@
   font-weight: 600;
 }
 
-
-.search{
-  width: 300px;
+#searchFrm{
+	margin :5px;
+	display:flex;
+	justify-content: flex-end;
 }
 
-.input-form {
+#search{
+  width: 300px;
+  position : relative;
+}
+
+#input-form {
   width: 100%;
   border: 1px solid #bbb;
   border-radius: 8px;
-  padding: 10px 12px;
   font-size: 14px;
   text-indent: 1em;
+}
+
+#check{
+	width: 10%;
+	position : absolute;
+	top : 1px;
+	right :10px;
 }
 
 
@@ -35,7 +47,6 @@
 .tr-header{
 	background-color: rgba(57, 62, 70, 0.15);
 	border-bottom: 3px solid #008cba;
-
 }
 
 .tr-content{
@@ -64,7 +75,7 @@ tr:nth-child(even) td {
 	margin:30px auto;
 	overflow : hidden;
 	display : flex;
-	justify-contente : center;
+	justify-content : center;
 }
 
 .pagination a {
