@@ -4,14 +4,13 @@
 .searchHospital .search_area{display:flex; overflow:hidden; border-top:1px solid rgba(67,137,186,0.4);}
 .searchHospital .search_area .list_area{flex:1; max-width:456px; padding:20px; box-shadow:5px 0 10px rgba(0,0,0,0.1); z-index:1;}
 .searchHospital .search_area .api_area{flex:1;}
-.searchHospital .search_form{border-bottom:1px solid var(--line_01);}
-.searchHospital .search_form .btn_search{width:40px; height:40px; background:url(/images/icon_search.svg) no-repeat center / 20px 20px;}
-.searchHospital .search_form .input_item input{border:none;}
+.searchHospital .search_wrap{border-bottom:1px solid var(--line_01);}
+.searchHospital .search_wrap .btn_search{width:40px; height:40px; background:url(/images/icon_search.svg) no-repeat center / 20px 20px;}
+.searchHospital .search_wrap .input_item input{border:none;}
 .searchHospital .list_wrap{padding:24px 0;}
 .searchHospital .list_wrap .total_count{padding-bottom:12px; border-bottom:1px solid var(--line_02); font-size:14px; line-height:1.5;}
 .searchHospital .list_wrap .hospital_list_wrap{height:650px; padding-bottom:24px; overflow-y:auto;}
-.searchHospital .list_wrap .hospital_list{border-bottom:1px solid var(--line_02);}
-.searchHospital .list_wrap .hospital_list>li+li{border-top:1px solid var(--line_02);}
+.searchHospital .list_wrap .hospital_list>li{border-bottom:1px solid var(--line_02);}
 .searchHospital .list_wrap .hospital_list>li>a{display:block; padding:24px 0;}
 .searchHospital .row_wrap{display:flex; flex-wrap:wrap; align-items:center; gap:8px; color:var(--gray_04); font-size:12px; line-height:1.5;}
 .searchHospital .row_wrap+.row_wrap{margin-top:8px;}
