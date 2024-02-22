@@ -100,11 +100,11 @@ public class HospitalController {
 	}
 	
 	
-	@GetMapping(value="/myHospitalEnroll")
+	@PostMapping(value="/myHospitalEnroll")
 	public String myHospitalEnroll() {
-			
-		
-		return null;
+
+		return "redirect:/";
+
 	}
 	
 	

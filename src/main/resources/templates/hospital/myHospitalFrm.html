@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <link rel="stylesheet" href="/css/hospital/myHospitalFrm.css">
+<script type="text/javascript" src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=3jwhpqglw9&submodules=geocoder"></script>
+
+
 <script
 	src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <th:block th:include="common/header"></th:block>
@@ -19,6 +22,8 @@
 			</ul>
 		</div>
 		<div class="main_content">
+
+		
 			<div class="hospital_info_form">
 				<!-- 병원정보 입력 -->
 		<h2>병원정보 입력</h2>
@@ -205,6 +210,9 @@
 					</div>
 
 
+
+
+
 					<div class="btn_area">
 						<button type="submit"
 							class="btn_secondary lg hospital_enroll_cancel">취소</button>
@@ -217,12 +225,24 @@
 	</div>
 </section>
 <!--// contents -->
+
+<div class="map">d</div>
 </main>
 <!--// container -->
 
 
 <script src="/js/common/myHospitalFrm.js"></script>
 <script>
+naver.maps.Service.geocode({ query: '등촌동' }, function(status, response) {
+    if (status === naver.maps.Service.Status.ERROR) {
+        return alert('Something wrong!');
+    }
+    // 성공 시의 response 처리
+    console.log(response);
+});
+
+
+
 function loadImg(obj) {
 
 	const index = $("[name=imageFile]").index(obj);
@@ -255,6 +275,12 @@ function searchAddr() {
 				}
 			}).open();
 }
+
+//옵션 없이 지도 객체를 생성하면 서울 시청을 중심으로 하는 16 레벨의 지도가 생성됩니다.
+
+
+
+
 </script>
 
 
