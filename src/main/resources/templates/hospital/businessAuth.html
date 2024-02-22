@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <link rel="stylesheet" href="/css/hospital/businessAuth.css">
+<script type="text/javascript" src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=3jwhpqglw9&submodules=geocoder"></script>
 
 <th:block th:include="common/header"></th:block>
 
@@ -28,6 +29,8 @@
 						<button type="button" class="btn_primary" id="search_btn">상태조회</button>
 					</div>
 				</div>
+			
+				
 
 
 				<div class="businessAuth_lable">사업자등록증 및 의사면허증</div>
@@ -84,6 +87,12 @@ $("#search_btn").on("click", async function() {
 	    }
 	  });
 	});
+	
+	
+	
+
+
+	
 	
 </script>
 

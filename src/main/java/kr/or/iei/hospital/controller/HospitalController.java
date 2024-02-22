@@ -100,6 +100,11 @@ public class HospitalController {
 	}
 	
 	
+	@PostMapping(value="/myHospitalEnroll")
+	public String myHospitalEnroll() {
+		return "redirect:/";
+	}
+	
 	
 	
 	
