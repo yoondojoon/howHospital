@@ -215,7 +215,7 @@ $(document).ready(function() {
 		                        <tr>
 		                        	<th>진료과</th>
 		                        	<td>
-		          <select class="specialty">
+		          <select class="specialty" name="subjectNo">
 		          		<option>선택하세요</option>
 		                <option value="1">내과</option>
 		                <option value="2">신경과</option>
