@@ -2,6 +2,8 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <link rel="stylesheet" href="/css/hospital/myHospitalReservationList.css">
 <link rel="stylesheet" href="/css/reservation/reservationPaginavi.css">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	
 <th:block th:include="common/header"></th:block>
 <!-- container -->
     <main id="container" class="container">
@@ -15,6 +17,11 @@
 	            <th:block th:each="reservation : ${reservation}">
 		            <div class="hospital_reservation">
 		            	<div class="reservation_wrap_content top">
+		            	<th:block th:switch="${reservation.reservationType}">
+		            		<span th:case="1" class="badge blue">대면진료</span>
+		            		<span th:case="2" class="badge red outline">비대면진료</span>
+		      
+		            	</th:block>
 		            	<th:block th:switch="${reservation.reservationStatus}">
 		            		<span th:case="1" class="badge blue outline">접수대기</span>
 		            		<span th:case="2" class="badge red outline">예약취소</span>
@@ -44,15 +51,16 @@
 							<button type="button" class="btn_primary hospital_reservation_type">예약확정</button>
 						</div>
 						 -->
-						<div class="prescription_btn btn_wrap" th:case="4">
+						<div class="prescription_btn btn_wrap" th:case="4" th:if="${reservation.reservationType == 2}">
 							<button type="button" class="btn_secondary hospital_reservation_type">처방전 등록</button>
 						</div>
 						</th:block>	
 		            </div>
 		            <input type="hidden" id="reservationNo" name="reservationNo" class="reservationNo" th:value="${reservation.reservationNo}">
 	            </th:block>	
-	            	
+	            <div id="pageNavi" th:utext="${pageNavi}"></div>	
 	            </div>
+	            
             </div>
         </section>
 	    <!--// contents -->
@@ -82,12 +90,14 @@
 					}else if (selectValue == 4){
 						obj.parent().parent().find(".badge").eq(0).text("진료완료");
 						obj.parent().parent().find(".badge").eq(0).attr("class","badge gray");
-						obj.parent().remove();
+						//대면 비대면 
 						const newBtnWrap = $("<div class='prescription_btn btn_wrap'>");
 						const newBtn = $("<button type='button' class='btn_secondary hospital_reservation_type'>");
 						newBtn.text("처방전 등록");
 						newBtnWrap.append(newBtn);
-						$(".hospital_reservation").eq(index).append(newBtnWrap);
+						obj.parent().parent().append(newBtnWrap);
+						obj.parent().remove();
+						
 					}
 				}
 			},
