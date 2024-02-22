@@ -1,12 +1,14 @@
 package kr.or.iei.admin.model.service;
 
 import java.util.List;
+import java.util.StringTokenizer;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import kr.or.iei.admin.model.dao.AdminDao;
+import kr.or.iei.admin.model.dto.MemberReport;
 import kr.or.iei.admin.model.dto.MemberReportListData;
 import kr.or.iei.admin.model.dto.Notice;
 import kr.or.iei.admin.model.dto.NoticeListData;
@@ -243,6 +245,40 @@ public class AdminService {
 		
 		MemberReportListData mrld = new MemberReportListData(list,pageNavi);
 		return mrld;
+	}
+
+	@Transactional
+	public boolean deletChk(String deleteList) {
+		StringTokenizer sT1 = new StringTokenizer(deleteList, "/");
+		boolean result=true;
+		while(sT1.hasMoreTokens()) {
+			int reportNo = Integer.parseInt(sT1.nextToken());
+			int deleteResult = adminDao.deleteChk(reportNo);
+			
+			if(deleteResult == 0) {
+				result = false;
+				break;
+			}
+		}
+		return result;
+	}
+
+
+	public MemberReport searchReportDetail(int reportNo) {
+		MemberReport mr = adminDao.searchReportDetail(reportNo);
+		return mr;
+	}
+
+	@Transactional
+	public int deleteReport(int reportNo) {
+		int result = adminDao.deleteReport(reportNo);
+		return result;
+	}
+
+	@Transactional
+	public int confirmReport(int reportNo) {
+		int result = adminDao.confirmReport(reportNo);
+		return result;
 	}
 	
 

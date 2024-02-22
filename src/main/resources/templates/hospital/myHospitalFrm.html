@@ -28,7 +28,7 @@
 				<!-- 병원정보 입력 -->
 		<h2>병원정보 입력</h2>
 		<form id="uploadForm" action="/hospital/myHospitalEnroll"
-			method="get" enctype="multipart/form-data">
+			method="post" enctype="multipart/form-data">
 			<!-- 병원이름 입력 -->
 			<div class="input_wrap">
 				<div class="input_title">
@@ -58,12 +58,12 @@
 			<div class="input_wrap">
 				<div class="input_title">병원주소</div>
 				<div class="input_item">
-					<input type="text" name="postCode" id="post_code" readonly>
+					<input type="text" name="postCode" id="post_code"  readonly>
 					<button type="button" class="btn_primary" onclick="searchAddr()">주소찾기</button>
 				</div>
 				<div class="input_item">
 					<input type="text" name="hospitalAddrMain"
-						id="hospital_addr_main" readonly>
+						id="hospital_addr_main"  readonly>
 				</div>
 				<div class="input_item">
 					<input type="text" name="hospitalAddrSub" id="hospital_addr_sub"
@@ -135,14 +135,14 @@
 			<div class="input_wrap">
 				<div class="input_title">휴무일</div>
 				<div class="input_item">
-					<label><input type="checkbox" name="holiday" value="2"
+					<label><input type="checkbox" name="hol" value="2"
 						checked> 월</label> <label><input type="checkbox"
 						name="holiday" value="3"> 화</label> <label><input
-						type="checkbox" name="holiday" value="4"> 수</label> <label><input
-						type="checkbox" name="holiday" value="5"> 목</label> <label><input
-						type="checkbox" name="holiday" value="6"> 금</label> <label><input
-						type="checkbox" name="holiday" value="7"> 토</label> <label><input
-						type="checkbox" name="holiday" value="1"> 일</label>
+						type="checkbox" name="hol" value="4"> 수</label> <label><input
+						type="checkbox" name="hol" value="5"> 목</label> <label><input
+						type="checkbox" name="hol" value="6"> 금</label> <label><input
+						type="checkbox" name="hol" value="7"> 토</label> <label><input
+						type="checkbox" name="hol" value="1"> 일</label>
 				</div>
 			</div>
 
@@ -209,8 +209,8 @@
 						</div>
 					</div>
 
-
-
+					   <input type="hidden" id="lng" name="lng" value="">
+					    <input type="hidden" id="lat" name="lat" value="">
 
 
 					<div class="btn_area">
@@ -232,19 +232,37 @@
 
 
 <script src="/js/common/myHospitalFrm.js"></script>
+
 <script>
-naver.maps.Service.geocode({ query: '등촌동' }, function(status, response) {
-    if (status === naver.maps.Service.Status.ERROR) {
-        return alert('Something wrong!');
-    }
-    // 성공 시의 response 처리
-    console.log(response);
-});
+
+function searchAddr() {
+	new daum.Postcode(
+			{
+				oncomplete : function(data) {
+					console.log(data);
+					// 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분입니다.
+					// 예제를 참고하여 다양한 활용법을 확인해 보세요.
+					document.querySelector("#post_code").value = data.zonecode;
+					document.querySelector("#hospital_addr_main").value = data.address;
+				  var hospitalAddrMain = document.querySelector("#hospital_addr_main").value;
+				  naver.maps.Service.geocode({query: hospitalAddrMain}, function(status, response) {
+					    if (status !== naver.maps.Service.Status.OK) {
+				            return alert('실패');
+				        }
+				        var result = response.v2, // 검색 결과의 컨테이너
+				            items = result.addresses; // 검색 결과의 배열
+				        // do Something
+			             document.querySelector("#lng").value = items[0].x;
+		                document.querySelector("#lat").value = items[0].y;
+				    });
+				}
+			}).open();
+}
 
 
 
+    
 function loadImg(obj) {
-
 	const index = $("[name=imageFile]").index(obj);
 	//input type file dom 객체의 files라는 속성이 첨부한 파일 정보
 	console.log(obj.files); //multiple옵션이 있으므로 배열과 유사한 형태로 처리
@@ -263,23 +281,9 @@ function loadImg(obj) {
 	}
 }
 
-function searchAddr() {
-	new daum.Postcode(
-			{
-				oncomplete : function(data) {
-					console.log(data);
-					// 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분입니다.
-					// 예제를 참고하여 다양한 활용법을 확인해 보세요.
-					document.querySelector("#post_code").value = data.zonecode;
-					document.querySelector("#hospital_addr_main").value = data.address;
-				}
-			}).open();
-}
+
 
 //옵션 없이 지도 객체를 생성하면 서울 시청을 중심으로 하는 16 레벨의 지도가 생성됩니다.
-
-
-
 
 </script>
 

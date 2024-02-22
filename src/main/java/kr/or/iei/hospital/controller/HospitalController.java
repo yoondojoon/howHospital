@@ -17,6 +17,7 @@ import jakarta.servlet.http.HttpSession;
 import kr.or.iei.FileUtils;
 import kr.or.iei.hospital.model.dto.BusinessAuth;
 import kr.or.iei.hospital.model.dto.BusinessAuthFile;
+import kr.or.iei.hospital.model.dto.Hospital;
 import kr.or.iei.hospital.model.dto.PrescriptionFile;
 import kr.or.iei.hospital.model.service.DoctorService;
 import kr.or.iei.hospital.model.service.HospitalService;
@@ -27,7 +28,7 @@ import kr.or.iei.reservation.model.service.ReservationDetailService;
 import kr.or.iei.reservation.model.service.ReservationService;
 
 @Controller
-@RequestMapping(value="/hospital")
+@RequestMapping(value = "/hospital")
 public class HospitalController {
 	@Autowired
 	private HospitalService hospitalService;
@@ -41,20 +42,29 @@ public class HospitalController {
 	private ReservationDetailService reservationDetailService;
 	@Autowired
 	private PrescriptionService prescriptionService;
-	
+
 	@Value("${file.root}")
 	private String root; // 자바 전체에서 쓸수있는 변수, application.properties에 선언되어있는 값을 문자열로 가져옴.
 
 	@Autowired
 	private FileUtils fileUtils;
-	
-	@GetMapping(value="/myHospitalMain")
+
+	@GetMapping(value = "/myHospitalMain")
 	public String myHospitalMain() {
 		return "hospital/myHospitalMain";
 	}
-	
-	
-	@PostMapping(value="/businessAuthEnroll")
+
+	@PostMapping(value="/myHospitalEnroll")
+	public String myHospitalEnroll(Hospital hospital, String hospitalIntro, String postCode, String hospitalAddrMain, String hospitalAddrSub, String dayOpenHour, String dayCloseHour, String weekendOpenHour, String weekendCloseHour, String lunchOpenHour, String lunchCloseHour, String[] hol, String hospitalTelFirst, String hospitalTelLast, String[] doctorName, String[] doctorEducation, String[] doctorExperience, String[] subjectNo, MultipartFile[] files, String CostOne, String CostTwo) {
+		
+		//String holidayString = String.join("", holiday);
+		
+		
+		
+		return "redirect:/";
+	}
+
+	@PostMapping(value = "/businessAuthEnroll")
 	public String businessAuthEnroll(BusinessAuth ba, MultipartFile[] upfile, Model model) {
 		List<BusinessAuthFile> fileList = new ArrayList<BusinessAuthFile>();
 		if (!upfile[0].isEmpty()) {
@@ -69,91 +79,67 @@ public class HospitalController {
 				fileList.add(businessAuthFile);
 			}
 		}
-	    // ba : businessAuthNo, memberNo
-	    // fileList : (BusinessAuthFile) x 첨부파일갯수(2개)
-	    // 총 3차례 insert
+		// ba : businessAuthNo, memberNo
+		// fileList : (BusinessAuthFile) x 첨부파일갯수(2개)
+		// 총 3차례 insert
 
-	    int result = hospitalService.insertBusinessAuth(ba, fileList);
-	    
-	    
-	    // insert 성공  테이블 결과(1) + 파일 테이블 결과(파일갯수)
-	    if (result == (fileList.size() + 2)) { // notice 테이블 1 포함
-	    	System.out.println("성공");
-	    	return "redirect:/";
-	    } else {
-	        System.out.println("실패");
-	        return "redirect:/";
-	    }
+		int result = hospitalService.insertBusinessAuth(ba, fileList);
+
+		// insert 성공 테이블 결과(1) + 파일 테이블 결과(파일갯수)
+		if (result == (fileList.size() + 2)) { // notice 테이블 1 포함
+			System.out.println("성공");
+			return "redirect:/";
+		} else {
+			System.out.println("실패");
+			return "redirect:/";
+		}
 	}
-		
 
-	
-	
-	@GetMapping(value="/businessAuth")
+	@GetMapping(value = "/businessAuth")
 	public String businessAuth(Model model, HttpSession session) {
 		return "hospital/businessAuth";
 	}
-	
-	@GetMapping(value="/myHospitalFrm")
+
+	@GetMapping(value = "/myHospitalFrm")
 	public String myHospitalFrm() {
 		return "hospital/myHospitalFrm";
 	}
-	
-	
-	@PostMapping(value="/myHospitalEnroll")
-	public String myHospitalEnroll() {
 
-		return "redirect:/";
-
-	}
-	
-	
-	
-	
 	@GetMapping("/myHospitalReservation")
 	public String myHospitalReservation(int reqPage, Model model) {
-		//병원 예약 조회해오기
+		// 병원 예약 조회해오기
 		ReservationListData nld = reservationService.selectReservation(reqPage);
 		model.addAttribute("reservation", nld.getList());
 		model.addAttribute("pageNavi", nld.getPageNavi());
 		return "hospital/myHospitalReservationList";
 	}
 
-	
-	
 	@ResponseBody
 	@GetMapping("/changeReservationType")
 	public int changeReservationType(int selectValue, int reservationNo) {
-		//병원 예약 업데이트
+		// 병원 예약 업데이트
 		int result = reservationService.updateReservation(selectValue, reservationNo);
-		if(result > 0) {
+		if (result > 0) {
 			return 1;
-		}else {
+		} else {
 			return 0;
 		}
 	}
-	
+
 	@ResponseBody
 	@PostMapping("/prescriptionRegistration")
 	public int prescriptionRegistration(MultipartFile file, PrescriptionFile pf) {
-		String savepath = root+"/prescription/";
+		String savepath = root + "/prescription/";
 		String filename = file.getOriginalFilename();
 		String filepath = fileUtils.upload(savepath, file);
 		pf.setPrescriptionName(filename);
 		pf.setPrescriptionPath(filepath);
 		int result = prescriptionService.insertPrescription(pf);
-		if(result > 0) {
+		if (result > 0) {
 			return 1;
-		}else {
+		} else {
 			return 0;
 		}
 	}
 
-	
-	
-	
-	
 }
-
-
-
