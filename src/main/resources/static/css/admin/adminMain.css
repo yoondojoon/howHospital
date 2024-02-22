@@ -31,6 +31,13 @@
 	right :10px;
 }
 
+.form-select{
+	border:1px solid #222; 
+	border-radius:4px; 
+	overflow:hidden;
+	width:70px;
+	text-indent:20px;
+}
 
 .btl{
 	width: 100%;
