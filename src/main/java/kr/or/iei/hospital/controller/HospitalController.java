@@ -54,40 +54,37 @@ public class HospitalController {
 	
 	
 	@PostMapping(value="/businessAuthEnroll")
-	public String businessAuthEnroll(BusinessAuth ba, MultipartFile[] upfile, HttpSession session, Model model) {
-		Member member = (Member)session.getAttribute("member");
-		List<BusinessAuthFile> fileList = new ArrayList<BusinessAuthFile>();
-		if (!upfile[0].isEmpty()) {
-			String savepath = root + "/notice/";
-			for (MultipartFile file : upfile) {
-				// 업로드한 파일명을 추출
-				String filename = file.getOriginalFilename();
-				String filepath = fileUtils.upload(savepath, file);
-				BusinessAuthFile businessAuthFile = new BusinessAuthFile();
-				businessAuthFile.setFilename(filename);
-				businessAuthFile.setFilepath(filepath);
-				fileList.add(businessAuthFile);
-			}
-		}
-		// ba : businessAuthNo, memberNo
-		// fileList : (BusinessAuthFile) x 첨부파일갯수(2개)
-		// 총 3차례 insert
+	public String businessAuthEnroll(BusinessAuth ba, MultipartFile[] upfile, Model model) {
+	    List<BusinessAuthFile> fileList = new ArrayList<BusinessAuthFile>();
+	    if (upfile != null) {
+	        String savepath = root + "/notice/";
+	        for (MultipartFile file : upfile) {
+	            if (!file.isEmpty()) { // 파일이 비어있지 않은 경우에만 처리
+	                // 업로드한 파일명을 추출
+	                String filename = file.getOriginalFilename();
+	                String filepath = fileUtils.upload(savepath, file);
+	                BusinessAuthFile businessAuthFile = new BusinessAuthFile();
+	                businessAuthFile.setFilename(filename);
+	                businessAuthFile.setFilepath(filepath);
+	                fileList.add(businessAuthFile);
+	            }
+	        }
+	    }
+	    // ba : businessAuthNo, memberNo
+	    // fileList : (BusinessAuthFile) x 첨부파일갯수(2개)
+	    // 총 3차례 insert
 
-		int result = hospitalService.insertBusinessAuth(ba, fileList);
-		
-		
-		// insert 성공  테이블 결과(1) + 파일 테이블 결과(파일갯수)
-		if (result == (fileList.size() + 1)) { // notice 테이블 1 포함
-			model.addAttribute("title", "성공");
-			model.addAttribute("msg", "사업자 정보 등록에 성공했습니다.");
-			model.addAttribute("icon", "success");
-		} else {
-			model.addAttribute("title", "실패");
-			model.addAttribute("msg", "사업자 정보 등록에 실패하였습니다.");
-			model.addAttribute("icon", "error");
-		}
-		model.addAttribute("loc", "/");
-		return "hospital/msg";
+	    int result = hospitalService.insertBusinessAuth(ba, fileList);
+	    
+	    
+	    // insert 성공  테이블 결과(1) + 파일 테이블 결과(파일갯수)
+	    if (result == (fileList.size() + 1)) { // notice 테이블 1 포함
+	    	System.out.println("성공");
+	    	return "hospital/msg";
+	    } else {
+	        System.out.println("실패");
+	        return "hospital/msg";
+	    }
 	}
 		
 

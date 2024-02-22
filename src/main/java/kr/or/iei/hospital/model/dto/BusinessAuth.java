@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 public class BusinessAuth {
 	private int businessAuthNo; //seq 채번
 	private int memberNo;		//businessauth hidden value
-	private int representativeNo; 
+	private long representativeNo; 
 	private String regDate;		//sysdate
 	private List<BusinessAuthFile> fileList; //service:controller 데이터 수신
 }
