@@ -1,6 +1,26 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <link rel="stylesheet" href="/css/admin/adminMain.css">
+<style>
+
+#content-td{
+	border:1px solid black;
+	background: #eaeaed;
+}
+
+.textarea{
+  margin : 30px;
+}
+
+
+#noticeContent{
+	background-color:white;
+	justify-content:center;
+	height : 400px;
+	overflow-y:scroll;
+}
+
+</style>
 
 	<th:block th:include="common/header"></th:block>
 
@@ -16,8 +36,8 @@
 	        	<table class="btl">
 	        		<tr class="tr-header">
 	        			<th style="width:20%;">제목</th>
-	        			<th style="width:80%;">
-	        				<input style="width:90%;" type="text" id="input-form" name="noticeTitle" disabled>
+	        			<th style="width:80%; text-align:left;">
+	        				<span style="width:90%;" type="text" th:text="${n.getNoticeTitle}" name="noticeTitle">
 	        			</th>
 	        		</tr>
 	        		<tr class="tr-header">
@@ -27,15 +47,16 @@
 	        			</th>
 	        		</tr>
 	        		<tr>
-	        			<td colspan="2" style="text-align:left;">
-		        			<textarea id="noticeContent" name="noticeContent" th:text="${n.getNoticeContent}" disabled>
-		        			</textarea>		        			
+	        			<td colspan="2" style="text-align:left;" id="content-td">
+	        				<div class="textarea">
+			        			<textarea id="noticeContent" name="noticeContent" th:text="${n.getNoticeContent}" disabled></textarea>		        			
+	        				</div>
 	        			</td>
 	        		</tr>
 	        	</table>
 	        	<div class="btn_area">
-		        		<button type="button" class="btn_primary lg" th:onclick="noticeDelete([[${n.noticeNo}]]);">삭제하기</button>
-		        		<button type="button" class="btn_primary lg">수정하기</button>
+		        		<button type="button" th:if="${session.member != null && session.member.memberType == 3}" class="btn_secondary lg" th:onclick="noticeDelete([[${n.noticeNo}]]);">삭제하기</button>
+		        		<button type="button" th:if="${session.member != null && session.member.memberType == 3}" class="btn_primary lg" th:href="@{/admin/noticeUpdateFrm(noticeNo=${notice.noticeNo})}">수정하기</button>
 	        	</div>	        	
 	        </div>
         </section>
@@ -48,7 +69,7 @@
 	<script>
 	function noticeDelete(noticeNo){
 		if(confirm("게시글을 삭제하시겠습니까?")){
-			location.href="/notice/delete?noticeNo="+noticeNo;
+			location.href="/admin/deleteNotice?noticeNo="+noticeNo;
 		}
 	}
 	</script>
