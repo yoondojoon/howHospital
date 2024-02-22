@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <link rel="stylesheet" href="/css/service/hospitalDetail.css">
+<link rel="stylesheet" href="/css/lib/swiper-bundle.min.css">
 
 <th:block th:include="common/header"></th:block>
 
@@ -10,21 +11,39 @@
 		<!-- contents -->
         <section id="contents" class="contents hospitalDetail">
             <div class="inner_wrap">
-                <h2>병원이름!!</h2>
+                <h2 th:text="${h.hospitalName}">병원이름</h2>
                 
                 <div class="detail_area">
                     <div class="detail_top_wrap">
-                        <div class="lt_area">
-                            <div class="banner_wrap">
-                                --병원 배너 영역--
+                        <div class="banner_wrap">
+                            <div class="hospitalDetail_banner">
+                                <div class="swiper-wrapper">
+                                    <div class="swiper-slide">
+                                        <img src="/images/banner_img_01.jpg" alt="배너 1">
+                                    </div>
+                                    <div class="swiper-slide">
+                                        <img src="/images/banner_img_02.jpg" alt="배너 2">
+                                    </div>
+                                    <div class="swiper-slide">
+                                        <img src="/images/banner_img_03.jpg" alt="배너 3">
+                                    </div>
+                                    <div class="swiper-slide">
+                                        <img src="/images/banner_img_04.jpg" alt="배너 4">
+                                    </div>
+                                </div>
+                                
+                                <div class="swiper-pagination"></div>
+                        
+                                <div class="swiper-button-prev"></div>
+                                <div class="swiper-button-next"></div>
                             </div>
                         </div>
-                        <div class="rt_area">
-                            <div class="top_info_list">
+                        <div class="info_wrap">
+                            <ul class="top_info_list">
                                 <li>
                                     <div class="info_title">진료 과목</div>
                                     <div class="info_content">
-                                        <span class="subject_name">ㅇㅇ과</span>
+                                        <span class="subject_name" th:each="s : ${h.subjectList}" th:text="${s.subjectName}">ㅇㅇ과</span>
                                     </div>
                                 </li>
                                 <li>
@@ -46,7 +65,7 @@
                                         <span class="open_status">진료중</span>
                                     </div>
                                 </li>
-                            </div>
+                            </ul>
                         </div>
                     </div>
 
@@ -190,5 +209,19 @@
 	
 <th:block th:include="common/footer"></th:block>
 <!-- js 링크 -->
+<script src="/js/lib/swiper-bundle.min.js"></script>
+<script>
+    const swiper = new Swiper('.hospitalDetail_banner', {
+        slidesPerView: 1,
+        pagination: {
+            el: '.swiper-pagination',
+        },
+
+        navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+        },
+    });
+</script>
 </body>
 </html>

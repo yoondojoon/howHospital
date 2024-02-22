@@ -13,3 +13,12 @@ $(window).on("scroll", function(){
         $("#header").removeClass("fixed");
     }
 })
+
+function openModal(popupId){
+    $(popupId).show();
+    $("html").addClass("scroll_fixed");
+}
+function closeModal(obj){
+    $(obj).closest(".modal").hide();
+    $("html").removeClass("scroll_fixed");
+}
