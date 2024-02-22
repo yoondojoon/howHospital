@@ -100,13 +100,6 @@ public class HospitalController {
 	}
 	
 	
-	@GetMapping(value="/myHospitalEnroll")
-	public String myHospitalEnroll() {
-			
-		
-		return 0;
-	}
-	
 	
 	
 	
