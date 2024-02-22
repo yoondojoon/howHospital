@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import kr.or.iei.hospital.model.dao.HospitalDao;
 import kr.or.iei.hospital.model.dto.BusinessAuth;
 import kr.or.iei.hospital.model.dto.BusinessAuthFile;
+import kr.or.iei.hospital.model.dto.Doctor;
 import kr.or.iei.hospital.model.dto.Hospital;
 import kr.or.iei.hospital.model.dto.Subject;
 import kr.or.iei.hospital.model.dto.Time;
@@ -39,13 +40,11 @@ public class HospitalService {
 			List subjectList = hospitalDao.searchSubjectList(hospitalNo);
 			List keywordList = hospitalDao.searchKeywordList(hospitalNo);
 			Time time = hospitalDao.searchHospitalTime(hospitalNo);
-			List doctorList = hospitalDao.searchDoctorList(hospitalNo);
-			List reviewList = hospitalDao.searchReviewList(hospitalNo);
+			List doctorList = hospitalDao.searchSubjectDoctorList(hospitalNo);
 			h.setSubjectList(subjectList);
 			h.setKeywordList(keywordList);
 			h.setTime(time);
 			h.setDoctorList(doctorList);
-			h.setReviewList(reviewList);
 		}
 		return h;
 	}

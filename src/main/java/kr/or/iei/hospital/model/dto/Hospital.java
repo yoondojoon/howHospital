@@ -26,5 +26,4 @@ public class Hospital {
 	private List keywordList;
 	private Time time;
 	private List doctorList;
-	private List reviewList;
 }

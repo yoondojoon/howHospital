@@ -15,6 +15,7 @@ import kr.or.iei.hospital.model.dto.HospitalDetailRowMapper;
 import kr.or.iei.hospital.model.dto.HospitalRowMapper;
 import kr.or.iei.hospital.model.dto.HospitalSearchRowMapper;
 import kr.or.iei.hospital.model.dto.KeywordRowMapper;
+import kr.or.iei.hospital.model.dto.SubjectDoctorRowMapper;
 import kr.or.iei.hospital.model.dto.SubjectRowMapper;
 import kr.or.iei.hospital.model.dto.Time;
 import kr.or.iei.hospital.model.dto.TimeRowMapper;
@@ -39,6 +40,8 @@ public class HospitalDao {
 	private TimeRowMapper timeRowMapper;
 	@Autowired
 	private DoctorRowMapper doctorRowMapper;
+	@Autowired
+	private SubjectDoctorRowMapper subjectDoctorRowMapper;
 	@Autowired
 	private ReviewRowMapper reviewRowMapper;
 
@@ -134,10 +137,10 @@ public class HospitalDao {
 		}
 	}
 
-	public List searchDoctorList(int hospitalNo) {
-		String query = "select * from doctor_tbl where hospital_no=? order by 1";
+	public List searchSubjectDoctorList(int hospitalNo) {
+		String query = "select doctor_no, hospital_no, subject_no, (select subject_name from subject_tbl where subject_no = d.subject_no) subject_name, doctor_picture, doctor_name, doctor_education, doctor_experience from doctor_tbl d where hospital_no=? order by 1";
 		Object[] params = {hospitalNo};
-		List list = jdbc.query(query, doctorRowMapper, params);
+		List list = jdbc.query(query, subjectDoctorRowMapper, params);
 		return list;
 	}
 
