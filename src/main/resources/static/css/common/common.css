@@ -135,3 +135,15 @@ input:not([type=radio]):-internal-autofill-selected {background-color:#fff!impor
 .no_data_wrap{display:flex; flex-direction:column; justify-content:center; align-items:center; gap:12px; height:100%; padding:10% 0; color:var(--gray_04); font-size:16px; font-weight:bold; line-height:1.5; text-align:center;}
 .no_data_wrap .icon{width:72px; height:72px;}
 .no_data_wrap .icon.no_data{background:url(/images/icon_warning_gray.svg) no-repeat center / contain;}
+
+/* modal */
+
+.modal{position:fixed; left:0; right:0; top:0; bottom:0; background-color:rgba(0,0,0,0.4);}
+.modal .modal_wrap{position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); display:flex; flex-direction:column; gap:20px; min-width:444px; min-height:315px; padding:40px 20px; background-color:#fff; border-radius:8px;}
+.modal .modal_title{font-size:20px; font-weight:bold; line-height:30px; text-align:center;}
+.modal .modal_container{max-height:114px; padding:0 20px; overflow-y:auto;}
+.modal .modal_content{font-size:16px; line-height:1.5;}
+.modal .modal_content .center{text-align:center;}
+.modal .btn_area{margin-top:20px;}
+.modal .btn_close{position:absolute; top:12px; right:12px; display:block; width:36px; height:36px; background:url(/images/icon_close.svg) no-repeat center / 16px;}
+
