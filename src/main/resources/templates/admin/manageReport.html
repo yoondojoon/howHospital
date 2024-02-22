@@ -26,8 +26,8 @@
 					<td name="noticeTitle" th:text="${report.reportTitle}">
 					<td name="memberName" th:text="${report.memberName}"></td>
 					<td name="reportStatus"> 
-						<span th:if="${report.status == 0}">미처리</span>
-						<span th:if="${report.status == 1}">처리</span>
+						<span th:if="${report.reportStatus == 0}">미처리</span>
+						<span th:if="${report.reportStatus == 1}">처리</span>
 					</td>
 				</tr>
         	</table>

@@ -26,6 +26,8 @@ public class AdminController {
 	@GetMapping(value="/manageReport")
 	public String adminMain(int reqPage, Model model) {
 		MemberReportListData mrld = adminService.selectAllMemberReport(reqPage);
+		model.addAttribute("reportList",mrld.getList());
+		model.addAttribute("pageNavi", mrld.getPageNavi());
 		return "/admin/manageReport";
 	}
 	
