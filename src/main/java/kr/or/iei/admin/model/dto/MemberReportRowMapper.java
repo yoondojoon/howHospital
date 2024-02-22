@@ -3,7 +3,7 @@ package kr.or.iei.admin.model.dto;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import org.springframework.jdbc.core.RowMapper; // 수정 필요
+import org.springframework.jdbc.core.RowMapper;
 
 import org.springframework.stereotype.Component;
 
@@ -18,6 +18,7 @@ public class MemberReportRowMapper implements RowMapper<MemberReport> {
         mr.setReportTitle(rs.getString("report_title"));
         mr.setReportNo(rs.getInt("report_no"));
         mr.setReportStatus(rs.getInt("report_status"));
+        mr.setMemberName(rs.getString("member_Name"));
         return mr;
     }
 }

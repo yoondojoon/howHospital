@@ -14,4 +14,5 @@ public class MemberReport {
 	private String reportTitle; //신고 제목
 	private String reportContent; //신고내용
 	private int reportStatus;	//신고처리상태
+	private String memberName;
 }
