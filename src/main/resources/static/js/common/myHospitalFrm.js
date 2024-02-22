@@ -9,7 +9,7 @@
         // 시작 시간을 선택하지 않은 경우 마감 시간 비활성화
         if (isNaN(openHour)) {
             var disabledOption = document.createElement("option");
-            disabledOption.text = "시작 시간을 선택하세요.";
+            disabledOption.text = "마감 시간을 선택하세요.";
             closeSelect.appendChild(disabledOption);
             closeSelect.disabled = true;
             return;
@@ -58,7 +58,7 @@ function setWeekendCloseTime() {
     // 시작 시간을 선택하지 않은 경우 마감 시간 비활성화
     if (isNaN(openHour)) {
         var disabledOption = document.createElement("option");
-        disabledOption.text = "시작 시간을 선택하세요.";
+        disabledOption.text = "마감 시간을 선택하세요.";
         closeSelect.appendChild(disabledOption);
         closeSelect.disabled = true;
         return;
@@ -110,7 +110,7 @@ function setLunchTime() {
     // 시작 시간을 선택하지 않은 경우 마감 시간 비활성화
     if (isNaN(openHour)) {
         var disabledOption = document.createElement("option");
-        disabledOption.text = "시작 시간을 선택하세요.";
+        disabledOption.text = "마감 시간을 선택하세요.";
         closeSelect.appendChild(disabledOption);
         closeSelect.disabled = true;
         return;
@@ -182,7 +182,7 @@ $(document).ready(function() {
     $('.addDoctorBtn').click(function() {
         // 새로운 의사 정보 입력 필드 생성
         let newDoctorInfo = `
-            <div class="input_wrap">
+            <div class="input_wrap doctor_info">
                 <div class="input_item">
 					<div class="imgViewDiv" width="200px">
 						<img class="img-view">
@@ -193,7 +193,7 @@ $(document).ready(function() {
 		                <td>
 			                <div class="input_item">
 			                
-					  <input type="text" class="doc" name="doctorName_${doctorCount}" placeholder="이름을 입력하세요." required></li>
+					  <input type="text" class="doc" name="doctorName" placeholder="이름을 입력하세요." required></li>
 					<input type="file" id="docImgInput" class="doc" name="imageFile" accept=".jpg, .png, .jpeg" onchange="loadImg(this);" >
 			                  <button type="button" class="btn_primary outline sm deleteDoctorBtn">삭제</button>
 							</div>
@@ -202,13 +202,13 @@ $(document).ready(function() {
 		                        <tr>
 		                            <th>학력</th>
 		                            <td>
-		                                <input type="text" class="doc" name="doctorEducation_${doctorCount}" placeholder="학력을 입력하세요." required>
+		                                <input type="text" class="doc" name="doctorEducation" placeholder="학력을 입력하세요." required>
 		                            </td>
 		                        </tr>
 		                        <tr>
 		                            <th>경력</th>
 		                            <td>
-		                                <input type="text" class="doc" name="doctorExperience_${doctorCount}" placeholder="예시) 20.03~21.11 강서병원장" required>
+		                                <input type="text" class="doc" name="doctorExperience" placeholder="예시) 20.03~21.11 강서병원장" required>
 		                            </td>
 		                        </tr>
 		                        
@@ -301,14 +301,10 @@ $(document).ready(function() {
             return;
         }
         
-        // 세 자리 단위로 콤마를 추가
-    value = value.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 
-        
-        
-            // 최대 10자리까지만 입력 가능하도록 제한
-    if (value.length > 9) {
-        value = value.slice(0, 9);
+            // 최대  6자리까지만 입력 가능하도록 제한
+    if (value.length > 5) {
+        value = value.slice(0, 5);
     }
         
         

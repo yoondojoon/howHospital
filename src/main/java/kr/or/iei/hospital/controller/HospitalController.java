@@ -100,6 +100,15 @@ public class HospitalController {
 	}
 	
 	
+	@GetMapping(value="/myHospitalEnroll")
+	public String myHospitalEnroll() {
+			
+		
+		return 0;
+	}
+	
+	
+	
 	
 	@GetMapping("/myHospitalReservation")
 	public String myHospitalReservation(int reqPage, Model model) {
@@ -110,6 +119,8 @@ public class HospitalController {
 		return "hospital/myHospitalReservationList";
 	}
 
+	
+	
 	@ResponseBody
 	@GetMapping("/changeReservationType")
 	public int changeReservationType(int selectValue, int reservationNo) {
@@ -122,6 +133,9 @@ public class HospitalController {
 		}
 	}
 
+	
+	
+	
 	
 }
 
