@@ -4,239 +4,194 @@
 
 <th:block th:include="common/header"></th:block>
 
-	<!-- container -->
-    <main id="container" class="container">
+<!-- container -->
+<main id="container" class="container">
 
-		<!-- contents -->
-        <section id="contents" class="contents searchHospital">
-            <h2>병원 찾기</h2>
-            <div class="search_area">
-            	<div class="list_area">
-            		<div class="search_wrap">
-	                    <div class="input_item">
-	                        <input class="search_input" type="search" name="keyword" placeholder="지역, 진료과 또는 병명을 입력해보세요">
-		                    <button type="button" class="btn_search" onclick="return searchHospital(this);"><span class="blind">검색</span></button>
-	                    </div>
-	                </div>
-	                <div class="list_wrap">
-	                	<h3 class="blind">병원 검색 리스트</h3>
-	                	
-	                	<div class="total_count" style="display: none;">총 <strong></strong>개의 병원이 검색되었습니다.</div>
-	                	
-	                	<div class="hospital_list_wrap">
-	                	
-		                	<div class="no_data_wrap">
-		                		<i class="icon no_data"></i>
-		                		<p>검색 결과가 없습니다.</p>
-		                	</div>
-		                	
-		                	<!-- 
-		                	<ul class="hospital_list" th:if="${hospitalList != null}">
-		                		<li th:each="h : ${hospitalList}">
-		                			<a href="javascript:void(0);" onclick="listClickFunc();">
-			                			<div class="row_wrap">
-			                				<strong class="title_info" th:text="${h.hospitalName}"></strong>
-			                				<th:block th:switch="${h.openStatus}">
-				                				<strong th:case="'진료중'" class="status_info open" th:text="${h.openStatus}"></strong>
-				                				<strong th:case="'진료종료'" class="status_info closed" th:text="${h.openStatus}"></strong>
-			                				</th:block>
-			                			</div>
-										<div class="row_wrap">
-											<span th:each="s : ${h.subjectList}" th:text="${s.subjectName}"></span>
-											<div class="row">
-				                				<span>3.3km</span>
-				                				<span th:text="${h.hospitalAddress}"></span>
-											</div>
-			                			</div>
-			                			<div class="row_wrap">
-			                				<span class="keyword" th:each="k : ${h.keywordList}" th:text="${k.keyword}"></span>
-			                			</div>
-		                			</a>
-		                		</li>
-		                	</ul>
-		                	 -->
-		                	
-	                	</div>
-	                </div>
-            	</div>
-            	<div id="map" class="api_area"></div>
-            </div>
-        </section>
-	    <!--// contents -->
-        
-    </main>
-    <!--// container -->
-	
+	<!-- contents -->
+	<section id="contents" class="contents searchHospital">
+		<h2>병원 찾기</h2>
+		<div class="search_area">
+			<div class="list_area">
+				<div class="search_wrap">
+					<div class="input_item">
+						<input class="search_input" type="search" name="keyword" placeholder="지역, 진료과 또는 병명을 입력해보세요">
+						<button type="button" class="btn_search" onclick="return searchHospital(this);"><span
+								class="blind">검색</span></button>
+					</div>
+				</div>
+				<div class="list_wrap">
+					<h3 class="blind">병원 검색 리스트</h3>
+
+					<div class="total_count" style="display: none;">총 <strong></strong>개의 병원이 검색되었습니다.</div>
+
+					<div class="hospital_list_wrap">
+
+						<div class="no_data_wrap">
+							<i class="icon no_data"></i>
+							<p>검색 결과가 없습니다.</p>
+						</div>
+
+					</div>
+				</div>
+			</div>
+			<div id="map" class="api_area"></div>
+		</div>
+	</section>
+	<!--// contents -->
+
+</main>
+<!--// container -->
+
 <th:block th:include="common/footer"></th:block>
 <!-- js 링크 -->
 <script type="text/javascript" src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=bizfvb77ie"></script>
 <script>
-//엔터키 이벤트
-$(".search_input").on("keyup", function(e){
-    if(e.keyCode == 13){
-    	return searchHospital($(this).next("button"));
-    }
-})
-
-let map = new naver.maps.Map("map");
-
-let markerArr = [];
-let infoWindowArr = [];
-function searchHospital(obj){
-	const keyword = $(obj).prev("input").val();
-	
-	if(keyword == ""){
-		alert("검색어를 입력하세요");
-		return false;
-	}
-	
-	$.ajax({
-		url: "/service/searchHospital",
-		type: "GET",
-		dataType:"JSON",		
-		data: {keyword: keyword},
-		success: function(hospitalList){
-			$(".hospital_list").empty();
-			$(markerArr).each(function(index, item){
-				item.setMap(null);
-			})
-			markerArr = [];
-			$(infoWindowArr).each(function(index, item){
-				item.close();
-			})
-			infoWindowArr = [];
-			
-			if(hospitalList.length == 0){
-				$(".total_count").hide();
-				$(".hospital_list_wrap .no_data_wrap").show();
-				return;
-			}
-			$(".hospital_list_wrap .no_data_wrap").hide();
-			$(".total_count").show();
-			const list = $("<ul class='hospital_list'>");
-			$(hospitalList).each(function(index, item){
-				$(window).scrollTop($(".search_area").offset().top - 72);
-				
-				const latlng = new naver.maps.LatLng(hospitalList[0].lat, hospitalList[0].lng);
-				map.setCenter(latlng);
-				map.setZoom(16);
-				
-				const marker = new naver.maps.Marker({
-					position: new naver.maps.LatLng(item.lat, item.lng),
-					map: map
-				});
-				markerArr.push(marker);
-				
-				//검색 결과 리스트
-				const listLi = $("<li>");
-				const listA = $("<a>");
-				const rowWrap1 = $("<div class='row_wrap'>");
-				const rowWrap2 = $("<div class='row_wrap'>");
-				const rowWrap3 = $("<div class='row_wrap'>");
-				const titleInfo = $("<strong class='title_info'>");
-				const statusInfo = $("<strong class='status_info'>");
-				const row = $("<div class='row'>");
-				const tel = $("<span>");
-				const address = $("<span>");
-				//병원이름
-				titleInfo.text(item.hospitalName);
-				rowWrap1.append(titleInfo);
-				//영업여부
-				statusInfo.text(item.openStatus);
-				if(item.openStatus == '진료중'){
-					statusInfo.addClass("open");
-				}else{
-					statusInfo.addClass("closed");
-				}
-				rowWrap1.append(statusInfo);
-				//진료과목명
-				$(item.subjectList).each(function(i, obj){
-					const span = $("<span class='subject'>");
-					span.text(obj.subjectName);
-					rowWrap2.append(span);
-				})
-				//전화번호
-				tel.text(item.hospitalTel);
-				row.append(tel);
-				//주소
-				address.text(item.hospitalAddress);
-				row.append(address);				
-				rowWrap2.append(row);
-				//키워드
-				$(item.keywordList).each(function(i, obj){
-					const span = $("<span class='keyword'>");
-					span.text(obj.keyword);
-					rowWrap3.append(span);
-				})
-				
-				//합치기
-				listA.attr("href","javascript:void(0);");
-				//리스트 클릭시 이벤트
-				
-				listA.append(rowWrap1);
-				listA.append(rowWrap2);
-				listA.append(rowWrap3);
-				listLi.append(listA);
-				list.append(listLi);
-				$(".hospital_list_wrap").append(list);
-				
-				//total count
-				$(".total_count>strong").text(hospitalList.length);
-				
-				let contentString = [
-					"<div class='info_window'>",
-					"	<div class='row_wrap'>"+rowWrap1.html()+"</div>",
-					"	<div class='row_wrap'>"+rowWrap2.html()+"</div>",
-					"	<div class='row_wrap'>"+rowWrap3.html(),
-					"		<a href='/service/hospitalDetail?hospitalNo="+item.hospitalNo+"' class='btn_primary sm'>예약하기</a>",						
-					"	</div>",
-					"</div>"
-				].join("");
-				
-				const infoWindow = new naver.maps.InfoWindow({
-					content: contentString
-				});
-				infoWindowArr.push(infoWindow);
-
-				naver.maps.Event.addListener(marker,"click",function(e){
-					map.setCenter(e.coord);					
-					infoWindow.open(map, marker);
-				});
-				listA.on("click",function(){
-					const thisIndex = $(this).parent().index();
-					const newLatlng = new naver.maps.LatLng(hospitalList[thisIndex].lat, hospitalList[thisIndex].lng);
-					map.setCenter(newLatlng);
-					infoWindow.open(map, marker);
-				});
-			});
-		},
-		error: function(res){
-			console.log(res);
-			console.log("에러");
+	//엔터키 이벤트
+	$(".search_input").on("keyup", function (e) {
+		if (e.keyCode == 13) {
+			return searchHospital($(this).next("button"));
 		}
-	});
-}
+	})
+
+	let map = new naver.maps.Map("map");
+
+	let markerArr = [];
+	let infoWindowArr = [];
+	function searchHospital(obj) {
+		const keyword = $(obj).prev("input").val();
+
+		if (keyword == "") {
+			alert("검색어를 입력하세요");
+			return false;
+		}
+
+		$.ajax({
+			url: "/service/searchHospital",
+			type: "GET",
+			dataType: "JSON",
+			data: { keyword: keyword },
+			success: function (hospitalList) {
+				$(".hospital_list").empty();
+				$(markerArr).each(function (index, item) {
+					item.setMap(null);
+				})
+				markerArr = [];
+				$(infoWindowArr).each(function (index, item) {
+					item.close();
+				})
+				infoWindowArr = [];
+
+				if (hospitalList.length == 0) {
+					$(".total_count").hide();
+					$(".hospital_list_wrap .no_data_wrap").show();
+					return;
+				}
+				$(".hospital_list_wrap .no_data_wrap").hide();
+				$(".total_count").show();
+				const list = $("<ul class='hospital_list'>");
+				$(hospitalList).each(function (index, item) {
+					$(window).scrollTop($(".search_area").offset().top - 72);
+
+					const latlng = new naver.maps.LatLng(hospitalList[0].lat, hospitalList[0].lng);
+					map.setCenter(latlng);
+					map.setZoom(16);
+
+					const marker = new naver.maps.Marker({
+						position: new naver.maps.LatLng(item.lat, item.lng),
+						map: map
+					});
+					markerArr.push(marker);
+
+					//검색 결과 리스트
+					const listLi = $("<li>");
+					const listA = $("<a>");
+					const rowWrap1 = $("<div class='row_wrap'>");
+					const rowWrap2 = $("<div class='row_wrap'>");
+					const rowWrap3 = $("<div class='row_wrap'>");
+					const titleInfo = $("<strong class='title_info'>");
+					const statusInfo = $("<strong class='status_info'>");
+					const row = $("<div class='row'>");
+					const tel = $("<span>");
+					const address = $("<span>");
+					//병원이름
+					titleInfo.text(item.hospitalName);
+					rowWrap1.append(titleInfo);
+					//영업여부
+					statusInfo.text(item.openStatus);
+					if (item.openStatus == '진료중') {
+						statusInfo.addClass("open");
+					} else {
+						statusInfo.addClass("closed");
+					}
+					rowWrap1.append(statusInfo);
+					//진료과목명
+					$(item.subjectList).each(function (i, obj) {
+						const span = $("<span class='subject'>");
+						span.text(obj.subjectName);
+						rowWrap2.append(span);
+					})
+					//전화번호
+					tel.text(item.hospitalTel);
+					row.append(tel);
+					//주소
+					address.text(item.hospitalAddress);
+					row.append(address);
+					rowWrap2.append(row);
+					//키워드
+					$(item.keywordList).each(function (i, obj) {
+						const span = $("<span class='keyword'>");
+						span.text(obj.keyword);
+						rowWrap3.append(span);
+					})
+
+					//합치기
+					listA.attr("href", "javascript:void(0);");
+					//리스트 클릭시 이벤트
+
+					listA.append(rowWrap1);
+					listA.append(rowWrap2);
+					listA.append(rowWrap3);
+					listLi.append(listA);
+					list.append(listLi);
+					$(".hospital_list_wrap").append(list);
+
+					//total count
+					$(".total_count>strong").text(hospitalList.length);
+
+					let contentString = [
+						"<div class='info_window'>",
+						"	<div class='row_wrap'>" + rowWrap1.html() + "</div>",
+						"	<div class='row_wrap'>" + rowWrap2.html() + "</div>",
+						"	<div class='row_wrap'>" + rowWrap3.html(),
+						"		<a href='/service/hospitalDetail?hospitalNo=" + item.hospitalNo + "' class='btn_primary sm'>예약하기</a>",
+						"	</div>",
+						"</div>"
+					].join("");
+
+					const infoWindow = new naver.maps.InfoWindow({
+						content: contentString
+					});
+					infoWindowArr.push(infoWindow);
+
+					naver.maps.Event.addListener(marker, "click", function (e) {
+						map.setCenter(e.coord);
+						infoWindow.open(map, marker);
+					});
+					listA.on("click", function () {
+						const thisIndex = $(this).parent().index();
+						const newLatlng = new naver.maps.LatLng(hospitalList[thisIndex].lat, hospitalList[thisIndex].lng);
+						map.setCenter(newLatlng);
+						infoWindow.open(map, marker);
+					});
+				});
+			},
+			error: function (res) {
+				console.log(res);
+				console.log("에러");
+			}
+		});
+	}
 </script>
 </body>
+
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

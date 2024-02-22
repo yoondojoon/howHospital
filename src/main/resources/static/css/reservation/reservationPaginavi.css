@@ -30,6 +30,9 @@
   line-height: 40px;
 }
 .pagination .page-item.active-page {
-  background-color: #252a34;
+  background-color: #4389BA;
   color: #fff;
+}
+a{
+	text-decoration: none;
 }

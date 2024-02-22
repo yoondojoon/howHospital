@@ -76,7 +76,7 @@ public class AdminDao {
 	public int deleteNotice(int noticeNo) {
 		String query = "delete from notice_tbl where notice_no =?";
 		Object[] params = {noticeNo};
-		int result = jdbc.queryForObject(query, Integer.class);
+		int result = jdbc.update(query,params);
 		return result;
 	}
 }
