@@ -49,6 +49,9 @@ public class AdminController {
 		return "redirect:/admin/noticeList?reqPage=1";
 	}
 	
+	
+	
+	
 	@GetMapping(value="/noticeDetail")
 	public String noticeDetail(int noticeNo, Model model) {
 		Notice n = adminService.searchNoticeDetail(noticeNo);
