@@ -16,10 +16,9 @@ public class H_ReservationRowMapper implements RowMapper<H_Reservation>{
 		hr.setMemberName(rs.getString("member_name"));
 		hr.setRegReservation(rs.getString("reg_reservation"));
 		hr.setReservationStatus(rs.getInt("reservation_status"));
-		hr.setReservationTime(rs.getString("reservation_time"));
 		hr.setReservationType(rs.getInt("reservation_type"));
 		hr.setReservationNo(rs.getInt("reservation_no"));
-		hr.setHospitalNo(rs.getInt("hospital_no"));
+		//hr.setHospitalNo(rs.getInt("hospital_no"));
 		
 		return hr;
 	}
