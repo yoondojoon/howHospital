@@ -200,6 +200,55 @@
 
 					<h4>체크박스</h4>
 
+					<h5>기본</h5>
+					<div class="checkbox_wrap">
+						<div class="input_item">
+							<input type="checkbox" name="check1_1" id="check1_1">
+							<label for="check1_1">체크박스 기본</label>
+						</div>
+						<div class="input_item">
+							<input type="checkbox" name="check1_2" id="check1_2">
+							<label for="check1_2">체크박스 기본</label>
+						</div>
+						<div class="input_item">
+							<input type="checkbox" name="check1_3" id="check1_3">
+							<label for="check1_3">체크박스 기본</label>
+						</div>
+						<div class="input_item">
+							<input type="checkbox" name="check1_4" id="check1_4">
+							<label for="check1_4">체크박스 기본</label>
+						</div>
+					</div>
+
+					<h5>col</h5>
+					<div class="checkbox_wrap row">
+						<div class="input_item">
+							<input type="checkbox" name="check2_1" id="check2_1">
+							<label for="check2_1">체크박스 기본</label>
+						</div>
+						<div class="input_item">
+							<input type="checkbox" name="check2_2" id="check2_2">
+							<label for="check2_2">체크박스 기본체크박스 기본체크박스 기본체크박스 기본체크박스 기본체크박스 기본체크박스 기본체크박스 기본체크박스 기본체크박스 기본</label>
+							<button type="button" class="btn_more"><span class="blind">더보기</span></button>
+						</div>
+						<div class="input_item">
+							<input type="checkbox" name="check3_3" id="check3_3">
+							<label for="check3_3">체크박스 기본</label>
+							<button type="button" class="btn_more"><span class="blind">더보기</span></button>
+						</div>
+						<div class="input_item">
+							<input type="checkbox" name="check4_4" id="check4_4">
+							<label for="check4_4">체크박스 기본</label>
+							<button type="button" class="btn_more"><span class="blind">더보기</span></button>
+						</div>
+					</div>
+
+					<h5>단독 사용시 checkbox_wrap 필요 없음</h5>
+					<div class="input_item">
+						<input type="checkbox" name="checkbox_only" id="checkbox_only">
+						<label for="checkbox_only">체크박스 기본</label>
+					</div>
+
 					<h4>파일(사진) 선택</h4>
 				</div>
 			</section>
@@ -215,6 +264,7 @@
 			<h3>modal</h3>
 			<section class="ref_section">
 				<button type="button" class="btn_primary" onclick="openModal(popup_01);">modal open</button>
+				<p>- .modal은 컨텐츠 밖에 작성</p>
 				<p>- .modal에 부여한 id명을 파라미터로 넣어준다.</p>
 				<p>- 팝업 내 closeModal()엔 this를 넣어준다.</p>
 			</section>
