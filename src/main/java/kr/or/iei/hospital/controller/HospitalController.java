@@ -23,6 +23,7 @@ import kr.or.iei.member.model.dto.Member;
 import kr.or.iei.member.model.service.MemberService;
 import kr.or.iei.reservation.model.dto.H_Reservation;
 import kr.or.iei.reservation.model.dto.ReservationDetail;
+import kr.or.iei.reservation.model.dto.ReservationListData;
 import kr.or.iei.reservation.model.service.ReservationDetailService;
 import kr.or.iei.reservation.model.service.ReservationService;
 import kr.or.iei.hospital.model.service.HospitalService;
@@ -102,8 +103,9 @@ public class HospitalController {
 	@GetMapping("/myHospitalReservation")
 	public String myHospitalReservation(int reqPage, Model model) {
 		//병원 예약 조회해오기
-		List list = reservationService.selectReservation(reqPage);
-		model.addAttribute("reservation", list);
+		ReservationListData nld = reservationService.selectReservation(reqPage);
+		model.addAttribute("reservation", nld.getList());
+		model.addAttribute("pageNavi", nld.getPageNavi());
 		return "hospital/myHospitalReservationList";
 	}
 

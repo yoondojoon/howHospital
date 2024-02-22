@@ -12,6 +12,7 @@ public class H_Reservation {
 	private int reservationStatus;
 	private String regReservation;
 	private String reservationTime;
+	private int reservationType;
 	private String memberName;
 	private String doctorName;
 }
