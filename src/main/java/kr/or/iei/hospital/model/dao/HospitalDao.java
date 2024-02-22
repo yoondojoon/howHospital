@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import kr.or.iei.hospital.model.dto.BusinessAuth;
 import kr.or.iei.hospital.model.dto.BusinessAuthFile;
+import kr.or.iei.admin.model.dto.ReviewMemberNameRowMapper;
 import kr.or.iei.admin.model.dto.ReviewRowMapper;
 import kr.or.iei.hospital.model.dto.DoctorRowMapper;
 import kr.or.iei.hospital.model.dto.Hospital;
@@ -44,6 +45,8 @@ public class HospitalDao {
 	private SubjectDoctorRowMapper subjectDoctorRowMapper;
 	@Autowired
 	private ReviewRowMapper reviewRowMapper;
+	@Autowired
+	private ReviewMemberNameRowMapper reviewMemberNameRowMapper;
 
 	public List searchHospital(String keyword) {	
 		String query = "select hospital_no, hospital_name, hospital_tel, hospital_address, lat, lng,\r\n" + 
@@ -144,10 +147,10 @@ public class HospitalDao {
 		return list;
 	}
 
-	public List searchReviewList(int hospitalNo) {
-		String query = "select * from review_tbl where reservation_no in(select reservation_no from reservation_tbl where hospital_no=?)";
+	public List searchReviewMemberNameList(int hospitalNo) {
+		String query = "select review_no, reservation_no, member_no, (select member_name from member_tbl where member_no=r.member_no) member_name, review_title, review_content, review_date, review_img from review_tbl r where reservation_no in(select reservation_no from reservation_tbl where hospital_no=?)";
 		Object[] params = {hospitalNo};
-		List list = jdbc.query(query, reviewRowMapper, params);
+		List list = jdbc.query(query, reviewMemberNameRowMapper, params);
 		return list;
 	}
 	

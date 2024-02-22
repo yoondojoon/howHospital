@@ -16,4 +16,5 @@ public class Review {
 	private String reviewRating;
 	private String reviewDate;
 	private String reviewImg;
+	private String memberName;
 }
