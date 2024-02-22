@@ -19,13 +19,13 @@
 .hospitalDetail .top_info_list .info_title{min-width:160px; font-size:16px; font-weight:bold; line-height:1.5;}
 .hospitalDetail .top_info_list .info_content{display:flex; flex-wrap:wrap; gap:12px; justify-content:flex-end; flex:1;}
 .hospitalDetail .top_info_list .info_content>.subject_name+.subject_name{position:relative; margin-left:12px;}
-.hospitalDetail .top_info_list .info_content>.subject_name+.subject_name::after{content:''; display:block; position:absolute; left:-12px; top:6px; width:1px; height:16px; background-color:var(--gray_06);}
+.hospitalDetail .top_info_list .info_content>.subject_name+.subject_name::after{content:''; display:block; position:absolute; left:-12px; top:6px; width:1px; height:16px; background-color:var(--line_02);}
 .hospitalDetail .top_info_list .info_content .open_status{position:relative; margin-left:12px; padding-left:12px; color:var(--main_05); font-size:16px; font-weight:bold; line-height:1.5}
 .hospitalDetail .top_info_list .info_content .open_status::before{content:''; display:block; position:absolute; top:9px; left:0; width:8px; height:8px; border-radius:50%;}
 .hospitalDetail .top_info_list .info_content .open_status.open{color:var(--main_05);}
 .hospitalDetail .top_info_list .info_content .open_status.open::before{background-color:var(--main_05);}
 .hospitalDetail .top_info_list .info_content .open_status.closed{color:var(--gray_04);}
-.hospitalDetail .top_info_list .info_content .open_status.closed::before{background-color:var(--gray_05);}
+.hospitalDetail .top_info_list .info_content .open_status.closed::before{background-color:var(----line_02);}
 .hospitalDetail .top_info_list .keyword{display:block; height:30px; padding:0 19px; border-radius:30px; background-color:var(--bg_01); color:var(--main_01); font-size:14px; font-weight:bold; line-height:30px; text-align:center;}
 
 .hospitalDetail .detail_tab_wrap{margin-top:48px;}
@@ -36,10 +36,11 @@
 .hospitalDetail .detail_tab_wrap .tab_menu_wrap .tab_menu_btn.active{border:1px solid var(--main_01); border-radius:8px 8px 0 0; background-color:var(--main_01); color:#fff;}
 .hospitalDetail .detail_tab_wrap .tab_content_wrap .tab_content{padding:48px 0;}
 .hospitalDetail .detail_tab_wrap .tab_content_wrap .tab_content:first-child{padding-top:36px;}
-.hospitalDetail .detail_tab_wrap .tab_content_wrap .tab_content+.tab_content{border-top:1px solid var(--gray_05);}
+.hospitalDetail .detail_tab_wrap .tab_content_wrap .tab_content+.tab_content{border-top:1px solid var(----line_02);}
+.hospitalDetail .detail_tab_wrap .tab_content_wrap .tab_content .item_section{color:var(--gray_04);}
 .hospitalDetail .detail_tab_wrap .tab_content_wrap .tab_content .item_section+.item_section{margin-top:48px;}
 .hospitalDetail .time_list{display:flex; flex-wrap:wrap; gap:24px; padding-top:24px;}
-.hospitalDetail .time_list>li{width:calc(20% - 24px); padding:8px 0; font-size:14px; line-height:1.5;}
+.hospitalDetail .time_list>li{width:calc(20% - 24px); padding:8px 0; color:var(--gray_01); font-size:14px; line-height:1.5;}
 .hospitalDetail .time_list>li>*{display:block; text-align:center;}
 .hospitalDetail .time_list .lunch_hour{color:var(--gray_04); font-size:12px; line-height:1.5;}
 .hospitalDetail .time_list .holiday{color:var(--main_02);}
@@ -47,9 +48,11 @@
 .hospitalDetail .time_list .today{position:relative; border-radius:8px; background-color:var(--bg_01);}
 .hospitalDetail .time_list .today::before{content:'오늘'; display:block; position:absolute; top:-24px; left:0; right:0; color:var(--main_05); font-size:12px; font-weight:bold; text-align:center;}
 .hospitalDetail .doctor_list>li{padding:20px 0;}
-.hospitalDetail .doctor_list>li+li{border-top: 1px solid var(--gray_07);}
-.hospitalDetail .doctor_list .title_wrap .subject_name{margin-left:12px; color:var(--gray_03);}
+.hospitalDetail .doctor_list>li+li{border-top: 1px solid var(--line_02);}
+.hospitalDetail .doctor_list .title_wrap .doctor_name{color:var(--gray_01);}
+.hospitalDetail .doctor_list .title_wrap .subject_name{margin-left:12px;}
 .hospitalDetail .doctor_list .info_wrap{padding:20px 0;}
+.hospitalDetail .doctor_list .doctor_img_wrap{width:200px; height:257px;}
 .hospitalDetail .doctor_list .info_wrap>p+p{margin-top:12px;}
 
 .hospitalDetail .review_wrap {margin-top:-5.5px;}
@@ -64,9 +67,9 @@
 .hospitalDetail .review_wrap .btn_write{padding-left:36px; background:url(/images/icon_write.svg) no-repeat center left 12px / 20px;}
 .hospitalDetail .review_wrap .review_main_wrap{padding:16px 0;}
 .hospitalDetail .review_wrap .review_main_wrap .sorting_wrap{width:160px; margin-bottom:16px;}
-.hospitalDetail .review_wrap .review_main_wrap .review_list{border-top:1px solid var(--gray_06); border-bottom:1px solid var(--gray_06);}
+.hospitalDetail .review_wrap .review_main_wrap .review_list{border-top:1px solid var(--line_02); border-bottom:1px solid var(--line_02);}
 .hospitalDetail .review_wrap .review_main_wrap .review_list>li{padding:16px 0;}
-.hospitalDetail .review_wrap .review_main_wrap .review_list>li+li{border-top:1px solid var(--gray_06);}
+.hospitalDetail .review_wrap .review_main_wrap .review_list>li+li{border-top:1px solid var(--line_02);}
 .hospitalDetail .review_main_wrap .review_list .rating_wrap{display:flex; gap:8px;}
 .hospitalDetail .review_main_wrap .review_list .rating_wrap .rating{display:block; font-size:14px; font-weight:bold; line-height:20px;}
 .hospitalDetail .review_main_wrap .review_list .rating_wrap .star_wrap{width:100px; height:20px; background:url(/images/icon_star.svg) repeat-x left top;}
@@ -75,10 +78,10 @@
 .hospitalDetail .review_list .detail_btm_wrap{display:flex; align-items:center; gap:20px;}
 .hospitalDetail .review_list .detail_btm_wrap>span{color:var(--gray_04); font-size:14px; line-height:1.5;}
 .hospitalDetail .review_list .detail_btm_wrap>span+span{position:relative;}
-.hospitalDetail .review_list .detail_btm_wrap>span+span::before{content:''; display:block; position:absolute; left:-10px; top:5px; width:1px; height:10px; background-color:var(--gray_05);}
+.hospitalDetail .review_list .detail_btm_wrap>span+span::before{content:''; display:block; position:absolute; left:-10px; top:5px; width:1px; height:10px; background-color:var(----line_02);}
 .hospitalDetail .review_list .detail_btm_wrap>.btm_btn_wrap{margin-left:auto;}
 .hospitalDetail .review_list .detail_btm_wrap>.btm_btn_wrap .report_btn{color:var(--gray_04); font-size:13px; line-height:21px;}
 .hospitalDetail .review_wrap .pagination_wrap{margin-top:12px; padding:12px 0;}
 .hospitalDetail .review_wrap .pagination_wrap .pagination{display:flex; justify-content:center; gap:8px;}
-.hospitalDetail .review_wrap .pagination_wrap .pagination .page-item{display:block; width:28px; height:28px; color:var(--gray_03);font-size:14px; line-height:24px; text-align:center;}
+.hospitalDetail .review_wrap .pagination_wrap .pagination .page-item{display:block; width:28px; height:28px; color:var(--gray_04);font-size:14px; line-height:24px; text-align:center;}
 .hospitalDetail .review_wrap .pagination_wrap .pagination .page-item.active{border-radius:50%; background-color:var(--gray_04); color:#fff;}
