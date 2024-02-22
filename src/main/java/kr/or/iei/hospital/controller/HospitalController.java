@@ -104,7 +104,7 @@ public class HospitalController {
 	public String myHospitalEnroll() {
 			
 		
-		return 0;
+		return null;
 	}
 	
 	
