@@ -43,7 +43,7 @@
 }
 
 #hospital_wrap .main_content .hospital_info_form {
-    width:70%;
+    width:1080px;
     border:1px solid red;
     padding:30px;
 }
@@ -130,15 +130,10 @@ input:not([type=radio]){
 	
 	
 	
-img{
-	width:25%;
+.img{
+	width:20%;
 	border: 0.5px solid var(--line_02) !important;
 	/*border-radius: 20px !important;*/
-	
-}
-
-.doctors{
-	width:100%;
 }
 
 table th{
@@ -153,9 +148,13 @@ table th, table td{
 .doc{
 	padding: 10px !important;
 	border-style:none !important;
-	
 }
 
+
+#dicImg{
+	  background-color: #81ecec !important;
+  border: 2px solid #00cec9;
+}
 
 .deleteDoctorBtn{
     border-color: var(--main_02) !important;
@@ -174,3 +173,18 @@ table th, table td{
 	width:100%;
 	font-size:16px;
 }
+
+
+.imgViewDiv{
+	display: flex;
+	align-items: center ; /* 수직 가운데 정렬 */
+	border: 1px solid var(--line_02);
+	width: 150px;
+}
+
+.img-view{
+	width:100%;
+}
+
+
+

@@ -21,7 +21,7 @@ public class FileUtils {
 	public String upload(String savepath, MultipartFile file) { //Multipartfile
 		String filename = file.getOriginalFilename(); 		//원폰파일명 추출 => text.txt
 		//test.txt			->		test			.txt
-		String onlyFilename = filename.substring(0, filename.lastIndexOf(".")); //여기까지가 test
+		String onlyFilename = filename.substring(0, filename.lastIndexOf(".")); //0번~'.이하'
 		String extention = filename.substring(filename.lastIndexOf(".")); // 여기까지가 .txt
 		
 		//실제 업로드한 파일명

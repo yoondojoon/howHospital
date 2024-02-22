@@ -94,6 +94,12 @@ public class HospitalController {
 		return "hospital/businessAuth";
 	}
 	
+	@GetMapping(value="/myHospitalFrm")
+	public String myHospitalFrm() {
+		return "hospital/myHospitalFrm";
+	}
+	
+	
 	
 	@GetMapping("/myHospitalReservation")
 	public String myHospitalReservation(int reqPage, Model model) {
