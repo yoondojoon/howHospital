@@ -109,23 +109,8 @@ form .text h3 a:hover {
 
 .multiple_file {
   margin-bottom: 10px;
-
 }
 
-.file-button {
-  display: inline-block;
-  background-color: #4070f4;
-  color: #fff;
-  cursor: pointer;
-  font-size: 14px;
-  display: inline-block;
-  text-align: center;
-  line-height: 30px;
-  width: 80px;
-  height: 30px;
-  border-radius: 5px;
-
-}
 
 .multiple_file {
   width: 100%;
@@ -133,10 +118,6 @@ form .text h3 a:hover {
   overflow: hidden;
 }
 
-.file-upload input[type='file'] {
-  position: absolute;
-  left: -9999px;
-}
 
 #fileList {
 

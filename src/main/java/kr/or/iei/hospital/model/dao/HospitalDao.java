@@ -168,5 +168,12 @@ public class HospitalDao {
 		int result = jdbc.update(query, params);
 		return result;
 	}
+
+	public int updateMemberStatus(int memberNo) {
+		String query = "update member_tbl set member_status = 4 where member_no=?";
+		Object[] params = {memberNo};
+		int result = jdbc.update(query, params);
+		return result;
+	}
 	
 }
