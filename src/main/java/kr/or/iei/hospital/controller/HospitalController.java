@@ -102,9 +102,8 @@ public class HospitalController {
 	
 	@PostMapping(value="/myHospitalEnroll")
 	public String myHospitalEnroll() {
-<<<<<<< HEAD
+
 		return "redirect:/";
-=======
 
 	}
 	
