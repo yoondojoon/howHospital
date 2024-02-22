@@ -60,9 +60,13 @@ public class HospitalService {
 			
 			// 2. BusinessAuth_file테이블에 insert
 			for (BusinessAuthFile businessAuthFile : fileList) {
+				System.out.println(businessAuthFile);
 				businessAuthFile.setBusinessAuthNo(businessAuthNo);
 				result += hospitalDao.insertBusinessAuthFile(businessAuthFile);
 			}
+			
+			result += hospitalDao.updateMemberStatus(ba.getMemberNo()); 
+			
 		}
 		return result;
 	}

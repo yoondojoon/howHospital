@@ -31,6 +31,13 @@
 	right :10px;
 }
 
+.form-select{
+	border:1px solid #222; 
+	border-radius:4px; 
+	overflow:hidden;
+	width:70px;
+	text-indent:20px;
+}
 
 .btl{
 	width: 100%;
@@ -70,6 +77,14 @@ td:first-child {
 
 tr:nth-child(even) td {
   background: #eaeaed;
+}
+
+.chk{
+	appearance:auto; 
+	position:relative; 
+	width:20px;
+	height:20px; 
+	left:0;
 }
 
 .pagination{

@@ -156,16 +156,25 @@ public class MemberController {
 		
 	}
 	
-	//회원탈퇴(아직 안끝남)
-	@GetMapping(value="/delete")
+	//회원탈퇴 화면
+	@GetMapping(value="/memberDelete")
 	public String delete(@SessionAttribute(required = false) Member member) {
 		
 		
 		
-		return "redirect:/";
+		return "member/memberDelete";
 	}
 	
 	
+	
+	//회원탈퇴 확인
+	@GetMapping(value="/confirmDelete")
+	public String confirmDelete() {
+		
+		return "member/confirmDelete";
+		
+		
+	}
 	
 	
 	

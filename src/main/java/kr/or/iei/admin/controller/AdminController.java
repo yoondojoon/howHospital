@@ -6,6 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import kr.or.iei.admin.model.dto.MemberReportListData;
 import kr.or.iei.admin.model.dto.Notice;
 import kr.or.iei.admin.model.dto.NoticeListData;
 import kr.or.iei.admin.model.service.AdminService;
@@ -21,6 +22,15 @@ public class AdminController {
 	public String adminMain() {
 		return "/admin/adminMain";
 	}
+
+	@GetMapping(value="/manageReport")
+	public String adminMain(int reqPage, Model model) {
+		MemberReportListData mrld = adminService.selectAllMemberReport(reqPage);
+		model.addAttribute("reportList",mrld.getList());
+		model.addAttribute("pageNavi", mrld.getPageNavi());
+		return "/admin/manageReport";
+	}
+	
 	
 	@GetMapping(value="/noticeList")
 	public String noticeList(int reqPage, Model model) {
@@ -49,6 +59,9 @@ public class AdminController {
 		return "redirect:/admin/noticeList?reqPage=1";
 	}
 	
+	
+	
+	
 	@GetMapping(value="/noticeDetail")
 	public String noticeDetail(int noticeNo, Model model) {
 		Notice n = adminService.searchNoticeDetail(noticeNo);
@@ -64,6 +77,13 @@ public class AdminController {
 	
 	@GetMapping(value="/noticeUpdateFrm")
 	public String noticeUpdateFrm(int noticeNo, Model model) {
+		Notice n = adminService.searchNoticeDetail(noticeNo);
+		model.addAttribute("n",n);
+		return "/admin/noticeUpdateFrm";
+	}
+	
+	@GetMapping(value="/deleteChk")
+	public String deleteChk(int noticeNo, Model model) {
 		Notice n = adminService.searchNoticeDetail(noticeNo);
 		model.addAttribute("n",n);
 		return "/admin/noticeUpdateFrm";

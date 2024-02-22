@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 @Data
 public class H_Reservation {
 	private int reservationNo;
+	private int hospitalNo;
 	private int reservationStatus;
 	private String regReservation;
 	private String reservationTime;

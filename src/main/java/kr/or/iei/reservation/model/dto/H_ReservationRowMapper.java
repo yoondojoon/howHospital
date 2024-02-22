@@ -19,6 +19,7 @@ public class H_ReservationRowMapper implements RowMapper<H_Reservation>{
 		hr.setReservationTime(rs.getString("reservation_time"));
 		hr.setReservationType(rs.getInt("reservation_type"));
 		hr.setReservationNo(rs.getInt("reservation_no"));
+		hr.setHospitalNo(rs.getInt("hospital_no"));
 		
 		return hr;
 	}
