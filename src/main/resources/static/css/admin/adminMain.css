@@ -79,6 +79,14 @@ tr:nth-child(even) td {
   background: #eaeaed;
 }
 
+.chk{
+	appearance:auto; 
+	position:relative; 
+	width:20px;
+	height:20px; 
+	left:0;
+}
+
 .pagination{
 	margin:30px auto;
 	overflow : hidden;
