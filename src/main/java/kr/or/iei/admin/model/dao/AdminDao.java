@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import kr.or.iei.admin.model.dto.MemberReport;
 import kr.or.iei.admin.model.dto.MemberReportRowMapper;
 import kr.or.iei.admin.model.dto.Notice;
 import kr.or.iei.admin.model.dto.NoticeListData;
@@ -95,5 +96,33 @@ public class AdminDao {
 		String query = "select count(*) from Member_report_tbl";
 		int totalCount = jdbc.queryForObject(query, Integer.class);
 		return totalCount;
+	}
+
+	public int deleteChk(int reportNo) {
+		String query = "delete from member_report_tbl where report_no = ?";
+		Object[] params = {reportNo};
+		int result = jdbc.update(query,params);
+		return result;
+	}
+
+	public MemberReport searchReportDetail(int reportNo) {
+		String query = "SELECT report_NO, MEMBER_TBL.MEMBER_NO, board_no, report_title, report_content, report_status, MEMBER_NAME FROM MEMBER_TBL RIGHT OUTER JOIN Member_Report_TBL ON MEMBER_TBL.MEMBER_NO = Member_Report_TBL.MEMBER_NO WHERE report_no= ?";
+		Object[] params = {reportNo};
+		MemberReport mr = jdbc.queryForObject(query, memberReportRowMapper,params);
+		return mr;
+	}
+
+	public int deleteReport(int reportNo) {
+		String query = "delete from member_report_tbl where report_no=?";
+		Object[] params = {reportNo};
+		int result = jdbc.update(query,params);
+		return result;
+	}
+
+	public int confirmReport(int reportNo) {
+		String query = "update member_report_tbl set report_status = 1 where report_no=?";
+		Object[] params = {reportNo};
+		int result = jdbc.update(query,params);
+		return result;
 	}
 }

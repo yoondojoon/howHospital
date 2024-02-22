@@ -1,11 +1,14 @@
 package kr.or.iei.admin.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import kr.or.iei.admin.model.dto.MemberReport;
 import kr.or.iei.admin.model.dto.MemberReportListData;
 import kr.or.iei.admin.model.dto.Notice;
 import kr.or.iei.admin.model.dto.NoticeListData;
@@ -60,8 +63,6 @@ public class AdminController {
 	}
 	
 	
-	
-	
 	@GetMapping(value="/noticeDetail")
 	public String noticeDetail(int noticeNo, Model model) {
 		Notice n = adminService.searchNoticeDetail(noticeNo);
@@ -83,9 +84,33 @@ public class AdminController {
 	}
 	
 	@GetMapping(value="/deleteChk")
-	public String deleteChk(int noticeNo, Model model) {
-		Notice n = adminService.searchNoticeDetail(noticeNo);
-		model.addAttribute("n",n);
-		return "/admin/noticeUpdateFrm";
+	public String deleteChk(String deleteList) {
+		boolean result = adminService.deletChk(deleteList);
+		if(result) {
+			System.out.println("삭제성공");
+		}else{
+			System.out.println("삭제실패");
+		}
+		return "redirect:/admin/manageReport?reqPage=1";
+		
+	}
+	
+	@GetMapping(value="/reportDetail")
+	public String reportDetail(int reportNo, Model model) {
+		MemberReport mr = adminService.searchReportDetail(reportNo);
+		model.addAttribute("mr",mr);
+		return "/admin/reportDetail";
+	}
+	
+	@GetMapping(value="/reportDelete")
+	public String reportDelete(int reportNo) {
+		int result = adminService.deleteReport(reportNo);
+		return "redirect:/admin/manageReport?reqPage=1";
+	}
+	
+	@GetMapping(value="/reportConfirm")
+	public String reportDetail(int reportNo) {
+		int result = adminService.confirmReport(reportNo);
+		return "redirect:/admin/manageReport?reqPage=1";
 	}
 }
