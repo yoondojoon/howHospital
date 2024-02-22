@@ -53,12 +53,19 @@ public class AdminController {
 	public String noticeDetail(int noticeNo, Model model) {
 		Notice n = adminService.searchNoticeDetail(noticeNo);
 		model.addAttribute("n",n);
-		return "/admin/noticeDetail?noticeNo="+noticeNo;
+		return "/admin/noticeDetail";
 	}
 	
-	@GetMapping(value="/noticeDelete")
-	public String noticeDelete(int noticeNo) {
+	@GetMapping(value="/deleteNotice")
+	public String deleteNotice(int noticeNo) {
 		int result = adminService.deleteNotice(noticeNo);
 		return "redirect:/admin/noticeList?reqPage=1";
+	}
+	
+	@GetMapping(value="/noticeUpdateFrm")
+	public String noticeUpdateFrm(int noticeNo, Model model) {
+		Notice n = adminService.searchNoticeDetail(noticeNo);
+		model.addAttribute("n",n);
+		return "/admin/noticeUpdateFrm";
 	}
 }
