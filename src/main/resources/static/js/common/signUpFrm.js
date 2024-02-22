@@ -17,11 +17,11 @@ $("#agreeAll").on("click", function() {
     }
 
 
-});
+	});
 
 
 
-$("#agreeService").on("click",function(){
+	$("#agreeService").on("click",function(){
 
     const isChecked = $(this).is(":checked");
 
@@ -29,12 +29,12 @@ $("#agreeService").on("click",function(){
         $("#agreeAll").prop("checked",false)
     };
 
-});
+	});
 
 
 
-//주소
-function searchAddr(){
+	//주소
+	function searchAddr(){
     new daum.Postcode({
         oncomplete: function(data) {
             $("#postcode").val(data.zonecode);
@@ -43,15 +43,12 @@ function searchAddr(){
         }
     }).open();
     
-    
-    
-    
-};
+	};
 
 
 
 
-$("#agreeLocation").on("click",function(){
+	$("#agreeLocation").on("click",function(){
 
     const isChecked = $(this).is(":checked");
 
@@ -59,9 +56,9 @@ $("#agreeLocation").on("click",function(){
         $("#agreeAll").prop("checked",false)
     };
 
-});
+	});
 
-$("#agreeAge").on("click",function(){
+	$("#agreeAge").on("click",function(){
 
     const isChecked = $(this).is(":checked");
 
@@ -69,12 +66,12 @@ $("#agreeAge").on("click",function(){
         $("#agreeAll").prop("checked",false)
     };
 
-});
+	});
 
 
 
 
-$("#agreeService, #agreeLocation, #agreeAge").on("click",function(){
+	$("#agreeService, #agreeLocation, #agreeAge").on("click",function(){
 
 
     const agreeService = $("#agreeService").is(":checked");
@@ -88,11 +85,11 @@ $("#agreeService, #agreeLocation, #agreeAge").on("click",function(){
         $("#agreeAll").prop("checked",true)
     };
 
-});
+	});
 
-let mailCode = null;
+	let mailCode = null;
 
-$("#sendBtn").on("click",function(){
+	$("#sendBtn").on("click",function(){
 
 	const memberEmail = $("#memberEmail").val();
 	
@@ -231,35 +228,188 @@ $("#signUpBtn").on("click",function(){
 	
 	
 	
-	//console.log(selectType, memberEmail, memberPassword, memberName, memberRrn, postcode, address, detailAddress);
-
+	if(selectType === 0){
 	
-	
-	if((selectType, memberEmail, memberPassword, memberName, memberRrn, postcode, address, detailAddress) == null){
+		event.preventDefault()
 		
-		
-	};
+	}
 	
 	
 });
 
 
-//전화번호 하이픈
-const autoHyphen = (target) => {
- target.value = target.value
-   .replace(/[^0-9]/g, '')
-  .replace(/^(\d{0,3})(\d{0,4})(\d{0,4})$/g, "$1-$2-$3").replace(/(\-{1,2})$/g, "");
-}
+$("#signUpBtn").on("click", function(event) {
 
-//주민번호제한
-function rrnMaxLength(e){
+    const selectType = $("select[name=memberType]").val();
+    const memberEmail = $("#memberEmail").val();
+    const memberPassword = $("#memberPassword").val();
+    const rePassword = $("#reMemberPassword").val();
+    const memberName = $("#memberName").val();
+    const memberRrn = $("#memberRrn").val();
+    const postcode = $("#postcode").val();
+    const address = $("#address").val();
+    const detailAddress = $("#detailAddress").val();
+    const memberPhone = $("#memberPhone").val();
+	
+	
+	
+	//cosnt regEmail = /^[a-zA-Z0-9+-\_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
+	//const regPw = 
+	//const regPhone = 
+	
+	
+	
+	
+   
+})
+
+	$("#memberPassword").on("change",function(){
+
+	const password = $("#memberPassword").val();
+	
+	
+	
+	
+		if(password.length < 4){//비밀번호가 4보다 커야 true
+			$("#passwordStatus1").text("비밀번호는 4글자 이상 사용하실 수 있습니다.");
+			$("#passwordStatus1").css("color","red");
+			event.preventDefault()
+			
+			
+		}else if( password.length > 3){
+			$("#passwordStatus1").text("사용가능한 비밀번호 입니다.");
+			$("#passwordStatus1").css("color","blue");
+		}
+	
+});
+
+
+
+
+
+
+	$("#reMemberPassword").on("change",function(){
+	
+	const password = $("#memberPassword").val();
+	const reMemberPassword = $("#reMemberPassword").val();
+	
+	if(password === reMemberPassword){
+	
+		$("#passwordStatus2").text("비밀번호가 일치합니다.");
+		$("#passwordStatus2").css("color","blue");
+		
+	}else{
+	
+		$("#passwordStatus2").text("비밀번호가 일치하지 않습니다.");
+		$("#passwordStatus2").css("color","red");
+		event.preventDefault()
+	}
+
+	});
+	
+	
+	
+	
+	$("#memberRrn").on("change",function(){
+		
+		const memberRrn = $("#memberRrn").val();
+		
+		if(memberRrn.length < 7){
+			
+			$("#rrnStatus").text("주민등록번호는 뒷1자리까지 입력해야 합니다. XXXXXX-X");
+			$("#rrnStatus").css("color","red");
+			event.preventDefault()
+			
+		}else{
+			$("#rrnStatus").text("사용가는한 주민등록번호 입니다.");
+			$("#rrnStatus").css("color","blue");
+		}
+		
+	
+	});
+	
+	
+	$("#memberPhone").on("change",function(){
+		
+		const memberPhone = $("#memberPhone").val();
+		
+		if(memberPhone.length < 13){
+		
+			$(phoneStatus).text("전화번호를 정확히 입력해주세요.");
+			$(phoneStatus).css("color","red");
+			event.preventDefault()
+		
+		}else{
+			
+			$(phoneStatus).text("사용가능한 전화번호 입니다.");
+			$(phoneStatus).css("color","blue");
+		}
+		
+		
+	});
+	
+	
+//이메일 중복 체크
+$("#memberEmail").on("change",function(){
+
+	const memberEmail = $("#memberEmail").val();
+
+	const regExp = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
+
+
+	if(!regExp.test(memberEmail)){
+
+	$("#emailStatus").text("잘못된 형식의 이메일입니다.").css("color","red");
+
+	}else{
+	
+		$.ajax({
+			url: "/member/emailChk",
+			type: "post",
+			data : {memberEmail :member_email},
+			success : function(data){
+				
+				
+				if(cnt == 1){
+				$("#emailStatus").text("사용가능한 이메일입니다. ");
+				}
+			},
+			error: function(){
+			
+				$("#emailStatus").text("중복된 이메일입니다. ");
+			
+			
+			}
+		
+		
+		
+		});
+	
+	
+	}
+            
+            
+});
+		
+
+
+
+	//전화번호 하이픈
+	const autoHyphen = (target) => {
+ 	target.value = target.value
+   	.replace(/[^0-9]/g, '')
+  	.replace(/^(\d{0,3})(\d{0,4})(\d{0,4})$/g, "$1-$2-$3").replace(/(\-{1,2})$/g, "");
+		}
+
+	//주민번호제한
+	function rrnMaxLength(e){
 
         if(e.value.length > e.maxLength){
 
             e.value = e.value.slice(0, e.maxLength);
-        }
-
-    }
+    	    }
+	
+    	}
 
 
 
