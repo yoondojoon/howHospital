@@ -17,6 +17,7 @@ import jakarta.servlet.http.HttpSession;
 import kr.or.iei.FileUtils;
 import kr.or.iei.hospital.model.dto.BusinessAuth;
 import kr.or.iei.hospital.model.dto.BusinessAuthFile;
+import kr.or.iei.hospital.model.dto.Hospital;
 import kr.or.iei.hospital.model.dto.PrescriptionFile;
 import kr.or.iei.hospital.model.service.DoctorService;
 import kr.or.iei.hospital.model.service.HospitalService;
@@ -54,6 +55,16 @@ public class HospitalController {
 	}
 	
 	
+	@PostMapping(value="/myHospitalEnroll")
+	public String myHospitalEnroll(Hospital hospital, String postCode, String hospitalAddrMain, String hospitalAddrSub) {
+		
+		
+		
+		
+		return "redirect:/";
+	}
+	
+
 	@PostMapping(value="/businessAuthEnroll")
 	public String businessAuthEnroll(BusinessAuth ba, MultipartFile[] upfile, Model model) {
 		List<BusinessAuthFile> fileList = new ArrayList<BusinessAuthFile>();
@@ -100,12 +111,6 @@ public class HospitalController {
 	}
 	
 	
-	@PostMapping(value="/myHospitalEnroll")
-	public String myHospitalEnroll() {
-
-		return "redirect:/";
-
-	}
 	
 	
 	
