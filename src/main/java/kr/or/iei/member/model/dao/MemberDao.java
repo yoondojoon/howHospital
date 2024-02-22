@@ -50,8 +50,21 @@ public class MemberDao {
 		
 		return result;
 		
+	}
+	
+	
+	public int checkEmail(String memberEmail) {
+		
+		
+		String query = "select count(*) from member_tbl where member_email = ?";
+		
+		int cnt = jdbc.queryForObject(query, Integer.class, memberEmail);
+		
+		return cnt;
 		
 		
 	}
+	
+	
 	
 }

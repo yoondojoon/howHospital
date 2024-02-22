@@ -54,5 +54,14 @@ public class MemberService {
 		return result;
 		
 	}
+	
+
+	public int checkEmail(String memberEmail) {
+		
+		int cnt = memberDao.checkEmail(memberEmail);
+		
+		return cnt;
+		
+	}
 
 }

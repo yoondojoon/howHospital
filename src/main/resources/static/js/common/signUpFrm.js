@@ -348,47 +348,30 @@ $("#signUpBtn").on("click", function(event) {
 		
 	});
 	
-	
-//이메일 중복 체크
-$("#memberEmail").on("change",function(){
+	//이메일 중복
+$("#memberEmail").on("change", function() {
+    const memberEmail = $("#memberEmail").val();
+    const regExp = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
 
-	const memberEmail = $("#memberEmail").val();
-
-	const regExp = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
-
-
-	if(!regExp.test(memberEmail)){
-
-	$("#emailStatus").text("잘못된 형식의 이메일입니다.").css("color","red");
-
-	}else{
-	
-		$.ajax({
-			url: "/member/emailChk",
-			type: "post",
-			data : {memberEmail :member_email},
-			success : function(data){
-				
-				
-				if(cnt == 1){
-				$("#emailStatus").text("사용가능한 이메일입니다. ");
-				}
-			},
-			error: function(){
-			
-				$("#emailStatus").text("중복된 이메일입니다. ");
-			
-			
-			}
-		
-		
-		
-		});
-	
-	
-	}
-            
-            
+    if (!regExp.test(memberEmail)) {
+        $("#emailStatus").text("잘못된 형식의 이메일입니다.").css("color", "red");
+    } else {
+        $.ajax({
+            url: "/member/emailChk",
+            type: "post",
+            data: { memberEmail: memberEmail }, 
+            success: function(data) {
+                if (data === 0) {
+                    $("#emailStatus").text("사용 가능한 이메일입니다.").css("color","blue");
+                } else {
+                    $("#emailStatus").text("중복된 이메일입니다.").css("color","red");
+                }
+            },
+            error: function() {
+                $("#emailStatus").text("에러");
+            }
+        });
+    }
 });
 		
 
