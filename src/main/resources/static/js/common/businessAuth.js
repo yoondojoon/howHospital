@@ -52,28 +52,20 @@ function updateFileCount() {
 
   fileCountElement.textContent = '총 ' + fileCount + '개 파일';
 
-  // 파일 개수가 2개 이상이면 파일 선택 버튼을 비활성화합니다.
-  if (fileCount >= 2) {
-    document.getElementById('upfile').disabled = true;
-  } else {
-    document.getElementById('upfile').disabled = false;
-  }
-}
 
 
 document.getElementById('enroll_btn').addEventListener('click', function(event) {
-  // 대표자명 입력란
-  const representativeInput = document.querySelector('input[name="representative_name"]');
+   event.preventDefault(); // 이벤트의 기본 동작을 취소합니다.
   // 사업자등록번호 입력란
   const representativeNoInput = document.getElementById('representative_no');
   const fileList = document.getElementById('fileList');
   const fileCount = fileList.getElementsByTagName('li').length;
   const nextMessage = $(".no_check").next("p").text();
 
-
+	console.log(document.querySelector("#upfile").files);
 
   // 파일 개수가 2개 미만인 경우에 경고창 표시
-  if (representativeInput.value.trim() === '' || representativeNoInput.value.trim() === '') {
+  if (representativeNoInput.value.trim() === '') {
     alert('대표자명과 사업자등록번호를 입력하세요.');
   }
    
