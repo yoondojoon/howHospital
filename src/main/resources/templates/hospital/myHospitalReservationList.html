@@ -20,7 +20,6 @@
 		            	<th:block th:switch="${reservation.reservationType}">
 		            		<span th:case="1" class="badge blue">대면진료</span>
 		            		<span th:case="2" class="badge red outline">비대면진료</span>
-		      
 		            	</th:block>
 		            	<th:block th:switch="${reservation.reservationStatus}">
 		            		<span th:case="1" class="badge blue outline">접수대기</span>
@@ -60,12 +59,42 @@
 	            </th:block>	
 	            <div id="pageNavi" th:utext="${pageNavi}"></div>	
 	            </div>
-	            
             </div>
         </section>
 	    <!--// contents -->
     </main>
     <!--// container -->
+    
+    <!--// container -->
+
+	<div id="popup_01" class="modal" style="display:none;">
+	<!-- <div id="popup_01" class="modal"> -->
+		<div class="modal_wrap">
+			
+			<div class="modal_header">
+				<div class="modal_title">처방전 등록하기</div>
+			</div>
+	
+			<div class="modal_container">
+				<div class="modal_content">
+					<div class="img-viewer">
+						<img class="img-view" width="100px">
+					</div>
+					<input type="file" name="prescription_file" accept=".pdf">
+				</div>
+			</div>
+			
+			<div class="modal_footer">
+				<div class="btn_area">
+					<button type="button" onclick="closeModal(this);" class="btn_secondary lg">취소</button>
+					<button type="button" class="btn_primary lg submit_btn">등록하기</button>
+				</div>
+			</div>
+	
+			<button type="button" onclick="closeModal(this);" class="btn_close"><span class="blind">닫기</span></button>
+	
+		</div>
+	</div>
 <th:block th:include="common/footer"></th:block>
 <script>
 	$(".hospital_reservation_type").on("change",function(){
@@ -73,6 +102,7 @@
 		const obj = $(this);
 		const selectValue = $(this).val();
 		const reservationNo = $(this).parent().parent().next().val();
+		const reservationType = $(this).parent().parent().children().eq(0).children().eq(0).text();
 		$.ajax({
 			url:"/hospital/changeReservationType",
 			type:"get",
@@ -80,24 +110,29 @@
 			success : function(data){
 				if(data == 1){
 					if(selectValue == 2){
-						obj.parent().parent().find(".badge").eq(0).text("예약취소");
-						obj.parent().parent().find(".badge").eq(0).attr("class","badge red outline");
+						obj.parent().parent().find(".badge").eq(1).text("예약취소");
+						obj.parent().parent().find(".badge").eq(1).attr("class","badge red outline");
 						obj.parent().remove();
 					}else if (selectValue == 3){
-						obj.parent().parent().find(".badge").eq(0).text("예약확정");
-						obj.parent().parent().find(".badge").eq(0).attr("class","badge blue");
+						obj.parent().parent().find(".badge").eq(1).text("예약확정");
+						obj.parent().parent().find(".badge").eq(1).attr("class","badge blue");
 						obj.parent().remove();
 					}else if (selectValue == 4){
-						obj.parent().parent().find(".badge").eq(0).text("진료완료");
-						obj.parent().parent().find(".badge").eq(0).attr("class","badge gray");
-						//대면 비대면 
-						const newBtnWrap = $("<div class='prescription_btn btn_wrap'>");
-						const newBtn = $("<button type='button' class='btn_secondary hospital_reservation_type'>");
-						newBtn.text("처방전 등록");
-						newBtnWrap.append(newBtn);
-						obj.parent().parent().append(newBtnWrap);
-						obj.parent().remove();
-						
+						obj.parent().parent().find(".badge").eq(1).text("진료완료");
+						obj.parent().parent().find(".badge").eq(1).attr("class","badge gray");
+						if(reservationType == "비대면진료"){
+							const newBtnWrap = $("<div class='prescription_btn btn_wrap'>");
+							const newBtn = $("<button type='button' class='btn_secondary hospital_reservation_type'>");
+							newBtn.text("처방전 등록");
+							newBtnWrap.append(newBtn);
+							obj.parent().parent().append(newBtnWrap);
+							obj.parent().remove();
+							newBtn.on("click",function(){
+								prescriptionUpload(nextBtn);
+							});
+						}else{
+							obj.parent().remove();
+						}
 					}
 				}
 			},
@@ -106,7 +141,47 @@
 			}
 		});
 	});
+
+	$(".prescription_btn").on("click",function(){
+		prescriptionUpload(this);
 	
+	});
+	let reservationNo = 0;
+	function prescriptionUpload(obj){
+		const revNo = $(obj).parent().next().val();
+		console.log(revNo)
+		reservationNo = revNo;
+		$(".modal").attr("style","display:block");
+
+	}
+
+	$(".submit_btn").on("click",function(){
+		const file = $("[name=prescription_file]")[0].files[0];
+		$(".prescription_btn").remove();
+		if(file !== undefined){
+			const form = new FormData();
+			form.append("file",file);
+			form.append("reservationNo",reservationNo);;
+			
+			$.ajax({
+				url:"/hospital/prescriptionRegistration",
+				type: "post",
+				data : form,
+				processData : false,
+				contentType : false,
+				success : function(data){
+					if(data==1){
+						$(".modal").attr("style","display:none");
+					}
+				},
+				error : function(){
+					console.log("에러발생")
+				}
+			});
+		}else{
+			alert("처방전을 등록해주세요");
+		}
+	});
 	
 </script>
 </html>

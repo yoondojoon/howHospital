@@ -28,7 +28,7 @@
                     	<th:block th:unless="${session.member == null}">
                         	<li><a href="/member/myInfo" class="mypage">마이페이지</a></li>
                         	<!-- 밑에 이거 지울거에요!! 테스트용입니다. -->
-                        	<li><a href="/hospital/myHospitalReservation?reqPage=1">병원예약조회</a></li>
+                        	<li><a th:if="${session.member.memberType == 2}" href="/hospital/myHospitalReservation?reqPage=1">병원예약조회</a></li>
                         	<li><a href="/member/logout">로그아웃</a></li>
                         </th:block>
                     </ul>

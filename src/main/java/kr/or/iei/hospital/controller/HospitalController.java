@@ -3,7 +3,6 @@ package kr.or.iei.hospital.controller;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.jsoup.Jsoup;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -18,15 +17,14 @@ import jakarta.servlet.http.HttpSession;
 import kr.or.iei.FileUtils;
 import kr.or.iei.hospital.model.dto.BusinessAuth;
 import kr.or.iei.hospital.model.dto.BusinessAuthFile;
+import kr.or.iei.hospital.model.dto.PrescriptionFile;
 import kr.or.iei.hospital.model.service.DoctorService;
-import kr.or.iei.member.model.dto.Member;
+import kr.or.iei.hospital.model.service.HospitalService;
+import kr.or.iei.hospital.model.service.PrescriptionService;
 import kr.or.iei.member.model.service.MemberService;
-import kr.or.iei.reservation.model.dto.H_Reservation;
-import kr.or.iei.reservation.model.dto.ReservationDetail;
 import kr.or.iei.reservation.model.dto.ReservationListData;
 import kr.or.iei.reservation.model.service.ReservationDetailService;
 import kr.or.iei.reservation.model.service.ReservationService;
-import kr.or.iei.hospital.model.service.HospitalService;
 
 @Controller
 @RequestMapping(value="/hospital")
@@ -41,6 +39,8 @@ public class HospitalController {
 	private DoctorService doctorService;
 	@Autowired
 	private ReservationDetailService reservationDetailService;
+	@Autowired
+	private PrescriptionService prescriptionService;
 	
 	@Value("${file.root}")
 	private String root; // 자바 전체에서 쓸수있는 변수, application.properties에 선언되어있는 값을 문자열로 가져옴.
@@ -111,6 +111,22 @@ public class HospitalController {
 	public int changeReservationType(int selectValue, int reservationNo) {
 		//병원 예약 업데이트
 		int result = reservationService.updateReservation(selectValue, reservationNo);
+		if(result > 0) {
+			return 1;
+		}else {
+			return 0;
+		}
+	}
+	
+	@ResponseBody
+	@PostMapping("/prescriptionRegistration")
+	public int prescriptionRegistration(MultipartFile file, PrescriptionFile pf) {
+		String savepath = root+"/prescription/";
+		String filename = file.getOriginalFilename();
+		String filepath = fileUtils.upload(savepath, file);
+		pf.setPrescriptionName(filename);
+		pf.setPrescriptionPath(filepath);
+		int result = prescriptionService.insertPrescription(pf);
 		if(result > 0) {
 			return 1;
 		}else {
