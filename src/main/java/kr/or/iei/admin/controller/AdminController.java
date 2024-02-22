@@ -81,4 +81,11 @@ public class AdminController {
 		model.addAttribute("n",n);
 		return "/admin/noticeUpdateFrm";
 	}
+	
+	@GetMapping(value="/deleteChk")
+	public String deleteChk(int noticeNo, Model model) {
+		Notice n = adminService.searchNoticeDetail(noticeNo);
+		model.addAttribute("n",n);
+		return "/admin/noticeUpdateFrm";
+	}
 }
