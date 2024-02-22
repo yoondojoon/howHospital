@@ -2,8 +2,8 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
-<th:block th:include="common/header"></th:block>
 <link rel="stylesheet" href="/css/admin/adminMain.css">
+<th:block th:include="common/header"></th:block>
 
 	<!-- container -->
     <main id="container" class="container">
@@ -14,16 +14,21 @@
                 <h2>신고관리</h2>
             </div>
             <div class="inner_wrap">
+            <button type="button" class="btn_primary outline lg" name="clear" id="clear" style="cursor:pointer;">선택 신고 일괄삭제</a></button>
         	<table class="btl">
         		<tr class="tr-header">
-        			<th style="width:15%;">번호</th>
+        			<th style="width:10%;">선택</th>
+        			<th style="width:10%;">번호</th>
         			<th style="width:40%;">신고제목</th>
-        			<th style="width:25%;">피신고자</th>
+        			<th style="width:20%;">피신고자</th>
         			<th style="width:20%;">처리상태</th>
         		</tr>
         		<tr class="tr-content" th:each="report : ${reportList}">
+        			<td>
+        				<input type="checkbox" style="cursor:pointer;" class="chk">
+        			</td>
 					<td name="reportNo" th:text="${report.reportNo}"></td>
-					<td name="noticeTitle" th:text="${report.reportTitle}">
+					<td name="noticeTitle" th:text="${report.reportTitle}"></td>
 					<td name="memberName" th:text="${report.memberName}"></td>
 					<td name="reportStatus"> 
 						<span th:if="${report.reportStatus == 0}">미처리</span>
@@ -42,6 +47,39 @@
 	
 <th:block th:include="common/footer"></th:block>
 <!-- js 링크 -->
+	<script>
+	$("#clear").click(function(){
+	    
+		//선택한 행 전부 담을 배열
+		var param = [];
+		 	
+		if($('.chk:checked').length==0){
+			alert("삭제할 신고를 선택해주세요");
+		}else{
+			$(".chk:checked").each(function(i) {
+			 
+		     	reportNo:$(this).parents('tr').find("[name=reportNo]").text();
+			        
+		    	//param 배열에 reportNo을 담는다.
+			      param.push(reportNo);
+			  });
+		}   
+		console.log(param, typeof param);
+			
+		 $.ajax({
+			method: "get",
+			url: "/admin/deleteChkReport",
+			data: {param, param},
+		    success: function(data) {
+				
+				console.log("삭제성공");
+				},
+			error: function() {
+				console.log("삭제실패");
+				}
+			});
+		});
+	</script>
     
 </body>
 </html>
