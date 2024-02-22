@@ -53,7 +53,7 @@ public class AdminController {
 	public String noticeDetail(int noticeNo, Model model) {
 		Notice n = adminService.searchNoticeDetail(noticeNo);
 		model.addAttribute("n",n);
-		return "redirect:/admin/noticeDetail?noticeNo=";
+		return "/admin/noticeDetail?noticeNo="+noticeNo;
 	}
 	
 	@GetMapping(value="/noticeDelete")
