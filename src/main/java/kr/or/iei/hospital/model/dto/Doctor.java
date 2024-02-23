@@ -15,4 +15,5 @@ public class Doctor {
 	private String doctorName;
 	private String doctorEducation;
 	private String doctorExperience;
+	private String subjectName;
 }

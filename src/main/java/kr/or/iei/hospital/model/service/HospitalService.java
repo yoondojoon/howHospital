@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import kr.or.iei.hospital.model.dao.HospitalDao;
 import kr.or.iei.hospital.model.dto.BusinessAuth;
 import kr.or.iei.hospital.model.dto.BusinessAuthFile;
+import kr.or.iei.hospital.model.dto.Doctor;
 import kr.or.iei.hospital.model.dto.Hospital;
 import kr.or.iei.hospital.model.dto.Subject;
 import kr.or.iei.hospital.model.dto.Time;
@@ -33,19 +34,18 @@ public class HospitalService {
 		return hospitalList;
 	}
 
+	
 	public Hospital searchHospitalDetail(int hospitalNo) {
 		Hospital h = hospitalDao.searchHospitalDetail(hospitalNo);
 		if(h != null) {
 			List subjectList = hospitalDao.searchSubjectList(hospitalNo);
 			List keywordList = hospitalDao.searchKeywordList(hospitalNo);
 			Time time = hospitalDao.searchHospitalTime(hospitalNo);
-			List doctorList = hospitalDao.searchDoctorList(hospitalNo);
-			List reviewList = hospitalDao.searchReviewList(hospitalNo);
+			List doctorList = hospitalDao.searchSubjectDoctorList(hospitalNo);
 			h.setSubjectList(subjectList);
 			h.setKeywordList(keywordList);
 			h.setTime(time);
 			h.setDoctorList(doctorList);
-			h.setReviewList(reviewList);
 		}
 		return h;
 	}
@@ -71,5 +71,46 @@ public class HospitalService {
 		}
 		return result;
 	}
+
+	@Transactional
+	public int insertHospitalEnroll(Hospital hospital, Time time, List<Doctor> doctorList, List<Subject> subjectList) {
+		//1. hospital 테이블 insert
+		int result = hospitalDao.insertHospitalEnroll(hospital);
+		
+		//2. doctor 테이블 insert (*사진파일명 포함)
+		
+		
+		//3. time 테이블 insert
+		
+		//4. subject 테이블 insert
+		
+		
+		
+		
+		
+		
+	return 0;
+	}
+	
+	public List selectReviewList(int hospitalNo, int sortValue, int start, int amount) {
+		int end = start+amount-1;
+		if(sortValue == 1) {
+			List reviewList = hospitalDao.selectReviewList(hospitalNo, sortValue, start, end);			
+			return reviewList;
+		}else {
+			List reviewList = hospitalDao.selectReviewList2(hospitalNo, sortValue, start, end);
+			return reviewList;
+		}
+	}
 	
 }
+
+
+
+
+
+
+
+
+
+

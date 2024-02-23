@@ -14,15 +14,16 @@
 .searchHospital .list_wrap .hospital_list>li>a{display:block; padding:24px 0;}
 .searchHospital .row_wrap{display:flex; flex-wrap:wrap; align-items:center; gap:8px; color:var(--gray_04); font-size:12px; line-height:1.5;}
 .searchHospital .row_wrap+.row_wrap{margin-top:8px;}
-.searchHospital .row_wrap span{}
 .searchHospital .row_wrap span+.row{margin-top:-4px;}
-.searchHospital .row_wrap .row{flex-basis:100%; display:flex; gap:16px;}
-.searchHospital .row_wrap .row>span+span{position:relative;}
-.searchHospital .row_wrap .row>span+span::before{content:''; display:block; position:absolute; left:-8px; top:5px; bottom:5px; width:1px; background-color:var(--gray_05);}
+.searchHospital .row_wrap .row{flex-basis:100%; display:flex; flex-wrap:wrap; gap:8px;}
+.searchHospital .row_wrap .row>span:first-child{position:relative; margin-right:8px;}
+.searchHospital .row_wrap .row>span:first-child::after{content:''; display:block; position:absolute; right:-8px; top:5px; width:1px; height:10px; background-color:var(--gray_05);}
 .searchHospital .title_info{color:var(--gray_01); font-size:16px; line-height:1.5;}
 .searchHospital .time_info{font-weight:bold;}
-.searchHospital .status_info.open{color:#1065DC;}
+.searchHospital .status_info.open{color:var(--main_05);}
 .searchHospital .status_info.closed{color:var(--gray_05);}
-.searchHospital .row_wrap span.keyword{display:inline-block; padding:0 8px; border:1px solid var(--main_03); border-radius:20px; color:var(--main_03); font-size:12px; font-weight:bold; line-height:20px;}
-.searchHospital .info_window{width:340px; padding:20px; box-shadow:0 0 10px rgba(0,0,0,0.3); z-index:1;}
+.searchHospital .row_wrap .subject+.subject{position:relative; margin-left:4px;}
+.searchHospital .row_wrap .subject+.subject::before{content:'/'; display:block; position:absolute; left:-8px; top:0; bottom:0; width:8px; height:10px; font-size:12px;}
+.searchHospital .row_wrap span.keyword{display:inline-block; padding:0 8px; border:1px solid var(--main_01); border-radius:20px; color:var(--main_01); font-size:12px; font-weight:bold; line-height:20px;}
+.searchHospital .info_window{width:340px; padding:20px; z-index:1;}
 .searchHospital .info_window .row_wrap>[class^=btn_]{margin-left:auto;}

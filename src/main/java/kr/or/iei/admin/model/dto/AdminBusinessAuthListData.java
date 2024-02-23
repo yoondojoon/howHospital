@@ -1,4 +1,4 @@
-package kr.or.iei.reservation.model.dto;
+package kr.or.iei.admin.model.dto;
 
 import java.util.List;
 
@@ -9,8 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class ReservationListData {
+public class AdminBusinessAuthListData {
 	private List list;
 	private String pageNavi;
-	private List doctorList;
 }

@@ -20,11 +20,11 @@ public class Hospital {
 	private String hospitalTel;
 	private String costOne;
 	private String costTwo;
+	private int reviewCount;
 	private int ratingAvg;
 	private String openStatus;
 	private List subjectList;
 	private List keywordList;
 	private Time time;
 	private List doctorList;
-	private List reviewList;
 }

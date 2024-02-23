@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import kr.or.iei.hospital.model.dto.BusinessAuth;
 import kr.or.iei.hospital.model.dto.BusinessAuthFile;
+import kr.or.iei.admin.model.dto.ReviewMemberNameRowMapper;
 import kr.or.iei.admin.model.dto.ReviewRowMapper;
 import kr.or.iei.hospital.model.dto.DoctorRowMapper;
 import kr.or.iei.hospital.model.dto.Hospital;
@@ -15,6 +16,7 @@ import kr.or.iei.hospital.model.dto.HospitalDetailRowMapper;
 import kr.or.iei.hospital.model.dto.HospitalRowMapper;
 import kr.or.iei.hospital.model.dto.HospitalSearchRowMapper;
 import kr.or.iei.hospital.model.dto.KeywordRowMapper;
+import kr.or.iei.hospital.model.dto.SubjectDoctorRowMapper;
 import kr.or.iei.hospital.model.dto.SubjectRowMapper;
 import kr.or.iei.hospital.model.dto.Time;
 import kr.or.iei.hospital.model.dto.TimeRowMapper;
@@ -40,7 +42,11 @@ public class HospitalDao {
 	@Autowired
 	private DoctorRowMapper doctorRowMapper;
 	@Autowired
+	private SubjectDoctorRowMapper subjectDoctorRowMapper;
+	@Autowired
 	private ReviewRowMapper reviewRowMapper;
+	@Autowired
+	private ReviewMemberNameRowMapper reviewMemberNameRowMapper;
 
 	public List searchHospital(String keyword) {	
 		String query = "select hospital_no, hospital_name, hospital_tel, hospital_address, lat, lng,\r\n" + 
@@ -90,6 +96,7 @@ public class HospitalDao {
 
 	public Hospital searchHospitalDetail(int hospitalNo) {
 		String query = "select hospital_no, hospital_name, hospital_tel, hospital_address, cost_one, cost_two,\r\n" + 
+				"nvl((select count(*) from review_tbl where reservation_no in(select reservation_no from reservation_tbl where hospital_no=h.hospital_no)),0) review_count,\r\n" +
 				"nvl((select avg(review_rating) from review_tbl where reservation_no in(select reservation_no from reservation_tbl where hospital_no=h.hospital_no)),0) rating_avg,\r\n" + 
 				"(select distinct\r\n" + 
 				"    case\r\n" + 
@@ -134,17 +141,17 @@ public class HospitalDao {
 		}
 	}
 
-	public List searchDoctorList(int hospitalNo) {
-		String query = "select * from doctor_tbl where hospital_no=? order by 1";
+	public List searchSubjectDoctorList(int hospitalNo) {
+		String query = "select doctor_no, hospital_no, subject_no, (select subject_name from subject_tbl where subject_no = d.subject_no) subject_name, doctor_picture, doctor_name, doctor_education, doctor_experience from doctor_tbl d where hospital_no=? order by 1";
 		Object[] params = {hospitalNo};
-		List list = jdbc.query(query, doctorRowMapper, params);
+		List list = jdbc.query(query, subjectDoctorRowMapper, params);
 		return list;
 	}
 
-	public List searchReviewList(int hospitalNo) {
-		String query = "select * from review_tbl where reservation_no in(select reservation_no from reservation_tbl where hospital_no=?)";
+	public List searchReviewMemberNameList(int hospitalNo) {
+		String query = "select review_no, reservation_no, member_no, (select member_name from member_tbl where member_no=r.member_no) member_name, review_title, review_content, review_date, review_img from review_tbl r where reservation_no in(select reservation_no from reservation_tbl where hospital_no=?)";
 		Object[] params = {hospitalNo};
-		List list = jdbc.query(query, reviewRowMapper, params);
+		List list = jdbc.query(query, reviewMemberNameRowMapper, params);
 		return list;
 	}
 	
@@ -174,6 +181,27 @@ public class HospitalDao {
 		Object[] params = {memberNo};
 		int result = jdbc.update(query, params);
 		return result;
+	}
+
+	public int insertHospitalEnroll(Hospital hospital) {
+		String query = "INSERT INTO HOSPITAL_TBL VALUES(HOSPITAL_SEQ.nextval, ?, ?, ?, ?, ?, ?, ?, ? ,?)";
+		Object[] params = {hospital.getMemberNo(), hospital.getHospitalName(), hospital.getHospitalIntro(), hospital.getHospitalAddress(), hospital.getLat(), hospital.getLng(), hospital.getHospitalTel(), hospital.getCostOne(), hospital.getCostTwo()};
+		int reuslt = jdbc.update(query, params);
+		return reuslt;
+	}
+
+	public List selectReviewList(int hospitalNo, int sortValue, int start, int end) {
+		String query = "select * from (select rownum rnum, r.* from (select review_no, (select replace(member_name,substr(member_name,2,1),'*') from member_tbl where member_no=r.member_no) member_name, review_title, review_content, review_rating, review_date, review_img from review_tbl r where reservation_no in (select reservation_no from reservation_tbl where hospital_no=?) order by review_no desc)r) where rnum between ? and ?";
+		Object[] params = {hospitalNo, start, end};
+		List reviewList = jdbc.query(query, reviewRowMapper, params);
+		return reviewList;
+	}
+	
+	public List selectReviewList2(int hospitalNo, int sortValue, int start, int end) {
+		String query = "select * from (select rownum rnum, r.* from (select review_no, (select replace(member_name,substr(member_name,2,1),'*') from member_tbl where member_no=r.member_no) member_name, review_title, review_content, review_rating, review_date, review_img from review_tbl r where reservation_no in (select reservation_no from reservation_tbl where hospital_no=?) order by review_rating desc, review_no desc)r) where rnum between ? and ?";
+		Object[] params = {hospitalNo, start, end};
+		List reviewList = jdbc.query(query, reviewRowMapper, params);
+		return reviewList;
 	}
 	
 }
