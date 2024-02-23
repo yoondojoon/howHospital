@@ -43,6 +43,15 @@ public class ServiceController {
 		List reviewList = hospitalService.selectReviewList(hospitalNo, sortValue, start, amount);
 		return reviewList;
 	}
+	
+	@GetMapping(value="/reserveContactFrm")
+	public String reserveContactFrm(int hospitalNo, String hospitalName, Model model) {
+		Hospital h = hospitalService.selectHospitalInfo(hospitalNo);
+		h.setHospitalNo(hospitalNo);
+		h.setHospitalName(hospitalName);
+		model.addAttribute("h", h);
+		return "/service/reserveContactFrm";
+	}
 
 }
 

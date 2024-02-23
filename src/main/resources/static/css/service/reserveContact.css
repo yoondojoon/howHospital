@@ -1,0 +1,9 @@
+@charset "UTF-8";
+
+.reserveContact .reserve_area{max-width:1080px; margin:0 auto; padding:20px 20px 40px 20px; border-radius:12px; border:1px solid var(--line_02);}
+.reserveContact .form_area{display:grid; grid-template-columns:calc(50% - 12px) calc(50% - 12px); grid-template-rows:auto auto auto; column-gap:24px; row-gap:24px;}
+.reserveContact .form_area>.input_wrap:last-child{grid-row:3/4; grid-column:1/3;}
+.reserveContact .item_title{font-weight:normal;}
+.reserveContact .input_title{margin-bottom:12px;}
+.reserveContact .time_wrap .checkbox_wrap>.checkbox{flex:1;}
+.reserveContact .time_wrap>.item_title~.item_title{margin-top:24px;}
