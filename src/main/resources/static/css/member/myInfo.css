@@ -1,4 +1,12 @@
 @charset "UTF-8";
 
-
-
+.menu{
+	
+	display: flex;
+	
+}
+.material-icons{
+	
+	
+	display :flex;
+}
