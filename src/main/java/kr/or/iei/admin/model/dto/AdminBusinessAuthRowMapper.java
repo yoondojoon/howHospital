@@ -18,8 +18,6 @@ public class AdminBusinessAuthRowMapper implements RowMapper<AdminBusinessAuth>{
 		ab.setMemberPhone(rs.getString("member_phone"));
 		ab.setRegDate(rs.getString("reg_date"));
 		ab.setRepresentativeNo(rs.getString("representative_no"));
-		ab.setFileName(rs.getString("filename"));
-		ab.setFilePath(rs.getString("filepath"));
 		return ab;
 	}
 }

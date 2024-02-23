@@ -14,6 +14,7 @@ import kr.or.iei.admin.model.dto.MemberReport;
 import kr.or.iei.admin.model.dto.MemberReportListData;
 import kr.or.iei.admin.model.dto.Notice;
 import kr.or.iei.admin.model.dto.NoticeListData;
+import kr.or.iei.hospital.model.dto.BusinessAuthFile;
 
 @Service
 public class AdminService {
@@ -351,7 +352,32 @@ public class AdminService {
 
 	public AdminBusinessAuth confirmAuth(int businessAuthNo) {
 		AdminBusinessAuth aba = adminDao.confirmAuth(businessAuthNo);
+		List fileList = adminDao.confirmAuthFile(businessAuthNo);
+		aba.setFileList(fileList);
 		return aba;
+	}
+
+	@Transactional
+	public boolean authConfirmSuccess(int businessAuthNo) {
+		boolean result = true;
+		int changeStatusResult = adminDao.authConfirmSuccess(businessAuthNo);
+		if(changeStatusResult == 0) {
+			result = false;
+		}else {
+			int deleteFileResult = adminDao.deleteFileInfo(businessAuthNo);
+			int deleteAuthResult = adminDao.deleteAuthInfo(businessAuthNo);
+		}
+		
+		
+		return result;
+	}
+
+	@Transactional
+	public boolean authConfirmFail(int businessAuthNo) {
+		boolean result = true;
+		int deleteFileResult = adminDao.deleteFileInfo(businessAuthNo);
+		int deleteAuthResult = adminDao.deleteAuthInfo(businessAuthNo);
+		return result;
 	}
 	
 

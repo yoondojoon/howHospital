@@ -1,5 +1,8 @@
 package kr.or.iei.admin.model.dto;
 
+import java.util.List;
+
+import kr.or.iei.hospital.model.dto.BusinessAuthFile;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,8 +15,7 @@ public class AdminBusinessAuth {
 	private int businessAuthNo;
 	private String memberEmail;
 	private String memberPhone;
-	private String fileName;
-	private String filePath;
+	private List<BusinessAuthFile> fileList;
 	private String representativeNo;
 	private String regDate;
 }
