@@ -152,6 +152,7 @@ public class AdminDao {
 		String query = "SELECT * FROM MEMBER_TBL RIGHT OUTER JOIN BUSINESSAUTH_TBL ON MEMBER_TBL.MEMBER_NO = BUSINESSAUTH_TBL.MEMBER_NO WHERE MEMBER_STATUS = 4 AND BUSINESSAUTH_NO=?";
 		Object[] params = {businessAuthNo};
 		AdminBusinessAuth aba = jdbc.queryForObject(query, abaRowMapper,params);
+		System.out.println("접속:"+aba);
 		return aba;
 	}
 
