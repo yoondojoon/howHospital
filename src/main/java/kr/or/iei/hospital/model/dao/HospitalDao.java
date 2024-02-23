@@ -194,9 +194,9 @@ public class HospitalDao {
 
 
 
-	public int insertHospitalTime(Hospital hospital, Time time) {
+	public int insertHospitalTime(int hospitalNo, Time time) {
 		String query = "INSERT INTO time_tbl VALUES(?, ?, ?, ?, ?)";
-		Object[] params = {hospital.getHospitalNo(), time.getDayHour(), time.getWeekendHour(), time.getLunchHour(), time.getHoliday()};
+		Object[] params = {hospitalNo, time.getDayHour(), time.getWeekendHour(), time.getLunchHour(), time.getHoliday()};
 		int reuslt = jdbc.update(query, params);
 		return reuslt;
 	}
@@ -208,12 +208,7 @@ public class HospitalDao {
 		return result;
 	}
 
-	public int insertDoctor(Hospital hospital, Doctor doctor, Subject subject) {
-		String query = "insert into doctor_tbl values(DOCTOR_SEQ.nextval, ?, ?, ?, ?, ?, ?)";
-		Object[] params = {hospital.getHospitalNo(), subject.getSubjectNo(), doctor.getDoctorPicture(), doctor.getDoctorName(), doctor.getDoctorEducation(), doctor.getDoctorExperience()};
-		int result = jdbc.update(query, params);
-		return result;
-	}
+
 	
 	
 	public List selectReviewList(int hospitalNo, int sortValue, int start, int end) {
@@ -229,6 +224,25 @@ public class HospitalDao {
 		Object[] params = {hospitalNo, start, end};
 		List reviewList = jdbc.query(query, reviewRowMapper, params);
 		return reviewList;
+	}
+
+	public int selectHospitalNo() {
+		String query = "select max(hospital_no) from hospital_tbl";
+		int hospitalNo = jdbc.queryForObject(query, Integer.class);
+		return hospitalNo;
+	}
+
+	public int selectSubjectNo() {
+		String query = "select max(subject_no) from subject_tbl";
+		int subjectNo = jdbc.queryForObject(query, Integer.class);
+		return subjectNo;
+	}
+
+	public int insertDoctor(int hospitalNo, Doctor doctor, int subjectNo) {
+		String query = "insert into doctor_tbl values(doctor_seq.nextval, ?, ?, ?, ?, ?, ?)";
+		Object[] params = {hospitalNo, subjectNo, doctor.getDoctorPicture(), doctor.getDoctorName(), doctor.getDoctorEducation(), doctor.getDoctorExperience()};
+		int result = jdbc.update(query, params);
+		return result;
 	}
 	
 }

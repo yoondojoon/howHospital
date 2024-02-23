@@ -1,20 +1,4 @@
-document.getElementById('upfile').addEventListener('change', handleFileSelect);
 
-function handleFileSelect(event) {
-  const files = event.target.files;
-  const fileList = document.getElementById('fileList');
-  const maxFiles = 2; // 최대 파일 개수
-
-  // 현재 업로드된 파일 개수 확인
-  const currentFileCount = fileList.getElementsByTagName('li').length;
-  const remainingFiles = maxFiles - currentFileCount;
-
-  if (files.length > remainingFiles) {
-    alert('최대 2개까지 업로드할 수 있습니다.');
-    // 파일 선택을 취소하고 이전에 선택한 파일을 다시 표시합니다.
-    event.target.value = null;
-    return;
-  }
 
   for (let i = 0; i < files.length; i++) {
     const file = files[i];
@@ -51,6 +35,10 @@ function updateFileCount() {
   const nextbtn = document.getElementsByName('nextbtn');
 
   fileCountElement.textContent = '총 ' + fileCount + '개 파일';
+}
+
+
+
 
 
 
@@ -79,13 +67,7 @@ document.getElementById('enroll_btn').addEventListener('click', function(event) 
         event.preventDefault(); // 이벤트의 기본 동작을 취소합니다.
     
     }
-  
-  
-  
 });
-
-
-
 
 // 사업자 등록번호 입력 필드에 자동으로 하이픈 추가하고 입력 제한 구현
 const representative_no = document.getElementById('representative_no');
@@ -99,7 +81,6 @@ representative_no.addEventListener('input', function () {
 
   this.value = trimmedValue; // 최종값을 입력 필드에 설정
 });
-
 
 function goBack() {
   window.history.back();

@@ -99,7 +99,6 @@ public class HospitalController {
 				String filepath = fileUtils.upload(savepath, doctor_picture[i]);
 				doctor.setDoctorPicture(filepath);
 				doctorList.add(doctor);
-				
 				Subject subject = new Subject();
 				subject.setSubjectName(subjectSelect[i]);
 	            subjectList.add(subject);
@@ -107,7 +106,7 @@ public class HospitalController {
 	        
 	        int result = hospitalService.insertHospitalEnroll(hospital, time, doctorList, subjectList);
 
-	        if (result == (doctorList.size() + 2)) {
+	        if (result == (doctorList.size() + subjectList.size() + 2)) {
 				System.out.println("성공");
 				return "redirect:/";
 	        } else {
@@ -136,9 +135,9 @@ public class HospitalController {
 		// 총 3차례 insert
 
 		int result = hospitalService.insertBusinessAuth(ba, fileList);
-
+		
 		// insert 성공 테이블 결과(1) + 파일 테이블 결과(파일갯수)
-		if (result == (fileList.size() + 1)) { 
+		if (result == (fileList.size() + 2)) { 
 			System.out.println("성공");
 			return "redirect:/";
 		} else {

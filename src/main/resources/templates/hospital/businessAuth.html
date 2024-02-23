@@ -88,8 +88,22 @@ $("#search_btn").on("click", async function() {
 	  });
 	});
 	
-	
-	
+
+
+
+document.getElementById('enroll_btn').addEventListener('click', function(event) {
+  // 파일 업로드를 위한 input 요소
+  var fileInput = document.getElementById('upfile');
+  // 업로드된 파일의 수
+  var fileCount = fileInput.files.length;
+  
+  // 파일 수가 2개가 아닌 경우
+  if (fileCount !== 2) {
+    // 이벤트의 기본 동작을 막음 (파일 업로드 동작을 비활성화)
+    event.preventDefault();
+    alert('업로드 파일개수 2개가 아닙니다.');
+  }
+});
 
 
 	
