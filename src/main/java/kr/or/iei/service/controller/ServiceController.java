@@ -36,4 +36,19 @@ public class ServiceController {
 		model.addAttribute("h", h);
 		return "/service/hospitalDetail";
 	}
+	
+	@ResponseBody
+	@GetMapping(value="/selectReviewList")
+	public List selectReviewList(int hospitalNo, int sortValue, int start, int amount) {
+		List reviewList = hospitalService.selectReviewList(hospitalNo, sortValue, start, amount);
+		return reviewList;
+	}
+
 }
+
+
+
+
+
+
+
