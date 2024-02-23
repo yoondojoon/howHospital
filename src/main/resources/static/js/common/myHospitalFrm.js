@@ -18,7 +18,7 @@
         // 시작 시간 다음 시간부터 마감 시간 옵션 생성
         for (var i = openHour + 1; i <= 23; i++) {
             var option = document.createElement("option");
-            option.value = i;
+            option.value = (i < 10 ? "0" : "") + i + ":00";
             option.text = (i < 10 ? "0" : "") + i + ":00";
             closeSelect.appendChild(option);
         }
@@ -31,7 +31,7 @@
         // 평일 오픈 시간 옵션 생성
         for (var i = 0; i <= 23; i++) {
             var option = document.createElement("option");
-            option.value = i;
+            option.value = (i < 10 ? "0" : "") + i + ":00";
             option.text = (i < 10 ? "0" : "") + i + ":00";
             document.getElementById("select_dayopen_hour").appendChild(option);
         }
@@ -67,7 +67,7 @@ function setWeekendCloseTime() {
     // 시작 시간 다음 시간부터 마감 시간 옵션 생성
     for (var i = openHour + 1; i <= 23; i++) {
         var option = document.createElement("option");
-        option.value = i;
+            option.value = (i < 10 ? "0" : "") + i + ":00";
         option.text = (i < 10 ? "0" : "") + i + ":00";
         closeSelect.appendChild(option);
     }
@@ -80,7 +80,7 @@ document.addEventListener("DOMContentLoaded", function() {
     // 주말 오픈 시간 옵션 생성
     for (var i = 0; i <= 23; i++) {
         var option = document.createElement("option");
-        option.value = i;
+            option.value = (i < 10 ? "0" : "") + i + ":00";
         option.text = (i < 10 ? "0" : "") + i + ":00";
         document.getElementById("select_weekendopen_hour").appendChild(option);
     }
@@ -119,7 +119,7 @@ function setLunchTime() {
     // 시작 시간 다음 시간부터 마감 시간 옵션 생성
     for (var i = openHour + 1; i <= 23; i++) {
         var option = document.createElement("option");
-        option.value = i;
+            option.value = (i < 10 ? "0" : "") + i + ":00";
         option.text = (i < 10 ? "0" : "") + i + ":00";
         closeSelect.appendChild(option);
     }
@@ -132,7 +132,7 @@ document.addEventListener("DOMContentLoaded", function() {
     // 점심 오픈 시간 옵션 생성
     for (var i = 0; i <= 23; i++) {
         var option = document.createElement("option");
-        option.value = i;
+            option.value = (i < 10 ? "0" : "") + i + ":00";
         option.text = (i < 10 ? "0" : "") + i + ":00";
         document.getElementById("select_lunchopen_hour").appendChild(option);
     }
@@ -193,8 +193,8 @@ $(document).ready(function() {
 		                <td>
 			                <div class="input_item">
 			                
-					  <input type="text" class="doc" name="doctorName" placeholder="이름을 입력하세요." required></li>
-					<input type="file" id="docImgInput" class="doc" name="imageFile" accept=".jpg, .png, .jpeg" onchange="loadImg(this);" >
+					  <input type="text" class="doc" name="doctor_name" placeholder="이름을 입력하세요." required></li>
+					<input type="file" id="docImgInput" class="doc" name="doctor_picture" accept=".jpg, .png, .jpeg" onchange="loadImg(this);" >
 			                  <button type="button" class="btn_primary outline sm deleteDoctorBtn">삭제</button>
 							</div>
 		                </td>
@@ -202,50 +202,50 @@ $(document).ready(function() {
 		                        <tr>
 		                            <th>학력</th>
 		                            <td>
-		                                <input type="text" class="doc" name="doctorEducation" placeholder="학력을 입력하세요." required>
+		                                <input type="text" class="doc" name="doctor_education" placeholder="학력을 입력하세요." required>
 		                            </td>
 		                        </tr>
 		                        <tr>
 		                            <th>경력</th>
 		                            <td>
-		                                <input type="text" class="doc" name="doctorExperience" placeholder="예시) 20.03~21.11 강서병원장" required>
+		                                <input type="text" class="doc" name="doctor_experience" placeholder="예시) 20.03~21.11 강서병원장" required>
 		                            </td>
 		                        </tr>
 		                        
 		                        <tr>
 		                        	<th>진료과</th>
 		                        	<td>
-		          <select class="specialty" name="subjectNo">
+		          <select class="specialty" name="subjectSelect">
 		          		<option>선택하세요</option>
-		                <option value="1">내과</option>
-		                <option value="2">신경과</option>
-		                <option value="3">정신건강의학과</option>
-		                <option value="4">외과</option>
-		                <option value="5">정형외과</option>
-		                <option value="6">신경외과</option>
-		                <option value="7">심장혈관흉부외과</option>
-		                <option value="8">성형외과</option>
-		                <option value="9">마취통증의학과</option>
-		                <option value="10">산부인과</option>
-		                <option value="11">소아청소년과</option>
-		                <option value="12">안과</option>
-		                <option value="13">이비인후과</option>
-		                <option value="14">피부과</option>
-		                <option value="15">비뇨의학과</option>
-		                <option value="16">영상의학과</option>
-		                <option value="17">방사선종양학과</option>
-		                <option value="18">병리과</option>
-		                <option value="19">진단검사의학과</option>
-		                <option value="20">재활의학과</option>
-		                <option value="21">결핵과</option>
-		                <option value="22">예방의학과</option>
-		                <option value="23">가정의학과</option>
-		                <option value="24">핵의학과</option>
-		                <option value="25">직업환경의학과</option>
-		                <option value="26">응급의학과</option>
-		                <option value="27">구강안악면외과</option>
-		                <option value="28">치과</option>
-		                <option value="29">한의원</option>
+		                <option value="내과">내과</option>
+		                <option value="신경과">신경과</option>
+		                <option value="정신건강의학과">정신건강의학과</option>
+		                <option value="외과">외과</option>
+		                <option value="정형외과">정형외과</option>
+		                <option value="신경외과">신경외과</option>
+		                <option value="심장혈관흉부외과">심장혈관흉부외과</option>
+		                <option value="성형외과">성형외과</option>
+		                <option value="마취통증의학과">마취통증의학과</option>
+		                <option value="산부인과">산부인과</option>
+		                <option value="소아청소년과">소아청소년과</option>
+		                <option value="소아청소년과">안과</option>
+		                <option value="이비인후과">이비인후과</option>
+		                <option value="피부과">피부과</option>
+		                <option value="비뇨의학과">비뇨의학과</option>
+		                <option value="영상의학과">영상의학과</option>
+		                <option value="방사선종양학과">방사선종양학과</option>
+		                <option value="방사선종양학과">병리과</option>
+		                <option value="진단검사의학과">진단검사의학과</option>
+		                <option value="재활의학과">재활의학과</option>
+		                <option value="결핵과">결핵과</option>
+		                <option value="예방의학과">예방의학과</option>
+		                <option value="가정의학과">가정의학과</option>
+		                <option value="핵의학과">핵의학과</option>
+		                <option value="직업환경의학과">직업환경의학과</option>
+		                <option value="응급의학과">응급의학과</option>
+		                <option value="구강안악면외과">구강안악면외과</option>
+		                <option value="치과">치과</option>
+		                <option value="한의원">한의원</option>
 		              </select>
 		                        	
 		                        	</td>

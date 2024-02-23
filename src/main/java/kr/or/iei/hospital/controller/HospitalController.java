@@ -17,8 +17,11 @@ import jakarta.servlet.http.HttpSession;
 import kr.or.iei.FileUtils;
 import kr.or.iei.hospital.model.dto.BusinessAuth;
 import kr.or.iei.hospital.model.dto.BusinessAuthFile;
+import kr.or.iei.hospital.model.dto.Doctor;
 import kr.or.iei.hospital.model.dto.Hospital;
 import kr.or.iei.hospital.model.dto.PrescriptionFile;
+import kr.or.iei.hospital.model.dto.Subject;
+import kr.or.iei.hospital.model.dto.Time;
 import kr.or.iei.hospital.model.service.DoctorService;
 import kr.or.iei.hospital.model.service.HospitalService;
 import kr.or.iei.hospital.model.service.PrescriptionService;
@@ -55,12 +58,50 @@ public class HospitalController {
 	}
 
 	@PostMapping(value="/myHospitalEnroll")
-	public String myHospitalEnroll(Hospital hospital, String hospitalIntro, String postCode, String hospitalAddrMain, String hospitalAddrSub, String dayOpenHour, String dayCloseHour, String weekendOpenHour, String weekendCloseHour, String lunchOpenHour, String lunchCloseHour, String[] hol, String hospitalTelFirst, String hospitalTelLast, String[] doctorName, String[] doctorEducation, String[] doctorExperience, String[] subjectNo, MultipartFile[] files, String CostOne, String CostTwo) {
+	public String myHospitalEnroll(Hospital hospital, String postCode, String hospitalAddrMain, String hospitalAddrSub,
+			String dayOpenHour, String dayCloseHour, String weekendOpenHour, String weekendCloseHour, String lunchOpenHour, String lunchCloseHour, String[] hol, 
+			String hospitalTelFirst, String hospitalTelLast,
+			String[] doctor_name, String[] doctor_education, String[] doctor_experience, String[] subjectSelect, MultipartFile[] doctor_picture, String CostOne, String CostTwo) {
+			
+			//System.out.println(hospital.getHospitalAddress());
 		
-		//String holidayString = String.join("", holiday);
-		
-		
-		
+			//VO 값 세팅
+			hospital.setHospitalAddress(postCode +" "+ hospitalAddrMain + " " + hospitalAddrSub);
+			
+			Time time = new Time();
+			time.setDayHour(dayOpenHour + "~" +  dayCloseHour);
+			time.setWeekendHour(weekendOpenHour + "~" + weekendCloseHour);
+			time.setLunchHour(lunchOpenHour + "~" + lunchCloseHour);
+			
+			String holiday = String.join("", hol);
+			time.setHoliday(Integer.parseInt(holiday));
+			
+			System.out.println("회원번호:"+hospital.getMemberNo());
+			hospital.setHospitalTel(hospitalTelFirst + "-" + hospitalTelLast);
+			System.out.println(hospital.getLat());
+			//의사정보 등록
+			List<Doctor> doctorList = new ArrayList<Doctor>();
+			List<Subject> subjectList = new ArrayList<Subject>();
+	        for(int i = 0; i < doctor_name.length; i++) {
+	            Doctor doctor = new Doctor(); 
+	            doctor.setDoctorName(doctor_name[i]);
+	            doctor.setDoctorEducation(doctor_education[i]); 
+	            doctor.setDoctorExperience(doctor_experience[i]);
+	            
+    			String savepath = root + "/doctor/";
+    			// 업로드한 파일명을 추출
+				String filename = doctor_picture[i].getOriginalFilename();
+				String filepath = fileUtils.upload(savepath, doctor_picture[i]);
+				doctor.setDoctorPicture(filepath);
+				doctorList.add(doctor);
+				
+				Subject subject = new Subject();
+				subject.setSubjectName(subjectSelect[i]);
+	            subjectList.add(subject);
+	        }
+	        
+	        int result = hospitalService.insertHospitalEnroll(hospital, time, doctorList, subjectList);
+
 		return "redirect:/";
 	}
 

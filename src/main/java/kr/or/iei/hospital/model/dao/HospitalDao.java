@@ -181,5 +181,17 @@ public class HospitalDao {
 		int result = jdbc.update(query, params);
 		return result;
 	}
+
+	public int insertHospitalEnroll(Hospital hospital) {
+		String query = "INSERT INTO HOSPITAL_TBL VALUES(HOSPITAL_SEQ.nextval, ?, ?, ?, ?, ?, ?, ?, ? ,?)";
+		Object[] params = {hospital.getMemberNo(), hospital.getHospitalName(), hospital.getHospitalIntro(), hospital.getHospitalAddress(), hospital.getLat(), hospital.getLng(), hospital.getHospitalTel(), hospital.getCostOne(), hospital.getCostTwo()};
+		int reuslt = jdbc.update(query, params);
+		return reuslt;
+	}
+	
+	
+	
+	
+	
 	
 }

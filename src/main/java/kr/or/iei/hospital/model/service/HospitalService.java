@@ -34,6 +34,7 @@ public class HospitalService {
 		return hospitalList;
 	}
 
+	
 	public Hospital searchHospitalDetail(int hospitalNo) {
 		Hospital h = hospitalDao.searchHospitalDetail(hospitalNo);
 		if(h != null) {
@@ -69,6 +70,26 @@ public class HospitalService {
 			
 		}
 		return result;
+	}
+
+	@Transactional
+	public int insertHospitalEnroll(Hospital hospital, Time time, List<Doctor> doctorList, List<Subject> subjectList) {
+		//1. hospital 테이블 insert
+		int result = hospitalDao.insertHospitalEnroll(hospital);
+		
+		//2. doctor 테이블 insert (*사진파일명 포함)
+		
+		
+		//3. time 테이블 insert
+		
+		//4. subject 테이블 insert
+		
+		
+		
+		
+		
+		
+	return 0;
 	}
 	
 }
