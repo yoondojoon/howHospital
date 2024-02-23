@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import kr.or.iei.hospital.model.dto.BusinessAuth;
 import kr.or.iei.hospital.model.dto.BusinessAuthFile;
+import kr.or.iei.hospital.model.dto.Doctor;
 import kr.or.iei.admin.model.dto.ReviewMemberNameRowMapper;
 import kr.or.iei.admin.model.dto.ReviewRowMapper;
 import kr.or.iei.hospital.model.dto.DoctorRowMapper;
@@ -16,6 +17,7 @@ import kr.or.iei.hospital.model.dto.HospitalDetailRowMapper;
 import kr.or.iei.hospital.model.dto.HospitalRowMapper;
 import kr.or.iei.hospital.model.dto.HospitalSearchRowMapper;
 import kr.or.iei.hospital.model.dto.KeywordRowMapper;
+import kr.or.iei.hospital.model.dto.Subject;
 import kr.or.iei.hospital.model.dto.SubjectDoctorRowMapper;
 import kr.or.iei.hospital.model.dto.SubjectRowMapper;
 import kr.or.iei.hospital.model.dto.Time;
@@ -188,6 +190,30 @@ public class HospitalDao {
 		int reuslt = jdbc.update(query, params);
 		return reuslt;
 	}
+
+
+	public int insertHospitalTime(Hospital hospital, Time time) {
+		String query = "INSERT INTO time_tbl VALUES(?, ?, ?, ?, ?)";
+		Object[] params = {hospital.getHospitalNo(), time.getDayHour(), time.getWeekendHour(), time.getLunchHour(), time.getHoliday()};
+		int reuslt = jdbc.update(query, params);
+		return reuslt;
+	}
+
+	public int insertSubject(Subject subject) {
+		String query = "insert into subject_tbl values(subject_seq.nextval, ?)";
+		Object[] params = {subject.getSubjectName()};
+		int result = jdbc.update(query, params);
+		return result;
+	}
+
+	public int insertDoctor(Hospital hospital, Doctor doctor, Subject subject) {
+		String query = "insert into doctor_tbl values(DOCTOR_SEQ.nextval, ?, ?, ?, ?, ?, ?)";
+		Object[] params = {hospital.getHospitalNo(), subject.getSubjectNo(), doctor.getDoctorPicture(), doctor.getDoctorName(), doctor.getDoctorEducation(), doctor.getDoctorExperience()};
+		int result = jdbc.update(query, params);
+		return result;
+	}
+	
+	
 	
 	
 	

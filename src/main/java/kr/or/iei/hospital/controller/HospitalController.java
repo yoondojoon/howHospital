@@ -102,14 +102,20 @@ public class HospitalController {
 	        
 	        int result = hospitalService.insertHospitalEnroll(hospital, time, doctorList, subjectList);
 
-		return "redirect:/";
+	        if (result == (doctorList.size() + 2)) {
+				System.out.println("성공");
+				return "redirect:/";
+	        } else {
+				System.out.println("실패");
+				return "redirect:/";
+			}
 	}
 
 	@PostMapping(value = "/businessAuthEnroll")
 	public String businessAuthEnroll(BusinessAuth ba, MultipartFile[] upfile, Model model) {
 		List<BusinessAuthFile> fileList = new ArrayList<BusinessAuthFile>();
 		if (!upfile[0].isEmpty()) {
-			String savepath = root + "/hospital/";
+			String savepath = root + "/auth/";
 			for (MultipartFile file : upfile) {
 				// 업로드한 파일명을 추출
 				String filename = file.getOriginalFilename();
@@ -127,7 +133,7 @@ public class HospitalController {
 		int result = hospitalService.insertBusinessAuth(ba, fileList);
 
 		// insert 성공 테이블 결과(1) + 파일 테이블 결과(파일갯수)
-		if (result == (fileList.size() + 2)) { // notice 테이블 1 포함
+		if (result == (fileList.size() + 1)) { 
 			System.out.println("성공");
 			return "redirect:/";
 		} else {

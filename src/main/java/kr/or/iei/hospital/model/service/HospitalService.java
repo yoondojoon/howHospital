@@ -61,7 +61,6 @@ public class HospitalService {
 			
 			// 2. BusinessAuth_file테이블에 insert
 			for (BusinessAuthFile businessAuthFile : fileList) {
-				System.out.println(businessAuthFile);
 				businessAuthFile.setBusinessAuthNo(businessAuthNo);
 				result += hospitalDao.insertBusinessAuthFile(businessAuthFile);
 			}
@@ -77,12 +76,18 @@ public class HospitalService {
 		//1. hospital 테이블 insert
 		int result = hospitalDao.insertHospitalEnroll(hospital);
 		
-		//2. doctor 테이블 insert (*사진파일명 포함)
+		//2. time 테이블 insert
+		result += hospitalDao.insertHospitalTime(hospital, time);
 		
+		//3. subject 테이블 insert
+		for(int i = 0; i < subjectList.size(); i++) {
+			  result += hospitalDao.insertSubject(subjectList.get(i));
+			//4. doctor 테이블 insert (*사진파일명 포함)
+			  result += hospitalDao.insertDoctor(hospital, doctorList.get(i), subjectList.get(i));
+	      }
+			  
 		
-		//3. time 테이블 insert
-		
-		//4. subject 테이블 insert
+	
 		
 		
 		
