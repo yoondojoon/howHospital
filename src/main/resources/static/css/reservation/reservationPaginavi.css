@@ -30,7 +30,7 @@
   line-height: 40px;
 }
 .pagination .page-item.active-page {
-  background-color: #4389BA;
+  background-color: var(--main_01);
   color: #fff;
 }
 a{

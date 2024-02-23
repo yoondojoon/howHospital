@@ -3,7 +3,8 @@
 /* 기본 색상 */
 :root{
     /* main color */
-    --main_01:#4389BA;
+    /* --main_01:#4389BA; */
+    --main_01:#0081B4;
     --main_02:#FF3D00;
     --main_03:#2F6082;
     --main_04:#8F8F8F;
@@ -23,7 +24,7 @@
     --gray_08:#FFFFFF;
 
     /* line color */
-    --line_02:#222222;
+    --line_01:#222222;
     --line_02:#D6D6D6;
     --line_03:#EAECED;
     --line_04:#F6F6F6;
@@ -44,7 +45,7 @@ h4{margin-bottom:20px; color:var(--gray_01); font-size:16px; font-weight:bold; l
 h5{margin-bottom:8px; color:var(--gray_01); font-size:14px; font-weight:bold; line-height:1.5;}
 
 /* header */
-#header{z-index:1000; position:fixed; top:0; left:0; right:0; border-bottom:1px solid rgba(67,137,186,0.4);}
+#header{z-index:1000; position:fixed; top:0; left:0; right:0; border-bottom:1px solid /*rgba(67,137,186,0.4)*/ rgba(0,129,180,0.4);}
 #header .header_top_area{position:relative; z-index:1;}
 #header .header_bottom_area{display:block; position:relative; z-index:1;}
 #header.fixed .header_bottom_area{display:none;}
@@ -70,13 +71,13 @@ h5{margin-bottom:8px; color:var(--gray_01); font-size:14px; font-weight:bold; li
 #header .gnb_area .gnb_list>li>a{min-width:132px;}
 #header .gnb_area .gnb_list>li:hover>a{border-radius:12px 12px 0 0; background-color:rgba(67,137,186,0.2);}
 #header .gnb_area .gnb_list>li:hover a+.sub_menu{display:block;}
-#header .gnb_area .gnb_list .sub_menu{display:none; position:absolute; border-radius:0 0 12px 12px; border:1px solid rgba(67,137,186,0.4); border-top:none; background-color:var(--bg_01); overflow:hidden;}
+#header .gnb_area .gnb_list .sub_menu{display:none; position:absolute; border-radius:0 0 12px 12px; border:1px solid /*rgba(67,137,186,0.4)*/ rgba(0,129,180,0.4); border-top:none; background-color:var(--bg_01); overflow:hidden;}
 #header .gnb_area .gnb_list .sub_menu a{min-width:130px;}
 #header .gnb_area .gnb_list .sub_menu a:hover{background-color:rgba(67,137,186,0.2);}
 
 
 /* footer */
-#footer {border-top:1px solid rgba(67,137,186,0.4);}
+#footer {border-top:1px solid /*rgba(67,137,186,0.4)*/ rgba(0,129,180,0.4);}
 #footer .inner_wrap{position:relative;}
 #footer .logo{margin-left:-15px;}
 #footer .logo>a{display:block; width:200px; height:48px; background:url(/images/logo.png) no-repeat center left / auto 48px; color:var(--main_01); font-size:28px; font-weight:bold; line-height:48px;}
@@ -106,9 +107,9 @@ input:not([type=radio]):-internal-autofill-selected {background-color:#fff!impor
 .input_item+.msg.warning::before{background:url(/images/icon_info_warning.svg) no-repeat center / contain;}
 .select{flex:1; position:relative; border:1px solid var(--line_02); border-radius:4px; overflow:hidden;}
 .select::after{content:''; display:block; position:absolute; top:0; right:8px; width:24px; height:40px; background:url(/images/icon_arrow_down.svg) no-repeat center / 12px;}
-.select>select{width:100%; padding:8px 12px; font-size:16px; line-height:1.5; background-color:#fff;}
+.select>select{width:100%; padding:8px 12px; font-size:16px; line-height:1.5; background-color:#fff; cursor:pointer;}
 .textarea{display:flex; border:1px solid var(--line_02); border-radius:8px; overflow:hidden;}
-.textarea textarea{width:100%; height:156px; padding:15px; resize:none; font-size:16px; line-height:24px;}
+.textarea textarea{width:100%; height:156px; padding:15px; resize:none; font-size:16px; line-height:24px;} 
 /* checkbox */
 .checkbox_wrap{display:flex; flex-wrap:wrap; gap:12px;}
 .checkbox_wrap.row{display:flex; flex-direction:column; gap:0;}
@@ -118,7 +119,7 @@ input:not([type=radio]):-internal-autofill-selected {background-color:#fff!impor
 .input_item input[type=checkbox]+label+.btn_more{width:40px; height:40px; background:url(/images/icon_arrow_gray.svg) no-repeat center / 12px; transform:rotate(180deg);}
 /* radio boxtype */
 .radio_wrap.box_type{display:grid; grid-template-columns:1fr 1fr 1fr 1fr 1fr; grid-template-rows:auto; column-gap:12px; row-gap:12px;}
-.radio.boxtype label{display:block; min-width:79px; padding:6.5px 12px; border:1px solid var(--line_02); border-radius:4px; font-size:14px; line-height:1.5; text-align:center; cursor:pointer;}
+.radio.boxtype label{display:block; padding:6.5px 12px; border:1px solid var(--line_02); border-radius:4px; font-size:14px; line-height:1.5; text-align:center; cursor:pointer;}
 .radio.boxtype input[type=radio]:checked+label{border-color:var(--main_01); color:var(--main_01); font-weight:bold;}
 
 /* button */
@@ -150,7 +151,7 @@ input:not([type=radio]):-internal-autofill-selected {background-color:#fff!impor
 
 /* modal */
 .modal{position:fixed; left:0; right:0; top:0; bottom:0; background-color:rgba(0,0,0,0.4);}
-.modal .modal_wrap{position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); display:flex; flex-direction:column; gap:20px; min-width:444px; min-height:315px; padding:40px 20px; background-color:#fff; border-radius:8px;}
+.modal .modal_wrap{position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); display:flex; flex-direction:column; gap:20px; min-width:444px; padding:40px 20px; background-color:#fff; border-radius:8px;}
 .modal .modal_title{font-size:20px; font-weight:bold; line-height:30px; text-align:center;}
 .modal .modal_container{height:114px; padding:0 20px; overflow-y:auto;}
 .modal .modal_content{display:flex; flex-direction:column; justify-content:center; min-height:100%; font-size:16px; line-height:1.5;}
@@ -158,3 +159,18 @@ input:not([type=radio]):-internal-autofill-selected {background-color:#fff!impor
 .modal .btn_area{margin-top:0;}
 .modal .btn_close{position:absolute; top:12px; right:12px; display:block; width:36px; height:36px; background:url(/images/icon_close.svg) no-repeat center / 16px;}
 
+/* datepicker */
+.ui-datepicker{}
+.ui-datepicker .ui-datepicker-header{position:relative; padding:6px;}
+.ui-datepicker .ui-datepicker-header .ui-datepicker-title{font-size:16px; font-weight:bold; line-height:36px; text-align:center;}
+.ui-datepicker .ui-datepicker-header .ui-corner-all{position:absolute; top:0; bottom:0; width:calc(100% / 7); height:48px; background:url(/images/icon_arrow_black.svg) no-repeat center / 12px; font-size:0; text-indent:-9999%; overflow:hidden; cursor:pointer;}
+.ui-datepicker .ui-datepicker-header .ui-datepicker-prev{left:0;}
+.ui-datepicker .ui-datepicker-header .ui-datepicker-next{right:0; transform:rotate(180deg);}
+.ui-datepicker .ui-datepicker-calendar{width:100%;}
+.ui-datepicker .ui-datepicker-calendar th,
+.ui-datepicker .ui-datepicker-calendar td{padding:6px; text-align:center;}
+.ui-datepicker .ui-datepicker-calendar th>span{display:block; font-size:16px; line-height:36px;}
+.ui-datepicker .ui-state-default{width:36px; border:1px solid transparent; border-radius:50%; color:var(--gray_01); font-size:14px; line-height:34px; text-align:center;}
+.ui-datepicker .ui-state-default.ui-state-active{background-color:var(--main_01); color:#fff; font-weight:bold;}
+.ui-datepicker .ui-datepicker-today .ui-state-default{border-color:var(--main_01); color:var(--main_01); font-weight:bold;}
+.ui-datepicker .ui-datepicker-today .ui-state-default.ui-state-active{color:#fff;}

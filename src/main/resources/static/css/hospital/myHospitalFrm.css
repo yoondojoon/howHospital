@@ -121,9 +121,9 @@ input:not([type=radio]){
 	
 
 .addDoctorBtn{
-    border-color: #1065DC !important;
+    border-color: var(--main_05) !important;
     background-color: #fff !important;
-    color: #1065DC !important;
+    color: var(--main_05) !important;
     margin-left:10px;
 }
 	

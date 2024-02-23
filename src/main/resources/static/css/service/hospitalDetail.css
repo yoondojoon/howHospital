@@ -20,12 +20,12 @@
 .hospitalDetail .top_info_list .info_content{display:flex; flex-wrap:wrap; gap:12px; justify-content:flex-end; flex:1;}
 .hospitalDetail .top_info_list .info_content>.subject_name+.subject_name{position:relative; margin-left:12px;}
 .hospitalDetail .top_info_list .info_content>.subject_name+.subject_name::after{content:''; display:block; position:absolute; left:-12px; top:6px; width:1px; height:16px; background-color:var(--line_02);}
-.hospitalDetail .top_info_list .info_content .open_status{position:relative; margin-left:12px; padding-left:12px; color:var(--main_05); font-size:16px; font-weight:bold; line-height:1.5}
+.hospitalDetail .top_info_list .info_content .open_status{position:relative; margin-left:12px; padding-left:16px; color:var(--main_05); font-size:16px; font-weight:bold; line-height:1.5}
 .hospitalDetail .top_info_list .info_content .open_status::before{content:''; display:block; position:absolute; top:9px; left:0; width:8px; height:8px; border-radius:50%;}
 .hospitalDetail .top_info_list .info_content .open_status.open{color:var(--main_05);}
 .hospitalDetail .top_info_list .info_content .open_status.open::before{background-color:var(--main_05);}
 .hospitalDetail .top_info_list .info_content .open_status.closed{color:var(--gray_04);}
-.hospitalDetail .top_info_list .info_content .open_status.closed::before{background-color:var(--line_02);}
+.hospitalDetail .top_info_list .info_content .open_status.closed::before{background-color:var(--gray_05);}
 .hospitalDetail .top_info_list .keyword{display:block; height:30px; padding:0 19px; border-radius:30px; background-color:var(--bg_01); color:var(--main_01); font-size:14px; font-weight:bold; line-height:30px; text-align:center;}
 .hospitalDetail .detail_top_wrap .btn_area{margin-top:20px;}
 .hospitalDetail .detail_top_wrap .btn_area>[class^=btn_]{flex:1;}
@@ -61,7 +61,7 @@
 .hospitalDetail .review_wrap .review_top_wrap{display:flex; justify-content:space-between; margin-bottom:18.5px;}
 .hospitalDetail .review_wrap .review_top_wrap .top_title_wrap{display:flex; align-items:center;}
 .hospitalDetail .review_wrap .top_title_wrap h3{margin:0; line-height:41px;}
-.hospitalDetail .review_wrap .top_title_wrap .review_count{margin-left:4px; color:var(--main_05); font-size:20px; font-weight:bold; line-height:41px;}
+.hospitalDetail .review_wrap .top_title_wrap .review_count{margin-left:4px; color:var(--main_01); font-size:20px; font-weight:bold; line-height:41px;}
 .hospitalDetail .review_wrap .top_title_wrap .rating_wrap{display:flex; align-items:center; gap:8px;}
 .hospitalDetail .review_wrap .top_title_wrap .star_wrap{width:120px; height:24px; margin-left:16px; background:url(/images/icon_star.svg) repeat-x left top;}
 .hospitalDetail .review_wrap .top_title_wrap .star_wrap .star{display:block; width:80%; height:100%; background:url(/images/icon_star_on.svg) repeat-x left top;}
