@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.multipart.MultipartFile;
 
 import jakarta.servlet.http.HttpSession;
@@ -22,6 +23,7 @@ import kr.or.iei.hospital.model.dto.PrescriptionFile;
 import kr.or.iei.hospital.model.service.DoctorService;
 import kr.or.iei.hospital.model.service.HospitalService;
 import kr.or.iei.hospital.model.service.PrescriptionService;
+import kr.or.iei.member.model.dto.Member;
 import kr.or.iei.member.model.service.MemberService;
 import kr.or.iei.reservation.model.dto.ReservationListData;
 import kr.or.iei.reservation.model.service.ReservationDetailService;
@@ -45,6 +47,9 @@ public class HospitalController {
 
 	@Value("${file.root}")
 	private String root; // 자바 전체에서 쓸수있는 변수, application.properties에 선언되어있는 값을 문자열로 가져옴.
+	
+	@Value("${file.prescriptionRoot}")
+	private String prescriptionRoot;
 
 	@Autowired
 	private FileUtils fileUtils;
@@ -106,11 +111,15 @@ public class HospitalController {
 	}
 
 	@GetMapping("/myHospitalReservation")
-	public String myHospitalReservation(int reqPage, Model model) {
+	public String myHospitalReservation(int reqPage, Model model, @SessionAttribute Member member, int doctorNo) {
+		//회원 번호로 해당하는 병원 정보 가져오기.
+		int memberNo = member.getMemberNo();
 		// 병원 예약 조회해오기
-		ReservationListData nld = reservationService.selectReservation(reqPage);
+		ReservationListData nld = reservationService.selectReservation(reqPage, memberNo, doctorNo);
 		model.addAttribute("reservation", nld.getList());
 		model.addAttribute("pageNavi", nld.getPageNavi());
+		model.addAttribute("doctorList", nld.getDoctorList());
+		model.addAttribute("doctorNo", doctorNo);
 		return "hospital/myHospitalReservationList";
 	}
 
@@ -129,7 +138,7 @@ public class HospitalController {
 	@ResponseBody
 	@PostMapping("/prescriptionRegistration")
 	public int prescriptionRegistration(MultipartFile file, PrescriptionFile pf) {
-		String savepath = root + "/prescription/";
+		String savepath = prescriptionRoot + "/prescription/";
 		String filename = file.getOriginalFilename();
 		String filepath = fileUtils.upload(savepath, file);
 		pf.setPrescriptionName(filename);

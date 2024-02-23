@@ -12,4 +12,5 @@ import lombok.NoArgsConstructor;
 public class ReservationListData {
 	private List list;
 	private String pageNavi;
+	private List doctorList;
 }
