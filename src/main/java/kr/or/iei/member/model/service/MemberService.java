@@ -64,4 +64,11 @@ public class MemberService {
 		
 	}
 
+	
+
+	public int delete(String memberEmail, String memberPassword) {
+		
+		return 0;
+	}
+
 }

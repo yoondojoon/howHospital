@@ -8,41 +8,26 @@
 <main id="container" class="container">
 <div id="contents" class="contents signUpFrm">
 	<div id="contents" class="contents memberDelete">
-			<div class="inner_wrap">
-					
-	<h2>비밀번호를 입력해주세요.</h2>
-	<form action="/member/delete">
-	<input type="text" placeholder="비밀번호를 입력해주세요.">
-	<div>
-	<button type="submit" class="btn_primary lg">확인</button>
-	</div>
-	</form>	
-	
-	
-	
-	
-	
-		</div>
+			<form action="/member/confirmPassword">
+			<div class="input_wrap">
+						<div class="input_title"><label for="input_default">비밀번호</label></div>
+						<div class="input_item">
+							<input type="text" name="memberPassword" id="memberPassword" placeholder="비밀번호를 입력해주세요.">
+							<button type="submit" id="delete" class="btn_primary">버튼 primary</button>
+						</div>
+						
+					</div>
+					<div class="msg" id="passwordStatus"></div>
+			</form>
 	</div>
 </div>
 	
 	</th:block>
 
 
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-
-
 </main>
 
 <th:block th:include="common/footer"></th:block>
+<script src="/js/common/confirmDelete.js"></script>
 </body>
 </html>

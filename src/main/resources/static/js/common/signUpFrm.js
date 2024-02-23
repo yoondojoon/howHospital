@@ -1,36 +1,33 @@
+
 $(".agreeAll").on("click", function() {
+
+    
     const isChecked = $(this).is(":checked"); 
+    
 
-    $(".agreeService, .agreeLocation, .agreeAge").prop("checked", isChecked);
-});
+    
 
-$(".agreeService, .agreeLocation, .agreeAge").on("click", function() {
-    const allChecked = $(".agreeService:checked, .agreeLocation:checked, .agreeAge:checked").length === 3;
+    if(isChecked){ 
+        $(".agreeService").prop("checked",true);
+        $(".agreeLocation").prop("checked",true);
+        $(".agreeAge").prop("checked",true);
+    }else{
+        $(".agreeService").prop("checked",false);
+        $(".agreeLocation").prop("checked",false);
+        $(".agreeAge").prop("checked",false);     
+    }
 
-    $(".agreeAll").prop("checked", allChecked);
-});
-
-
-
-
-
-
-	$("#agreeLocation").on("click",function(){
-
-    const isChecked = $(this).is(":checked");
-
-    if(!isChecked ){
-        $("#agreeAll").prop("checked",false)
-    };
 
 	});
 
-	$("#agreeAge").on("click",function(){
+
+
+	$(".agreeService").on("click",function(){
 
     const isChecked = $(this).is(":checked");
 
     if(!isChecked ){
-        $("#agreeAll").prop("checked",false)
+        $(".agreeAll").prop("checked",false)
     };
 
 	});
@@ -38,21 +35,49 @@ $(".agreeService, .agreeLocation, .agreeAge").on("click", function() {
 
 
 
-	$("#agreeService, #agreeLocation, #agreeAge").on("click",function(){
 
 
-    const agreeService = $("#agreeService").is(":checked");
-    const agreeLocation = $("#agreeLocation").is(":checked");
-    const agreeAge = $("#agreeAge").is(":checked");
+	$(".agreeLocation").on("click",function(){
+
+    const isChecked = $(this).is(":checked");
+
+    if(!isChecked ){
+        $(".agreeAll").prop("checked",false)
+    };
+
+	});
+
+	$(".agreeAge").on("click",function(){
+
+    const isChecked = $(this).is(":checked");
+
+    if(!isChecked ){
+        $(".agreeAll").prop("checked",false)
+    };
+
+	});
+
+
+
+
+	$(".agreeService, .agreeLocation, .agreeAge").on("click",function(){
+
+
+    const agreeService = $(".agreeService").is(":checked");
+    const agreeLocation = $(".agreeLocation").is(":checked");
+    const agreeAge = $(".agreeAge").is(":checked");
 
     
 
     if(agreeService == true && agreeLocation == true && agreeAge == true){
 
-        $("#agreeAll").prop("checked",true)
+        $(".agreeAll").prop("checked",true)
     };
 
 	});
+
+
+
 
 
 
@@ -204,6 +229,21 @@ $("#signUpBtn").on("click", function(event) {
         event.preventDefault();
         alert("모든 항목을 정확히 입력해 주세요."); 
     }
+    
+    const isChecked = $(".agreeAll").is(":checked");
+    
+    if(!isChecked){
+    	
+    	$("#agreeStatus").text("모든 약관에 동의해주셔야 가입이 가능합니다.").css("color","red");
+    	
+    }else{
+    
+    	$("#agreeStatus").hide();
+
+    }
+    
+    form.submit();
+    
 });
 	
 	$("#select select[name=memberType]").on("change", function() {
@@ -277,7 +317,7 @@ $("#signUpBtn").on("click", function(event) {
 	
 		$("#passwordStatus2").text("비밀번호가 일치합니다.");
 		$("#passwordStatus2").css("color","blue");
-		$("#passwordStatus2").hide();
+		
 		
 	}else{
 	
@@ -304,7 +344,7 @@ $("#signUpBtn").on("click", function(event) {
 		}else{
 			$("#rrnStatus").text("사용가는한 주민등록번호 입니다.");
 			$("#rrnStatus").css("color","blue");
-			$("#rrnStatus").hide();
+			
 		}
 		
 	
@@ -325,7 +365,7 @@ $("#signUpBtn").on("click", function(event) {
 			
 			$("#phoneStatus").text("사용가능한 전화번호 입니다.");
 			$("#phoneStatus").css("color","blue");
-			$("#phoneStatus").hide();
+			
 		}
 		
 		
@@ -347,7 +387,7 @@ $("#signUpBtn").on("click", function(event) {
             success: function(data) {
                 if (data === 0) {
                     $("#emailStatus").text("사용 가능한 이메일입니다.").css("color","blue");
-                    $("#emailStatus").hide();
+                    
                 } else {
                     $("#emailStatus").text("중복된 이메일입니다.").css("color","red");
                     event.preventDefault();
@@ -361,16 +401,24 @@ $("#signUpBtn").on("click", function(event) {
     }
 });
 		
-
-
-
-	//전화번호 하이픈
+		
+//전화번호 하이픈
 	const autoHyphen = (target) => {
  	target.value = target.value
-   	.replace(/[^0-9]/g, '')
+ 	.replace(/[^0-9]/g, '')
   	.replace(/^(\d{0,3})(\d{0,4})(\d{0,4})$/g, "$1-$2-$3").replace(/(\-{1,2})$/g, "");
+ 	
+   	
 		}
 
+
+
+
+
+
+
+
+	
 	//주민번호제한
 	function rrnMaxLength(e){
 

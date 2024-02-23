@@ -64,6 +64,21 @@ public class MemberDao {
 		
 		
 	}
+
+	public int checkPassword(String memberPassword, String memberEmail) {
+		
+		
+		String query = "select count(*) from member_tbl where member_password =? and member_email=?";
+		
+		//Object[] params = {memberPassword,memberEmail};
+		
+		int cnt = jdbc.queryForObject(query, Integer.class,memberPassword,memberEmail);
+		
+		
+		
+		
+		return cnt;
+	}
 	
 	
 	
