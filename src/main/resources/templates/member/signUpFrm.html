@@ -23,6 +23,7 @@
 						<option value="2">병원관계자</option>
 					</select>
 				</div>
+				<div id="typeStatus"></div>
 				
 					<div class="input_wrap">
 				
@@ -91,6 +92,7 @@
 						<input type="text" name="memberName" id="memberName"
 							placeholder="이름을 입력하세요">
 					</div>
+					<div id="nameStatus"></div>
 				</div>
 				<div class="input_wrap">
 					<div class="input_title">
@@ -132,10 +134,42 @@
 				
 				
 				
+				<div class="checkbox_wrap row">
+						<div class="input_item">
+							<input type="checkbox" name="agreeAll" id="check2_1" class="agreeAll">
+							<label for="check2_1">전체동의</label>
+						</div>
+						<div class="input_item">
+							<input type="checkbox" name="agreeService" id="check2_2" class="agressService">
+							<label for="check2_2">서비스 이용약관 동의</label>
+							<button type="button" class="btn_more"><span class="blind">더보기</span></button>
+						</div>
+						<div class="input_item">
+							<input type="checkbox" name="agreeLocation" id="check3_3" class="agreeLocation">
+							<label for="check3_3">위치기반 서비스 이용 동의</label>
+							<button type="button" class="btn_more"><span class="blind">더보기</span></button>
+						</div>
+						<div class="input_item">
+							<input type="checkbox" name="agreeAge" id="check4_4" class="agreeAge">
+							<label for="check4_4">만 14세 이상 동의</label>
+							<button type="button" class="btn_more"><span class="blind">더보기</span></button>
+						</div>
+					</div>
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
 				
 				<div class="agree">
 					<div>
-						<label> <input type="checkbox" name="agreeAll" id="agreeAll"> 전체 동의</label>
+						<label for="checkbox_only"> <input type="checkbox" name="agreeAll" id="checkbox_only"> 전체 동의</label>
 					</div>
 					<hr>
 					<div class="checkbox">
