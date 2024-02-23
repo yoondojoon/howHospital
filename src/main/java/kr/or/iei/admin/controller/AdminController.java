@@ -8,6 +8,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import kr.or.iei.admin.model.dto.AdminBusinessAuth;
+import kr.or.iei.admin.model.dto.AdminBusinessAuthListData;
 import kr.or.iei.admin.model.dto.MemberReport;
 import kr.or.iei.admin.model.dto.MemberReportListData;
 import kr.or.iei.admin.model.dto.Notice;
@@ -112,5 +114,20 @@ public class AdminController {
 	public String reportDetail(int reportNo) {
 		int result = adminService.confirmReport(reportNo);
 		return "redirect:/admin/manageReport?reqPage=1";
+	}
+	
+	@GetMapping(value="/businessAuthList")
+	public String BusinessAuthList(int reqPage, Model model) {
+		AdminBusinessAuthListData abld = adminService.selectAllBusinessAuth(reqPage); 
+		model.addAttribute("businessAuthList", abld.getList());
+		model.addAttribute("pageNavi", abld.getPageNavi());
+		return "admin/businessAuthList";
+	}
+	
+	@GetMapping(value="/confirmAuth")
+	public String confirmAuth(int businessAuthNo, Model model) {
+		AdminBusinessAuth aba = adminService.confirmAuth(businessAuthNo);
+		model.addAttribute("authInfo",aba);
+		return "admin/confirmAuth";
 	}
 }

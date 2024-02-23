@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+<th:block th:include="common/header"></th:block>
+<link rel="stylesheet" href="/css/admin/adminMain.css">
+
+	<!-- container -->
+    <main id="container" class="container">
+
+		<!-- contents -->
+        <section id="contents" class="contents adminMain">
+            <div class="inner_wrap">
+                <h2>병원승인 목록</h2>
+            </div>
+            <div class="inner_wrap">
+        	<table class="btl">
+        		<tr class="tr-header">
+        			<th style="width:25%;">번호</th>
+        			<th style="width:25%;">이름</th>
+        			<th style="width:25%;">이메일</th>
+        			<th style="width:25%;">등록일</th>
+        		</tr>
+        		<tr class="tr-content" th:each="bal : ${businessAuthList}">
+					<td name="businessAuthNo" th:text="${bal.businessAuthNo}">
+						<a th:href="@{/admin/confirmAuth(businessAuthNo=${bal.businessAuthNo})}" th:text="${bal.memberName}"></a>
+					</td>
+					<td name="memberName" th:text="${bal.memberName}"></td>
+					<td name="memberEmail" th:text="${bal.memberEmail}"></td>
+					<td name="regDate" th:text="${bal.regDate}"></td>
+				</tr>
+        	</table>
+        	
+        	<div id="pageNavi" class="pagination" th:utext="${pageNavi}"></div>
+        </div>
+        </section>
+	    <!--// contents -->
+        
+    </main>
+    <!--// container -->
+	
+<th:block th:include="common/footer"></th:block>
+<!-- js 링크 -->
+    
+</body>
+</html>
