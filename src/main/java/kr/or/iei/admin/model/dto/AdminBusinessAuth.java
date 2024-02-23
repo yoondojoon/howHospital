@@ -14,6 +14,6 @@ public class AdminBusinessAuth {
 	private String memberPhone;
 	private String fileName;
 	private String filePath;
-	private int representativeNo;
+	private String representativeNo;
 	private String regDate;
 }
