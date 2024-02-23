@@ -13,6 +13,7 @@ import kr.or.iei.admin.model.dto.MemberReportRowMapper;
 import kr.or.iei.admin.model.dto.Notice;
 import kr.or.iei.admin.model.dto.NoticeListData;
 import kr.or.iei.admin.model.dto.NoticeRowMapper;
+import kr.or.iei.hospital.model.dto.BusinessAuthFileRowMapper;
 
 @Repository
 public class AdminDao {
@@ -27,6 +28,9 @@ public class AdminDao {
 	
 	@Autowired
 	private AdminBusinessAuthRowMapper abaRowMapper;
+	
+	@Autowired
+	private BusinessAuthFileRowMapper bafRowMapper;
 
 	public List selectAllNotice(int start, int end) {
 		String query = "SELECT  * FROM (SELECT ROWNUM AS RNUM, N.* FROM (SELECT NOTICE_NO, MEMBER_TBL.MEMBER_NO, NOTICE_TITLE, NOTICE_CONTENT, READ_COUNT, REQ_DATE, MEMBER_NAME FROM MEMBER_TBL RIGHT OUTER JOIN NOTICE_TBL ON MEMBER_TBL.MEMBER_NO = NOTICE_TBL.MEMBER_NO ORDER BY NOTICE_NO DESC)N) WHERE RNUM BETWEEN ? AND ?";
@@ -132,22 +136,52 @@ public class AdminDao {
 	}
 
 	public List selectAllBusinessAuth(int start, int end) {
-		String query = "SELECT * FROM (SELECT ROWNUM AS RNUM, N.* FROM(SELECT MEMBER_NAME, J_TBL.BUSINESSAUTH_NO, MEMBER_EMAIL, MEMBER_PHONE, FILENAME, FILEPATH, REPRESENTATIVE_NO, REG_DATE FROM BUSINESSAUTH_FILE_TBL RIGHT OUTER JOIN (SELECT * FROM MEMBER_TBL RIGHT OUTER JOIN BUSINESSAUTH_TBL ON MEMBER_TBL.MEMBER_NO = BUSINESSAUTH_TBL.MEMBER_NO WHERE MEMBER_STATUS = 4) J_TBL ON J_TBL.BUSINESSAUTH_NO = BUSINESSAUTH_FILE_TBL.BUSINESSAUTH_NO ORDER BY BUSINESSAUTH_NO DESC)N)WHERE RNUM BETWEEN ? AND ?";
+		String query = "SELECT * FROM (SELECT ROWNUM AS RNUM, N.* FROM(SELECT MEMBER_NAME, BUSINESSAUTH_NO, MEMBER_EMAIL, MEMBER_PHONE, REPRESENTATIVE_NO, REG_DATE FROM MEMBER_TBL RIGHT OUTER JOIN BUSINESSAUTH_TBL ON MEMBER_TBL.MEMBER_NO = BUSINESSAUTH_TBL.MEMBER_NO WHERE MEMBER_STATUS = 4 ORDER BY BUSINESSAUTH_NO DESC)N) WHERE RNUM BETWEEN ? AND ?";
 		Object[] params = {start,end};
 		List list = jdbc.query(query, abaRowMapper, params);
 		return list;
 	}
 
 	public int selectAllBusinessAuthCount() {
-		String query = "SELECT count(*) FROM (BUSINESSAUTH_FILE_TBL RIGHT OUTER JOIN (SELECT * FROM MEMBER_TBL RIGHT OUTER JOIN BUSINESSAUTH_TBL ON MEMBER_TBL.MEMBER_NO = BUSINESSAUTH_TBL.MEMBER_NO WHERE MEMBER_STATUS = 4) J_TBL ON J_TBL.BUSINESSAUTH_NO = BUSINESSAUTH_FILE_TBL.BUSINESSAUTH_NO)";
+		String query = "SELECT COUNT(*) FROM (SELECT ROWNUM AS RNUM, N.* FROM(SELECT MEMBER_NAME, BUSINESSAUTH_NO, MEMBER_EMAIL, MEMBER_PHONE, REPRESENTATIVE_NO, REG_DATE FROM MEMBER_TBL RIGHT OUTER JOIN BUSINESSAUTH_TBL ON MEMBER_TBL.MEMBER_NO = BUSINESSAUTH_TBL.MEMBER_NO WHERE MEMBER_STATUS = 4 ORDER BY BUSINESSAUTH_NO DESC)N)";
 		int totalCount = jdbc.queryForObject(query, Integer.class);
 		return totalCount;
 	}
 
 	public AdminBusinessAuth confirmAuth(int businessAuthNo) {
-		String query = "SELECT MEMBER_NAME, J_TBL.BUSINESSAUTH_NO, MEMBER_EMAIL, MEMBER_PHONE, FILENAME, FILEPATH, REPRESENTATIVE_NO, REG_DATE FROM BUSINESSAUTH_FILE_TBL RIGHT OUTER JOIN (SELECT * FROM MEMBER_TBL RIGHT OUTER JOIN BUSINESSAUTH_TBL ON MEMBER_TBL.MEMBER_NO = BUSINESSAUTH_TBL.MEMBER_NO WHERE MEMBER_STATUS = 4) J_TBL ON J_TBL.BUSINESSAUTH_NO = BUSINESSAUTH_FILE_TBL.BUSINESSAUTH_NO WHERE J_TBL.BUSINESSAUTH_NO=?";
+		String query = "SELECT * FROM MEMBER_TBL RIGHT OUTER JOIN BUSINESSAUTH_TBL ON MEMBER_TBL.MEMBER_NO = BUSINESSAUTH_TBL.MEMBER_NO WHERE MEMBER_STATUS = 4 AND BUSINESSAUTH_NO=?";
 		Object[] params = {businessAuthNo};
 		AdminBusinessAuth aba = jdbc.queryForObject(query, abaRowMapper,params);
 		return aba;
+	}
+
+	public List confirmAuthFile(int businessAuthNo) {
+		String query = "select * from businessAuth_file_tbl where businessAuth_no=?";
+		Object[] params = {businessAuthNo};
+		List fileList = jdbc.query(query, bafRowMapper,params);
+		System.out.println(fileList);
+		return fileList;
+	}
+
+	public int authConfirmSuccess(int businessAuthNo) {
+		String query = "update (member_tbl.member_no, businessAuth_no, member_status from businessAuth_tbl right outer join member_tbl) set member_status=1 where businessAuth = ?";
+		Object[] params = {businessAuthNo};
+		int result = jdbc.update(query,params);
+		return result;
+	}
+
+
+	public int deleteFileInfo(int businessAuthNo) {
+		String query = "delete from business_file_tbl where businessAuth_no = ?";
+		Object[] params = {businessAuthNo};
+		int result = jdbc.update(query, params);
+		return result;
+	}
+
+	public int deleteAuthInfo(int businessAuthNo) {
+		String query = "delete from business_tbl where businessAuth_no = ?";
+		Object[] params = {businessAuthNo};
+		int result = jdbc.update(query, params);
+		return result;
 	}
 }

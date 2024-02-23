@@ -63,6 +63,7 @@ public class HospitalService {
 			for (BusinessAuthFile businessAuthFile : fileList) {
 				businessAuthFile.setBusinessAuthNo(businessAuthNo);
 				result += hospitalDao.insertBusinessAuthFile(businessAuthFile);
+				
 			}
 			
 			result += hospitalDao.updateMemberStatus(ba.getMemberNo()); 
@@ -75,27 +76,23 @@ public class HospitalService {
 	public int insertHospitalEnroll(Hospital hospital, Time time, List<Doctor> doctorList, List<Subject> subjectList) {
 		//1. hospital 테이블 insert
 		int result = hospitalDao.insertHospitalEnroll(hospital);
+		// 방금 insert 한  테이블의 데이터의 _no가 필요 
+		int hospitalNo = hospitalDao.selectHospitalNo();
 		
-		//2. time 테이블 insert
-		result += hospitalDao.insertHospitalTime(hospital, time);
-		
-		//3. subject 테이블 insert
+		//2. subject 테이블 insert
 		for(int i = 0; i < subjectList.size(); i++) {
 			  result += hospitalDao.insertSubject(subjectList.get(i));
-			//4. doctor 테이블 insert (*사진파일명 포함)
-			  result += hospitalDao.insertDoctor(hospital, doctorList.get(i), subjectList.get(i));
+			  int subjectNo = hospitalDao.selectSubjectNo();
+		//3. doctor 테이블 insert (*사진파일명 포함)
+			  result += hospitalDao.insertDoctor(hospitalNo, doctorList.get(i), subjectNo);
 	      }
-			  
 		
-	
+		//4. time 테이블 insert
+		result += hospitalDao.insertHospitalTime(hospitalNo, time);
 		
-		
-		
-		
-		
-		
-	return 0;
+	return result;
 	}
+	
 	
 	public List selectReviewList(int hospitalNo, int sortValue, int start, int amount) {
 		int end = start+amount-1;
@@ -106,6 +103,17 @@ public class HospitalService {
 			List reviewList = hospitalDao.selectReviewList2(hospitalNo, sortValue, start, end);
 			return reviewList;
 		}
+	}
+
+	public Hospital selectHospitalInfo(int hospitalNo) {
+		Hospital h = new Hospital();
+		List subjectList = hospitalDao.searchSubjectList(hospitalNo);
+		Time time = hospitalDao.searchHospitalTime(hospitalNo);
+		List doctorList = hospitalDao.searchSubjectDoctorList(hospitalNo);
+		h.setSubjectList(subjectList);
+		h.setTime(time);
+		h.setDoctorList(doctorList);
+		return h;
 	}
 	
 }
