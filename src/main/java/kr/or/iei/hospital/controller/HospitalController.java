@@ -66,12 +66,19 @@ public class HospitalController {
 	public String myHospitalEnroll(Hospital hospital, String postCode, String hospitalAddrMain, String hospitalAddrSub,
 			String dayOpenHour, String dayCloseHour, String weekendOpenHour, String weekendCloseHour, String lunchOpenHour, String lunchCloseHour, String[] hol, 
 			String hospitalTelFirst, String hospitalTelLast,
-			String[] doctor_name, String[] doctor_education, String[] doctor_experience, String[] subjectSelect, MultipartFile[] doctor_picture, String CostOne, String CostTwo) {
+			String[] doctor_name, String[] doctor_education, String[] doctor_experience, String[] subjectSelect, MultipartFile hospital_picture ,MultipartFile[] doctor_picture, String CostOne, String CostTwo) {
 			
 			//System.out.println(hospital.getHospitalAddress());
 		
 			//VO 값 세팅
 			hospital.setHospitalAddress(postCode +" "+ hospitalAddrMain + " " + hospitalAddrSub);
+			
+			
+			//병원사진
+			String savepath1 = root+"/hospital/";
+			String filepath1 = fileUtils.upload(savepath1, hospital_picture); //파일 업로드 및 경로 반환
+			hospital.setHospitalPicture(filepath1); //중복처리된 이름 여기에 넣어줌. 번호는 시퀀스쓴다.
+			
 			
 			Time time = new Time();
 			time.setDayHour(dayOpenHour + "~" +  dayCloseHour);
