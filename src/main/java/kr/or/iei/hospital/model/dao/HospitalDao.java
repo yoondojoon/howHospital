@@ -51,7 +51,7 @@ public class HospitalDao {
 	private ReviewMemberNameRowMapper reviewMemberNameRowMapper;
 
 	public List searchHospital(String keyword) {	
-		String query = "select hospital_no, hospital_name, hospital_tel, hospital_address, lat, lng,\r\n" + 
+		String query = "select hospital_no, hospital_name, hospital_intro, hospital_tel, hospital_address, lat, lng,\r\n" + 
 				"(select distinct\r\n" + 
 				"    case\r\n" + 
 				"    when to_char(sysdate,'d') in (select holiday from time_tbl where hospital_no=h.hospital_no)\r\n" + 
