@@ -3,22 +3,14 @@
 <link rel="stylesheet" href="/css/admin/adminMain.css">
 <style>
 
-#content-td{
+.tr-content{
 	border:1px solid black;
 	background: #eaeaed;
-}
-
-.textarea{
-  margin : 30px;
+	width:100%;
+	height:500px;
 }
 
 
-#reportContent{
-	background-color:white;
-	justify-content:center;
-	height : 400px;
-	overflow-y:scroll;
-}
 
 
 </style>
@@ -52,8 +44,12 @@
 	        				<span th:text="${authInfo.memberPhone}"></span>
 	        			</th>
 	        		</tr>
-	        		<tr class="img-area">
-	        			
+	        		<tr class="tr-content">
+			    		<th:block th:each="file : ${authInfo.fileList}">
+	   		    			<td colspan="2">
+								<img th:src="${file.filepath}">
+							</td>
+					    </th:block>
 	        		</tr>
 	        	</table>
 	        	<div class="btn_area">

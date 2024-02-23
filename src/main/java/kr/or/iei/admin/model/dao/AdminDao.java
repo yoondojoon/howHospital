@@ -159,7 +159,6 @@ public class AdminDao {
 		String query = "select * from businessAuth_file_tbl where businessAuth_no=?";
 		Object[] params = {businessAuthNo};
 		List fileList = jdbc.query(query, bafRowMapper,params);
-		System.out.println(fileList);
 		return fileList;
 	}
 
