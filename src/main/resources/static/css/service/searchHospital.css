@@ -21,7 +21,7 @@
 .searchHospital .title_info{color:var(--gray_01); font-size:16px; line-height:1.5;}
 .searchHospital .time_info{font-weight:bold;}
 .searchHospital .status_info.open{color:var(--main_05);}
-.searchHospital .status_info.closed{color:var(--gray_05);}
+.searchHospital .status_info.closed{color:var(--gray_04);}
 .searchHospital .row_wrap .subject+.subject{position:relative; margin-left:4px;}
 .searchHospital .row_wrap .subject+.subject::before{content:'/'; display:block; position:absolute; left:-8px; top:0; bottom:0; width:8px; height:10px; font-size:12px;}
 .searchHospital .row_wrap span.keyword{display:inline-block; padding:0 8px; border:1px solid var(--main_01); border-radius:20px; color:var(--main_01); font-size:12px; font-weight:bold; line-height:20px;}

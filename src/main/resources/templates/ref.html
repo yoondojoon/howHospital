@@ -2,6 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <th:block th:include="common/header"></th:block>
+<script src="/js/lib/jquery-ui.min.js"></script>
 
 <style>
 	.ref_section {
@@ -293,6 +294,12 @@
 				<p>- .modal에 부여한 id명을 파라미터로 넣어준다.</p>
 				<p>- 팝업 내 closeModal()엔 this를 넣어준다.</p>
 			</section>
+
+			<h3>Datepicker</h3>
+			<section class="ref_section">
+				<p>- 기본 width는 100%이므로 너비 조절해야할 시 다른 div로 감싸서 커스텀</p>
+				<div id="datepicker"></div>
+			</section>
 		</div>
 	</section>
 	<!--// contents -->
@@ -336,6 +343,20 @@
 
 <th:block th:include="common/footer"></th:block>
 <script src="/js/common.js"></script>
+<script>
+	$(function(){
+        $("#datepicker").datepicker({
+			changeYear: false,
+            changeMonth: false,
+            dayNames: ['월요일','화요일','수요일','목요일','금요일','토요일','일요일'],
+            dayNamesMin: ['월','화','수','목','금','토','일'],
+            monthNameShort: ['1','2','3','4','5','6','7','8','9','10','11','12'],
+            monthNames: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+            prevText: '이전 달',
+            nextText: '다음 달'
+		});
+    });
+</script>
 </body>
 
 </html>

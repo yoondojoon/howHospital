@@ -254,6 +254,16 @@
     let currentCount = 0;
     let start = 1;
 
+    if(totalCount == 0){
+        let noDataDiv = [
+            "<div class='no_data_wrap'>",
+				"<i class='icon no_data'></i>",
+				"<p>리뷰가 없습니다.</p>",
+			"</div>"
+        ].join("");
+        $(".review_list").append(noDataDiv);
+    }
+
     $(".review_wrap select[name=review_sort]").on("change", function(){
         $(".review_list").empty();
         sortValue = $(this).val();
