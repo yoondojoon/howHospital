@@ -149,7 +149,7 @@ public class AdminDao {
 	}
 
 	public AdminBusinessAuth confirmAuth(int businessAuthNo) {
-		String query = "SELECT MEMBER_NAME, J_TBL.BUSINESSAUTH_NO, MEMBER_EMAIL, MEMBER_PHONE, REPRESENTATIVE_NO, REG_DATE FROM BUSINESSAUTH_FILE_TBL RIGHT OUTER JOIN (SELECT * FROM MEMBER_TBL RIGHT OUTER JOIN BUSINESSAUTH_TBL ON MEMBER_TBL.MEMBER_NO = BUSINESSAUTH_TBL.MEMBER_NO WHERE MEMBER_STATUS = 4) J_TBL ON J_TBL.BUSINESSAUTH_NO = BUSINESSAUTH_FILE_TBL.BUSINESSAUTH_NO WHERE J_TBL.BUSINESSAUTH_NO=?";
+		String query = "SELECT * FROM MEMBER_TBL RIGHT OUTER JOIN BUSINESSAUTH_TBL ON MEMBER_TBL.MEMBER_NO = BUSINESSAUTH_TBL.MEMBER_NO WHERE MEMBER_STATUS = 4 AND BUSINESSAUTH_NO=?";
 		Object[] params = {businessAuthNo};
 		AdminBusinessAuth aba = jdbc.queryForObject(query, abaRowMapper,params);
 		System.out.println("접속:"+aba);
@@ -160,7 +160,6 @@ public class AdminDao {
 		String query = "select * from businessAuth_file_tbl where businessAuth_no=?";
 		Object[] params = {businessAuthNo};
 		List fileList = jdbc.query(query, bafRowMapper,params);
-		System.out.println(fileList);
 		return fileList;
 	}
 

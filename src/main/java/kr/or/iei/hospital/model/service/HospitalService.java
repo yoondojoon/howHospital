@@ -104,6 +104,17 @@ public class HospitalService {
 			return reviewList;
 		}
 	}
+
+	public Hospital selectHospitalInfo(int hospitalNo) {
+		Hospital h = new Hospital();
+		List subjectList = hospitalDao.searchSubjectList(hospitalNo);
+		Time time = hospitalDao.searchHospitalTime(hospitalNo);
+		List doctorList = hospitalDao.searchSubjectDoctorList(hospitalNo);
+		h.setSubjectList(subjectList);
+		h.setTime(time);
+		h.setDoctorList(doctorList);
+		return h;
+	}
 	
 }
 

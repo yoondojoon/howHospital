@@ -65,10 +65,10 @@ public class MemberService {
 	}
 
 	
-
-	public int delete(String memberEmail, String memberPassword) {
+	//회탈
+	@Transactional
+	public int confirmDelete(String memberPassword, Member m) {
+		int cnt = memberDao.confirmDelete(memberPassword, m);
 		
-		return 0;
-	}
-
-}
+		return cnt;
+	}}
