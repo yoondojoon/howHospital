@@ -81,8 +81,8 @@
                             </li>
                         </ul>
                         <div class="btn_area">
-                            <a href="#" class="btn_primary">진료 예약</a>
-                            <a href="#" class="btn_primary outline">비대면 진료</a>
+                            <a th:href="@{/service/reserveContactFrm(hospitalNo=${h.hospitalNo}, hospitalName=${h.hospitalName})}" class="btn_primary">진료 예약</a>
+                            <a th:href="@{/service/reserveContactlessFrm(hospitalNo=${h.hospitalNo}, hospitalName=${h.hospitalName})}" class="btn_primary outline">비대면 진료</a>
                         </div>
                     </div>
                 </div>
@@ -135,6 +135,10 @@
                                         <span class="time_info" th:text="${h.time.weekendHour}"></span>
                                     </li>
                                 </ul>
+                            </div>
+                            <div class="item_section">
+                                <h4>병원 소개</h4>
+                                <p class="intro" th:text="${h.hospitalIntro}">병원소개글</p>
                             </div>
                             <div class="item_section">
                                 <h4>위치</h4>
@@ -244,7 +248,6 @@
 <script src="/js/lib/swiper-bundle.min.js"></script>
 <script th:inline="javascript">
     //리뷰
-    console.log([[${h}]]);
     const hospitalNo = [[${h.hospitalNo}]];
     const totalCount = [[${h.reviewCount}]];
     let sortValue = $(".review_wrap select[name=review_sort]").val();
@@ -252,7 +255,6 @@
     let start = 1;
 
     $(".review_wrap select[name=review_sort]").on("change", function(){
-        console.log($(this).val());
         $(".review_list").empty();
         sortValue = $(this).val();
         currentCount = 0;
