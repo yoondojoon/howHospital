@@ -97,4 +97,25 @@ public class HospitalService {
 	return 0;
 	}
 	
+	public List selectReviewList(int hospitalNo, int sortValue, int start, int amount) {
+		int end = start+amount-1;
+		if(sortValue == 1) {
+			List reviewList = hospitalDao.selectReviewList(hospitalNo, sortValue, start, end);			
+			return reviewList;
+		}else {
+			List reviewList = hospitalDao.selectReviewList2(hospitalNo, sortValue, start, end);
+			return reviewList;
+		}
+	}
+	
 }
+
+
+
+
+
+
+
+
+
+

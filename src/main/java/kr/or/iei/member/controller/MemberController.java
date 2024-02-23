@@ -1,11 +1,14 @@
 package kr.or.iei.member.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
@@ -176,7 +179,71 @@ public class MemberController {
 		
 	}
 	
+	@ResponseBody
+	@PostMapping(value="/emailChk")
+	public int emailChk(@RequestParam("memberEmail") String memberEmail ) {
+		
+		int cnt = memberService.checkEmail(memberEmail);
+		
+		return cnt;
+		
+		
+	}
 	
+	
+	
+	//서비스 이용 약관
+	@GetMapping(value="/agreeService")
+	public String agreeService() {
+		
+		
+		return "/member/agreeService";
+		
+	}
+	
+	
+	//위치 이용 약관
+	@GetMapping(value="/agreeLocation")
+	public String agreeLocation() {
+		
+		return "/member/agreeLocation";
+		
+	}
+	
+	//나이 이용 약관
+	@GetMapping(value="/agreeAge")
+	public String agreeAge() {
+		
+		return "/member/agreeAge";
+	}
+	
+	
+	
+	//비밀번호 체크 회탈)
+	@ResponseBody
+	@PostMapping(value="/passwordChk")
+	public int passwordChk(@RequestParam("memberPassword") String memberPassword, @RequestParam("memberEmail") String memberEmail ) {
+		
+		int cnt = memberService.checkPassword(memberPassword,memberEmail);
+
+		
+		return cnt;
+	}
+	
+	
+	//회탈
+	@PostMapping(value="/delete")
+	public String delete(@SessionAttribute(required = false) Member member) {
+		
+		String memberEmail = member.getMemberEmail();
+		String memberPassword = member.getMemberPassword()
+		
+		int cnt = memberService.delete(memberEmail, memberPassword);
+		
+		
+		
+		
+	}
 	
 }
 

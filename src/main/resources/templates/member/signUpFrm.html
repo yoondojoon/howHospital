@@ -23,6 +23,7 @@
 						<option value="2">병원관계자</option>
 					</select>
 				</div>
+				<div id="typeStatus"></div>
 				
 					<div class="input_wrap">
 				
@@ -40,7 +41,7 @@
 						<button type="button" class="btn_primary" id="sendBtn">이메일 인증</button>
 													
 					</div>
-					<div id="emailStatus"></div>
+					<div class="msg" id="emailStatus"></div>
 					
 				</div>
 				<div class="input_wrap" id="auth" style="display:none;"> 
@@ -70,7 +71,7 @@
 						<input type="password" name="memberPassword" id="memberPassword"
 							placeholder="비밀번호를 입력하세요">
 					</div>
-					<div id="passwordStatus1"></div>
+					<div class="msg" id="passwordStatus1"></div>
 				</div>
 				<div class="input_wrap">
 					<div class="input_title">
@@ -80,7 +81,7 @@
 						<input type="password" name="reMemberPassword" id="reMemberPassword"
 							placeholder="비밀번호를 재입력하세요">
 					</div>
-					<div id="passwordStatus2"></div>
+					<div class="msg" id="passwordStatus2"></div>
 					
 				</div>
 				<div class="input_wrap">
@@ -91,6 +92,7 @@
 						<input type="text" name="memberName" id="memberName"
 							placeholder="이름을 입력하세요">
 					</div>
+					<div class="msg" id="nameStatus"></div>
 				</div>
 				<div class="input_wrap">
 					<div class="input_title">
@@ -100,7 +102,7 @@
 						<input oninput="rrnMaxLength(this)" maxLength="7" type="number" name="memberRrn" id="memberRrn" placeholder="주민등록번호 뒷1자리까지 입력하세요('-'미포함)" >
 					</div>
 					
-					<div id="rrnStatus"></div>
+					<div class="msg" id="rrnStatus"></div>
 					
 				</div>
 		
@@ -124,32 +126,38 @@
 						<label for="memberPhone">전화번호</label>
 					</div>
 					<div class="input_item">
-						<input oninput="autoHyphen(this)" pattern="\d*" maxlength="13" type="text" name="memberPhone" id="memberPhone" placeholder="전화번호를 입력하세요('-' 포함)">
+						<input oninput="autoHyphen(this)" maxlength="13" type="text" name="memberPhone" id="memberPhone" placeholder="전화번호를 입력하세요('-' 포함)">
 					</div>
-					<div id="phoneStatus"></div>
+					<div class="msg" id="phoneStatus"></div>
 				</div>
 				
 				
 				
 				
-				
-				<div class="agree">
-					<div>
-						<label> <input type="checkbox" name="agreeAll" id="agreeAll"> 전체 동의</label>
-					</div>
-					<hr>
-					<div class="checkbox">
-						<div>
-							<label> <input type="checkbox" name="agreeService" id="agreeService"> 서비스 이용 약관 동의</label>
-						</div>
-						<div>
-							<label> <input type="checkbox" name="agreeLocation" id="agreeLocation"> 위치기반 서비스 이용 동의</label>
-						</div>
-						<div>
-							<label> <input type="checkbox" name="agreeAge" id="agreeAge"> 만 14세 이상 동의</label>
-						</div>
-					</div>
-				</div>
+<div class="checkbox_wrap row">
+<div class="input_item">
+    <input type="checkbox" name="agreeAll" id="check2_1" class="agreeAll">
+    <label for="check2_1">전체동의</label>
+</div>
+<div class="input_item">
+    <input type="checkbox" name="agreeService" id="check2_2" class="agreeService">
+    <label for="check2_2"><a href="/member/agreeService">서비스 이용약관 동의</a></label>
+    <button type="button" class="btn_more"><span class="blind">더보기</span></button>
+</div>
+<div class="input_item">
+    <input type="checkbox" name="agreeLocation" id="check3_3" class="agreeLocation">
+    <label for="check3_3"><a href="/member/agreeLocation">위치기반 서비스 이용 동의</a></label>
+    <button type="button" class="btn_more"><span class="blind">더보기</span></button>
+</div>
+<div class="input_item">
+    <input type="checkbox" name="agreeAge" id="check4_4" class="agreeAge">
+    <label for="check4_4"><a href="/member/agreeAge">만 14세 이상 동의</a></label>
+    <button type="button" class="btn_more"><span class="blind">더보기</span></button>
+</div>
+</div>
+<div class="msg" id="agreeStatus"></div>
+
+
 				<div>
 					<button  type="submit" class="btn_primary lg" id="signUpBtn">회원가입</button>
 				</div>

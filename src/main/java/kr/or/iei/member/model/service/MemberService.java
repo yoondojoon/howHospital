@@ -54,5 +54,21 @@ public class MemberService {
 		return result;
 		
 	}
+	
+
+	public int checkEmail(String memberEmail) {
+		
+		int cnt = memberDao.checkEmail(memberEmail);
+		
+		return cnt;
+		
+	}
+
+	
+
+	public int delete(String memberEmail, String memberPassword) {
+		
+		return 0;
+	}
 
 }

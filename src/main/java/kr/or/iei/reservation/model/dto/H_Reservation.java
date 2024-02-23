@@ -16,4 +16,6 @@ public class H_Reservation {
 	private int reservationType;
 	private String memberName;
 	private String doctorName;
+	private int prescriptionStatus;
+	private int doctorNo;
 }

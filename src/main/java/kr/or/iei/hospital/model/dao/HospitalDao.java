@@ -98,6 +98,7 @@ public class HospitalDao {
 
 	public Hospital searchHospitalDetail(int hospitalNo) {
 		String query = "select hospital_no, hospital_name, hospital_tel, hospital_address, cost_one, cost_two,\r\n" + 
+				"nvl((select count(*) from review_tbl where reservation_no in(select reservation_no from reservation_tbl where hospital_no=h.hospital_no)),0) review_count,\r\n" +
 				"nvl((select avg(review_rating) from review_tbl where reservation_no in(select reservation_no from reservation_tbl where hospital_no=h.hospital_no)),0) rating_avg,\r\n" + 
 				"(select distinct\r\n" + 
 				"    case\r\n" + 
@@ -192,6 +193,7 @@ public class HospitalDao {
 	}
 
 
+
 	public int insertHospitalTime(Hospital hospital, Time time) {
 		String query = "INSERT INTO time_tbl VALUES(?, ?, ?, ?, ?)";
 		Object[] params = {hospital.getHospitalNo(), time.getDayHour(), time.getWeekendHour(), time.getLunchHour(), time.getHoliday()};
@@ -214,10 +216,19 @@ public class HospitalDao {
 	}
 	
 	
+	public List selectReviewList(int hospitalNo, int sortValue, int start, int end) {
+		String query = "select * from (select rownum rnum, r.* from (select review_no, (select replace(member_name,substr(member_name,2,1),'*') from member_tbl where member_no=r.member_no) member_name, review_title, review_content, review_rating, review_date, review_img from review_tbl r where reservation_no in (select reservation_no from reservation_tbl where hospital_no=?) order by review_no desc)r) where rnum between ? and ?";
+		Object[] params = {hospitalNo, start, end};
+		List reviewList = jdbc.query(query, reviewRowMapper, params);
+		return reviewList;
+	}
+
 	
-	
-	
-	
-	
+	public List selectReviewList2(int hospitalNo, int sortValue, int start, int end) {
+		String query = "select * from (select rownum rnum, r.* from (select review_no, (select replace(member_name,substr(member_name,2,1),'*') from member_tbl where member_no=r.member_no) member_name, review_title, review_content, review_rating, review_date, review_img from review_tbl r where reservation_no in (select reservation_no from reservation_tbl where hospital_no=?) order by review_rating desc, review_no desc)r) where rnum between ? and ?";
+		Object[] params = {hospitalNo, start, end};
+		List reviewList = jdbc.query(query, reviewRowMapper, params);
+		return reviewList;
+	}
 	
 }

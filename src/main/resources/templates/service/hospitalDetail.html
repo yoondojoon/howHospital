@@ -69,8 +69,7 @@
                                 <div class="info_title">평일 진료</div>
                                 <div class="info_content">
                                     <span class="time_info" th:text="${h.time.dayHour}">00:00~00:00</span>
-                                    <span class="open_status" th:classappend="${open} == 진료중 ? open : closed"
-                                        th:text="${h.openStatus}">현재 진료여부</span>
+                                    <span class="open_status" th:classappend="${h.openStatus} == 진료중 ? open : closed" th:text="${h.openStatus}">현재 진료여부</span>
                                 </div>
                             </li>
                             <li>
@@ -81,6 +80,10 @@
                                 </div>
                             </li>
                         </ul>
+                        <div class="btn_area">
+                            <a href="#" class="btn_primary">진료 예약</a>
+                            <a href="#" class="btn_primary outline">비대면 진료</a>
+                        </div>
                     </div>
                 </div>
 
@@ -181,9 +184,9 @@
                                 <div class="review_top_wrap">
                                     <div class="top_title_wrap">
                                         <h3>리뷰</h3>
-                                        <span class="review_count">131</span>
+                                        <span class="review_count" th:text="${h.reviewCount}"></span>
                                         <div class="rating_wrap">
-                                            <div class="star_wrap"><span class="star"></span></div><div class="avg">4.5</div>
+                                            <div class="star_wrap"><span class="star"></span></div><div class="avg" th:text="${h.ratingAvg}"></div>
                                         </div>
                                     </div>
                                     <a href="#" class="btn_primary outline btn_write">리뷰 작성하기</a>
@@ -191,14 +194,14 @@
                                 <div class="review_main_wrap">
                                     <div class="sorting_wrap">
                                         <div class="select">
-                                            <select>
-                                                <option value="1">최신순</option>
+                                            <select name="review_sort">
+                                                <option value="1" selected>최신순</option>
                                                 <option value="2">별점순</option>
                                             </select>
                                         </div>
                                     </div>
                                     <ul class="review_list">
-                                        <li>
+                                        <!-- <li>
                                             <div class="detail_top_wrap">
                                                 <div class="rating_wrap">
                                                     <div class="star_wrap"><span class="star"></span></div><div class="rating">5</div>
@@ -209,66 +212,19 @@
                                                     리뷰내용<br>
                                                     리뷰내용
                                                 </div>
+                                                <button type="button" class="view_more">펼쳐보기</button>
                                             </div>
                                             <div class="detail_btm_wrap">
                                                 <span>김땡땡</span>
                                                 <span>2024-01-01</span>
                                                 <div class="btm_btn_wrap">
-                                                    <button type="button" class="report_btn">신고하기</button>
+                                                    <a href="#" class="report_btn">신고하기</a>
                                                 </div>
                                             </div>
-                                        </li>
-                                        <li>
-                                            <div class="detail_top_wrap">
-                                                <div class="rating_wrap">
-                                                    <div class="star_wrap"><span class="star"></span></div><div class="rating">4</div>
-                                                </div>
-                                            </div>
-                                            <div class="detail_cont_wrap">
-                                                <div class="review_txt">
-                                                    리뷰내용<br>
-                                                    리뷰내용
-                                                </div>
-                                            </div>
-                                            <div class="detail_btm_wrap">
-                                                <span>김땡땡</span>
-                                                <span>2024-01-01</span>
-                                                <div class="btm_btn_wrap">
-                                                    <button type="button" class="report_btn">신고하기</button>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="detail_top_wrap">
-                                                <div class="rating_wrap">
-                                                    <div class="star_wrap"><span class="star"></span></div><div class="rating">4</div>
-                                                </div>
-                                            </div>
-                                            <div class="detail_cont_wrap">
-                                                <div class="review_txt">
-                                                    리뷰내용<br>
-                                                    리뷰내용
-                                                </div>
-                                            </div>
-                                            <div class="detail_btm_wrap">
-                                                <span>김땡땡</span>
-                                                <span>2024-01-01</span>
-                                                <div class="btm_btn_wrap">
-                                                    <button type="button" class="report_btn">신고하기</button>
-                                                </div>
-                                            </div>
-                                        </li>
+                                        </li> -->
                                     </ul>
-                                    <div class="pagination_wrap">
-                                        <ul class="pagination">
-                                            <li><a class="page-item btn_prev" href="#"></a></li>
-                                            <li><a class="page-item active" href="#">1</a></li>
-                                            <li><a class="page-item" href="#">2</a></li>
-                                            <li><a class="page-item" href="#">3</a></li>
-                                            <li><a class="page-item" href="#">4</a></li>
-                                            <li><a class="page-item" href="#">5</a></li>
-                                            <li><a class="page-item btn_next" href="#"></a></li>
-                                        </ul>
+                                    <div class="btn_area">
+                                        <button type="button" id="viewMore" class="btn_secondary outline view_more">더보기</button>
                                     </div>
                                 </div>
                             </div>
@@ -287,6 +243,76 @@
 <!-- js 링크 -->
 <script src="/js/lib/swiper-bundle.min.js"></script>
 <script th:inline="javascript">
+    //리뷰
+    console.log([[${h}]]);
+    const hospitalNo = [[${h.hospitalNo}]];
+    const totalCount = [[${h.reviewCount}]];
+    let sortValue = $(".review_wrap select[name=review_sort]").val();
+    let currentCount = 0;
+    let start = 1;
+
+    $(".review_wrap select[name=review_sort]").on("change", function(){
+        console.log($(this).val());
+        $(".review_list").empty();
+        sortValue = $(this).val();
+        currentCount = 0;
+        start = 1;
+        $(".review_wrap #viewMore").show();
+        $(".review_wrap #viewMore").click();
+    })
+
+    $(".review_wrap #viewMore").on("click", function(){
+        const amount = 3;
+        $.ajax({
+            url: "/service/selectReviewList",
+            type: "GET",
+            dataType: "JSON",
+            data: {
+                hospitalNo: hospitalNo,
+                sortValue: sortValue,
+                start: start,
+                amount: amount
+            },
+            success: function(data) {
+                $(data).each(function(index, item){
+                    const starWidth = item.reviewRating*20;
+                    let reviewString = [
+                        "<li>",
+                            "<div class='detail_top_wrap'>",
+                                "<div class='rating_wrap'>",
+                                    "<div class='star_wrap'><span class='star' style='width:"+starWidth+"%'></span></div>",
+                                    "<div class='rating'>"+item.reviewRating+"</div>",
+                                "</div>",
+                            "</div>",
+                            "<div class='detail_cont_wrap'>",
+                                "<div class='review_txt'>",
+                                    item.reviewContent,
+                                "</div>",
+                            "</div>",
+                            "<div class='detail_btm_wrap'>",
+                                "<span>"+item.memberName+"</span>",
+                                "<span>"+item.reviewDate+"</span>",
+                                "<div class='btm_btn_wrap'>",
+                                    "<a href='#' class='report_btn'>신고하기</a>",
+                                "</div>",
+                            "</div>",
+                        "</li>"
+                    ].join("");
+                    $(".review_list").append(reviewString);
+                })
+                start=start+amount;
+                currentCount = currentCount+data.length;
+                if(currentCount == totalCount){
+                    $(".review_wrap #viewMore").hide();
+                }
+            },
+            error: function(){
+                console.log("에러");
+            }
+        });
+    })
+    $(".review_wrap #viewMore").click();
+
     //배너
     const swiper = new Swiper('.hospitalDetail_banner', {
         slidesPerView: 1,

@@ -14,24 +14,34 @@ public class ReservationService {
 	@Autowired
 	private ReservationDao reservationDao;
 
-	public ReservationListData selectReservation(int reqPage) {
+	public ReservationListData selectReservation(int reqPage,int memberNo,int doctorNo) {
+		//의사 정보 가져오기
+		List doctorList = reservationDao.selectDoctorInfo(memberNo);
 		//게시물 수 지정
 		int numPerPage = 10;
 		//시작 페이지 / 끝페이지
 		int endPage = reqPage * numPerPage;
 		int startPage = endPage - numPerPage + 1;
-		List list = reservationDao.selectReservation(startPage,endPage);
+		List list = null;
+		int totalReservation = 0;
+		if(doctorNo == 0) {
+			totalReservation = reservationDao.getTotalReservation(memberNo);
+			list = reservationDao.selectReservation(startPage,endPage,memberNo);
+		}else {
+			int doctroReservation = reservationDao.getDoctorReservation(memberNo,doctorNo);
+			list = reservationDao.selectDoctorReservation(startPage, endPage, memberNo,doctorNo);
+		}
 		
 		//페이지 네비게이션 제작
 		//게시물 수 조회
-		int totalCount = reservationDao.selectAllReservationCount();
+		//int totalCount = reservationDao.selectAllReservationCount();
 		
 		//전체 페이지 계산
 		int totalPage = 0;
-		if(totalCount%numPerPage == 0) {
-			totalPage = totalCount/numPerPage;
+		if(totalReservation%numPerPage == 0) {
+			totalPage = totalReservation/numPerPage;
 		}else {
-			totalPage = totalCount/numPerPage + 1;
+			totalPage = totalReservation/numPerPage + 1;
 		}
 		
 		//네비게이션 사이즈
@@ -44,7 +54,7 @@ public class ReservationService {
 		//이전 버튼생성 코드
 		if(pageNo != 1) {
 			pageNavi += "<li>";
-			pageNavi += "<a class='page-item' href='/hospital/myHospitalReservation?reqPage="+(pageNo -1)+"'>";
+			pageNavi += "<a class='page-item' href='/hospital/myHospitalReservation?reqPage="+(pageNo -1)+"&doctorNo="+doctorNo+"'>";
 			pageNavi += "<span class='material-icons'>chevron_left</span>";
 			pageNavi += "</a></li>";
 		}
@@ -52,12 +62,12 @@ public class ReservationService {
 		for(int i=0;i<pageNaviSize;i++) {
 			if(pageNo == reqPage) {
 				pageNavi += "<li>";
-				pageNavi += "<a class='page-item active-page' href='/hospital/myHospitalReservation?reqPage="+(pageNo)+"'>";
+				pageNavi += "<a class='page-item active-page' href='/hospital/myHospitalReservation?reqPage="+(pageNo)+"&doctorNo="+doctorNo+"'>";
 				pageNavi += pageNo;
 				pageNavi += "</a></li>";
 			}else {
 				pageNavi += "<li>";
-				pageNavi += "<a class='page-item' href='/hospital/myHospitalReservation?reqPage="+(pageNo)+"'>";
+				pageNavi += "<a class='page-item' href='/hospital/myHospitalReservation?reqPage="+(pageNo)+"&doctorNo="+doctorNo+"'>";
 				pageNavi += pageNo;
 				pageNavi += "</a></li>";
 			}
@@ -70,12 +80,12 @@ public class ReservationService {
 		//다음 버튼 생성(출력번호+1 한 숫자가 최종 페이지 보다 같거나 작으면 다음버튼 생성)
 		if(pageNo <= totalPage) {
 			pageNavi += "<li>";
-			pageNavi += "<a class='page-item' href='/hospital/myHospitalReservation?reqPage="+(pageNo)+"'>";
+			pageNavi += "<a class='page-item' href='/hospital/myHospitalReservation?reqPage="+(pageNo)+"&doctorNo="+doctorNo+"'>";
 			pageNavi += "<span class='material-icons'>chevron_right</span>";
 			pageNavi += "</a></li>";
 		}
 		pageNavi += "</ul>";
-		ReservationListData rld = new ReservationListData(list, pageNavi);
+		ReservationListData rld = new ReservationListData(list, pageNavi, doctorList);
 		return rld;
 	}
 	@Transactional
