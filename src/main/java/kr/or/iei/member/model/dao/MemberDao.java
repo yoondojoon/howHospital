@@ -65,16 +65,16 @@ public class MemberDao {
 		
 	}
 
-	public int checkPassword(String memberPassword, String memberEmail) {
+	
+
+	public int confirmDelete(String memberPassword,Member m) {
+		
+		String query = "delete from member_tbl where member_eamil=? and member_password=?";
+		
+		Object[] params = {m.getMemberEmail(), memberPassword};
 		
 		
-		String query = "select count(*) from member_tbl where member_password =? and member_email=?";
-		
-		//Object[] params = {memberPassword,memberEmail};
-		
-		int cnt = jdbc.queryForObject(query, Integer.class,memberPassword,memberEmail);
-		
-		
+		int cnt = jdbc.update(query,params);
 		
 		
 		return cnt;

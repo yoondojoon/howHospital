@@ -16,6 +16,7 @@ import jakarta.servlet.http.HttpSession;
 import kr.or.iei.EmailSender;
 import kr.or.iei.member.model.dto.Member;
 import kr.or.iei.member.model.service.MemberService;
+import lombok.Getter;
 
 @Controller
 @RequestMapping(value="/member")
@@ -218,32 +219,65 @@ public class MemberController {
 	}
 	
 	
-	
-	//비밀번호 체크 회탈)
-	@ResponseBody
-	@PostMapping(value="/passwordChk")
-	public int passwordChk(@RequestParam("memberPassword") String memberPassword, @RequestParam("memberEmail") String memberEmail ) {
+	//회원탈퇴 실패
+	@GetMapping(value="/failDeleteMember")
+	public String failDeleteMember() {
 		
-		int cnt = memberService.checkPassword(memberPassword,memberEmail);
-
+		return "/member/failDeleteMember";
 		
-		return cnt;
 	}
 	
 	
 	//회탈
 	@PostMapping(value="/delete")
-	public String delete(@SessionAttribute(required = false) Member member) {
+	public String confirmDelete(@SessionAttribute(required = false) Member member, Member m) {
 		
 		String memberEmail = member.getMemberEmail();
-		String memberPassword = member.getMemberPassword()
 		
-		int cnt = memberService.delete(memberEmail, memberPassword);
+		
+		int cnt = memberService.confirmDelete(memberEmail,m);
+		
+		
+		if(cnt == 0) {
+			
+				return "/member/failDeleteMember";
+			
+			
+		}else {
+			
+			
+			return "redirect:/";
+			
+		}
+		
 		
 		
 		
 		
 	}
+	
+	
+	//이메일 찾기
+	@GetMapping(value="/findEmail")
+	public String findEmail() {
+		
+		return "/member/findEmail";
+		
+	}
+	
+	//비밀번호 찾기
+	@GetMapping(value="/findPassword")
+	public String findPassword() {
+		
+		
+		
+		return "/member/findPassword";
+	}
+	
+	
+	
+	
+	
 	
 }
 
