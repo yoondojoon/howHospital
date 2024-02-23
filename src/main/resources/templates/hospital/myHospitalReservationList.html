@@ -14,6 +14,12 @@
             		<h2>내 병원 예약목록</h2>
             	</div>
 	            <div class="hospital_reservation_wrap">
+	          	<div class="select">
+	          		<select class="doctor_select" onchange="selectedDoctor()">
+	          			<option value="0">전체</option>
+	          			<option th:each="doctor : ${doctorList}" th:text="${doctor.doctorName}" th:value="${doctor.doctorNo}" th:selected="${doctor.doctorNo == doctorNo}"></option>
+	          		</select>
+	          	</div>
 	            <th:block th:each="reservation : ${reservation}">
 		            <div class="hospital_reservation">
 		            	<div class="reservation_wrap_content top">
@@ -50,7 +56,8 @@
 							<button type="button" class="btn_primary hospital_reservation_type">예약확정</button>
 						</div>
 						 -->
-						<div class="prescription_btn btn_wrap" th:case="4" th:if="${reservation.reservationType == 2}">
+					
+						<div class="prescription_btn btn_wrap" th:case="4" th:if="${reservation.reservationType == 2 && reservation.prescriptionStatus == 0}">
 							<button type="button" class="btn_secondary hospital_reservation_type">처방전 등록</button>
 						</div>
 						</th:block>	
@@ -127,8 +134,8 @@
 							newBtnWrap.append(newBtn);
 							obj.parent().parent().append(newBtnWrap);
 							obj.parent().remove();
-							newBtn.on("click",function(){
-								prescriptionUpload(nextBtn);
+							newBtnWrap.on("click",function(){
+								prescriptionUpload(newBtnWrap);
 							});
 						}else{
 							obj.parent().remove();
@@ -144,7 +151,7 @@
 
 	$(".prescription_btn").on("click",function(){
 		prescriptionUpload(this);
-	
+		
 	});
 	let reservationNo = 0;
 	function prescriptionUpload(obj){
@@ -157,7 +164,6 @@
 
 	$(".submit_btn").on("click",function(){
 		const file = $("[name=prescription_file]")[0].files[0];
-		$(".prescription_btn").remove();
 		if(file !== undefined){
 			const form = new FormData();
 			form.append("file",file);
@@ -172,6 +178,8 @@
 				success : function(data){
 					if(data==1){
 						$(".modal").attr("style","display:none");
+						alert("처방전 등록이 완료되었습니다.");
+						$(".prescription_btn").remove();
 					}
 				},
 				error : function(){
@@ -182,6 +190,12 @@
 			alert("처방전을 등록해주세요");
 		}
 	});
+	
+	$(".doctor_select").on("change",function(){
+		const doctorNo = $(this).val();
+		location.href="/hospital/myHospitalReservation?reqPage=1&doctorNo="+doctorNo;
+	});
+	
 	
 </script>
 </html>
