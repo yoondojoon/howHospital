@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import kr.or.iei.admin.model.dto.AdminBusinessAuth;
 import kr.or.iei.admin.model.dto.AdminBusinessAuthRowMapper;
 import kr.or.iei.admin.model.dto.MemberReport;
 import kr.or.iei.admin.model.dto.MemberReportRowMapper;
@@ -141,5 +142,12 @@ public class AdminDao {
 		String query = "SELECT count(*) FROM (BUSINESSAUTH_FILE_TBL RIGHT OUTER JOIN (SELECT * FROM MEMBER_TBL RIGHT OUTER JOIN BUSINESSAUTH_TBL ON MEMBER_TBL.MEMBER_NO = BUSINESSAUTH_TBL.MEMBER_NO WHERE MEMBER_STATUS = 4) J_TBL ON J_TBL.BUSINESSAUTH_NO = BUSINESSAUTH_FILE_TBL.BUSINESSAUTH_NO)";
 		int totalCount = jdbc.queryForObject(query, Integer.class);
 		return totalCount;
+	}
+
+	public AdminBusinessAuth confirmAuth(int businessAuthNo) {
+		String query = "SELECT MEMBER_NAME, J_TBL.BUSINESSAUTH_NO, MEMBER_EMAIL, MEMBER_PHONE, FILENAME, FILEPATH, REPRESENTATIVE_NO, REG_DATE FROM BUSINESSAUTH_FILE_TBL RIGHT OUTER JOIN (SELECT * FROM MEMBER_TBL RIGHT OUTER JOIN BUSINESSAUTH_TBL ON MEMBER_TBL.MEMBER_NO = BUSINESSAUTH_TBL.MEMBER_NO WHERE MEMBER_STATUS = 4) J_TBL ON J_TBL.BUSINESSAUTH_NO = BUSINESSAUTH_FILE_TBL.BUSINESSAUTH_NO WHERE J_TBL.BUSINESSAUTH_NO=?;";
+		Object[] params = {businessAuthNo};
+		AdminBusinessAuth aba = jdbc.queryForObject(query, abaRowMapper,params);
+		return aba;
 	}
 }

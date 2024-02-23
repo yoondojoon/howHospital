@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import kr.or.iei.admin.model.dao.AdminDao;
+import kr.or.iei.admin.model.dto.AdminBusinessAuth;
 import kr.or.iei.admin.model.dto.AdminBusinessAuthListData;
 import kr.or.iei.admin.model.dto.MemberReport;
 import kr.or.iei.admin.model.dto.MemberReportListData;
@@ -345,6 +346,12 @@ public class AdminService {
 		
 		AdminBusinessAuthListData abld = new AdminBusinessAuthListData(list, pageNavi);
 		return abld;
+	}
+
+
+	public AdminBusinessAuth confirmAuth(int businessAuthNo) {
+		AdminBusinessAuth aba = adminDao.confirmAuth(businessAuthNo);
+		return aba;
 	}
 	
 

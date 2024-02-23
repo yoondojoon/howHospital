@@ -22,7 +22,9 @@
         			<th style="width:25%;">등록일</th>
         		</tr>
         		<tr class="tr-content" th:each="bal : ${businessAuthList}">
-					<td name="businessAuthNo" th:text="${bal.businessAuthNo}"></td>
+					<td name="businessAuthNo" th:text="${bal.businessAuthNo}">
+						<a th:href="@{/admin/confirmAuth(businessAuthNo=${bal.businessAuthNo})}" th:text="${bal.memberName}"></a>
+					</td>
 					<td name="memberName" th:text="${bal.memberName}"></td>
 					<td name="memberEmail" th:text="${bal.memberEmail}"></td>
 					<td name="regDate" th:text="${bal.regDate}"></td>

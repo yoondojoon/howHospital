@@ -123,4 +123,11 @@ public class AdminController {
 		model.addAttribute("pageNavi", abld.getPageNavi());
 		return "admin/businessAuthList";
 	}
+	
+	@GetMapping(value="/confirmAuth")
+	public String confirmAuth(int businessAuthNo, Model model) {
+		AdminBusinessAuth aba = adminService.confirmAuth(businessAuthNo);
+		model.addAttribute("authInfo",aba);
+		return "admin/confirmAuth";
+	}
 }
