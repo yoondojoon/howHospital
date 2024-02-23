@@ -127,8 +127,20 @@ public class AdminController {
 	@GetMapping(value="/confirmAuth")
 	public String confirmAuth(int businessAuthNo, Model model) {
 		AdminBusinessAuth aba = adminService.confirmAuth(businessAuthNo);
-		System.out.println(aba.getFilePath());
 		model.addAttribute("authInfo",aba);
+		System.out.println(aba);
+		return "admin/confirmAuth";
+	}
+	
+	@GetMapping(value="/authConfirmSuccess")
+	public String authConfirmSuccess(int businessAuthNo) {
+		boolean result = adminService.authConfirmSuccess(businessAuthNo);
+		return "admin/confirmAuth";
+	}
+	
+	@GetMapping(value="/authConfirmFail")
+	public String authConfirmFail(int businessAuthNo) {
+		boolean result = adminService.authConfirmFail(businessAuthNo);
 		return "admin/confirmAuth";
 	}
 }
