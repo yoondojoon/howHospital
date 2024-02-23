@@ -376,7 +376,11 @@ public class AdminService {
 	public boolean authConfirmFail(int businessAuthNo) {
 		boolean result = true;
 		int deleteFileResult = adminDao.deleteFileInfo(businessAuthNo);
-		int deleteAuthResult = adminDao.deleteAuthInfo(businessAuthNo);
+		if(deleteFileResult == 0) {
+			result = false;
+		}else {
+			int deleteAuthResult = adminDao.deleteAuthInfo(businessAuthNo);
+		}
 		return result;
 	}
 	
