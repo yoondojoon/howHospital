@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<th:block th:include="common/header"></th:block>
+<!-- container -->
+    <main id="container" class="container">
+
+		<!-- contents -->
+        <section id="contents" class="contents">
+            <div class="inner_wrap">
+                <h2>예약 상세보기</h2>
+            </div>
+            <div class="detail_reservation_wrap">
+            	<div class="detail_reservation">
+	            	<div class="detail_reservation top">
+           				<span th:text="${reservationDetail.memberName}"></span>
+	            	</div>
+            	</div>
+            	
+            </div>
+        </section>
+	    <!--// contents -->
+        
+    </main>
+    <!--// container -->
+<th:block th:include="common/footer"></th:block>
+</html>

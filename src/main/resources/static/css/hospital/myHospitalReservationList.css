@@ -1,31 +1,33 @@
 @charset "UTF-8";
 
 .hospital_reservation_wrap{
-	border: 1px solid rgba(30, 30, 30, 0.3);
+	border: 1px solid var(--line_02);
 	border-radius: 10px;
 	box-sizing: border-box;
 	width: 100%;
 	padding: 40px 60px;
+	
 }
 
+.hospital_reservation_list{
+	display: flex;
+	flex-wrap: wrap;
+	flex-direction: flex-start;
+}
 .hospital_reservation{
-	margin: 20px auto;
-	border: 1px solid rgba(30, 30, 30, 0.7);
+	width: 220px;
+	margin: 20px 20px;
+	border: 1px solid var(--line_02);
 	border-radius: 10px;
 	box-sizing: border-box;
 	padding: 20px 20px;
 	position: relative;
 }
-.hospital_reservation>.select,.btn_wrap{
-	position: absolute;
-	top : 40px;
-	right : 30px;
-	width: 130px;
-}
+
 .top>*{
 	margin-right: 3px;
 }
-.top>.reg_reservation{
+.top>.reservationTime{
 	font-size: 14px;
 	color: #ccc;
 }
@@ -39,4 +41,21 @@
 .bottom>.chargeDoctor{
 	font-size: 12px;
 }
-
+a{
+	color: #222;
+}
+.hospital_reservation_wrap>.select{
+	margin-bottom: 25px;
+	border: 1px solid rgba(30, 30, 30, 0.7);
+}
+.hospital_reservation_list{
+	margin-bottom: 30px;
+}
+.msg{
+	font-size: 20px;
+	font-weight: bold;
+	margin-bottom: 15px;
+}
+.msg>span{
+	color: red;
+}

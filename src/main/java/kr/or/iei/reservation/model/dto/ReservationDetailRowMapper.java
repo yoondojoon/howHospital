@@ -17,7 +17,7 @@ public class ReservationDetailRowMapper implements RowMapper<ReservationDetail>{
 		rd.setReservationNo(rs.getInt("reservation_no"));
 		rd.setSubjectNo(rs.getInt("subject_no"));
 		rd.setSymptom(rs.getString("symptom"));
-		
+		rd.setMemberName(rs.getString("member_name"));
 		return rd;
 	}
 	

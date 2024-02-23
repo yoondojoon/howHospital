@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+<th:block th:include="common/header"></th:block>
 <link rel="stylesheet" href="/css/hospital/myHospitalReservationList.css">
 <link rel="stylesheet" href="/css/reservation/reservationPaginavi.css">
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 	
-<th:block th:include="common/header"></th:block>
+
 <!-- container -->
     <main id="container" class="container">
 		<!-- contents -->
@@ -14,12 +15,14 @@
             		<h2>내 병원 예약목록</h2>
             	</div>
 	            <div class="hospital_reservation_wrap">
+	            <div class="msg"><span>*</span>의사 선택</div>
 	          	<div class="select">
-	          		<select class="doctor_select" onchange="selectedDoctor()">
+	          		<select class="doctor_select">
 	          			<option value="0">전체</option>
 	          			<option th:each="doctor : ${doctorList}" th:text="${doctor.doctorName}" th:value="${doctor.doctorNo}" th:selected="${doctor.doctorNo == doctorNo}"></option>
 	          		</select>
 	          	</div>
+	          	<div class="hospital_reservation_list">
 	            <th:block th:each="reservation : ${reservation}">
 		            <div class="hospital_reservation">
 		            	<div class="reservation_wrap_content top">
@@ -33,15 +36,16 @@
 		            		<span th:case="3" class="badge blue">예약확정</span>
 		            		<span th:case="4" class="badge gray">진료완료</span>
 		            	</th:block>
-		            		<span class="reg_reservation" th:text="${reservation.reservationTime}"></span>
+		          			<span class="reservationTime" th:text="${reservation.reservationTime}" style="width:40px;"></span>	
 		            	</div>
 		            	<div class="reservation_wrap_content midle">
-		            		<span class="reservationName" th:text="${reservation.memberName}"></span>
+		            		<a th:href="@{/hospital/detailReservation(reservationNo=${reservation.reservationNo})}"class="reservationName" th:text="${reservation.memberName}"></a>
 		            	</div>
 		            	<div class="reservation_wrap_content bottom">
 		            		<span class="chargeDoctor">진료선생님</span>
 		            		<span class="chargeDoctorName" th:text="${reservation.doctorName}"></span>
 		            	</div>
+		            	<!-- 
 		            	<th:block th:switch="${reservation.reservationStatus}">
 		            	<div class="select" th:case="1">
 		            		<select class="hospital_reservation_type">
@@ -51,19 +55,15 @@
 								<option value="4" th:selected="${reservation.reservationStatus == 4}">진료완료</option>
 							</select>
 						</div>
-						<!-- 
-						<div class="success_btn btn_wrap" th:case="3">
-							<button type="button" class="btn_primary hospital_reservation_type">예약확정</button>
-						</div>
-						 -->
-					
 						<div class="prescription_btn btn_wrap" th:case="4" th:if="${reservation.reservationType == 2 && reservation.prescriptionStatus == 0}">
 							<button type="button" class="btn_secondary hospital_reservation_type">처방전 등록</button>
 						</div>
 						</th:block>	
+						 <input type="hidden" id="reservationNo" name="reservationNo" class="reservationNo" th:value="${reservation.reservationNo}">
+						 -->
 		            </div>
-		            <input type="hidden" id="reservationNo" name="reservationNo" class="reservationNo" th:value="${reservation.reservationNo}">
 	            </th:block>	
+	            </div>
 	            <div id="pageNavi" th:utext="${pageNavi}"></div>	
 	            </div>
             </div>
@@ -75,7 +75,6 @@
     <!--// container -->
 
 	<div id="popup_01" class="modal" style="display:none;">
-	<!-- <div id="popup_01" class="modal"> -->
 		<div class="modal_wrap">
 			
 			<div class="modal_header">
@@ -84,9 +83,6 @@
 	
 			<div class="modal_container">
 				<div class="modal_content">
-					<div class="img-viewer">
-						<img class="img-view" width="100px">
-					</div>
 					<input type="file" name="prescription_file" accept=".pdf">
 				</div>
 			</div>
@@ -97,7 +93,6 @@
 					<button type="button" class="btn_primary lg submit_btn">등록하기</button>
 				</div>
 			</div>
-	
 			<button type="button" onclick="closeModal(this);" class="btn_close"><span class="blind">닫기</span></button>
 	
 		</div>

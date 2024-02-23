@@ -14,4 +14,5 @@ public class ReservationDetail {
 	private int doctorNo;
 	private int subjectNo;
 	private String symptom;
+	private String memberName;
 }
