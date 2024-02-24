@@ -192,10 +192,9 @@ $(document).ready(function() {
 		                <th>이름</th>
 		                <td>
 			                <div class="input_item">
-			                
-					  <input type="text" class="doc" name="doctor_name" placeholder="이름을 입력하세요." required></li>
-					<input type="file" id="docImgInput" class="doc" name="doctor_picture" accept=".jpg, .png, .jpeg" onchange="loadImg(this);" >
-			                  <button type="button" class="btn_primary outline sm deleteDoctorBtn">삭제</button>
+							    <input type="text" class="doc" name="doctor_name" placeholder="이름을 입력하세요." required></li>
+								<input type="file" id="docImgInput" class="doc" name="doctor_picture" accept=".jpg, .png, .jpeg" onchange="loadImg(this);" >
+				                <button type="button" class="btn_primary outline sm deleteDoctorBtn">삭제</button>
 							</div>
 		                </td>
 		              </tr>
