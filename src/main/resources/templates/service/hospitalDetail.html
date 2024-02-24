@@ -369,8 +369,8 @@
     //진료시간
     const hospital = [[${ h }]];
     const holiday = String(hospital.time.holiday);
-    const today = new Date();
-    const todayDay = today.getDay();//0:일 ~ 6:토
+    const date = new Date();
+    const today = date.getDay();//0:일 ~ 6:토
     $(".time_list>li").each(function (index, item) {
         if (index !== 6) {
             if (holiday.indexOf(index + 2) !== -1) {
@@ -379,7 +379,7 @@
                 dayInfo.next(".time_info").text("휴진");
                 dayInfo.siblings(".lunch_hour").remove();
             }
-            if (todayDay == (index + 1)) {
+            if (today == (index + 1)) {
                 const dayInfo = $(item).find(".day_info");
                 $(item).addClass("today");
             }
@@ -390,7 +390,7 @@
                 dayInfo.next(".time_info").text("휴진");
                 dayInfo.siblings(".lunch_hour").remove();
             }
-            if (todayDay == (index - 6)) {
+            if (today == (index - 6)) {
                 const dayInfo = $(item).find(".day_info");
                 $(item).addClass("today");
             }

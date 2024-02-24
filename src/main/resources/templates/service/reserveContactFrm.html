@@ -17,7 +17,8 @@
                     <!-- 트리거 만들지? -->
                     <!-- 예약테이블: 예약번호(시퀀스), 병원번호(h.hospitalNo), 회원번호(session), 예약상태(항상 1), 예약접수시간(선택)(sysdate yyyy-mm-dd hh:24:mi:ss), 예약타입(여기선 1), 예약시간(예약접수시간과 동일하게) -->
                     <!-- 예약상세테이블: 예약상세번호(시퀀스), 예약번호(직전예약테이블번호), 의사번호(h.doctorList[0)], 과목번호(선택), 증상(필수 아님) -->
-                    <form action="/service/reserveContact" method="post">
+                    <div class="hospital_name" th:text="${h.hospitalName}"></div>
+                    <form action="/service/reserveContact" method="post" class="reserve_form">
                         <div class="form_area">
 
                             <div class="input_wrap">
@@ -175,17 +176,42 @@
 <th:block th:include="common/footer"></th:block>
 <!-- js 링크 -->
 <script th:inline="javascript">
-    console.log([[${h}]]);
+    const hospital = [[${h}]];
+    const holiday = String(hospital.time.holiday);
+    const date = new Date();
+    const today = date.getDay();//0:일 ~ 6:토
+    let holidayArr = [];
+
+    for(let i=0;i<7;i++){
+        if(holiday.indexOf(i+1) !== -1){
+            holidayArr.push(i);
+        };
+    }
+    console.log(holidayArr);
+
     $(function(){
+        $("#datepicker").datepicker("setDate","today");
         $("#datepicker").datepicker({
             changeYear: false,
             changeMonth: false,
-            dayNames: ['월요일','화요일','수요일','목요일','금요일','토요일','일요일'],
-            dayNamesMin: ['월','화','수','목','금','토','일'],
+            showMonthAfterYear: true,
+            yearSuffix: '년',
+            dayNames: ['일요일','월요일','화요일','수요일','목요일','금요일','토요일'],
+            dayNamesMin: ['일','월','화','수','목','금','토'],
             monthNameShort: ['1','2','3','4','5','6','7','8','9','10','11','12'],
             monthNames: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
             prevText: '이전 달',
-            nextText: '다음 달'
+            nextText: '다음 달',
+            minDate: 'today',
+            maxDate: '+1M',
+            onSelect: function(){
+                // const date = $.datepicker.formatDate("yy-mm-dd", $("#datepicker").datepicker("getDate"));
+                // const day = $("#datepicker").datepicker("getDate").getDay();
+                // console.log(typeof day);
+                // $.ajax({
+                //     url: ""
+                // });
+            },
         });
     });
 </script>
