@@ -135,12 +135,22 @@ public class AdminController {
 	@GetMapping(value="/authConfirmSuccess")
 	public String authConfirmSuccess(int businessAuthNo) {
 		boolean result = adminService.authConfirmSuccess(businessAuthNo);
-		return "admin/confirmAuth";
+		if(result) {
+			System.out.println("success!!");
+		}else {
+			System.out.println("fail");
+		}
+		return "admin/businessAuthList";
 	}
 	
 	@GetMapping(value="/authConfirmFail")
 	public String authConfirmFail(int businessAuthNo) {
 		boolean result = adminService.authConfirmFail(businessAuthNo);
-		return "admin/confirmAuth";
+		if(result) {
+			System.out.println("success!!");
+		}else {
+			System.out.println("fail");
+		}
+		return "admin/businessAuthList";
 	}
 }

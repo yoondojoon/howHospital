@@ -47,14 +47,14 @@
 	        		<tr class="tr-content">
 			    		<th:block th:each="file : ${authInfo.fileList}">
 	   		    			<td colspan="2">
-								<img th:src="${file.filepath}">
+								<img th:src="@{'C:/Temp/hospital/auth/' +${file.filepath}}">
 							</td>
 					    </th:block>
 	        		</tr>
 	        	</table>
 	        	<div class="btn_area">
-		        		<button type="button" class="btn_secondary lg" th:onclick="|location.href='/admin/authConfirmFail?businessAuthNo=${authInfo.businessAuthNo}'|">승인거부</button>
-		        		<button type="button" class="btn_primary lg" th:onclick="|location.href='/admin/authConfirmSuccess?businessAuthNo=${authInfo.businessAuthNo}'|">승인</button>
+	        		<button type="button" class="btn_secondary lg" th:onclick="|location.href='/admin/authConfirmFail?businessAuthNo=${authInfo.businessAuthNo}'|">승인거부</button>
+	        		<button type="button" class="btn_primary lg" th:onclick="|location.href='/admin/authConfirmSuccess?businessAuthNo=${authInfo.businessAuthNo}'|">승인</button>
 	        	</div>	        	
 	        </div>
         </section>
