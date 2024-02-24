@@ -2,8 +2,10 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <th:block th:include="common/header"></th:block>
 <link rel="stylesheet" href="/css/hospital/myHospitalFrm.css">
-<script	src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-<script type="text/javascript" src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=3jwhpqglw9&submodules=geocoder"></script>
+<script
+	src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script type="text/javascript"
+	src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=3jwhpqglw9&submodules=geocoder"></script>
 
 
 <!-- container -->
@@ -20,203 +22,166 @@
 		</div>
 		<div class="main_content">
 
-		
+
 			<div class="hospital_info_form">
 				<!-- 병원정보 입력 -->
 		<h2>병원정보 입력</h2>
-		<form id="uploadForm" action="/hospital/myHospitalEnroll"
-			method="post" enctype="multipart/form-data">
-			<!-- 병원이름 입력 -->
-			<div class="input_wrap">
-				<div class="input_title">
-					<label for="hospital_name">병원이름</label>
-				</div>
-				<div class="input_value">
-					<span th:text="${h.hospitalName}">병원이름</p>
-				</div>
+		<!-- 병원이름 입력 -->
+		<div class="input_wrap">
+			<div class="input_title">
+				<label for="hospital_name">병원이름</label>
 			</div>
-			
-			<!-- 병원사진  -->		
-			<div class="input_wrap">
+			<div class="input_value">
+				<span th:text="${h.hospitalName}">병원이름</span>
+			</div>
+		</div>
+
+		<!-- 병원사진  -->
+		<div class="input_wrap">
 			<div class="input_title">
 				<label for="hospital_name">병원사진</label>
 			</div>
 			<div class="imghospital">
-					<img src="/images/banner_img_01.jpg" class="hospic" width="100%">
-				</div>	
+				<img src="/images/banner_img_01.jpg" class="hospic" width="100%">
+			</div>
+		</div>
+
+
+		<!-- 병원소개 입력 -->
+		<div class="input_wrap">
+			<div class="input_title">
+				병원소개<em>(Hooking Point)</em>
+			</div>
+			<div class="input_value">
+				<span th:text="${h.hospitalIntro}">병원이름</span>
+			</div>
+		</div>
+
+
+
+		<!-- 병원주소 입력 -->
+		<div class="input_wrap">
+			<div class="input_title">병원주소</div>
+			<div class="input_value">
+				<div th:text="${h.hospitalPostCode}">우편번호</div>
+				<div th:text="${h.hospitalAddrMain}">메인주소</div>
+				<div th:text="${h.hospitalAddrSub}">주소상세</div>
+			</div>
+
+		</div>
+
+
+		<!-- 진료시간 입력 -->
+		<div class="input_wrap">
+			<div class="input_title">
+				<label for="time_table">진료시간</label>
+			</div>
+			<div class="input_item">
+				<div class="time_table">
+					<label for="select">평일</label>
+				</div>
+				<div class="select">
+					<select disabled>
+						<option th:text="${h.time.dayHour}">평일</option>
+					</select>
+				</div>
+			</div>
+
+			<!-- 주말  -->
+			<div class="input_item time_zone">
+				<div class="time_table">
+					<label for="select">주말</label>
+				</div>
+				<div class="select">
+					<select disabled>
+						<option th:text="${h.time.weekendHour}">주말</option>
+					</select>
+				</div>
 			</div>
 
 
-			<!-- 병원소개 입력 -->
-			<div class="input_wrap">
-				<div class="input_title">
-					병원소개<em>(Hooking Point)</em>
+
+			<!-- 점심  -->
+			<div class="input_item time_zone">
+				<div class="time_table">
+					<label for="select">점심</label>
 				</div>
-				<div class="input_value">
-					<span th:text="${h.hospitalIntro}">병원이름</p>
-				</div>
-			</div>
-
-
-
-			<!-- 병원주소 입력 -->
-			<div class="input_wrap">
-				<div class="input_title">병원주소</div>
-				<div class="input_value">
-					<span th:text="${h.hospitalPostCode}">우편번호</p>
-					<span th:text="${h.hospitalAddrMain}">메인주소</p>
-					<span th:text="${h.hospitalAddrSub}">서브주소</p>
+				<div class="select">
+					<select disabled>
+						<option th:text="${h.time.lunchHour}">주말</option>
+					</select>
 				</div>
 			</div>
+		</div>
 
 
-			<!-- 진료시간 입력 -->
-						<div class="input_wrap">
-							<div class="input_title">
-								<label for="time_table">진료시간</label>
+		<div class="input_wrap">
+			<div class="input_title">휴무일</div>
+			<div class="input_item">
+				<label><input type="checkbox" name="hol" value="2">
+					월</label> <label><input type="checkbox" name="hol" value="3">
+					화</label> <label><input type="checkbox" name="hol" value="4">
+					수</label> <label><input type="checkbox" name="hol" value="5">
+					목</label> <label><input type="checkbox" name="hol" value="6">
+					금</label> <label><input type="checkbox" name="hol" value="7">
+					토</label> <label><input type="checkbox" name="hol" value="1">
+					일</label>
+			</div>
+		</div>
+
+
+		<!-- 전화번호 입력 -->
+		<div class="input_wrap">
+			<div class="input_title">전화번호</div>
+			<div class="input_value">
+				<span th:text="${h.hospitalTel}">전화번호</span>
+			</div>
+		</div>
+
+
+
+		<!-- 의사정보 등록  -->
+		<div class="input_wrap">
+			<div class="input_title">의사정보</div>
+			<div class="input_doctor">
+				<ul class="doctor_list">
+					<li th:each="d : ${h.doctorList}">
+						<div class="doctor_img_wrap">
+							<img th:src="@{/doctor/} + ${d.doctorPicture}"
+								style="width: 150px; height: 150px">
+						</div>
+						<div class="doctor_info_wrap">
+							<div class="title_wrap">
+								<strong class="doctor_name" th:text="${d.doctorName}">의사이름</strong>
+								<span class="subject_name" th:text="${d.subjectName}">진료과</span>
 							</div>
-							<div class="input_item">
-								<div class="time_table">
-									<label for="select">평일</label>
-								</div>
-								<div class="select">
-									<select name="dayOpenHour" id="select_dayopen_hour">
-										<option selected disabled>시작시간</option>
-									</select>
-								</div>
-								<div class="time_table">~</div>
-								<div class="select">
-									<select name="dayCloseHour" id="select_dayclose_hour"></select>
-								</div>
-							</div>
-
-
-							<!-- 주말시간 -->
-
-							<div class="input_item time_zone">
-								<div class="time_table">
-									<label for="select">주말</label>
-								</div>
-								<div class="select">
-									<select name="weekendOpenHour" id="select_weekendopen_hour">
-										<option selected disabled>시작 시간</option>
-									</select>
-								</div>
-								<div class="time_table">~</div>
-								<div class="select">
-									<select name="weekendCloseHour" id="select_weekendclose_hour">
-									</select>
-								</div>
-							</div>
-
-
-							<!-- 점심 시간 -->
-
-							<div class="input_item time_zone">
-								<div class="time_table">
-									<label for="select">점심</label>
-								</div>
-								<div class="select">
-									<select name="lunchOpenHour" id="select_lunchopen_hour">
-										<option selected disabled>시작 시간</option>
-									</select>
-								</div>
-								<div class="time_table">~</div>
-								<div class="select">
-									<select name="lunchCloseHour" id="select_lunchclose_hour">
-									</select>
-								</div>
+							<div class="info_wrap">
+								<p class="education_info" th:text="${d.doctorEducation}">의사
+									학력 정보</p>
+								<p class="experience_info" th:text="${d.doctorExperience}">의사
+									경력 정보</p>
 							</div>
 						</div>
+					</li>
+				</ul>
+			</div>
+		</div>
 
 
-						<div class="input_wrap">
-							<div class="input_title">휴무일</div>
-							<div class="input_item">
-								<label><input type="checkbox" name="hol" value="2"	checked> 월</label>
-								<label><input type="checkbox" name="hol" value="3"> 화</label>
-								<label><input type="checkbox" name="hol" value="4"> 수</label> <label>
-								<input type="checkbox" name="hol" value="5"> 목</label> <label>
-								<input type="checkbox" name="hol" value="6"> 금</label> <label>
-								<input type="checkbox" name="hol" value="7"> 토</label> <label>
-								<input type="checkbox" name="hol" value="1"> 일</label>
-							</div>
-						</div>
-
-
-						<!-- 전화번호 입력 -->
-						<div class="input_wrap">
-							<div class="input_title">전화번호</div>
-							<div class="input_item">
-								<select name="hospitalTelFirst" id="hospital_tel_first">
-									<option value="0">국번없음</option>
-									<option value="02">02</option>
-									<option value="032">032</option>
-									<option value="031">031</option>
-									<option value="041">041</option>
-									<option value="042">042</option>
-									<option value="043">043</option>
-									<option value="051">051</option>
-									<option value="052">052</option>
-									<option value="053">053</option>
-									<option value="054">054</option>
-									<option value="055">055</option>
-									<option value="061">061</option>
-									<option value="062">062</option>
-									<option value="063">063</option>
-									<option value="064">064</option>
-								</select> <input type="text" name="hospitalTelLast" id="phoneNumber"
-									placeholder="전화번호를 입력하세요." required>
-							</div>
-						</div>
-
-
-
-						<!-- 의사정보 등록  -->
-			<div class="input_wrap">
-				<div id="doctorContainer">
-					<!-- 의사 정보 추가 버튼 -->
-					<div class="input_wrap">
-						<div class="input_title">
-							의사정보
-							<button type="button" class="btn_primary sm addDoctorBtn">추가</button>
-						</div>
+		<!-- 진료비용 -->
+				<div class="input_wrap">
+					<div class="input_title">병원주소</div>
+					<div class="input_value">
+						<div th:text="${'상담비  - '}+${h.costOne}">상담비</div>
+						<div th:text="${'시술비  - '}+${h.costTwo}">시술비</div>
 					</div>
 				</div>
-			</div>
 
+				<div class="btn_area">
+					<button type="submit" class="btn_secondary lg hospital_enroll_cancel">정보삭제</button>
+					<button type="submit" class="btn_primary lg hospital_enroll">정보수정</button>
+				</div>
 
-
-			<!-- 진료비용 -->
-					<div class="input_wrap">
-						<div class="input_title">진료비용</div>
-						<div class="input_item">
-							<table id="hospital_cost">
-								<tr>
-									<th>상담비</th>
-									<td><input name="costOne" class="cost" type="text"
-										placeholder="비용을 입력하세요." required></td>
-								</tr>
-								<tr>
-									<th>시술비</th>
-									<td><input name="costTwo" class="cost" type="text"
-										placeholder="비용을 입력하세요." required></td>
-								</tr>
-							</table>
-						</div>
-					</div>
-
-					   <input type="hidden" id="lng" name="lng" value="">
-					    <input type="hidden" id="lat" name="lat" value="">
-						<input type="hidden" name="memberNo" th:value="${session.member.memberNo}">
-
-
-					<div class="btn_area">
-						<button type="submit" class="btn_secondary lg hospital_enroll_cancel">취소</button>
-						<button type="submit" class="btn_primary lg hospital_enroll">등록</button>
-					</div>
-
-				</form>
 			</div>
 		</div>
 	</div>
@@ -227,77 +192,19 @@
 <!--// container -->
 
 
-<script src="/js/common/myHospitalFrm.js"></script>
 
-<script>
-
-function searchAddr() {
-	new daum.Postcode(
-			{
-				oncomplete : function(data) {
-					console.log(data);
-					// 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분입니다.
-					// 예제를 참고하여 다양한 활용법을 확인해 보세요.
-					document.querySelector("#post_code").value = data.zonecode;
-					document.querySelector("#hospital_addr_main").value = data.address;
-				  var hospitalAddrMain = document.querySelector("#hospital_addr_main").value;
-				  naver.maps.Service.geocode({query: hospitalAddrMain}, function(status, response) {
-					    if (status !== naver.maps.Service.Status.OK) {
-				            return alert('실패');
-				        }
-				        var result = response.v2, // 검색 결과의 컨테이너
-				            items = result.addresses; // 검색 결과의 배열
-				        // do Something
-			             document.querySelector("#lng").value = items[0].x;
-		                document.querySelector("#lat").value = items[0].y;
-				    });
-				}
-			}).open();
-}
-
-
-function loadHospitalImg(obj) {
-	
-	//input type file dom 객체의 files라는 속성이 첨부한 파일 정보
-	console.log(obj.files); //multiple옵션이 있으므로 배열과 유사한 형태로 처리
-	//파일갯수가 0개가 아니고 && 해당 파일이 정상이면
-	if (obj.files.length != 0 && obj.files[0] != 0) {
-		const reader = new FileReader();//파일 정보를 읽어올 수 있는 js객체		
-		reader.readAsDataURL(obj.files[0]); //파일 정보 읽어옴 (비동기) -> ajax로 요청을 날림
-		//readAsData는 텍스트 숫자엄청많은 걸 가져옴 
-		//파일 리더가 정보를 다읽어오고 나면 동작할 함수
-		reader.onload = function(e) { //ajax로 요청날렸을 때 success를 위한 동작
-			//읽어온 파일정보로 img태그의 src 값 세팅
-			$(".hospic").eq(0).attr("src", e.target.result);
-		}
-	} else {
-		$(".hospic").eq(0).attr("src", "");
-	}
-}
-    
-    
-function loadImg(obj) {
-	const index = $("[name=doctor_picture]").index(obj);
-	//input type file dom 객체의 files라는 속성이 첨부한 파일 정보
-	console.log(obj.files); //multiple옵션이 있으므로 배열과 유사한 형태로 처리
-	//파일갯수가 0개가 아니고 && 해당 파일이 정상이면
-	if (obj.files.length != 0 && obj.files[0] != 0) {
-		const reader = new FileReader();//파일 정보를 읽어올 수 있는 js객체		
-		reader.readAsDataURL(obj.files[0]); //파일 정보 읽어옴 (비동기) -> ajax로 요청을 날림
-		//readAsData는 텍스트 숫자엄청많은 걸 가져옴 
-		//파일 리더가 정보를 다읽어오고 나면 동작할 함수
-		reader.onload = function(e) { //ajax로 요청날렸을 때 success를 위한 동작
-			//읽어온 파일정보로 img태그의 src 값 세팅
-			$(".img-view").eq(index).attr("src", e.target.result);
-		}
-	} else {
-		$(".img-view").eq(index).attr("src", "");
-	}
-}
+<script th:inline="javascript">
+const hospital = [[${h}]];
+const holiday = String(hospital.time.holiday);
+$('input[name="hol"]').each(function(index, item){
+	if(holiday.includes(index+2)){
+    	  $(item).prop("checked", true);
+    }
+	$(item).prop("disabled", true);
+});
 
 
 
-//옵션 없이 지도 객체를 생성하면 서울 시청을 중심으로 하는 16 레벨의 지도가 생성됩니다.
 
 </script>
 
