@@ -244,5 +244,12 @@ public class HospitalDao {
 		int result = jdbc.update(query, params);
 		return result;
 	}
+
+	public Hospital selectHospital(int memberNo) {
+		String query = "select * from hospital_tbl where hospital_tbl.member_no = ?";
+		Object[] params = {memberNo};
+		List list = jdbc.query(query, hospitalRowMapper, params);
+		return (Hospital)list.get(0);
+	}
 	
 }

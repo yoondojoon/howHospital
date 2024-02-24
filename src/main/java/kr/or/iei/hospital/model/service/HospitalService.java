@@ -63,11 +63,8 @@ public class HospitalService {
 			for (BusinessAuthFile businessAuthFile : fileList) {
 				businessAuthFile.setBusinessAuthNo(businessAuthNo);
 				result += hospitalDao.insertBusinessAuthFile(businessAuthFile);
-				
 			}
-			
 			result += hospitalDao.updateMemberStatus(ba.getMemberNo()); 
-			
 		}
 		return result;
 	}
@@ -115,7 +112,27 @@ public class HospitalService {
 		h.setDoctorList(doctorList);
 		return h;
 	}
+
+
+	public Hospital selectHospital(int memberNo) {
+		Hospital hospital = new Hospital();
+		//1. 병원변호 찾기
+		hospital = hospitalDao.selectHospital(memberNo);
+		//2. 병원번호로 병원/의사/시간/진료과목 조회
+		List subjectList = hospitalDao.searchSubjectList(hospital.getHospitalNo());
+		Time time = hospitalDao.searchHospitalTime(hospital.getHospitalNo());
+		List doctorList = hospitalDao.searchSubjectDoctorList(hospital.getHospitalNo());
+		hospital.setSubjectList(subjectList);
+		hospital.setTime(time);
+		hospital.setDoctorList(doctorList);
+		return hospital;
+		
+	}
+
+
 	
+	
+
 }
 
 

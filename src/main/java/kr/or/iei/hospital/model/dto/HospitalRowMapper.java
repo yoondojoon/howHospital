@@ -12,17 +12,17 @@ public class HospitalRowMapper implements RowMapper<Hospital> {
 	@Override
 	public Hospital mapRow(ResultSet rs, int rowNum) throws SQLException {
 		Hospital h = new Hospital();
-		h.setCostOne(rs.getString("cost_one"));
-		h.setCostTwo(rs.getString("cost_two"));
-		h.setHospitalAddress(rs.getString("hospital_address"));
-		h.setHospitalPicture(rs.getString("hospital_picture"));
-		h.setHospitalIntro(rs.getString("hospital_intro"));
-		h.setHospitalName(rs.getString("hospital_name"));
 		h.setHospitalNo(rs.getInt("hospital_no"));
-		h.setHospitalTel(rs.getString("hospital_tel"));
+		h.setMemberNo(rs.getInt("member_no"));
+		h.setHospitalName(rs.getString("hospital_name"));
+		h.setHospitalIntro(rs.getString("hospital_intro"));
+		h.setHospitalAddress(rs.getString("hospital_address"));
 		h.setLat(rs.getString("lat"));
 		h.setLng(rs.getString("lng"));
-		h.setMemberNo(rs.getInt("member_no"));
+		h.setHospitalTel(rs.getString("hospital_tel"));
+		h.setCostOne(rs.getString("cost_one"));
+		h.setCostTwo(rs.getString("cost_two"));
+		h.setHospitalPicture(rs.getString("hospital_picture"));
 		return h;
 	}
 

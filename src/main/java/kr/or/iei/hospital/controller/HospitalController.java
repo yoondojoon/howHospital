@@ -68,7 +68,7 @@ public class HospitalController {
 	public String myHospitalEnroll(Hospital hospital, String postCode, String hospitalAddrMain, String hospitalAddrSub,
 			String dayOpenHour, String dayCloseHour, String weekendOpenHour, String weekendCloseHour, String lunchOpenHour, String lunchCloseHour, String[] hol, 
 			String hospitalTelFirst, String hospitalTelLast,
-			String[] doctor_name, String[] doctor_education, String[] doctor_experience, String[] subjectSelect, MultipartFile hospital_picture ,MultipartFile[] doctor_picture, String CostOne, String CostTwo) {
+			String[] doctor_name, String[] doctor_education, String[] doctor_experience, String[] subjectSelect, MultipartFile hospital_picture ,MultipartFile[] doctor_picture, String CostOne, String CostTwo, Model model) {
 			
 			//System.out.println(hospital.getHospitalAddress());
 		
@@ -117,12 +117,29 @@ public class HospitalController {
 
 	        if (result == (doctorList.size() + subjectList.size() + 2)) {
 				System.out.println("성공");
+	
 				return "redirect:/";
+
 	        } else {
 				System.out.println("실패");
 				return "redirect:/";
 			}
 	}
+	
+	
+	@GetMapping(value = "/myHospitalDetail")
+	//hospital enroll 진입: hospitalNo
+	//마이페이지에서 진입: hospitalNo
+	public String myHospitalDetail(Model model, @SessionAttribute(required = false) Member member) {
+		Hospital h = hospitalService.selectHospital(member.getMemberNo());
+		System.out.println(h);
+		if(h != null) {
+			model.addAttribute("h", h);
+			return "hospital/myHospitalDetail";
+		}
+		return "redirect:/hospitalAuth";
+	}
+	
 
 	@PostMapping(value = "/businessAuthEnroll")
 	public String businessAuthEnroll(BusinessAuth ba, MultipartFile[] upfile, Model model) {
@@ -165,6 +182,7 @@ public class HospitalController {
 		return "hospital/myHospitalFrm";
 	}
 
+	
 	@GetMapping("/myHospitalReservation")
 	public String myHospitalReservation(int reqPage, Model model, @SessionAttribute Member member, int doctorNo) {
 		//회원 번호로 해당하는 병원 정보 가져오기.
@@ -212,4 +230,8 @@ public class HospitalController {
 		model.addAttribute("reservationDetail", rd);
 		return "hospital/detailReservationFrm";
 	}
+	
+
+	
+
 }
