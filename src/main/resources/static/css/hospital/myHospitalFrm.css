@@ -38,18 +38,18 @@
     flex-grow: 1;
     padding: 30px;
     display: flex;
-    justify-content: center; /* 가로 가운데 정렬 */
+    justify-content: flex-start; /* 가로 가운데 정렬 */
     width:1000px;
 }
 
 #hospital_wrap .main_content .hospital_info_form {
-    width:1080px;
+    width:600px;
     border:1px solid red;
     padding:30px;
 }
 
 .input_wrap{
-    margin-top:30px;
+    margin-top:50px;
 }
 
 .time_table{
@@ -187,4 +187,11 @@ table th, table td{
 }
 
 
+
+.input_value{
+	background-color:var(--gray_07);
+	padding: 8px;
+	box-sizing: border-box;
+	border: 1px solid silver;
+}
 

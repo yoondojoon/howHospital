@@ -65,17 +65,14 @@ public class HospitalController {
 	}
 
 	@PostMapping(value="/myHospitalEnroll")
-	public String myHospitalEnroll(Hospital hospital, String postCode, String hospitalAddrMain, String hospitalAddrSub,
+	public String myHospitalEnroll(Hospital hospital, String hospitalPostCode, String hospitalAddrMain, String hospitalAddrSub,
 			String dayOpenHour, String dayCloseHour, String weekendOpenHour, String weekendCloseHour, String lunchOpenHour, String lunchCloseHour, String[] hol, 
 			String hospitalTelFirst, String hospitalTelLast,
 			String[] doctor_name, String[] doctor_education, String[] doctor_experience, String[] subjectSelect, MultipartFile hospital_picture ,MultipartFile[] doctor_picture, String CostOne, String CostTwo, Model model) {
-			
-			//System.out.println(hospital.getHospitalAddress());
-		
+				
 			//VO 값 세팅
-			hospital.setHospitalAddress(postCode +" "+ hospitalAddrMain + " " + hospitalAddrSub);
-			
-			
+			hospital.setHospitalAddress(hospitalPostCode +" "+ hospitalAddrMain + " " + hospitalAddrSub);
+
 			//병원사진
 			String savepath1 = root+"/hospital/";
 			String filepath1 = fileUtils.upload(savepath1, hospital_picture); //파일 업로드 및 경로 반환
@@ -132,12 +129,12 @@ public class HospitalController {
 	//마이페이지에서 진입: hospitalNo
 	public String myHospitalDetail(Model model, @SessionAttribute(required = false) Member member) {
 		Hospital h = hospitalService.selectHospital(member.getMemberNo());
-		System.out.println(h);
 		if(h != null) {
 			model.addAttribute("h", h);
 			return "hospital/myHospitalDetail";
 		}
 		return "redirect:/hospitalAuth";
+		
 	}
 	
 

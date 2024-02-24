@@ -76,6 +76,8 @@ public class HospitalService {
 		// 방금 insert 한  테이블의 데이터의 _no가 필요 
 		int hospitalNo = hospitalDao.selectHospitalNo();
 		
+		
+		
 		//2. subject 테이블 insert
 		for(int i = 0; i < subjectList.size(); i++) {
 			  result += hospitalDao.insertSubject(subjectList.get(i));

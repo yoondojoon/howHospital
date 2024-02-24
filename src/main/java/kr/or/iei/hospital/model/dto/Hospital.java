@@ -15,6 +15,9 @@ public class Hospital {
 	private String hospitalName;
 	private String hospitalIntro;
 	private String hospitalAddress;
+	private String hospitalPostCode;
+	private String hospitalAddrMain;
+	private String hospitalAddrSub;
 	private String hospitalPicture;
 	private String lat;
 	private String lng;
