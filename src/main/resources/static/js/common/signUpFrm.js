@@ -76,34 +76,137 @@ $(".agreeAll").on("click", function() {
 
 	});
 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+	//이메일 중복
+	$("#memberEmail").on("keyup", function(event) {
+		const memberEmail = $("#memberEmail").val();
+		const regExp = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
+	
+		if (!regExp.test(memberEmail)) {
+			if(!$(".emailStatus").next().hasClass("noEmail")){
+			$(".emailStatus").after('<div class="msg warning noEmail">잘못된 이메일 형식입니다.</div>');
+			$(".duplicate").remove();
+			$(".available").remove();
+			$(".emailInput").remove();
+			}
+			$("#sendBtn").prop("disabled", true);
+			event.preventDefault();
+
+		} else {
+			$.ajax({
+				url: "/member/emailChk",
+				type: "post",
+				data: { memberEmail: memberEmail }, 
+				success: function(data) {
+					if (data === 0) {
+						if(!$(".emailStatus").next().hasClass("available")){
+						$(".emailStatus").after('<div class="msg success available">사용가능한 이메일입니다.</div>');
+						$(".duplicate").remove();	
+						$(".emailInput").remove();
+						$(".noEmail").remove();
+						}
+						$("#sendBtn").prop("disabled", false);
+					} else {	
+						if(!$(".emailStatus").next().hasClass("duplicate")){
+						$(".emailStatus").after('<div class="msg warning duplicate">중복된 이메일입니다.</div>');
+						$(".emailInput").remove();
+						$(".noEmail").remove();
+						$(".available").remove();
+						}
+						$("#sendBtn").prop("disabled", true);
+						event.preventDefault();
+					}
+					
+				},
+				error: function() {
+					$("#emailStatus").text("에러");
+					event.preventDefault();
+				}
+			});
+		}
+		
+		
+	});	
+
+	
 
 
 
+	//인증번호
+	$("#authBtn").on("click",function(event){
+			
+
+			
+			
+		if(mailCode != null){
+			const authCode = $("#authCode").val();
+			if(authCode == mailCode){
+			if(!$(".authStatus").next().hasClass("codeAuth1")){
+				$(".authStatus").after('<div class="msg success codeAuth1">인증이 완료되었습니다.</div>');
+				$(".codeAuth2").remove();
+				$(".at").remove();	
+			}
+				
+			window.clearInterval(intervalId);
+			
+			
+			$("#memberEmail").prop("disabled",true);
+			$("#sendBtn").prop("disabled",true); 
+			$("#authCode").prop("disabled",true); 
+			$("#authBtn").prop("disabled",true);
+			//시간을 화면에서 삭제
+			$("#timeZone").remove();
+			
+			}else{
+				if(!$(".authStatus").next().hasClass("codeAuth2")){
+					$(".authStatus").after('<div class="msg warning codeAuth2">인증번호를 확인하세요.</div>');
+					$(".codeAuth1").remove();
+					$(".at").remove();
+				}
+					
+					event.preventDefault();
+			}	
+	}			
+});	
 
 
+	//이메일로 인증코드 전송
+	let mailCode = null; // <---인증코드가 저장됨
 
-
-
-	let mailCode = null;
-
-	$("#sendBtn").on("click",function(){
+	$("#sendBtn").on("click",function(event){
 
 	const memberEmail = $("#memberEmail").val();
 	
-	$.ajax({
-		url : "/member/sendCode",
-		data : {memberEmail : memberEmail},
-		type : "post",
-		success : function(data){
+	if(memberEmail === ''){
+		if(!$(".emailStatus").next().hasClass("emailInput")){
+		$(".emailStatus").after('<div class="msg warning emailInput">이메일을 입력해 주세요.</div>');
+		}
+		event.preventDefault();
+		
+	}else{
+			
+		
+		$.ajax({
+			url : "/member/sendCode",
+			data : {memberEmail : memberEmail},
+			type : "post",
+			success : function(data){
 			console.log(data);
 			mailCode = data;
 			
 			$("#auth").show();
-		},
-		error : function(){
+
+			authTime();
+
+			},
+			error : function(){
 			console.log("에러");
-		}
-	});
+			}
+		});
+	}
+	
 	
 });
 
@@ -126,8 +229,11 @@ $(".agreeAll").on("click", function() {
 				if(min == "0"){
 					window.clearInterval(intervalId);
 					mailCode = null;
-					$("#authMsg").text("인증 시간이 만료되었습니다.");
-					$("#authMsg").css("color","red");
+					if(!$(".authStatus").next().hasClass("timeOver")){
+					$(".authStatus").after('<div class="msg warning timeOver">인증 시간이 만료되었습니다.</div>');
+					$(".at").remove();
+				}
+					
 				}else{
 					const newMin = Number(min) - 1;
 					$("#min").text(newMin);
@@ -162,44 +268,15 @@ $(".agreeAll").on("click", function() {
 
 
 
+	
+	
+	
+	
+
+		
 
 
-
-	//이메일인증
-	$("#authBtn").on("click",function(){
-			
-			
-			
-				if(mailCode != null){
-					const authCode = $("#authCode").val();
-					if(authCode == mailCode){
-					$("#authMsg").text("인증완료");
-					$("#authMsg").css("color","blue");
-					window.clearInterval(intervalId);
-					
-					
-					$("#memberEmail").prop("disabled",true);
-					$("#sendBtn").prop("disabled",true); 
-					$("#authCode").prop("disabled",true); 
-					$("#authBtn").prop("disabled",true);
-					//시간을 화면에서 삭제
-					$("#timeZone").remove();
-					
-					}else{
-						$("#authMsg").text("인증번호를 확인하세요");
-						$("#authMsg").css("color","red");
-					
-					}
-				
-			}	
-		});
-
-
-
-
-
-
-
+//회원가입 버튼 
 $("#signUpBtn").on("click", function(event) {
 
     const selectType = $("select[name=memberType]").val();
@@ -212,51 +289,84 @@ $("#signUpBtn").on("click", function(event) {
     const address = $("#address").val();
     const detailAddress = $("#detailAddress").val();
     const memberPhone = $("#memberPhone").val();
+	const authCode = $("#authCode").val();
 	
+		if(authCode !== mailCode){
+			if (!$(".authStatus").next().hasClass("at")) {
+				$(".authStatus").after('<div class="msg warning at">인증번호를 확인해주세요.</div>')
+			}
+			event.preventDefault();
+
+		}
+
+		if (
+		  selectType === "" ||
+		  memberEmail === "" ||
+		  memberPassword === "" ||
+		  rePassword === "" ||
+		  memberName === "" ||
+		  memberRrn === "" ||
+		  postcode === "" ||
+		  address === "" ||
+		  detailAddress === "" ||
+		  memberPhone === "" 
+		  
+	  ) {
+		  event.preventDefault();
+		  alert("모든 항목을 정확히 입력해 주세요.");
+		  return;
 	
-	  if (
-        selectType === "" ||
-    	memberEmail === "" ||
-    	memberPassword === "" ||
-    	rePassword === "" ||
-    	memberName === "" ||
-    	memberRrn === "" ||
-    	postcode === "" ||
-    	address === "" ||
-    	detailAddress === "" ||
-    	memberPhone === ""
-    ) {
-        event.preventDefault();
-        alert("모든 항목을 정확히 입력해 주세요."); 
-    }
-    
+	  }
+	
     const isChecked = $(".agreeAll").is(":checked");
     
     if(!isChecked){
     	
-    	$("#agreeStatus").text("모든 약관에 동의해주셔야 가입이 가능합니다.").css("color","red");
+		
     	
-    }else{
+		if (!$(".agreeStatus").next().hasClass("statusAgree")) {
+			$(".agreeStatus").after('<div class="msg warning statusAgree">모든 약관에 동의해주셔야 가입이 가능합니다.</div>')
+		}
+    	event.preventDefault();
+    }else if(isChecked == true){
     
-    	$("#agreeStatus").hide();
+    	$("#agreeStatus").text("");
 
     }
     
-    form.submit();
+	
     
 });
+
+$(".agreeAll").on("change", function() {
+    const isChecked = $(this).is(":checked");
+    if (isChecked) {
+        $("#agreeStatus").text(""); 
+    }
+});
 	
-	$("#select select[name=memberType]").on("change", function() {
+
+
+
+
+
+	//가입유형
+	$("#select select[name=memberType]").on("change", function(event) {
         const selectType = $(this).val();
         if (selectType === "0") {
-            $("#typeStatus").text("가입유형을 선택해주세요.").css("color","red");
-        	event.preventDefault();
+			
+			$(".joinType").after('<div class="msg warning selectType1">가입유형을 선택해주세요.</div>')
+			$(".selectType2").remove();
+			event.preventDefault();
         } else {
-            $("#typeStatus").text(""); 
+			$(".selectType1").remove();
         }
     });
-  
-	$("#memberName").on("change",function(){
+	
+
+
+	//이름
+	$("#memberName").on("keyup",function(event){
 		
 		
 	const memberName = $("#memberName").val();
@@ -264,12 +374,16 @@ $("#signUpBtn").on("click", function(event) {
 	const regName = /^[가-힣a-zA-Z]+$/;
 	
 	if(!regName.test(memberName)){
-	
-		$("#nameStatus").text("이름은 한글이나 영문만 가능합니다.").css("color","red");
-		event.preventDefault();
+		if (!$(".nameStatus").next().hasClass("noName")) {
+		$(".nameStatus").after('<div class="msg warning noName">이름은 한글이나 영문만 가능합니다.</div>')
+		$(".name").remove();
+	}
+	event.preventDefault();
 	}else{
-	
-		$("#nameStatus").hide();
+		if (!$(".nameStatus").next().hasClass("name")) {
+		$(".noName").remove();
+		$(".nameStatus").after('<div class="msg success name">사용가능한 이름입니다.</div>')
+		}
 	}
 		
 		
@@ -281,8 +395,8 @@ $("#signUpBtn").on("click", function(event) {
 
 
 
-
-	$("#memberPassword").on("change",function(){
+	//비밀번호
+	$("#memberPassword").on("keyup",function(event){
 
 	const password = $("#memberPassword").val();
 	
@@ -290,15 +404,21 @@ $("#signUpBtn").on("click", function(event) {
 	
 	
 		if(password.length < 4){//비밀번호가 4보다 커야 true
-			$("#passwordStatus1").text("비밀번호는 4글자 이상 사용하실 수 있습니다.");
-			$("#passwordStatus1").css("color","red");
+			
 			event.preventDefault();
+			if (!$(".password").next().hasClass("password1")) {
+				// 메시지가 없는 경우에만 메시지 추가
+				$(".password").after('<div class="msg warning password1">비밀번호는 4글자 이상 사용하실 수 있습니다.</div>');
+			}
+			
+			$(".password2").remove();
 			
 			
 		}else if( password.length > 3){
-			$("#passwordStatus1").text("사용가능한 비밀번호 입니다.");
-			$("#passwordStatus1").css("color","blue");
-			$("#passwordStatus1").hide();
+			if (!$(".password").next().hasClass("password2")) {
+			$(".password").after('<div class="msg success password2">사용 가능한 비밀번호입니다.</div>')
+			$(".password1").remove();
+			}
 		}
 	
 });
@@ -308,98 +428,75 @@ $("#signUpBtn").on("click", function(event) {
 
 
 
-	$("#reMemberPassword").on("change",function(){
+
+	//비밀번호 확인
+	$("#reMemberPassword").on("keyup",function(event){
 	
 	const password = $("#memberPassword").val();
 	const reMemberPassword = $("#reMemberPassword").val();
 	
+
 	if(password === reMemberPassword){
-	
-		$("#passwordStatus2").text("비밀번호가 일치합니다.");
-		$("#passwordStatus2").css("color","blue");
-		
+		if(!$(".rePassword").next().hasClass("rePw1")){
+		$(".rePassword").after('<div class="msg success rePw1">비밀번호가 일치합니다.</div>')
+		$(".rePw2").remove();
+		}
 		
 	}else{
-	
-		$("#passwordStatus2").text("비밀번호가 일치하지 않습니다.");
-		$("#passwordStatus2").css("color","red");
-		event.preventDefault()
+		if(!$(".rePassword").next().hasClass("rePw2")){
+		$(".rePassword").after('<div class="msg warning rePw2">비밀번호가 일치하지 않습니다.</div>')
+		$(".rePw1").remove();
+	}
+	event.preventDefault()
 	}
 
 	});
 	
 	
 	
-	
-	$("#memberRrn").on("change",function(){
+	//주민번호
+	$("#memberRrn").on("change",function(event){
 		
 		const memberRrn = $("#memberRrn").val();
 		
 		if(memberRrn.length < 7){
+			if(!$(".rrnStatus").next().hasClass("noRrn")){
+			$(".rrnStatus").after('<div class="msg warning noRrn">주민등록번호는 튓 1자리까지 입력해야합니다.</div>')
 			
-			$("#rrnStatus").text("주민등록번호는 뒷1자리까지 입력해야 합니다. XXXXXX-X");
-			$("#rrnStatus").css("color","red");
-			event.preventDefault()
 			
+		}
+		event.preventDefault();
 		}else{
-			$("#rrnStatus").text("사용가는한 주민등록번호 입니다.");
-			$("#rrnStatus").css("color","blue");
+			
+			$(".noRrn").remove();
 			
 		}
 		
 	
 	});
 	
-	
-	$("#memberPhone").on("change",function(){
+	//전화번호
+	$("#memberPhone").on("keyup",function(event){
 		
 		const memberPhone = $("#memberPhone").val();
 		
-		if(memberPhone.length < 13){
-		
-			$("#phoneStatus").text("전화번호를 정확히 입력해주세요.");
-			$("#phoneStatus").css("color","red");
-			event.preventDefault()
-		
-		}else{
-			
-			$("#phoneStatus").text("사용가능한 전화번호 입니다.");
-			$("#phoneStatus").css("color","blue");
-			
+		if (memberPhone.length < 13) {
+			if (!$(".phoneStatus").next().hasClass("noPhone")) {
+				$(".phoneStatus").after('<div class="msg warning noPhone">전화번호를 정확히 입력해주세요.</div>');
+			}
+			$(".okPhone").remove();
+			event.preventDefault();
+		} else {
+			if (!$(".phoneStatus").next().hasClass("okPhone")) {
+				$(".phoneStatus").after('<div class="msg success okPhone">사용가능한 전화번호입니다.</div>');
+			}
+			$(".noPhone").remove();
 		}
 		
 		
 	});
 	
-	//이메일 중복
-	$("#memberEmail").on("change", function() {
-    const memberEmail = $("#memberEmail").val();
-    const regExp = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
-
-    if (!regExp.test(memberEmail)) {
-        $("#emailStatus").text("잘못된 형식의 이메일입니다.").css("color", "red");
-        event.preventDefault();
-    } else {
-        $.ajax({
-            url: "/member/emailChk",
-            type: "post",
-            data: { memberEmail: memberEmail }, 
-            success: function(data) {
-                if (data === 0) {
-                    $("#emailStatus").text("사용 가능한 이메일입니다.").css("color","blue");
-                    
-                } else {
-                    $("#emailStatus").text("중복된 이메일입니다.").css("color","red");
-                    event.preventDefault();
-                }
-            },
-            error: function() {
-                $("#emailStatus").text("에러");
-                event.preventDefault();
-            }
-        });
-    }
-});
+	
 		
 		
 //전화번호 하이픈
@@ -431,6 +528,7 @@ $("#signUpBtn").on("click", function(event) {
 	
     	}
 
+		
 
-
+		
 	

@@ -33,7 +33,7 @@ public class MemberController {
 	//회원가입 페이지
 	@GetMapping(value="/signUpFrm")
 	public String signUpFrm() {
-		
+	
 		
 		return "member/signUpFrm";
 		
@@ -180,6 +180,7 @@ public class MemberController {
 		
 	}
 	
+	//이메일 중복 체크
 	@ResponseBody
 	@PostMapping(value="/emailChk")
 	public int emailChk(@RequestParam("memberEmail") String memberEmail ) {
@@ -188,6 +189,20 @@ public class MemberController {
 		
 		return cnt;
 		
+		
+	}
+	
+	
+	//비밀번호 중복 체크
+	@ResponseBody
+	@PostMapping(value="passwordChk")
+	public int passwordChk(@RequestParam("memberPassword") String memberPassword, @SessionAttribute(required = false) Member member) {
+		
+		String memberEmail = member.getMemberEmail();
+		
+		int cnt = memberService.checkPassword(memberPassword, memberEmail);
+		
+		return cnt;
 		
 	}
 	
@@ -229,30 +244,19 @@ public class MemberController {
 	
 	
 	//회탈
+	@ResponseBody
 	@PostMapping(value="/delete")
 	public String confirmDelete(@SessionAttribute(required = false) Member member, Member m) {
 		
 		String memberEmail = member.getMemberEmail();
+		String memberPassword = member.getMemberPassword();
 		
 		
-		int cnt = memberService.confirmDelete(memberEmail,m);
+		int cnt = memberService.confirmDelete(memberEmail,memberPassword);
 		
 		
-		if(cnt == 0) {
-			
-				return "/member/failDeleteMember";
-			
-			
-		}else {
-			
-			
-			return "redirect:/";
-			
-		}
-		
-		
-		
-		
+		return "cnt";
+	
 		
 	}
 	

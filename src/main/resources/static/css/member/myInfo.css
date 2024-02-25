@@ -1,12 +1,79 @@
 @charset "UTF-8";
 
-.menu{
-	
+
+#contents{
+	padding: 0 !important;
+	display:flex;
+	justify-content: center;
+	 
+}
+
+.mypageWrap{
+	padding: 0px !important;	
+	width:1200px; 
 	display: flex;
+	justify-content: center;  
 	
 }
+
+
+.mypageMenu li>a{
+	color:var(--main_03);
+	min-width:200px;
+	text-align:center;
+	padding: 20px 20px;
+	font-size: 16px;
+	width: 100%;
+	font-weight:bold;
+	width:100%;
+	
+}
+
+
+.mypageMenu li{
+	display:flex;
+	list-style :none;
+	font-color : #222222;
+	justify-content: flex-start;
+	
+}
+
+.mypageMenu li:hover{
+	background-color:rgba(67,137,186,0.2);
+	
+	
+}
+
+.myInfoWrap{
+	flex-grow: 1;
+    padding: 30px;
+    display: flex;
+    justify-content: flex-start; /* 가로 가운데 정렬 */
+    width:1000px;
+	
+}
+
+
+.myInfoBox{
+	width:750px;
+    
+    padding:30px;
+}
+
+
+
+
+.mypageMenu {
+	
+	display: flex;
+	flex-direction: column
+	
+	
+}
+
 .material-icons{
 	
+	font-size: 100px;
+	color:var(--main_03);
 	
-	display :flex;
 }

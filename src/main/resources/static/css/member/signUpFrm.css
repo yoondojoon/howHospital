@@ -13,3 +13,66 @@
     font-weight: bold;
     src: url(/font/Noto_Sans_KR/static/NotoSansKR-Bold.ttf);
 }
+
+
+a {
+    color: #222222;
+
+
+}
+
+.input_wrap{
+	margin-top:30px;
+}
+
+.phoneWrap{
+
+    margin-bottom: 30px;
+}
+
+#contents{
+	padding:0 !important;
+	display:flex;
+	justify-content: center; 
+    
+
+}
+
+
+#container {
+    width:60%;
+    background: #fff;
+    padding: 34px;
+    border-radius: 6px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    justify-content: center;
+    
+    margin: auto;
+    margin-top: 117px;
+}
+
+.signUpBtnBox{
+    display: flex;
+    justify-content: center;
+}
+
+
+
+
+.agreeStatus label{
+
+    font-size: 16px;
+
+}
+
+.checkbox_wrap{
+
+    width: 280px;
+
+}
+
+.modal_container{
+
+    min-height: 300px;
+}
+

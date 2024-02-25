@@ -18,7 +18,8 @@ public class MemberDao {
 	
 	@Autowired
 	public MemberRowMapper memberRowMapper;
-
+	
+	//로그인
 	public Member signIn(String memberEmail, String memberPassword) {
 		
 		
@@ -38,7 +39,8 @@ public class MemberDao {
 			
 		}
 	}
-
+	
+	//회원가입
 	public int signUp(Member member) {
 		
 		String query = "insert into member_tbl values(member_seq.nextval,?,?,?,?,?,?,?,to_char(sysdate,'yyyy-mm-dd'),?,?)";
@@ -52,7 +54,7 @@ public class MemberDao {
 		
 	}
 	
-	
+	//이메일 중복체크
 	public int checkEmail(String memberEmail) {
 		
 		
@@ -66,16 +68,27 @@ public class MemberDao {
 	}
 
 	
-
-	public int confirmDelete(String memberPassword,Member m) {
+	//회원탈퇴
+	public int confirmDelete(String memberEmail,String memberPassword) {
 		
-		String query = "delete from member_tbl where member_eamil=? and member_password=?";
+		String query = "delete from member_tbl where member_email=? and member_password=?";
 		
-		Object[] params = {m.getMemberEmail(), memberPassword};
+		Object[] params = {memberEmail,memberPassword};
 		
 		
 		int cnt = jdbc.update(query,params);
 		
+		
+		return cnt;
+	}
+
+	//비밀번호 중복 체크
+	public int checkPassword(String memberPassword, String memberEmail) {
+		
+		
+		String query = "select count(*) from member_tbl where member_email = ? and member_password=?";
+		
+		int cnt = jdbc.queryForObject(query, Integer.class,memberEmail,memberPassword);
 		
 		return cnt;
 	}

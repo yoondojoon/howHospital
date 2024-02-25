@@ -33,6 +33,7 @@ public class MemberService {
 	@Transactional
 	public int signUp(Member member) {
 		
+		System.out.println(member);
 		
 		if(member.getMemberType()==2) {
 			
@@ -55,7 +56,7 @@ public class MemberService {
 		
 	}
 	
-
+	//이메일 중복체크
 	public int checkEmail(String memberEmail) {
 		
 		int cnt = memberDao.checkEmail(memberEmail);
@@ -67,8 +68,16 @@ public class MemberService {
 	
 	//회탈
 	@Transactional
-	public int confirmDelete(String memberPassword, Member m) {
-		int cnt = memberDao.confirmDelete(memberPassword, m);
+	public int confirmDelete(String memberPassword, String memberEmail) {
+		int cnt = memberDao.confirmDelete(memberPassword, memberEmail);
+		
+		return cnt;
+	}
+
+	
+
+	public int checkPassword(String memberPassword, String memberEmail) {
+		int cnt = memberDao.checkPassword(memberPassword,memberEmail);
 		
 		return cnt;
 	}}

@@ -1,33 +1,64 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<th:block th:include="common/header"></th:block> <!--  ㅎㅔ더 위치! -->>
-
+<th:block th:include="common/header"></th:block>
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <link rel="stylesheet" href="/css/member/myInfo.css">
 
-<span class="material-icons">portrait</span>
+	<!-- container -->
+    <main id="container" class="container">
 
-<section id="contents" class="contents myPage">
-            <div class="inner_wrap">
-                <h2>마이페이지</h2>
-				<!--메뉴    -->
-    			<div class="menu">
-        			<ul>
-            			<li><a href="/member/myInfo">내 정보</a>	
-            			<li><a href="/member/childerenInfo">내 자녀 보기</a></li>
-            			<li><a href="/member/childAddFrm">내 자녀 추가</a></li>
-            			<li><a href="/">진료 내역 상세보기</a></li>
-            			<li><a href="/member/myReviewList">나의 리뷰 보기</a></li>
-	            		<li><a href="/member/favoriteList">즐겨찾기</a></li>
-	            		<li><a href="/member/memberDelete">회원탈퇴</a></li>
-	        		</ul>
-					
-    			</div>
-    			<div><span class="material-icons">portrait</span></div>
-			</div>
+		<!-- contents -->
+        <section id="contents" class="contents myInfo">
+        	<div class="mypageWrap">
+        	
+        		<!-- 메뉴 -->            
+            	<div class="menuBox">	
+                	<div class="mypageMenu">
+                		<ul>
+                			<li><a href="/member/myInfo">내 정보 보기</a></li>
+                			<li><a href="#">내 자녀 보기</a></li>
+                			<li><a href="#">내 자녀 추가</a></li>
+                			<li><a href="#">진료내역 상세보기</a></li>
+                			<li><a href="#">나의 리뷰 보기</a></li>
+                			<li><a href="#">즐겨찾기</a></li>
+                			<li><a href="/member/memberDelete">회원 탈퇴</a></li>
+                		</ul>
+                	</div>
+            	</div>
+           
+           
+           <!-- 내 정보 내용 -->
+           <div class="myInfoWrap">
+           		<div class="myInfoBox">
+           			<h2>내 정보</h2>
+           			           			
+	           			<div class="myInfoContents">
+           					<span class="material-icons">emoji_emotions</span>
+           				<h3><span th:text="${session.member.memberName}"></span>님</h3>
+           				<div class="info">
+           				<span id="memberRrn" th:text="${session.member.memberRrn}" style="display:none;"></span>
+           					<ul>
+           						<li>나이 : <span id="age"></span></li>
+           						<li>성별 : <span id="gender"></span></li>
+           						<li>주소 : <span th:text="${session.member.memberAddress}"></span></li>
+           						<li>연락처 : <span th:text="${session.member.memberPhone}"></span></li>
+           					</ul>
+           				</div>
+           			
+           			</div>
+           		</div>
+           </div>
+           
+           
+           </div>
         </section>
-
-
+	    <!--// contents -->
+        
+    </main>
+    <!--// container -->
+	
 <th:block th:include="common/footer"></th:block>
+<script src="/js/common/myInfo.js"></script>
+<!-- js 링크 -->
 </body>
 </html>
