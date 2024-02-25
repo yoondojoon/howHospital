@@ -14,7 +14,20 @@
 		</div>
 	</section>
 	<!--// contents -->
-
+	
+						<div class="info">
+           				<span id="memberRrn" th:text="${session.member.memberRrn}" style="display:none;"></span><!-- 뷰에 세션으로 주민번호 꺼내오 -->
+           					<ul>
+           						<li>나이 : <span id="age"></span></li>
+           						<li>성별 : <span id="gender"></span></li>
+           						<li>주소 : <span th:text="${session.member.memberAddress}"></span></li>
+           						<li>연락처 : <span th:text="${session.member.memberPhone}"></span></li>
+           					</ul>
+           				</div>
+	
+	
+	
+	
 </main>
 <!--// container -->
 
