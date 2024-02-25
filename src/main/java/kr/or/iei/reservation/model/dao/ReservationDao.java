@@ -106,11 +106,12 @@ public class ReservationDao {
 		return currResNo;
 	}
 	
-	public int insertReserveContactDetail(int currResNo, ReservationDetail rd) {
+	public int insertReservationDetail(int currResNo, ReservationDetail rd) {
 		String query = "insert into reservation_detail_tbl values(reservation_detail_seq.nextval,?,?,?,?,?)";
 		String doctorNo = rd.getDoctorNo() == 0 ? null : String.valueOf(rd.getDoctorNo());
+		String subjectNo = rd.getSubjectNo() == 0 ? null : String.valueOf(rd.getSubjectNo());
 		String childNo = rd.getChildNo() == 0 ? null : String.valueOf(rd.getChildNo());
-		Object[] params = {currResNo, doctorNo, rd.getSubjectNo(), rd.getSymptom(), childNo};
+		Object[] params = {currResNo, doctorNo, subjectNo, rd.getSymptom(), childNo};
 		int result = jdbc.update(query, params);
 		return result;
 	}

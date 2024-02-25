@@ -84,7 +84,7 @@
                                 </div>
                             </li>
                         </ul>
-                        <div class="btn_area">
+                        <div class="btn_area" th:if="${session.member != null}">
                             <a th:href="@{/service/reserveContactFrm(hospitalNo=${h.hospitalNo}, hospitalName=${h.hospitalName})}" class="btn_primary">진료 예약</a>
                             <a th:href="@{/service/reserveContactlessFrm(hospitalNo=${h.hospitalNo}, hospitalName=${h.hospitalName})}" class="btn_primary outline">비대면 진료</a>
                         </div>

@@ -100,7 +100,16 @@ public class ReservationService {
 		int result = reservationDao.insertReservation(r);
 		if(result > 0) {
 			int currResNo = reservationDao.selecteCurrResNo();
-			result = reservationDao.insertReserveContactDetail(currResNo, rd);
+			result = reservationDao.insertReservationDetail(currResNo, rd);
+		}
+		return result;
+	}
+	@Transactional
+	public int insertReserveContactless(Reservation r, ReservationDetail rd) {
+		int result = reservationDao.insertReservation(r);
+		if(result > 0) {
+			int currResNo = reservationDao.selecteCurrResNo();
+			result = reservationDao.insertReservationDetail(currResNo, rd);
 		}
 		return result;
 	}
