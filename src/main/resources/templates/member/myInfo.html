@@ -36,7 +36,7 @@
            					<span class="material-icons">emoji_emotions</span>
            				<h3><span th:text="${session.member.memberName}"></span>님</h3>
            				<div class="info">
-           				<span id="memberRrn" th:text="${session.member.memberRrn}" style="display:none;"></span>
+           				<span id="memberRrn" th:text="${session.member.memberRrn}" style="display:none;"></span><!-- 뷰에 세션으로 주민번호 꺼내오 -->
            					<ul>
            						<li>나이 : <span id="age"></span></li>
            						<li>성별 : <span id="gender"></span></li>
@@ -44,7 +44,10 @@
            						<li>연락처 : <span th:text="${session.member.memberPhone}"></span></li>
            					</ul>
            				</div>
-           			
+           				<form action="/member/updateMyInfo" method="post">
+           					<button type="submit" class="btn_primary lg">내 정보 수정하기</button>
+           				</form>
+           				
            			</div>
            		</div>
            </div>

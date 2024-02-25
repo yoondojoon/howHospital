@@ -280,6 +280,15 @@ public class MemberController {
 	
 	
 	
+	@PostMapping(value="/updateMyInfo")
+	public String updateMyInfo() {
+		
+		
+		
+		return "/member/updateMyInfo";
+	}
+	
+	
 	
 	
 	
