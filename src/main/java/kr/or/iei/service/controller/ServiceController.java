@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.or.iei.hospital.model.dto.Hospital;
 import kr.or.iei.hospital.model.service.HospitalService;
+import kr.or.iei.member.model.service.MemberService;
 
 @Controller
 @RequestMapping(value="/service")
@@ -22,6 +23,9 @@ public class ServiceController {
 	
 	@Autowired
 	private HospitalService hospitalService;
+	
+	@Autowired
+	private MemberService memberService;
 	
 	@GetMapping(value="/searchHospitalMain")
 	public String searchHospitalMain() {
@@ -58,6 +62,13 @@ public class ServiceController {
 		return "/service/reserveContactFrm";
 	}
 	
+	@ResponseBody
+	@PostMapping(value="/selectMyChildInfo")
+	public List selectMyChildInfo(int memberNo) {
+		List childList = memberService.selectMyChildInfo(memberNo);
+		System.out.println(childList);
+		return childList;
+	}
 }
 
 

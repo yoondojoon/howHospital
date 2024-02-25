@@ -71,4 +71,9 @@ public class MemberService {
 		int cnt = memberDao.confirmDelete(memberPassword, m);
 		
 		return cnt;
+	}
+
+	public List selectMyChildInfo(int memberNo) {
+		List childList = memberDao.selectMyChildInfo(memberNo);
+		return childList;
 	}}
