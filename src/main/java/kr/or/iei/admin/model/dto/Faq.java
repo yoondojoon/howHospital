@@ -13,5 +13,5 @@ public class Faq {
 	private String faqTitle;
 	private String faqContent;
 	private int faqRef;
-	private String category;
+	private int category;
 }
