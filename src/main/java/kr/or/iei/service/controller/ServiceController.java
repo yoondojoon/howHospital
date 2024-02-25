@@ -3,9 +3,11 @@ package kr.or.iei.service.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -15,6 +17,9 @@ import kr.or.iei.hospital.model.service.HospitalService;
 @Controller
 @RequestMapping(value="/service")
 public class ServiceController {
+	@Value("${file.root}")
+	private String root;
+	
 	@Autowired
 	private HospitalService hospitalService;
 	
@@ -52,7 +57,7 @@ public class ServiceController {
 		model.addAttribute("h", h);
 		return "/service/reserveContactFrm";
 	}
-
+	
 }
 
 

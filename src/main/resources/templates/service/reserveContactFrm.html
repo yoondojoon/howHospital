@@ -15,21 +15,19 @@
                 <h2>진료 예약</h2>
                 <div class="reserve_area">
                     <!-- 트리거 만들지? -->
-                    <!-- 예약테이블: 예약번호(시퀀스), 병원번호(h.hospitalNo), 회원번호(session), 예약상태(항상 1), 예약접수시간(선택)(sysdate yyyy-mm-dd hh:24:mi:ss), 예약타입(여기선 1), 예약시간(예약접수시간과 동일하게) -->
-                    <!-- 예약상세테이블: 예약상세번호(시퀀스), 예약번호(직전예약테이블번호), 의사번호(h.doctorList[0)], 과목번호(선택), 증상(필수 아님) -->
+                    <!-- 예약테이블: 예약번호(시퀀스), 병원번호(h.hospitalNo), 회원번호(session), 예약상태(항상 1), 예약접수시간(선택)(sysdate yyyy-mm-dd hh:24:mi:ss), 예약타입(여기선 1), 예약시간(선택) -->
+                    <!-- 예약상세테이블: 예약상세번호(시퀀스), 예약번호(직전예약테이블번호), 의사번호(null), 과목번호(선택), 증상(null 가능), 자녀번호(null 가능) -->
                     <div class="hospital_name" th:text="${h.hospitalName}"></div>
                     <form action="/service/reserveContact" method="post" class="reserve_form">
                         <div class="form_area">
 
                             <div class="input_wrap">
                                 <h4 class="input_title">진료 대상자</h4>
-                                <div class="select">
+                                <div class="select" th:if="${session}">
                                     <!-- 세션에서 값 가져오기 -->
                                     <select>
-                                        <option>김성은</option>
-                                        <option>김연우</option>
-                                        <option>이효경</option>
-                                        <option>윤도준</option>
+                                        <option th:text="${session.memberName}" th:value="${session.memberNo}">본인</option>
+                                        <option th:text="${session.memberName}" th:value="${session.memberNo}">자녀</option>
                                     </select>
                                 </div>
                             </div>
@@ -52,103 +50,19 @@
                                 <h4 class="input_title">예약 시간</h4>
                                 
                                 <h5 class="item_title">오전</h5>
-                                <div class="radio_wrap box_type">
-                                    <div class="radio boxtype">
+                                <div class="radio_wrap box_type am_time">
+                                    <!-- <div class="radio boxtype">
                                         <input type="radio" name="radio_boxtype" id="boxtype1_1">
                                         <label for="boxtype1_1">09:30</label>
-                                    </div>
-                                    <div class="radio boxtype">
-                                        <input type="radio" name="radio_boxtype" id="boxtype1_2">
-                                        <label for="boxtype1_2">09:30</label>
-                                    </div>
-                                    <div class="radio boxtype">
-                                        <input type="radio" name="radio_boxtype" id="boxtype1_3">
-                                        <label for="boxtype1_3">09:30</label>
-                                    </div>
-                                    <div class="radio boxtype">
-                                        <input type="radio" name="radio_boxtype" id="boxtype1_4">
-                                        <label for="boxtype1_4">09:30</label>
-                                    </div>
-                                    <div class="radio boxtype">
-                                        <input type="radio" name="radio_boxtype" id="boxtype1_5">
-                                        <label for="boxtype1_5">09:30</label>
-                                    </div>
-                                    <div class="radio boxtype">
-                                        <input type="radio" name="radio_boxtype" id="boxtype1_6">
-                                        <label for="boxtype1_6">09:30</label>
-                                    </div>
-                                    <div class="radio boxtype">
-                                        <input type="radio" name="radio_boxtype" id="boxtype1_7">
-                                        <label for="boxtype1_7">09:30</label>
-                                    </div>
-                                    <div class="radio boxtype">
-                                        <input type="radio" name="radio_boxtype" id="boxtype1_8">
-                                        <label for="boxtype1_8">09:30</label>
-                                    </div>
-                                    <div class="radio boxtype">
-                                        <input type="radio" name="radio_boxtype" id="boxtype1_9">
-                                        <label for="boxtype1_9">09:30</label>
-                                    </div>
-                                    <div class="radio boxtype">
-                                        <input type="radio" name="radio_boxtype" id="boxtype1_10">
-                                        <label for="boxtype1_10">09:30</label>
-                                    </div>
+                                    </div>-->
                                 </div>
 
                                 <h5 class="item_title">오후</h5>
-                                <div class="radio_wrap box_type">
-                                    <div class="radio boxtype">
+                                <div class="radio_wrap box_type pm_time">
+                                    <!-- <div class="radio boxtype">
                                         <input type="radio" name="radio_boxtype" id="boxtype1_11">
                                         <label for="boxtype1_11">09:30</label>
-                                    </div>
-                                    <div class="radio boxtype">
-                                        <input type="radio" name="radio_boxtype" id="boxtype1_12">
-                                        <label for="boxtype1_12">09:30</label>
-                                    </div>
-                                    <div class="radio boxtype">
-                                        <input type="radio" name="radio_boxtype" id="boxtype1_13">
-                                        <label for="boxtype1_13">09:30</label>
-                                    </div>
-                                    <div class="radio boxtype">
-                                        <input type="radio" name="radio_boxtype" id="boxtype1_14">
-                                        <label for="boxtype1_14">09:30</label>
-                                    </div>
-                                    <div class="radio boxtype">
-                                        <input type="radio" name="radio_boxtype" id="boxtype1_15">
-                                        <label for="boxtype1_15">09:30</label>
-                                    </div>
-                                    <div class="radio boxtype">
-                                        <input type="radio" name="radio_boxtype" id="boxtype1_16">
-                                        <label for="boxtype1_16">09:30</label>
-                                    </div>
-                                    <div class="radio boxtype">
-                                        <input type="radio" name="radio_boxtype" id="boxtype1_17">
-                                        <label for="boxtype1_17">09:30</label>
-                                    </div>
-                                    <div class="radio boxtype">
-                                        <input type="radio" name="radio_boxtype" id="boxtype1_18">
-                                        <label for="boxtype1_18">09:30</label>
-                                    </div>
-                                    <div class="radio boxtype">
-                                        <input type="radio" name="radio_boxtype" id="boxtype1_19">
-                                        <label for="boxtype1_19">09:30</label>
-                                    </div>
-                                    <div class="radio boxtype">
-                                        <input type="radio" name="radio_boxtype" id="boxtype1_20">
-                                        <label for="boxtype1_20">09:30</label>
-                                    </div>
-                                    <div class="radio boxtype">
-                                        <input type="radio" name="radio_boxtype" id="boxtype1_21">
-                                        <label for="boxtype1_21">09:30</label>
-                                    </div>
-                                    <div class="radio boxtype">
-                                        <input type="radio" name="radio_boxtype" id="boxtype1_22">
-                                        <label for="boxtype1_22">09:30</label>
-                                    </div>
-                                    <div class="radio boxtype">
-                                        <input type="radio" name="radio_boxtype" id="boxtype1_23">
-                                        <label for="boxtype1_23">09:30</label>
-                                    </div>
+                                    </div>-->
                                 </div>    
                             </div>
 
@@ -177,19 +91,19 @@
 <!-- js 링크 -->
 <script th:inline="javascript">
     const hospital = [[${h}]];
+    const dayHour = hospital.time.dayHour;
+    const weekendHour = hospital.time.weekendHour;
+    const lunchHour = hospital.time.lunchHour;
     const holiday = String(hospital.time.holiday);
+    let holidayArr = [];
     const date = new Date();
     const today = date.getDay();//0:일 ~ 6:토
-    let holidayArr = [];
 
-    for(let i=0;i<7;i++){
-        if(holiday.indexOf(i+1) !== -1){
-            holidayArr.push(i);
-        };
-    }
-    console.log(holidayArr);
+    console.log(hospital);
 
     $(function(){
+        /* datepicker */
+        //날짜는 1달 기준으로 활성화
         $("#datepicker").datepicker("setDate","today");
         $("#datepicker").datepicker({
             changeYear: false,
@@ -204,16 +118,125 @@
             nextText: '다음 달',
             minDate: 'today',
             maxDate: '+1M',
-            onSelect: function(){
-                // const date = $.datepicker.formatDate("yy-mm-dd", $("#datepicker").datepicker("getDate"));
-                // const day = $("#datepicker").datepicker("getDate").getDay();
-                // console.log(typeof day);
-                // $.ajax({
-                //     url: ""
-                // });
-            },
+            onSelect: selectDay,
+            beforeShowDay: disableHoliday
         });
+
+        //날짜 선택시 실행할 함수
+        function selectDay(){
+            const day = $("#datepicker").datepicker("getDate").getDay();
+            if(day == 0 || day == 6){
+                //주말 선택
+                timeSetting(weekendHour, day);
+            }else{
+                //평일 선택
+                timeSetting(dayHour, day);
+            }
+        }
+        //최초 날짜 선택 트리거(당일)
+        $(".ui-state-active").click();
+
+        //휴무일 초기 세팅
+        function disableHoliday(date){
+            //휴무일 배열
+            for(let i=0;i<7;i++){
+                if(holiday.indexOf(i+1) !== -1){
+                    holidayArr.push(i);
+                };
+            }
+            //휴무일 비활성화
+            for(i=0; i<holidayArr.length; i++) {
+                if($.inArray(date.getDay(), holidayArr) != -1) {
+                    return [false];
+                }
+            }
+            return [true];
+        }
+
+        //평일/주말 선택시 타임테이블 뿌려주기
+        function timeSetting(hour, day){
+            const hourArr = hour.split("~");
+            const timeStart = hourArr[0];
+            const timeEnd = hourArr[1];
+            const timeStartArr = timeStart.split(":");
+            const timeStartHour = Number(timeStartArr[0]);
+            const timeStartMinutes = Number(timeStartArr[1]);
+            const timeEndArr = timeEnd.split(":");
+            const timeEndHour = Number(timeEndArr[0]);
+            const timeEndMinutes = Number(timeEndArr[1]);
+            let timeArr = [];
+
+            //진료시간(시) 배열 - 30분 단위이므로 2개씩 넣기[9,9,10,10 ... 17,17,18,18]
+            //영업시간 1시간 전까지만 예약 가능
+            for(let i=timeStartHour;i<timeEndHour;i++){
+                for(let j=0;j<2;j++){
+                    if(i < 10){
+                        timeArr.push("0"+i);
+                    }else{
+                        timeArr.push(i);
+                    }
+                }
+            }
+            //진료시간이 HH:30부터 시작할 시 첫 번째 배열 삭제[9,10,10...]
+            if(timeStartMinutes == 30){
+                timeArr.shift();
+            }
+            //진료시간이 HH:00으로 끝날 시 마지막 배열 삭제[...17,17,18]
+            if(timeEndMinutes == 0){
+                timeArr.pop();
+            }
+            
+            //진료시간에 분 넣어서 라디오버튼 생성
+            let minutes;
+            $(".radio_wrap").empty();
+            for(let i=0;i<timeArr.length;i++){
+                //진료시간이 HH:00부터 시작할 시 분은 00, 30 번갈아 나오게
+                //진료시간이 HH:30부터 시가할 시 분은 30, 00 번갈아 나오게
+                if(i % 2 == 0){
+                    minutes = timeStartMinutes == 0 ? "00" : 30;
+                }else{
+                    minutes = timeStartMinutes == 0 ? 30 : "00";
+                }
+                let timeValue = timeArr[i]+":"+minutes;
+                let radioDivString = [
+                    "<div class='radio boxtype'>",
+                        "<input type='radio' name='radio_boxtype' id='boxtype_"+i+"' value='"+timeValue+"'>",
+                        "<label for='boxtype_"+i+"'>"+timeValue+"</label>",
+                    "</div>"
+                ].join("");
+                //오전 시간대는 .am_time, 오후 시간대는 .pm_time 안에 추가
+                if(timeArr[i] < 12){
+                    $(".radio_wrap.am_time").append(radioDivString);
+                }else{
+                    $(".radio_wrap.pm_time").append(radioDivString);
+                }
+            }
+            //평일인 경우 점심시간에 해당하는 라디오 버튼 비활성화
+            //점심시간 끝나는 시점부턴 예약 가능
+            if(day != 0 && day != 6){
+                const lunchHourArr = lunchHour.split("~");
+                const lunchHourStart = $("[name='radio_boxtype'][value='"+lunchHourArr[0]+"']").closest(".boxtype");
+                const lunchHourEnd = $("[name='radio_boxtype'][value='"+lunchHourArr[1]+"']").closest(".boxtype");
+                lunchHourStart.find("[name='radio_boxtype']").prop("disabled", true);
+                lunchHourStart.nextUntil(lunchHourEnd).find("[name='radio_boxtype']").prop("disabled", true);
+            }
+        }
     });
+
+    const memberNo = [[${session.memberNo}]];
+    //자녀 번호 가져오기
+    // $.ajax({
+    //     url: "/service/selectMyChildInfo", 
+    //     type: "POST",
+    //     dataType: "JSON",
+    //     data: {memberNo: memberNo},
+    //     success: function(data){
+    //         console.log(data);
+    //     },
+    //     error: function(){
+    //         console.log("에러");
+    //     }
+    // })
 </script>
 </body>
 </html>
