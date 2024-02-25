@@ -88,11 +88,9 @@ h5{margin-bottom:8px; color:var(--gray_01); font-size:14px; font-weight:bold; li
 #footer .footer_txt+.footer_txt{margin-top:12px;}
 
 /* input */
-input:not([type=checkbox]), 
-input:not([type=radio]) {display:block; width:100%; padding:8px 0; font-size:16px; line-height:1.5;}
+input:not([type=checkbox],[type=radio]){display:block; width:100%; padding:8px 0; font-size:16px; line-height:1.5;}
 select{background:transparent;}
-input:not([type=checkbox]), 
-input:not([type=radio]):-internal-autofill-selected {background-color:#fff!important;}
+input:not([type=checkbox],[type=radio]):-internal-autofill-selected {background-color:#fff!important;}
 .input_area .input_wrap+.input_wrap{margin-top:24px;}
 .input_wrap{display:flex; flex-direction:column;}
 .input_wrap .input_title{margin-bottom:12px; font-size:16px; font-weight:bold; line-height:1.5;}
@@ -118,6 +116,7 @@ input:not([type=radio]):-internal-autofill-selected {background-color:#fff!impor
 .input_item input[type=checkbox]:checked+label::before{border-color:var(--main_01); background:url(/images/icon_check_active.svg) no-repeat center / 12px;}
 .input_item input[type=checkbox]+label+.btn_more{width:40px; height:40px; background:url(/images/icon_arrow_gray.svg) no-repeat center / 12px; transform:rotate(180deg);}
 /* radio boxtype */
+.boxtype.red{border:1pxp solid red;}
 .radio_wrap.box_type{display:grid; grid-template-columns:1fr 1fr 1fr 1fr 1fr; grid-template-rows:auto; column-gap:12px; row-gap:12px;}
 .radio.boxtype label{display:block; padding:6.5px 12px; border:1px solid var(--line_02); border-radius:4px; font-size:14px; line-height:1.5; text-align:center; cursor:pointer;}
 .radio.boxtype input[type=radio]:checked+label{border-color:var(--main_01); color:var(--main_01); font-weight:bold;}
