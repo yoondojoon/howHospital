@@ -194,6 +194,7 @@
 							<button type="button" class="btn_primary sm addDoctorBtn">추가</button>
 						</div>
 					</div>
+					
 				</div>
 			</div>
 
@@ -260,7 +261,7 @@ function searchAddr() {
 				        var result = response.v2, // 검색 결과의 컨테이너
 				            items = result.addresses; // 검색 결과의 배열
 				        // do Something
-			             document.querySelector("#lng").value = items[0].x;
+		            	 document.querySelector("#lng").value = items[0].x;
 		                document.querySelector("#lat").value = items[0].y;
 				    });
 				}

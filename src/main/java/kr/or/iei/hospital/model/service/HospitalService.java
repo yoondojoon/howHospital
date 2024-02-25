@@ -132,6 +132,41 @@ public class HospitalService {
 	}
 
 
+	public Hospital findHospitalInfo(int hospitalNo) {
+		Hospital hospital = hospitalDao.findHospitalInfo(hospitalNo);
+		String[] tel = hospital.getHospitalTel().split("-",2);
+		String telFirst = tel[0];
+		String telLast = tel[1];
+		hospital.setTelFirst(telFirst);
+		hospital.setTelLast(telLast);
+		List subjectList = hospitalDao.searchSubjectList(hospitalNo);
+		Time time = hospitalDao.searchHospitalTime(hospitalNo);
+		String[] dayTime = time.getDayHour().split("~");
+		String dayStartTime = dayTime[0];
+		String dayEndTime = dayTime[1];
+		String[] weekendTime = time.getWeekendHour().split("~");
+		String weekendStartTime = weekendTime[0];
+		String weekendEndTime = weekendTime[1];
+		String[] lunchTime = time.getLunchHour().split("~");
+		String lunchStartTime = lunchTime[0];
+		String lunchEndTime = lunchTime[1];
+		time.setDayStartTime(dayStartTime);
+		time.setDayEndTime(dayEndTime);
+		time.setWeekendStartTime(weekendStartTime);
+		time.setWeekendEndTime(weekendEndTime);
+		time.setLunchStartTime(lunchStartTime);
+		time.setLunchEndTime(lunchEndTime);
+		hospital.setTime(time);
+		
+		List doctorList = hospitalDao.searchSubjectDoctorList(hospitalNo);
+		hospital.setSubjectList(subjectList);
+
+		hospital.setDoctorList(doctorList);
+		return hospital;
+	}
+
+
+
 	
 	
 

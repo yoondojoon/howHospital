@@ -251,5 +251,14 @@ public class HospitalDao {
 		List list = jdbc.query(query, hospitalRowMapper, params);
 		return (Hospital)list.get(0);
 	}
+
+	public Hospital findHospitalInfo(int hospitalNo) {
+		String query = "select * from hospital_tbl where hospital_no = ?";
+		Object[] params = {hospitalNo};
+		List list = jdbc.query(query, hospitalRowMapper, params);		
+		return (Hospital)list.get(0);
+	}
+
+
 	
 }

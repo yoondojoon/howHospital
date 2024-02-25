@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.multipart.MultipartFile;
@@ -111,7 +112,6 @@ public class HospitalController {
 	        }
 	        
 	        int result = hospitalService.insertHospitalEnroll(hospital, time, doctorList, subjectList);
-
 	        if (result == (doctorList.size() + subjectList.size() + 2)) {
 				System.out.println("성공");
 	
@@ -136,6 +136,16 @@ public class HospitalController {
 		return "redirect:/hospitalAuth";
 		
 	}
+	
+	
+	@PostMapping(value = "/myHospitalUpdateFrm")
+	public String myHospitalUpdateFrm(Model model, @RequestParam(value = "hospitalNo", required = false) int hospitalNo) {
+		Hospital h = hospitalService.findHospitalInfo(hospitalNo);
+		model.addAttribute("h", h);
+		System.out.println(h.getDoctorList());
+		return "hospital/myHospitalUpdateFrm";
+	}
+	
 	
 
 	@PostMapping(value = "/businessAuthEnroll")

@@ -22,6 +22,8 @@ public class Hospital {
 	private String lat;
 	private String lng;
 	private String hospitalTel;
+	private String telFirst;
+	private String telLast;
 	private String costOne;
 	private String costTwo;
 	private int reviewCount;
