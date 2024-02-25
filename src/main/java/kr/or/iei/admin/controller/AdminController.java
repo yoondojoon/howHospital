@@ -27,6 +27,11 @@ public class AdminController {
 	public String adminMain() {
 		return "/admin/adminMain";
 	}
+	
+	@GetMapping(value="/faqList")
+	public String faqList() {
+		return "/admin/faqList";
+	}
 
 	@GetMapping(value="/manageReport")
 	public String adminMain(int reqPage, Model model) {
