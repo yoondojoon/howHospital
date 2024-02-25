@@ -34,6 +34,7 @@ public class AdminController {
 		FaqListData fld = adminService.selectAllFaq();
 		model.addAttribute("categoryList",fld.getCategoryList());
 		model.addAttribute("contentList", fld.getContentList());
+		System.out.println(fld);
 		return "/admin/faqList";
 	}
 
