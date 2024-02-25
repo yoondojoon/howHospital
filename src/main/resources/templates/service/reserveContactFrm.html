@@ -97,7 +97,8 @@
     const holiday = String(hospital.time.holiday);
     let holidayArr = [];
     const date = new Date();
-    const today = date.getDay();//0:일 ~ 6:토
+    const currHour = date.getHours();
+    const currMinutes = date.getMinutes();
 
     console.log(hospital);
 
@@ -122,17 +123,6 @@
             beforeShowDay: disableHoliday
         });
 
-        //날짜 선택시 실행할 함수
-        function selectDay(){
-            const day = $("#datepicker").datepicker("getDate").getDay();
-            if(day == 0 || day == 6){
-                //주말 선택
-                timeSetting(weekendHour, day);
-            }else{
-                //평일 선택
-                timeSetting(dayHour, day);
-            }
-        }
         //최초 날짜 선택 트리거(당일)
         $(".ui-state-active").click();
 
@@ -153,8 +143,21 @@
             return [true];
         }
 
+        //날짜 선택시 실행할 함수
+        function selectDay(selectDate){
+            const day =  $("#datepicker").datepicker("getDate").getDay();
+            
+            if(day == 0 || day == 6){
+                //주말 선택
+                timeSetting(weekendHour, day, selectDate);
+            }else{
+                //평일 선택
+                timeSetting(dayHour, day, selectDate);
+            }
+        }
+
         //평일/주말 선택시 타임테이블 뿌려주기
-        function timeSetting(hour, day){
+        function timeSetting(hour, day, selectDate){
             const hourArr = hour.split("~");
             const timeStart = hourArr[0];
             const timeEnd = hourArr[1];
@@ -219,6 +222,19 @@
                 const lunchHourEnd = $("[name='radio_boxtype'][value='"+lunchHourArr[1]+"']").closest(".boxtype");
                 lunchHourStart.find("[name='radio_boxtype']").prop("disabled", true);
                 lunchHourStart.nextUntil(lunchHourEnd).find("[name='radio_boxtype']").prop("disabled", true);
+            }
+            //오늘 날짜 선택시 현재시각 기준 지나간 시간은 비활성화(1시간 단위. 예약은 당일 1시간 전까지만 가능)
+            const today = $.datepicker.formatDate('mm/dd/yy', date);
+            if(selectDate == today){
+                for(let i=timeStartHour;i<currHour+1;i++){
+                    if(i < 10){
+                        $("[name='radio_boxtype'][value^='0"+i+"']").closest(".boxtype").find("[name='radio_boxtype']").prop("disabled", true);
+                    }
+                    $("[name='radio_boxtype'][value^='"+(i+1)+"']").closest(".boxtype").find("[name='radio_boxtype']").prop("disabled", true);
+                    if(currMinutes < 30){
+                        $("[name='radio_boxtype'][value^='"+(currHour+1)+":30']").closest(".boxtype").find("[name='radio_boxtype']").prop("disabled", false);    
+                    }
+                }
             }
         }
     });
