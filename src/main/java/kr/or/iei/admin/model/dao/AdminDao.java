@@ -13,12 +13,19 @@ import kr.or.iei.admin.model.dto.MemberReportRowMapper;
 import kr.or.iei.admin.model.dto.Notice;
 import kr.or.iei.admin.model.dto.NoticeListData;
 import kr.or.iei.admin.model.dto.NoticeRowMapper;
+import kr.or.iei.hospital.model.dto.BusinessAuth;
 import kr.or.iei.hospital.model.dto.BusinessAuthFileRowMapper;
+import kr.or.iei.hospital.model.dto.BusinessAuthRowMapper;
+import kr.or.iei.member.model.dto.Member;
+import kr.or.iei.member.model.dto.MemberRowMapper;
 
 @Repository
 public class AdminDao {
 	@Autowired
 	private JdbcTemplate jdbc;
+	
+	@Autowired
+	private BusinessAuthRowMapper baRowMapper;
 	
 	@Autowired
 	private NoticeRowMapper noticeRowMapper;
@@ -162,26 +169,27 @@ public class AdminDao {
 		List fileList = jdbc.query(query, bafRowMapper,params);
 		return fileList;
 	}
-
-	public int authConfirmSuccess(int businessAuthNo) {
-		String query = "update (member_tbl.member_no, businessAuth_no, member_status from businessAuth_tbl right outer join member_tbl) set member_status=1 where businessAuth = ?";
-		Object[] params = {businessAuthNo};
+	
+	public BusinessAuth searchMember(int businessAuthNo) {
+			String query = "select * from businessAuth_tbl where businessAuth_no=?";
+			Object[] params = {businessAuthNo};
+			BusinessAuth ba = jdbc.queryForObject(query, baRowMapper, params);
+			return ba;
+		}
+	
+	public int authConfirmSuccess(BusinessAuth ba) {
+		String query = "update member_tbl set member_status=1 where member_no = ?";
+		Object[] params = {ba.getMemberNo()};
 		int result = jdbc.update(query,params);
 		return result;
 	}
 
-
-	public int deleteFileInfo(int businessAuthNo) {
-		String query = "delete from business_file_tbl where businessAuth_no = ?";
-		Object[] params = {businessAuthNo};
-		int result = jdbc.update(query, params);
-		return result;
-	}
-
 	public int deleteAuthInfo(int businessAuthNo) {
-		String query = "delete from business_tbl where businessAuth_no = ?";
+		String query = "delete from businessAuth_tbl where businessAuth_no = ?";
 		Object[] params = {businessAuthNo};
 		int result = jdbc.update(query, params);
 		return result;
 	}
+
+	
 }

@@ -15,7 +15,7 @@
 
             <div class="detail_area">
                 <div class="detail_top_wrap">
-                    <div class="banner_wrap">
+                    <!-- <div class="banner_wrap">
                         <div class="hospitalDetail_banner">
                             <div class="swiper-wrapper">
                                 <div class="swiper-slide">
@@ -36,6 +36,11 @@
 
                             <div class="swiper-button-prev"></div>
                             <div class="swiper-button-next"></div>
+                        </div>
+                    </div> -->
+                    <div class="picture_wrap">
+                        <div class="img_wrap">
+                            <img th:src="${h.hospitalPicture}" alt="병원사진">
                         </div>
                     </div>
                     <div class="info_wrap">
@@ -367,7 +372,7 @@
     })
 
     //진료시간
-    const hospital = [[${ h }]];
+    const hospital = [[${h}]];
     const holiday = String(hospital.time.holiday);
     const date = new Date();
     const today = date.getDay();//0:일 ~ 6:토

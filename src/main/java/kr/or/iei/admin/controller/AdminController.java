@@ -135,12 +135,41 @@ public class AdminController {
 	@GetMapping(value="/authConfirmSuccess")
 	public String authConfirmSuccess(int businessAuthNo) {
 		boolean result = adminService.authConfirmSuccess(businessAuthNo);
-		return "admin/confirmAuth";
+		if(result) {
+			System.out.println("success!!");
+		}else {
+			System.out.println("fail");
+		}
+		return "admin/businessAuthList";
 	}
 	
 	@GetMapping(value="/authConfirmFail")
 	public String authConfirmFail(int businessAuthNo) {
 		boolean result = adminService.authConfirmFail(businessAuthNo);
-		return "admin/confirmAuth";
+		if(result) {
+			System.out.println("success!!");
+		}else {
+			System.out.println("fail");
+		}
+		return "admin/businessAuthList";
+	}
+	
+	//관리자 인터셉터 메세지
+	@GetMapping("/adminMsg")
+	public String adminMsg(Model model) {
+		model.addAttribute("title","관리자페이지");
+		model.addAttribute("msg","관리자만 접근이 가능합니다");
+		model.addAttribute("icon","warning");
+		model.addAttribute("loc","/");
+		return "common/msg";
+	}
+	
+	@GetMapping("/blockMsg")
+	public String blockMsg(Model model) {
+		model.addAttribute("title","이용정지");
+		model.addAttribute("msg","이용정지중입니다.");
+		model.addAttribute("icon","warning");
+		model.addAttribute("loc","/");
+		return "common/msg";
 	}
 }

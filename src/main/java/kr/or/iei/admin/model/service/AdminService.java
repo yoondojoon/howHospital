@@ -14,7 +14,8 @@ import kr.or.iei.admin.model.dto.MemberReport;
 import kr.or.iei.admin.model.dto.MemberReportListData;
 import kr.or.iei.admin.model.dto.Notice;
 import kr.or.iei.admin.model.dto.NoticeListData;
-import kr.or.iei.hospital.model.dto.BusinessAuthFile;
+import kr.or.iei.hospital.model.dto.BusinessAuth;
+import kr.or.iei.member.model.dto.Member;
 
 @Service
 public class AdminService {
@@ -360,11 +361,11 @@ public class AdminService {
 	@Transactional
 	public boolean authConfirmSuccess(int businessAuthNo) {
 		boolean result = true;
-		int changeStatusResult = adminDao.authConfirmSuccess(businessAuthNo);
+		BusinessAuth ba = adminDao.searchMember(businessAuthNo);
+		int changeStatusResult = adminDao.authConfirmSuccess(ba);
 		if(changeStatusResult == 0) {
 			result = false;
 		}else {
-			int deleteFileResult = adminDao.deleteFileInfo(businessAuthNo);
 			int deleteAuthResult = adminDao.deleteAuthInfo(businessAuthNo);
 		}
 		
@@ -375,11 +376,9 @@ public class AdminService {
 	@Transactional
 	public boolean authConfirmFail(int businessAuthNo) {
 		boolean result = true;
-		int deleteFileResult = adminDao.deleteFileInfo(businessAuthNo);
-		if(deleteFileResult == 0) {
+		int deleteAuthResult = adminDao.deleteAuthInfo(businessAuthNo);
+		if(deleteAuthResult ==0) {
 			result = false;
-		}else {
-			int deleteAuthResult = adminDao.deleteAuthInfo(businessAuthNo);
 		}
 		return result;
 	}
