@@ -198,3 +198,21 @@ table th, table td{
 .doctor_list li{
 	margin-bottom: 40px ;
 }
+
+.infoDelBtn {
+	padding:20px;
+	background-color: var(--gray_04);
+	margin:5px;
+	color:white;
+	font-size:20px;
+}
+
+.infoUpBtn {
+	padding:20px;
+	background-color: var(--main_01);
+	margin:5px;
+	color:white;
+	font-size:20px;
+}
+
+

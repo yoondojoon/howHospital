@@ -121,6 +121,7 @@ input:not([type=radio]):-internal-autofill-selected {background-color:#fff!impor
 .radio_wrap.box_type{display:grid; grid-template-columns:1fr 1fr 1fr 1fr 1fr; grid-template-rows:auto; column-gap:12px; row-gap:12px;}
 .radio.boxtype label{display:block; padding:6.5px 12px; border:1px solid var(--line_02); border-radius:4px; font-size:14px; line-height:1.5; text-align:center; cursor:pointer;}
 .radio.boxtype input[type=radio]:checked+label{border-color:var(--main_01); color:var(--main_01); font-weight:bold;}
+.radio.boxtype input[type=radio][disabled]+label{opacity:0.4; cursor:default;}
 
 /* button */
 .btn_primary{min-width:112px; padding:9px 20px; border:1px solid var(--main_01); border-radius:4px; background-color:var(--main_01); color:#fff; font-size:14px; font-weight:bold; line-height:1.5; text-align:center;}
@@ -173,7 +174,7 @@ input:not([type=radio]):-internal-autofill-selected {background-color:#fff!impor
 .ui-datepicker .ui-datepicker-calendar th>span{display:block; font-size:16px; line-height:36px;}
 .ui-datepicker td.ui-state-disabled{cursor:default;}
 .ui-datepicker .ui-state-disabled>.ui-state-default{color:var(--gray_05);}
-.ui-datepicker .ui-state-default{width:36px; border:1px solid transparent; border-radius:50%; color:var(--gray_01); font-size:14px; line-height:34px; text-align:center;}
+.ui-datepicker .ui-state-default{display:block; width:36px; margin:0 auto; border:1px solid transparent; border-radius:50%; color:var(--gray_01); font-size:14px; line-height:34px; text-align:center;}
 .ui-datepicker .ui-state-default.ui-state-active{background-color:var(--main_01); color:#fff; font-weight:bold;}
 .ui-datepicker .ui-datepicker-today .ui-state-default{border-color:var(--main_01); color:var(--main_01); font-weight:bold;}
 .ui-datepicker .ui-datepicker-today .ui-state-default.ui-state-active{color:#fff;}

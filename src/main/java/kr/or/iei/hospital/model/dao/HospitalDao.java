@@ -97,7 +97,7 @@ public class HospitalDao {
 	}
 
 	public Hospital searchHospitalDetail(int hospitalNo) {
-		String query = "select hospital_no, hospital_name, hospital_intro, hospital_tel, hospital_postcode, hospital_addr_main, hospital_addr_sub, cost_one, cost_two,\r\n" + 
+		String query = "select hospital_no, hospital_name, hospital_intro, hospital_tel, hospital_postcode, hospital_addr_main, hospital_addr_sub, cost_one, cost_two, hospital_picture,\r\n" + 
 				"nvl((select count(*) from review_tbl where reservation_no in(select reservation_no from reservation_tbl where hospital_no=h.hospital_no)),0) review_count,\r\n" +
 				"nvl((select avg(review_rating) from review_tbl where reservation_no in(select reservation_no from reservation_tbl where hospital_no=h.hospital_no)),0) rating_avg,\r\n" + 
 				"(select distinct\r\n" + 
@@ -251,5 +251,14 @@ public class HospitalDao {
 		List list = jdbc.query(query, hospitalRowMapper, params);
 		return (Hospital)list.get(0);
 	}
+
+	public Hospital findHospitalInfo(int hospitalNo) {
+		String query = "select * from hospital_tbl where hospital_no = ?";
+		Object[] params = {hospitalNo};
+		List list = jdbc.query(query, hospitalRowMapper, params);		
+		return (Hospital)list.get(0);
+	}
+
+
 	
 }

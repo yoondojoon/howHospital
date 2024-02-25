@@ -13,4 +13,10 @@ public class Time {
 	private String weekendHour;
 	private String lunchHour;
 	private int holiday;
+	private String dayStartTime;
+	private String dayEndTime;
+	private String weekendStartTime;
+	private String weekendEndTime;
+	private String lunchStartTime;
+	private String lunchEndTime;
 }

@@ -25,7 +25,9 @@
 
 			<div class="hospital_info_form">
 				<!-- 병원정보 입력 -->
+				
 		<h2>병원정보 입력</h2>
+		<form id="infoForm" method="post">
 		<!-- 병원이름 입력 -->
 		<div class="input_wrap">
 			<div class="input_title">
@@ -177,11 +179,14 @@
 					</div>
 				</div>
 
-				<div class="btn_area">
-					<button type="submit" class="btn_secondary lg hospital_enroll_cancel">정보삭제</button>
-					<button type="submit" class="btn_primary lg hospital_enroll">정보수정</button>
-				</div>
+				<!--  value전달 -->
+				<input type="hidden" name="hospitalNo" th:value="${h.hospitalNo}">
 
+				<div class="btn_area">
+					<button type="submit" class="btn_secondary lg" onclick="changeFormAction('/hospital/myHospitalDeleteFrm')">정보삭제</button>
+					<button type="button" class="btn_primary lg" onclick="changeFormAction('/hospital/myHospitalUpdateFrm')">정보수정</button>
+				</div>
+		</form>
 			</div>
 		</div>
 	</div>
@@ -204,6 +209,32 @@ $('input[name="hol"]').each(function(index, item){
 });
 
 
+
+// JavaScript 함수를 정의합니다.
+function changeFormAction(actionUrl) {
+    // 'uploadForm' id를 가진 <form> 태그를 찾습니다.
+    var form = document.getElementById('infoForm');
+    // <form>의 action 속성을 매개변수로 받은 URL로 변경합니다.
+    form.action = actionUrl;
+
+    // 'actionUrl'이 '/hospital/myHospitalUpdateFrm'일 때만 폼을 제출합니다.
+    // '/hospital/myHospitalDeleteFrm'으로 설정된 경우에는 버튼의 기본 동작으로 폼이 제출됩니다.
+    if(actionUrl === '/hospital/myHospitalUpdateFrm') {
+        form.submit();
+    }
+}
+
+// "정보수정" 버튼에 대한 클릭 이벤트 핸들러를 추가합니다.
+// 이 버튼은 type="button"이므로, 클릭 시 form.submit()을 호출하여 폼을 제출해야 합니다.
+document.querySelector('.btn_primary.lg').addEventListener('click', function() {
+    changeFormAction('/hospital/myHospitalUpdateFrm');
+});
+
+// "정보삭제" 버튼에 대한 클릭 이벤트 핸들러를 추가합니다.
+// 이 버튼은 type="submit"이므로, form의 action을 변경만 하면 됩니다.
+document.querySelector('.btn_secondary.lg').addEventListener('click', function() {
+    changeFormAction('/hospital/myHospitalDeleteFrm');
+});
 
 
 </script>
