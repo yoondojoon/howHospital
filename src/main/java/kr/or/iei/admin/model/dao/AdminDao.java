@@ -8,6 +8,8 @@ import org.springframework.stereotype.Repository;
 
 import kr.or.iei.admin.model.dto.AdminBusinessAuth;
 import kr.or.iei.admin.model.dto.AdminBusinessAuthRowMapper;
+import kr.or.iei.admin.model.dto.Faq;
+import kr.or.iei.admin.model.dto.FaqRowMapper;
 import kr.or.iei.admin.model.dto.MemberReport;
 import kr.or.iei.admin.model.dto.MemberReportRowMapper;
 import kr.or.iei.admin.model.dto.Notice;
@@ -38,6 +40,9 @@ public class AdminDao {
 	
 	@Autowired
 	private BusinessAuthFileRowMapper bafRowMapper;
+	
+	@Autowired
+	private FaqRowMapper faqRowMapper;
 
 	public List selectAllNotice(int start, int end) {
 		String query = "SELECT  * FROM (SELECT ROWNUM AS RNUM, N.* FROM (SELECT NOTICE_NO, MEMBER_TBL.MEMBER_NO, NOTICE_TITLE, NOTICE_CONTENT, READ_COUNT, REQ_DATE, MEMBER_NAME FROM MEMBER_TBL RIGHT OUTER JOIN NOTICE_TBL ON MEMBER_TBL.MEMBER_NO = NOTICE_TBL.MEMBER_NO ORDER BY NOTICE_NO DESC)N) WHERE RNUM BETWEEN ? AND ?";
@@ -189,6 +194,18 @@ public class AdminDao {
 		Object[] params = {businessAuthNo};
 		int result = jdbc.update(query, params);
 		return result;
+	}
+
+	public List<Faq> selectCategory() {
+		String query="select * from faq_tbl where faq_ref is null";
+		List list = jdbc.query(query, faqRowMapper);
+		return list;
+	}
+
+	public List<Faq> selectContentList() {
+		String query="select * from faq_tbl where faq_ref is not null";
+		List list = jdbc.query(query, faqRowMapper);
+		return list;
 	}
 
 	
