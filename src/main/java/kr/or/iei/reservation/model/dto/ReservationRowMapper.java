@@ -18,6 +18,7 @@ public class ReservationRowMapper implements RowMapper<Reservation>{
 		r.setReservationNo(rs.getInt("reservation_no"));
 		r.setReservationStatus(rs.getInt("reservation_status"));
 		r.setReservationType(rs.getInt("reservation_type"));
+		r.setReservationTime(rs.getString("reservation_time"));
 		return r;
 	}
 
