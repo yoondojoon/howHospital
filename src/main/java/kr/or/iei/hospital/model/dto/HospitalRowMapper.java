@@ -16,7 +16,7 @@ public class HospitalRowMapper implements RowMapper<Hospital> {
 		h.setMemberNo(rs.getInt("member_no"));
 		h.setHospitalName(rs.getString("hospital_name"));
 		h.setHospitalIntro(rs.getString("hospital_intro"));
-		h.setHospitalPostCode(rs.getString("hospital_postcode"));
+		h.setHospitalPostcode(rs.getString("hospital_postcode"));
 		h.setHospitalAddrMain(rs.getString("hospital_addr_main"));
 		h.setHospitalAddrSub(rs.getString("hospital_addr_sub"));
 		h.setLat(rs.getString("lat"));
