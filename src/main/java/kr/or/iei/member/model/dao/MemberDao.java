@@ -10,6 +10,7 @@ import kr.or.iei.member.model.dto.Child;
 import kr.or.iei.member.model.dto.ChildRowMapper;
 import kr.or.iei.member.model.dto.Member;
 import kr.or.iei.member.model.dto.MemberRowMapper;
+import kr.or.iei.member.model.dto.MyReviewRowMapper;
 
 @Repository
 public class MemberDao {
@@ -20,6 +21,9 @@ public class MemberDao {
 	
 	@Autowired
 	public MemberRowMapper memberRowMapper;
+	
+	@Autowired
+	public MyReviewRowMapper myReviewRowMapper;
 	
 
 	//로그인
@@ -133,6 +137,33 @@ public class MemberDao {
 		List child = jdbc.query(query, childRowMapper, params);
 		return child;
 
+	}
+
+	public int deleteChild(int childNo) {
+		
+		
+		String query = "delete from child_tbl where child_no =?";
+		
+		Object[] params = {childNo};
+		
+		int cnt = jdbc.update(query, params);
+		
+
+		
+		return cnt;
+	}
+
+	public List myReviewList(int memberNo, int reservationNo) {
+		
+		
+		String query = "select * from review_tbl where member_no = ? and reservation_no =?";
+		
+		Object[] params = {memberNo, reservationNo};
+		
+		List list = jdbc.query(query, myReviewRowMapper,params);
+		
+		
+		return list;
 	}
 	
 	

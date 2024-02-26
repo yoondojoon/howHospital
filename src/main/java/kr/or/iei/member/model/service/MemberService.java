@@ -106,4 +106,22 @@ public class MemberService {
 		List child = memberDao.selectMyChildInfo(memberNo);
 		return child;
 
+	}
+
+	public int deleteChild(int childNo) {
+		
+		
+		int cnt = memberDao.deleteChild(childNo);
+		
+		
+		return cnt;
+	}
+
+	public List myReviewList(int memberNo, int reservationNo) {
+		
+		
+		List list = memberDao.myReviewList(memberNo ,reservationNo); 
+		
+		
+		return list;
 	}}

@@ -1,22 +1,19 @@
 document.addEventListener("DOMContentLoaded", function() {
-    var childRrnArr = document.getElementsByClassName("childRrn");
+    var childRrnArr = document.querySelectorAll(".childRrn");
 
-    for (var i = 0; i < childRrnArr.length; i++) {
-        var childRrn = childRrnArr[i].textContent;
+    childRrnArr.forEach(function(childRrnEl, index) {
+        var childRrn = childRrnEl.textContent.trim(); 
 
-        let birthYear = parseInt(childRrn.substr(0, 2)); 
-
-        if (birthYear === 0) {
-            let fullYear = parseInt(childRrn.substr(0, 4)); 
-            birthYear = fullYear + 2000;
-        } else if (birthYear > 0 && birthYear <= 20) { 
-            birthYear += 2000;
-        } else { 
-            birthYear += 1900;
-        }
+        let birthYear = parseInt(childRrn.substr(0, 2));
 
         const today = new Date();
-        const currentYear = today.getFullYear();
+        const currentYear = today.getFullYear(); // 오늘 년도
+
+        if (birthYear >= 0 && birthYear <= currentYear % 100) {
+            birthYear += 2000;
+        } else {
+            birthYear += 1900;
+        }
 
         let age = currentYear - birthYear;
 
@@ -24,21 +21,65 @@ document.addEventListener("DOMContentLoaded", function() {
         const birthDay = parseInt(childRrn.substr(4, 2));
         const currentMonth = today.getMonth() + 1;
         const currentDay = today.getDate();
-        
+
         if (currentMonth < birthMonth || (currentMonth === birthMonth && currentDay < birthDay)) {
             age--;
         }
 
-        var birthDateEl = document.getElementsByClassName("birthDate")[i];
-        birthDateEl.textContent = birthYear + "년" + birthMonth + "월" + birthDay + "일 ";
+        
+        var parentElement = childRrnEl.parentElement;
+        var birthDateEl = parentElement.querySelector(".birthDate");
+        if (birthDateEl) {
+            birthDateEl.textContent = birthYear + "년 " + birthMonth + "월 " + birthDay + "일";
+        }
 
-        var ageEl = document.getElementsByClassName("age")[i];
-        ageEl.textContent = age + "세 ";
+        var ageEl = parentElement.querySelector(".age");
+        if (ageEl) {
+            ageEl.textContent = age + "세";
+        }
 
-        const gender = childRrn.substr(6, 1);
-        const genderText = (gender === "1" || gender === "3") ? "(남)" : "(여)";
-
-        var genderEl = document.getElementsByClassName("gender")[i];
-        genderEl.textContent = genderText;
-    }
+        var genderEl = parentElement.querySelector(".gender");
+        if (genderEl) {
+            const gender = childRrn.substr(6, 1);
+            const genderText = (gender === "1" || gender === "3") ? "(남) " : "(여) ";
+            genderEl.textContent = genderText;
+        }
+    });
 });
+
+
+
+
+$(".closeBtn").on("click",function(){
+
+	var childNoElement = document.getElementById("childRrn");
+	var childNo = childNoElement.textContent || childNoElement.innerText;
+	
+	$.ajax({
+	
+		url : "/member/deleteChild",
+		type: "post",
+		data: {childNo : childNo},
+		success: function(){
+			 $(childNoElement).closest('.info').fadeOut();
+		},
+		error: function(){
+		
+		
+		}
+	
+	
+	});
+	
+
+});
+
+
+
+
+
+
+
+
+
+

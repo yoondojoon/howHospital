@@ -14,9 +14,11 @@ import org.springframework.web.bind.annotation.SessionAttribute;
 
 import jakarta.servlet.http.HttpSession;
 import kr.or.iei.EmailSender;
+import kr.or.iei.hospital.model.dto.Hospital;
 import kr.or.iei.member.model.dto.Child;
 import kr.or.iei.member.model.dto.Member;
 import kr.or.iei.member.model.service.MemberService;
+import kr.or.iei.reservation.model.dto.Reservation;
 import lombok.Getter;
 
 @Controller
@@ -374,6 +376,55 @@ public class MemberController {
 	public String myMedicalHistory() {
 		return "/member/myMedicalHistory";
 	}
+	
+	
+	//내 자녀 삭제
+	@ResponseBody
+	@PostMapping(value="/deleteChild")
+	public int deleteChild(int childNo) {
+		
+		int cnt = memberService.deleteChild(childNo);
+		
+		System.out.println(childNo);
+		
+		return cnt;
+		
+		
+	}
+	
+	
+	
+	//나의 리뷰 보기
+	@GetMapping(value="/myReview")
+	public String myReview(Member member, Reservation reservation) {
+		
+		int memberNo = member.getMemberNo();
+		
+		int reservationNo = reservation.getReservationNo();
+		
+		
+		
+		List list = memberService.myReviewList(memberNo,reservationNo);
+		
+		
+		return "/member/myReview";
+		
+		
+	}
+	
+	
+	//나의 리뷰 작성
+	@GetMapping(value="myReviewFrm")
+	public String myReviewFrm() {
+		
+		
+		return "/member/myReviewFrm";
+		
+		
+	}
+	
+	
+	
 	
 	
 }

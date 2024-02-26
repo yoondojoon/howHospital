@@ -3,19 +3,20 @@ document.addEventListener("DOMContentLoaded", function() {
     
 	const memberRrn = document.getElementById("memberRrn").textContent;
 
-    
-    let birthYear = parseInt(memberRrn.substr(0, 2)); //97
-    if (birthYear > 00) { 	   //1900년생
-        birthYear += 1900;
-    	} else { 			   //2000년생
-        birthYear += 2000;
-    	}
+   
+       let birthYear = parseInt(memberRrn.substr(0, 2));
 
-    
-    const today = new Date();
-    const currentYear = today.getFullYear();
+		const today = new Date();
+        const currentYear = today.getFullYear(); // 오늘 년도
 
-    // 현재 연도와 생년을 비교하여 나이 계산
+		if (birthYear >= 0 && birthYear <= currentYear % 100) {
+    		birthYear += 2000;
+			} else {
+    		birthYear += 1900;
+			}
+    
+
+    // 현재 년도와 생년을 비교하여 나이 계산
     let age = currentYear - birthYear;
 
     // 생일이 지났는지 체크하여 나이 조정

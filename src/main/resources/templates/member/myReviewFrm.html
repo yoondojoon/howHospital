@@ -2,7 +2,8 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <th:block th:include="common/header"></th:block>
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-<link rel="stylesheet" href="/css/member/myInfo.css">
+<link rel="stylesheet" href="/css/member/myReviewFrm.css">
+
 
 	<!-- container -->
     <main id="container" class="container">
@@ -28,28 +29,41 @@
            
            
            <!-- 내 정보 내용 -->
-           <div class="myInfoWrap">
-           		<div class="myInfoBox">
-           			<h2>내 정보</h2>
-           			           			
-	           			<div class="myInfoContents">
-           					<span class="material-icons">emoji_emotions</span>
-           				<h3><span th:text="${session.member.memberName}"></span>님</h3>
-           				<h4><span th:text="${session.member.memberEmail}"></span></h4>
-           				<div class="info">
-           				<span id="memberRrn" th:text="${session.member.memberRrn}" style="display:none;"></span><!-- 뷰에 세션으로 주민번호 꺼내오 -->
-           					<ul>
-           						<li>나이 : <span id="age"></span></li>
-           						<li>성별 : <span id="gender"></span></li>
-           						<li>주소 : <span th:text="${session.member.memberAddress}"></span></li>
-           						<li>연락처 : <span th:text="${session.member.memberPhone}"></span></li>
-           					</ul>
-           				</div>
-           				<form action="/member/updateMyInfo" method="post">
-           					<button type="submit" class="btn_primary lg">내 정보 수정하기</button>
-           				</form>
+           <div class="myReviewWrap">
+           		<div class="myReviewBox">
+           			<h2>나의 리뷰 작성하기</h2>
+           			        <div class="textBox">   			
+	           			<h3>대학/종합병원, 요양병원, 보건소 리뷰는 받지 않아요.</h3>
+	           			<h4>업로드한 사진은 진료 확인 목적으로만 사용되며, 외부로는 공개되지 않습니다.</h4>
+           					</div>
+           					
+           					<div class="hospitalInfo">
+           					<span class="material-icons">domain_add</span>
+           						
+           					
+           					</div>
            				
-           			</div>
+           					<div class="textarea reviewForm">
+           						<textarea>
+           						
+           						</textarea>
+           					
+           					</div>
+           					
+           					<div class="danger">
+           						<h5>부적절한 단어 및 비속어 사용 시 통보없이 삭제될 수 있으니 유의해주세요.</h5>
+           					</div>
+           					
+           					<div class="imgBox">
+           					
+           					
+           					</div>
+           				
+           				
+           				<div class="subBtn">
+           				<a href="#"><button type="button" class="btn_primary lg">작성 완료</button></a>
+           				</div>
+           			
            		</div>
            </div>
            
@@ -62,7 +76,7 @@
     <!--// container -->
 	
 <th:block th:include="common/footer"></th:block>
-<script src="/js/member/myInfo.js"></script>
+<script src="/js/member/myChildren.js"></script>
 <!-- js 링크 -->
 </body>
 </html>
