@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import kr.or.iei.hospital.model.dto.DoctorRowMapper;
+import kr.or.iei.reservation.model.dto.H_Reservation;
 import kr.or.iei.reservation.model.dto.H_ReservationRowMapper;
 import kr.or.iei.reservation.model.dto.Reservation;
 import kr.or.iei.reservation.model.dto.ReservationDetail;
@@ -113,6 +114,13 @@ public class ReservationDao {
 		String childNo = rd.getChildNo() == 0 ? null : String.valueOf(rd.getChildNo());
 		Object[] params = {currResNo, doctorNo, subjectNo, rd.getSymptom(), childNo};
 		int result = jdbc.update(query, params);
+		return result;
+	}
+
+	public int updateReservationDetail(H_Reservation hr) {
+		String query = "update reservation_tbl set reservation_status=? where reservation_no=?";
+		Object[] params = {hr.getReservationStatus(), hr.getReservationNo()};
+		int result = jdbc.update(query,params);
 		return result;
 	}
 

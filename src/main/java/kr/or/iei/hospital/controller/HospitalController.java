@@ -31,6 +31,7 @@ import kr.or.iei.member.model.dto.Member;
 import kr.or.iei.member.model.service.MemberService;
 import kr.or.iei.reservation.model.dto.H_Reservation;
 import kr.or.iei.reservation.model.dto.ReservationDetail;
+import kr.or.iei.reservation.model.dto.ReservationDetailList;
 import kr.or.iei.reservation.model.dto.ReservationListData;
 import kr.or.iei.reservation.model.service.ReservationDetailService;
 import kr.or.iei.reservation.model.service.ReservationService;
@@ -233,12 +234,9 @@ public class HospitalController {
 	
 	@GetMapping("/detailReservation")
 	public String detailReservation(H_Reservation hr, Model model) {
-		ReservationDetail rd = reservationDetailService.selectOneReservation(hr);
-		model.addAttribute("reservationDetail", rd);
+		ReservationDetailList rdl = reservationDetailService.selectOneReservation(hr);
+		model.addAttribute("reservationDetailList", rdl);
 		return "hospital/detailReservationFrm";
 	}
-	
-
-	
 
 }
