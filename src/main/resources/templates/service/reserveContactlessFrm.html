@@ -57,8 +57,8 @@
 
                             <div class="checkbox_wrap row">
                                 <div class="input_item">
-                                    <input type="checkbox" class="checkAll" name="check_agree_all" id="check_agree1">
-                                    <label for="check_agree1">전체 동의</label>
+                                    <input type="checkbox" class="checkAll" name="check_agree_all" id="check_agreeAll">
+                                    <label for="check_agreeAll">전체 동의</label>
                                 </div>
                                 <div class="input_item">
                                     <input type="checkbox" name="check_agree_req" id="check_agree1">
@@ -215,10 +215,31 @@
         }
     })
 
-    //폼 전송시 값 체크
+    //약관 동의
+    const reqs = $(".checkbox_wrap").find("[name='check_agree_req']");
+    const checkAll = $(".checkbox_wrap").find("[name='check_agree_all']");
+    checkAll.on("click", function(){
+        let is_checked = $(this).is(":checked");
+        $(this).closest(".checkbox_wrap").find("[name='check_agree_req']").prop("checked",is_checked);
+    })
+    reqs.each(function(index, item){
+        $(item).on("click", function(){
+            const checked = $(".checkbox_wrap").find("[name='check_agree_req']:checked");
+            if(reqs.length == checked.length){
+                checkAll.prop("checked", true);
+            }else{
+                checkAll.prop("checked", false);
+            }
+        })
+    })
+
+    
+    //폼 전송시 약관 체크
     function checkForm(){
-        if(!$("[name='reservationTime']:checked").val()){
-            alert("시간을 선택해주세요.");
+        const checked = $(".checkbox_wrap").find("[name='check_agree_req']:checked");
+
+        if(reqs.length != checked.length){
+            alert("필수 약관에 동의해주세요.");
             return false;
         }else{
             if(confirm("비대면 진료를 예약하시겠습니까?")){

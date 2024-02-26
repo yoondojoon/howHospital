@@ -1,1 +1,58 @@
 @charset "UTF-8";
+
+
+
+
+.textContents>h4{
+	
+	
+	display:flex;
+	flex-direction: column;
+	align-items: center;
+	
+	
+}
+
+.contentBox {
+	
+	display:flex;
+	justify-content: center;
+	flex-direction: column;
+	
+}
+
+.click{
+	
+	display:flex;
+	
+	justify-content: center;
+	
+}
+
+.click a{
+	
+	 margin-right: 10px;
+}
+
+.textContents{
+	
+	display:flex;
+	justify-content: center;
+	flex-direction: column;
+	
+}
+
+.contentBox h2{
+	display:flex;
+	
+	justify-content: center;
+	color: #222222;
+}
+
+
+
+
+
+
+
+

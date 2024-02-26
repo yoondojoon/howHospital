@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <th:block th:include="common/header"></th:block>
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-<link rel="stylesheet" href="/css/member/myInfo.css">
+<link rel="stylesheet" href="/css/member/updateMyInfo.css">
 
 	<!-- container -->
     <main id="container" class="container">
@@ -16,8 +16,8 @@
                 	<div class="mypageMenu">
                 		<ul>
                 			<li><a href="/member/myInfo">내 정보 보기</a></li>
-                			<li><a href="/member/myChildren">내 자녀 보기</a></li>
-                			<li><a href="/member/myChildAddFrm">내 자녀 추가</a></li>
+                			<li><a href="#">내 자녀 보기</a></li>
+                			<li><a href="#">내 자녀 추가</a></li>
                 			<li><a href="#">진료내역 상세보기</a></li>
                 			<li><a href="#">나의 리뷰 보기</a></li>
                 			<li><a href="#">즐겨찾기</a></li>
@@ -41,14 +41,33 @@
            					<ul>
            						<li>나이 : <span id="age"></span></li>
            						<li>성별 : <span id="gender"></span></li>
-           						<li>주소 : <span th:text="${session.member.memberAddress}"></span></li>
-           						<li>연락처 : <span th:text="${session.member.memberPhone}"></span></li>
-           					</ul>
-           				</div>
-           				<form action="/member/updateMyInfo" method="post">
-           					<button type="submit" class="btn_primary lg">내 정보 수정하기</button>
-           				</form>
-           				
+           						
+           						<form action="/member/updateMember" method="post">
+           						<div class="input_wrap">
+									<div class="input_item"><span>주소 : </span>
+										<input type="text" name="memberAddress" id="memberAddress" th:value="${session.member.memberAddress}" placeholder="수정할 주소를 입력하세요.">
+									</div>
+								</div>           		
+									<div class="input_wrap">
+									<div class="input_item"><span>전화번호 : </span>
+										<input type="text" name="memberPhone" id="memberPhone" th:value="${session.member.memberPhone}" placeholder="수정할 전화번호를 입력하세요.">
+									</div>
+								</div>           		
+									<div class="input_wrap">
+									<div class="input_item password"><span>비밀번호 : </span>
+										<input type="password" name="memberPassword" id="memberPassword" placeholder="수정할 비밀번호를 입력하세요.">
+									</div>				
+								</div>           			
+									<div class="input_wrap">				
+									<div class="input_item rePassword"><span>비밀번호 확인 : </span>
+										<input type="password" name="reMemberPassword" id="reMemberPassword" placeholder="수정할 비밀번호를 입력하세요.">
+									</div>           						
+           						</div>           		
+           							<button type="submit" class="btn_primary lg complete">내 정보 수정 완료</button>
+           						</form>
+           					
+           					</ul>	
+           				</div>	
            			</div>
            		</div>
            </div>
@@ -62,7 +81,7 @@
     <!--// container -->
 	
 <th:block th:include="common/footer"></th:block>
-<script src="/js/member/myInfo.js"></script>
+<script src="/js/member/updateMyInfo.js"></script>
 <!-- js 링크 -->
 </body>
 </html>

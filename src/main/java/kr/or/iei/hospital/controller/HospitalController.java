@@ -66,7 +66,7 @@ public class HospitalController {
 	}
 
 	@PostMapping(value = "/myHospitalEnroll")
-	public String myHospitalEnroll(Hospital hospital, String hospitalPostCode, String hospitalAddrMain,
+	public String myHospitalEnroll(Hospital hospital, String hospitalPostcode, String hospitalAddrMain,
 			String hospitalAddrSub, String dayOpenHour, String dayCloseHour, String weekendOpenHour,
 			String weekendCloseHour, String lunchOpenHour, String lunchCloseHour, String[] hol, String hospitalTelFirst,
 			String hospitalTelLast, String[] doctor_name, String[] doctor_education, String[] doctor_experience,
@@ -74,7 +74,7 @@ public class HospitalController {
 			String CostTwo, Model model) {
 
 		// VO 값 세팅
-//		hospital.setHospitalAddress(hospitalPostCode + " " + hospitalAddrMain + " " + hospitalAddrSub);
+//		hospital.setHospitalAddress(hospitalPostcode + " " + hospitalAddrMain + " " + hospitalAddrSub);
 
 		// 병원사진
 		String savepath1 = root + "/hospital/";
@@ -148,7 +148,7 @@ public class HospitalController {
 	}
 
 	@PostMapping(value = "/myHospitalUpdate")
-	public String myHospitalUpdate(Hospital hospital, String hospitalPostCode, String hospitalAddrMain,
+	public String myHospitalUpdate(Hospital hospital, String hospitalPostcode, String hospitalAddrMain,
 			String hospitalAddrSub, String dayOpenHour, String dayCloseHour, String weekendOpenHour,
 			String weekendCloseHour, String lunchOpenHour, String lunchCloseHour, String[] hol, String hospitalTelFirst,
 			String hospitalTelLast, int[] existDoctor_no, String[] doctor_name, String[] doctor_education,

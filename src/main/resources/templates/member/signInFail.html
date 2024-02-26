@@ -1,8 +1,28 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<link rel="stylesheet" href="/css/member/signInFail.css">
-
 <th:block th:include="common/header"></th:block>
+<style>
+
+.inner_wrap{
+	
+	justify-content: center; 
+}
+
+.inner_wrap>h4{
+	display:flex;
+	
+	justify-content: center; 
+}
+
+.inner_wrap>a{
+	display:flex;
+	padding-top: 30px;
+	justify-content: center; 
+}
+
+
+</style>
+
 
 	<!-- container -->
     <main id="container" class="container">
@@ -10,7 +30,9 @@
 		<!-- contents -->
         <section id="contents" class="contents signInFail">
             <div class="inner_wrap">
-                <h2>로그인 실패</h2>
+                <h2 >로그인 실패</h2>
+                <h4>입력해야 할 항목을 다시 확인해주세요.	</h4>
+                <a href="/member/signInFrm"><button type="submit" class="btn_primary lg ">되돌아가기</button></a>
             </div>
         </section>
 	    <!--// contents -->

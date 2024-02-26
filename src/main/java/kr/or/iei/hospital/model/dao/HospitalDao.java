@@ -187,7 +187,7 @@ public class HospitalDao {
 
 	public int insertHospitalEnroll(Hospital hospital) {
 		String query = "INSERT INTO HOSPITAL_TBL VALUES(HOSPITAL_SEQ.nextval, ?, ?, ?, ?, ?, ? ,?, ?, ?, ?, ?, ?)";
-		Object[] params = {hospital.getMemberNo(), hospital.getHospitalName(), hospital.getHospitalIntro(), hospital.getLat(), hospital.getLng(), hospital.getHospitalTel(), hospital.getCostOne(), hospital.getCostTwo(), hospital.getHospitalPicture(), hospital.getHospitalPostCode(), hospital.getHospitalAddrMain(), hospital.getHospitalAddrSub()};
+		Object[] params = {hospital.getMemberNo(), hospital.getHospitalName(), hospital.getHospitalIntro(), hospital.getLat(), hospital.getLng(), hospital.getHospitalTel(), hospital.getCostOne(), hospital.getCostTwo(), hospital.getHospitalPicture(), hospital.getHospitalPostcode(), hospital.getHospitalAddrMain(), hospital.getHospitalAddrSub()};
 		int reuslt = jdbc.update(query, params);
 		return reuslt;
 	}
@@ -261,7 +261,7 @@ public class HospitalDao {
 	//병원 테이블 Update
 	public int updateHospital(Hospital hospital) {
 		String query = "update hospital_tbl set hospital_intro=?, lat=?, lng=?, hospital_tel=?, cost_one=?, cost_two=?, hospital_postcode=?, hospital_addr_main=?, hospital_addr_sub=? where hospital_no = ?"; 
-		Object[] params = {hospital.getHospitalIntro(), hospital.getLat(), hospital.getLng(), hospital.getHospitalTel(), hospital.getCostOne(), hospital.getCostTwo(), hospital.getHospitalPostCode(), hospital.getHospitalAddrMain(), hospital.getHospitalAddrSub(), hospital.getHospitalNo()}; 
+		Object[] params = {hospital.getHospitalIntro(), hospital.getLat(), hospital.getLng(), hospital.getHospitalTel(), hospital.getCostOne(), hospital.getCostTwo(), hospital.getHospitalPostcode(), hospital.getHospitalAddrMain(), hospital.getHospitalAddrSub(), hospital.getHospitalNo()}; 
 		int result = jdbc.update(query, params);
 		return result;
 	}

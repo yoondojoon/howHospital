@@ -21,6 +21,9 @@ public class MemberDao {
 	@Autowired
 	public MemberRowMapper memberRowMapper;
 	
+
+	//로그인
+
 	@Autowired
 	public ChildRowMapper childRowMapper;
 
@@ -43,7 +46,8 @@ public class MemberDao {
 			
 		}
 	}
-
+	
+	//회원가입
 	public int signUp(Member member) {
 		
 		String query = "insert into member_tbl values(member_seq.nextval,?,?,?,?,?,?,?,to_char(sysdate,'yyyy-mm-dd'),?,?)";
@@ -57,7 +61,7 @@ public class MemberDao {
 		
 	}
 	
-	
+	//이메일 중복체크
 	public int checkEmail(String memberEmail) {
 		
 		
@@ -71,12 +75,12 @@ public class MemberDao {
 	}
 
 	
-
-	public int confirmDelete(String memberPassword,Member m) {
+	//회원탈퇴
+	public int confirmDelete(String memberEmail,String memberPassword) {
 		
-		String query = "delete from member_tbl where member_eamil=? and member_password=?";
+		String query = "delete from member_tbl where member_email=? and member_password=?";
 		
-		Object[] params = {m.getMemberEmail(), memberPassword};
+		Object[] params = {memberEmail,memberPassword};
 		
 		
 		int cnt = jdbc.update(query,params);
@@ -85,11 +89,50 @@ public class MemberDao {
 		return cnt;
 	}
 
+
+	//비밀번호 중복 체크
+	public int checkPassword(String memberPassword, String memberEmail) {
+		
+		
+		String query = "select count(*) from member_tbl where member_email = ? and member_password=?";
+		
+		int cnt = jdbc.queryForObject(query, Integer.class,memberEmail,memberPassword);
+		
+		return cnt;
+	}
+
+	public int updateInfo(Member m) {
+		
+		String query = "update member_tbl set member_address=?, member_phone=?, member_password=? where member_no =?";
+		
+		Object[] params = {m.getMemberAddress(), m.getMemberPhone(), m.getMemberPassword(),m.getMemberNo()};
+		
+		int result = jdbc.update(query,params);
+		
+		
+		return result;
+	}
+
+	public int childAdd(Integer memberNo, String childName, String childRrn) {
+		
+		String query = "insert into child_tbl values(child_seq.nextval, ?, ?, ?)";
+		
+		Object[] params = {memberNo,childName,childRrn};
+		
+		int result = jdbc.update(query,params);
+		
+		
+		
+		return result;
+		
+	}
+
 	public List selectMyChildInfo(int memberNo) {
 		String query = "select * from child_tbl where member_no=?";
 		Object[] params = {memberNo};
 		List childList = jdbc.query(query, childRowMapper, params);
 		return childList;
+
 	}
 	
 	

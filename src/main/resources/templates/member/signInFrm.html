@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+<th:block th:include="common/header"></th:block>
 <link rel="stylesheet" href="/css/member/signInfrm.css">
 
-<th:block th:include="common/header"></th:block>
+
 
 <main id="container" class="container">
 
@@ -26,13 +27,14 @@
 							placeholder="비밀번호를 입력하세요">
 					</div>
 				</div>
-
-				<button type="submit" class="btn_primary lg">로그인</button>
+				<div class="signInBtn">
+				<button type="submit" class="btn_primary lg ">로그인</button>
+				</div>
 			</form>
-			<div>
-				<a href="/member/findEmail">이메일주소찾기</a> <a href="/member/findPassword">비밀번호찾기</a>
+			<div class="findInfo">
+				<a href="/member/findEmail">이메일주소찾기/</a> <a href="/member/findPassword">비밀번호찾기</a>
 			</div>
-			<div>
+			<div class="goToSignUp">
 				<h4>
 					병원어때가 처음이신가요? <a href="/member/signUpFrm">회원가입</a>
 				</h4>

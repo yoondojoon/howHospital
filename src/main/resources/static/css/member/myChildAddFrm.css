@@ -1,4 +1,4 @@
-@charset "UTF-8";
+@charset "UTF-8";@charset "UTF-8";
 
 
 #contents{
@@ -77,3 +77,90 @@
 	color:var(--main_03);
 	
 }
+
+.textBox{
+	
+	
+	background-color: #D6D6D6;
+	border-radius: 6px;
+	padding: 10px;
+	
+}
+.textBox h4{
+	
+	text-align: center;
+	margin: 0 auto;
+	
+	
+	
+}
+
+.childAddBtn {
+	
+	text-align: center;
+	padding-top:30px
+	
+	
+}
+
+.childAddBtn>button{
+	
+	padding: 14px 250px;
+	
+}
+
+
+
+.childWrap{
+	
+	
+	width: 75%;
+	box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+	border-radius: 6px;
+	margin: 0 auto;
+	margin-bottom: 20px !important;
+	padding-bottom:25px;
+	
+	
+}
+
+.input_wrap{
+	
+	width: 90%;
+	padding: 20px;
+	display:flex;
+	justify-content: center; 
+	margin: 0 auto;
+	
+	
+	
+	
+	
+	
+}
+.input_item input{
+	
+	display:flex;
+	justify-content: center; 
+	
+}
+
+
+.paddingBox{
+	
+	padding: 30px;
+	
+}
+
+.close{
+	
+	
+	position: relative;
+    top: 10px;
+    left: 485px;
+    font-size: 20px;
+    color :#D6D6D6;
+    
+}
+
+
