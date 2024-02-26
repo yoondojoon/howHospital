@@ -364,9 +364,9 @@ public class MemberController {
 	
 	
 	//내 진료내역 보기
-	@GetMapping(value="/myMedicalDetail")
-	public String myMedicalDetail() {
-		return "/member/myMedicalDetail";
+	@GetMapping(value="/myMedicalHistory")
+	public String myMedicalHistory() {
+		return "/member/myMedicalHistory";
 	}
 	
 	
