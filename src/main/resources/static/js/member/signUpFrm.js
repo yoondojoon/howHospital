@@ -152,7 +152,7 @@ $(".agreeAll").on("click", function() {
 			window.clearInterval(intervalId);
 			
 			
-			//$("#memberEmail").prop("disabled",true);
+			$("#memberEmail").prop("readonly", true);
 			$("#sendBtn").prop("disabled",true); 
 			$("#authCode").prop("disabled",true); 
 			$("#authBtn").prop("disabled",true);
