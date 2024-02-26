@@ -8,6 +8,8 @@ import org.springframework.stereotype.Repository;
 
 import kr.or.iei.reservation.model.dto.H_Reservation;
 import kr.or.iei.reservation.model.dto.ReservationDetail;
+import kr.or.iei.reservation.model.dto.ReservationDetailList;
+import kr.or.iei.reservation.model.dto.ReservationDetailListRowMapper;
 import kr.or.iei.reservation.model.dto.ReservationDetailRowMapper;
 
 @Repository
@@ -16,19 +18,34 @@ public class ReservationDetailDao {
 	private JdbcTemplate jdbc;
 	@Autowired
 	private ReservationDetailRowMapper reservationDetailRowMapper;
+	@Autowired
+	private ReservationDetailListRowMapper reservationDetailListRowMapper;
+	
 	public String selectDoctor() {
 		String query = "select doctor_name from reservation_detail_tbl join doctor_tbl using (doctor_no)";
 		String doctorName = jdbc.queryForObject(query, String.class);
 		return doctorName;
 	}
-	public ReservationDetail selectOneReservation(H_Reservation hr) {
-		String query = "select rd.*,\r\n" + 
-				"    (select (select member_name from member_tbl where member_no=r.member_no) from reservation_tbl r where r.reservation_no = rd.reservation_no) member_name\r\n" + 
-				"    from reservation_detail_tbl rd";
-		List list = jdbc.query(query, reservationDetailRowMapper);
+	public ReservationDetailList selectOneReservation(H_Reservation hr) {
+		String query = "SELECT DISTINCT\r\n" + 
+				"    R.RESERVATION_NO, R.RESERVATION_STATUS, R.RESERVATION_TYPE, R.RESERVATION_TIME,\r\n" + 
+				"    RD.SYMPTOM, RF.FILENAME, RF.FILEPATH, M.MEMBER_NAME,\r\n" + 
+				"    (SELECT COUNT(*) FROM PRESCRIPTION_TBL WHERE RESERVATION_NO = R.RESERVATION_NO) AS PRESCRIPTION_STATUS\r\n" + 
+				"FROM \r\n" + 
+				"    RESERVATION_TBL R\r\n" + 
+				"LEFT JOIN \r\n" + 
+				"    RESERVATION_FILE RF ON R.RESERVATION_NO = RF.RESERVATION_NO\r\n" + 
+				"LEFT JOIN \r\n" + 
+				"    MEMBER_TBL M ON R.MEMBER_NO = M.MEMBER_NO\r\n" + 
+				"LEFT JOIN\r\n" + 
+				"    RESERVATION_DETAIL_TBL RD ON R.RESERVATION_NO = RD.RESERVATION_NO\r\n" + 
+				"WHERE \r\n" + 
+				"    R.RESERVATION_NO = ?";
+		Object[] params = {hr.getReservationNo()};
+		List list = jdbc.query(query, reservationDetailListRowMapper,params);
 		if(list.isEmpty()) {
 			return null;
 		}
-		return (ReservationDetail)list.get(0);
+		return (ReservationDetailList)list.get(0);
 	}
 }

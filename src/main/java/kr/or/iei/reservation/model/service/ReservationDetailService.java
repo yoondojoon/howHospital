@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import kr.or.iei.reservation.model.dao.ReservationDetailDao;
 import kr.or.iei.reservation.model.dto.H_Reservation;
 import kr.or.iei.reservation.model.dto.ReservationDetail;
+import kr.or.iei.reservation.model.dto.ReservationDetailList;
 
 @Service
 public class ReservationDetailService {
@@ -19,8 +20,8 @@ public class ReservationDetailService {
 		return doctorName;
 	}
 
-	public ReservationDetail selectOneReservation(H_Reservation hr) {
-		ReservationDetail rd = reservationDetailDao.selectOneReservation(hr);
-		return rd;
+	public ReservationDetailList selectOneReservation(H_Reservation hr) {
+		ReservationDetailList rdl = reservationDetailDao.selectOneReservation(hr);
+		return rdl;
 	}
 }

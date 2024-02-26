@@ -1,0 +1,28 @@
+@charset "UTF-8";
+
+.detail_reservation_wrap{
+	margin: 0 auto;
+}
+.detail_reservation_top{
+	margin: 10px 0px;
+}
+#patientName{
+	font-size: 18px;
+	font-weight: bold;
+}
+
+.symptomTextarea>textarea{
+	width: 500px;
+}
+#patientSymptom{
+	display: block;
+	font-size: 18px;
+	font-weight: bold;
+	margin-bottom: 10px;
+}
+.button_wrap{
+	text-align: center;
+}
+.button_wrap>button{
+	margin: 40px 40px;
+}
