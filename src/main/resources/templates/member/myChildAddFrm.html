@@ -2,7 +2,9 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <th:block th:include="common/header"></th:block>
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-<link rel="stylesheet" href="/css/member/myInfo.css">
+<link rel="stylesheet" href="/css/member/myChildAddFrm.css">
+
+
 
 	<!-- container -->
     <main id="container" class="container">
@@ -30,31 +32,33 @@
            <!-- 내 정보 내용 -->
            <div class="myInfoWrap">
            		<div class="myInfoBox">
-           			<h2>내 정보</h2>
-           			           			
-	           			<div class="myInfoContents">
-           					<span class="material-icons">emoji_emotions</span>
-           				<h3><span th:text="${session.member.memberName}"></span>님</h3>
-           				<h4><span th:text="${session.member.memberEmail}"></span></h4>
-           				<div class="info">
-           				<span id="memberRrn" th:text="${session.member.memberRrn}" style="display:none;"></span><!-- 뷰에 세션으로 주민번호 꺼내오 -->
-           					<ul>
-           						<li>나이 : <span id="age"></span></li>
-           						<li>성별 : <span id="gender"></span></li>
-           						<li>주소 : <span th:text="${session.member.memberAddress}"></span></li>
-           						<li>연락처 : <span th:text="${session.member.memberPhone}"></span></li>
-           					</ul>
+           
+           		 <form action="/member/myChildAdd" method="post">	  			
+	           		<div class="childContents">
+           				<h2>자녀의 정보를 입력해주세요</h2>
+           				<div class="paddingBox">
+           				<div class="textBox">
+           					<h4>만 18세 이하의 미성년 자녀만 등록할 수 있습니다.</h4>
+           					<h4>입력한 정보와 다른 경우 개인정보보호법에 위배되어 법적 책임이 발생할 수 있습니다.</h4>
            				</div>
-           				<form action="/member/updateMyInfo" method="post">
-           					<button type="submit" class="btn_primary lg">내 정보 수정하기</button>
-           				</form>
+           				</div>
            				
+
+           				
+           				<div class="childAddBtn">
+           					<button onclick="addChildForm()" type="button" class="btn_primary addChild">자녀 추가 +</button>
+           					
+           				</div>
            			</div>
+           			<button  type="submit" class="btn_primary">완료</button>
+           		</div>
+           		
+           	</form>
+           			
+           			
            		</div>
            </div>
            
-           
-           </div>
         </section>
 	    <!--// contents -->
         
@@ -62,7 +66,7 @@
     <!--// container -->
 	
 <th:block th:include="common/footer"></th:block>
-<script src="/js/member/myInfo.js"></script>
+<script src="/js/member/myChildAddFrm.js"></script>
 <!-- js 링크 -->
 </body>
 </html>

@@ -77,7 +77,7 @@ public class MemberController {
 				
 			}
 			
-			
+			session.setAttribute("memberNo", member.getMemberNo());
 			session.setAttribute("member", member);
 			
 			return "redirect:/";
@@ -279,7 +279,7 @@ public class MemberController {
 	}
 	
 	
-	
+	//회원 정보 수정 frm
 	@PostMapping(value="/updateMyInfo")
 	public String updateMyInfo() {
 		
@@ -287,6 +287,79 @@ public class MemberController {
 		
 		return "/member/updateMyInfo";
 	}
+	
+	
+	//회원 정보 수정
+	@PostMapping(value="/updateMember")
+	public String updateMember(HttpSession session, Member m) {
+		
+		int result = memberService.updateInfo(m);
+		
+		if(result > 0) {
+			 Member member = (Member) session.getAttribute("member");
+		        
+		        
+		        member.setMemberAddress(m.getMemberAddress());
+		        member.setMemberPhone(m.getMemberPhone());
+		        member.setMemberPassword(m.getMemberPassword());
+		        
+		        
+		        session.setAttribute("member", member);
+		        
+		        return "/member/myInfo";
+		        
+		}else {
+			
+			return "redirect:/";
+		}
+		
+	}
+	
+	
+	//내 자녀 보기
+	@GetMapping(value="/myChildren")
+	public String myChildren() {
+		
+		
+		return "/member/myChildren";
+		
+	}
+	
+	
+	//내 자녀 추가
+	@PostMapping(value="/myChildAdd")
+	public String myChildAdd(HttpSession session, @RequestParam("childName") String childName, @RequestParam("childRrn") String childRrn) {
+		
+		Integer memberNo =(Integer)session.getAttribute("memberNo");
+		
+		int result = memberService.childAdd(memberNo,childName,childRrn);
+		
+		System.out.println(memberNo);
+		
+		if(result > 0) {
+			
+			
+			return "/member/myChildAddFrm";
+		}else {
+			
+			return "/member/failAdd";
+		}
+		
+		
+		
+		
+	}
+	
+	
+	// 내 자녀 추가 frm
+	@GetMapping(value="/myChildAddFrm")
+	public String myChildAddFrm() {
+		
+		
+		
+		return "/member/myChildAddFrm";
+	}
+	
 	
 	
 	

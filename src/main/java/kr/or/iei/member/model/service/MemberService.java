@@ -80,4 +80,22 @@ public class MemberService {
 		int cnt = memberDao.checkPassword(memberPassword,memberEmail);
 		
 		return cnt;
+	}
+	//회원정보 수정
+	@Transactional
+	public int updateInfo(Member m) {
+		
+		int result = memberDao.updateInfo(m);
+		
+		return result;
+	}
+	
+	
+	//내 자녀 추가
+	@Transactional
+	public int childAdd(Integer memberNo, String childName, String childRrn) {
+		
+		int result = memberDao.childAdd(memberNo,childName,childRrn);
+		
+		return result;
 	}}

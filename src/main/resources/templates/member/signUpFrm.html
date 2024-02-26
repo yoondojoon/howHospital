@@ -14,7 +14,9 @@
 				10초 회원 가입으로 <br> 764,895개 리뷰를 확인하세요
 			</h2>
 
-			<form action="/member/signUp" method="post" id="signUpFrm">
+			<form action="/member/signUp" method="post" id="signUpFrm" >
+			
+			
 				<h4>가입유형</h4>
 				<div class="select input_item joinType" id="select">
 					<select name="memberType">
@@ -173,6 +175,8 @@
 				<div class="signUpBtnBox">
 					<button type="submit" class="btn_primary lg" id="signUpBtn">회원가입</button>
 				</div>
+				
+				
 			</form>
 		</div>
 	</div>
@@ -405,7 +409,7 @@
 <th:block th:include="common/footer"></th:block>
 
 <!-- js 링크 -->
-<script src="/js/common/signUpFrm.js"></script>
+<script src="/js/member/signUpFrm.js"></script>
 
 </body>
 

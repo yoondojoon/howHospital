@@ -152,7 +152,7 @@ $(".agreeAll").on("click", function() {
 			window.clearInterval(intervalId);
 			
 			
-			$("#memberEmail").prop("disabled",true);
+			//$("#memberEmail").prop("disabled",true);
 			$("#sendBtn").prop("disabled",true); 
 			$("#authCode").prop("disabled",true); 
 			$("#authBtn").prop("disabled",true);
@@ -529,6 +529,15 @@ $(".agreeAll").on("change", function() {
     	}
 
 		
+
+
+
+
+  document.addEventListener('keydown', function(event) {
+      if ((event.keyCode || event.which) === 13) {
+          event.preventDefault();
+      }
+  }, true);
 
 		
 	

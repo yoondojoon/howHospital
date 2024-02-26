@@ -92,6 +92,31 @@ public class MemberDao {
 		
 		return cnt;
 	}
+
+	public int updateInfo(Member m) {
+		
+		String query = "update member_tbl set member_address=?, member_phone=?, member_password=? where member_no =?";
+		
+		Object[] params = {m.getMemberAddress(), m.getMemberPhone(), m.getMemberPassword(),m.getMemberNo()};
+		
+		int result = jdbc.update(query,params);
+		
+		
+		return result;
+	}
+
+	public int childAdd(Integer memberNo, String childName, String childRrn) {
+		
+		String query = "insert into child_tbl values(child_seq.nextval, ?, ?, ?)";
+		
+		Object[] params = {memberNo,childName,childRrn};
+		
+		int result = jdbc.update(query,params);
+		
+		
+		
+		return result;
+	}
 	
 	
 	
