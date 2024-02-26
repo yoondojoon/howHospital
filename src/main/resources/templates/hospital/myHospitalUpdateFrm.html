@@ -26,9 +26,8 @@
 
 <div class="hospital_info_form">
 	<!-- 병원정보 입력 -->
-<h2>병원정보 입력</h2>
-<form id="uploadForm" action="/hospital/myHospitalEnroll"
-	method="post" enctype="multipart/form-data">
+<h2>병원정보 수정</h2>
+<form id="uploadForm" action="/hospital/myHospitalUpdate" method="post" enctype="multipart/form-data">
 	<!-- 병원이름 입력 -->
 <div class="input_wrap">
 	<div class="input_title">
@@ -94,14 +93,16 @@
 			<label for="select">평일</label>
 		</div>
 		<div class="select">
+
+		
 			<select name="dayOpenHour" id="select_dayopen_hour">
-				<option th:text="${h.time.dayStartTime}" selected>시작시간</option>
+				<option th:placeholder="${h.time.dayStartTime}" selected>시작시간</option>
 			</select>
 		</div>
 		<div class="time_table">~</div>
 		<div class="select">
 			<select name="dayCloseHour" id="select_dayclose_hour">
-				<option th:text=${h.time.dayEndTime}>종료 시간</option>
+				<option th:placeholder=${h.time.dayEndTime}>종료 시간</option>
 			</select>
 		</div>
 	</div>
@@ -115,13 +116,13 @@
 	</div>
 	<div class="select">
 		<select name="weekendOpenHour" id="select_weekendopen_hour">
-			<option th:text=${h.time.weekendStartTime}>시작 시간</option>
+			<option th:placeholder=${h.time.weekendStartTime}>시작 시간</option>
 		</select>
 	</div>
 	<div class="time_table">~</div>
 	<div class="select">
 		<select name="weekendCloseHour" id="select_weekendclose_hour">
-				<option th:text=${h.time.weekendEndTime}>종료 시간</option>
+				<option th:placeholder=${h.time.weekendEndTime}>종료 시간</option>
 		</select>
 	</div>
 </div>
@@ -135,13 +136,13 @@
 		</div>
 		<div class="select">
 			<select name="lunchOpenHour" id="select_lunchopen_hour">
-				<option th:text="${h.time.lunchStartTime}">시작 시간</option>
+				<option th:placeholder="${h.time.lunchStartTime}">시작 시간</option>
 			</select>
 		</div>
 		<div class="time_table">~</div>
 		<div class="select">
 			<select name="lunchCloseHour" id="select_lunchclose_hour">
-				<option th:text="${h.time.lunchEndTime}">종료 시간</option>
+				<option th:placeholder="${h.time.lunchEndTime}">종료 시간</option>
 			</select>
 		</div>
 	</div>
@@ -166,23 +167,23 @@
 		<div class="input_wrap">
 			<div class="input_title">전화번호</div>
 			<div class="input_item">
-				<select name="hospitalTelFirst" id="hospital_tel_first">
-					<option value="0" th:text="${h.telFirst}">국번없음</option>
-					<option value="02">02</option>
-					<option value="032">032</option>
-					<option value="031">031</option>
-					<option value="041">041</option>
-					<option value="042">042</option>
-					<option value="043">043</option>
-					<option value="051">051</option>
-					<option value="052">052</option>
-					<option value="053">053</option>
-					<option value="054">054</option>
-					<option value="055">055</option>
-					<option value="061">061</option>
-					<option value="062">062</option>
-					<option value="063">063</option>
-					<option value="064">064</option>
+				<select name="hospitalTelFirst" id="hospital_tel_first" th:value="${h.telFirst}">
+				   <option value="0" th:selected="${h.telFirst == '0'}">국번없음</option>
+				   <option value="02" th:selected="${h.telFirst == '02'}">02</option>
+				   <option value="032" th:selected="${h.telFirst == '032'}">032</option>
+				   <option value="031" th:selected="${h.telFirst == '031'}">031</option>
+				   <option value="041" th:selected="${h.telFirst == '041'}">041</option>
+				   <option value="042" th:selected="${h.telFirst == '042'}">042</option>
+				   <option value="043" th:selected="${h.telFirst == '043'}">043</option>
+				   <option value="051" th:selected="${h.telFirst == '051'}">051</option>
+				   <option value="052" th:selected="${h.telFirst == '052'}">052</option>
+				   <option value="053" th:selected="${h.telFirst == '053'}">053</option>
+				   <option value="054" th:selected="${h.telFirst == '054'}">054</option>
+				   <option value="055" th:selected="${h.telFirst == '055'}">055</option>
+				   <option value="061" th:selected="${h.telFirst == '061'}">061</option>
+				   <option value="062" th:selected="${h.telFirst == '062'}">062</option>
+				   <option value="063" th:selected="${h.telFirst == '063'}">063</option>
+				   <option value="064" th:selected="${h.telFirst == '064'}">064</option>
 				</select>
 <input type="text" name="hospitalTelLast" id="phoneNumber" th:placeholder="${h.telLast}" required>
 			</div>
@@ -195,90 +196,89 @@
 <div class="input_wrap">
     <div id="doctorContainer">
         <!-- 의사 정보 추가 버튼 -->
-        <div class="input_wrap">
-            <div class="input_title">
-                의사정보
-                <button type="button" class="btn_primary sm addDoctorBtn">추가</button>
-            </div>
-        </div>
-
-        <!-- 의사 정보 입력 -->
-        <ul class="doctor_list">
-            <li th:each="d : ${h.doctorList}">
-                <div class="input_wrap doctor_info">
-                    <div class="input_item">
-                        <div class="imgViewDiv" width="200px">
-                            <img class="img-view" th:src="@{/doctor/} + ${d.doctorPicture}">
-                        </div>
-                        <table class="doctors">
-                            <tr>
-                                <th>이름</th>
-                                <td>
-                                    <div class="input_item">
-                                        <input type="text" class="doc" name="doctor_name" th:placeholder="${d.doctorName}" required>
-                                        <input type="file" id="docImgInput" class="doc" name="doctor_picture" accept=".jpg, .png, .jpeg" onchange="loadImg(this);">
-                                        <button type="button" class="btn_primary outline sm deleteDoctorBtn">삭제</button>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>학력</th>
-                                <td>
-                                    <input type="text" class="doc" name="doctor_education" th:placeholder="${d.doctorEducation}" required>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>경력</th>
-                                <td>
-                                    <input type="text" class="doc" name="doctor_experience" th:placeholder="${d.doctorExperience}" required>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>진료과</th>
-                                <td>
-                                    <select class="specialty" name="subjectSelect">
-                                        <option th:text="${d.subjectName}">선택하세요</option>
-                                        <option value="내과">내과</option>
-                                        <option value="신경과">신경과</option>
-                                        <option value="정신건강의학과">정신건강의학과</option>
-                                        <option value="외과">외과</option>
-                                        <option value="정형외과">정형외과</option>
-                                        <option value="신경외과">신경외과</option>
-                                        <option value="심장혈관흉부외과">심장혈관흉부외과</option>
-                                        <option value="성형외과">성형외과</option>
-                                        <option value="마취통증의학과">마취통증의학과</option>
-                                        <option value="산부인과">산부인과</option>
-                                        <option value="소아청소년과">소아청소년과</option>
-                                        <option value="소아청소년과">안과</option>
-                                        <option value="이비인후과">이비인후과</option>
-                                        <option value="피부과">피부과</option>
-                                        <option value="비뇨의학과">비뇨의학과</option>
-                                        <option value="영상의학과">영상의학과</option>
-                                        <option value="방사선종양학과">방사선종양학과</option>
-                                        <option value="방사선종양학과">병리과</option>
-                                        <option value="진단검사의학과">진단검사의학과</option>
-                                        <option value="재활의학과">재활의학과</option>
-                                        <option value="결핵과">결핵과</option>
-                                        <option value="예방의학과">예방의학과</option>
-                                        <option value="가정의학과">가정의학과</option>
-                                        <option value="핵의학과">핵의학과</option>
-                                        <option value="직업환경의학과">직업환경의학과</option>
-                                        <option value="응급의학과">응급의학과</option>
-                                        <option value="구강안악면외과">구강안악면외과</option>
-                                        <option value="치과">치과</option>
-                                        <option value="한의원">한의원</option>
-                                    </select>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                </div>
-            </li>
-        </ul>
-    </div> <!-- Doctor Container -->
+<div class="input_wrap doctor_wrap">
+    <div class="input_title">
+        의사정보
+        <button type="button" class="btn_primary sm addDoctorBtn">추가</button>
+    </div>
 </div>
 
+<!-- 의사 정보 입력 -->
 
+
+        <div class="input_wrap doctor_info" th:each="d : ${h.doctorList}">
+            <div class="input_item">
+                <div class="imgViewDiv" width="200px">
+                    <img class="img-view" th:src="@{/doctor/} + ${d.doctorPicture}">
+                </div>
+                <table class="doctors">
+                    <tr>
+                        <th>이름</th>
+                        <td>
+                            <div class="input_item">
+                            	<input type="hidden" name="existDoctor_no" th:value="${d.doctorNo}">
+                                <input type="text" class="doc" name="doctor_name" th:placeholder="${d.doctorName}" required>
+                                <!-- input type=file은  value 설정 불가(보안상의 이유)-->
+                                    <input type="file" id="docImgInput" class="doc" name="doctor_picture" accept=".jpg, .png, .jpeg" th:onchange="loadImg(this, [[${d.doctorNo}]]);">
+                                    <!--  <button type="button" class="btn_primary outline sm deleteDoctorBtn" th:onclick="deleteDoctor(this, [[${d.doctorNo}]])">삭제</button>-->
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>학력</th>
+                            <td>
+                                <input type="text" class="doc" name="doctor_education" th:placeholder="${d.doctorEducation}" required>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>경력</th>
+                            <td>
+                                <input type="text" class="doc" name="doctor_experience" th:placeholder="${d.doctorExperience}" required>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>진료과</th>
+                            <td>
+                                <select class="specialty" name="subjectSelect">
+          					  		<option>선택하세요</option>
+                                    <option value="내과">내과</option>
+                                    <option value="신경과">신경과</option>
+                                    <option value="정신건강의학과">정신건강의학과</option>
+                                    <option value="외과">외과</option>
+                                    <option value="정형외과">정형외과</option>
+                                    <option value="신경외과">신경외과</option>
+                                    <option value="심장혈관흉부외과">심장혈관흉부외과</option>
+                                    <option value="성형외과">성형외과</option>
+                                    <option value="마취통증의학과">마취통증의학과</option>
+                                    <option value="산부인과">산부인과</option>
+                                    <option value="소아청소년과">소아청소년과</option>
+                                    <option value="소아청소년과">안과</option>
+                                    <option value="이비인후과">이비인후과</option>
+                                    <option value="피부과">피부과</option>
+                                    <option value="비뇨의학과">비뇨의학과</option>
+                                    <option value="영상의학과">영상의학과</option>
+                                    <option value="방사선종양학과">방사선종양학과</option>
+                                    <option value="방사선종양학과">병리과</option>
+                                    <option value="진단검사의학과">진단검사의학과</option>
+                                    <option value="재활의학과">재활의학과</option>
+                                    <option value="결핵과">결핵과</option>
+                                    <option value="예방의학과">예방의학과</option>
+                                    <option value="가정의학과">가정의학과</option>
+                                    <option value="핵의학과">핵의학과</option>
+                                    <option value="직업환경의학과">직업환경의학과</option>
+                                    <option value="응급의학과">응급의학과</option>
+                                    <option value="구강안악면외과">구강안악면외과</option>
+                                    <option value="치과">치과</option>
+                                    <option value="한의원">한의원</option>
+                                </select>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+      
+       
+</div> <!-- Doctor Container -->
+</div>
 
 
 <!-- 진료비용 -->
@@ -309,7 +309,9 @@
 						<button type="submit" class="btn_secondary lg hospital_enroll_cancel">취소</button>
 						<button type="submit" class="btn_primary lg hospital_enroll">등록</button>
 					</div>
-
+			
+	
+					<input type="hidden" name="hospitalNo" th:value="${h.hospitalNo}">
 				</form>
 			</div>
 		</div>
@@ -321,14 +323,33 @@
 <!--// container -->
 
 
-<script src="/js/common/myHospitalFrm.js"></script>
+<script src="/js/common/myHospitalUpdateFrm.js"></script>
 
 <script th:inline="javascript">
+
+function deleteDoctor(obj, doctorNo){
+	if(confirm("파일을 삭제하시겠습니까?")){
+		const input = $("<input>");
+		input.attr("name", "delDoctorNo");
+		input.attr("type", "text");
+		input.val(doctorNo);
+		$("#uploadForm").append(input);
+		$(obj).closest('.doctor_info').remove(); // 클릭된 삭제 버튼의 부모 요소인 .doctor_info를 삭제
+	}
+}
+
+
+
 const hospital = [[${h}]];
 const holiday = String(hospital.time.holiday);
 $('input[name="hol"]').each(function(index, item){
-	if(holiday.includes(index+2)){
-    	  $(item).prop("checked", true);
+    // 일요일을 체크하는 로직을 수정합니다.
+    let dayValue = index + 2; // 기본적으로 월요일부터 시작합니다.
+    if(dayValue > 7) { // 인덱스가 6일 때, 즉 일요일을 나타내면
+        dayValue = 1; // 일요일의 값을 1로 설정합니다.
+    }
+    if(holiday.includes(dayValue)){
+        $(item).prop("checked", true);
     }
 });
 
@@ -357,28 +378,8 @@ function searchAddr() {
 			}).open();
 }
 
-
-function loadHospitalImg(obj) {
-	
-	//input type file dom 객체의 files라는 속성이 첨부한 파일 정보
-	console.log(obj.files); //multiple옵션이 있으므로 배열과 유사한 형태로 처리
-	//파일갯수가 0개가 아니고 && 해당 파일이 정상이면
-	if (obj.files.length != 0 && obj.files[0] != 0) {
-		const reader = new FileReader();//파일 정보를 읽어올 수 있는 js객체		
-		reader.readAsDataURL(obj.files[0]); //파일 정보 읽어옴 (비동기) -> ajax로 요청을 날림
-		//readAsData는 텍스트 숫자엄청많은 걸 가져옴 
-		//파일 리더가 정보를 다읽어오고 나면 동작할 함수
-		reader.onload = function(e) { //ajax로 요청날렸을 때 success를 위한 동작
-			//읽어온 파일정보로 img태그의 src 값 세팅
-			$(".hospic").eq(0).attr("src", e.target.result);
-		}
-	} else {
-		$(".hospic").eq(0).attr("src", "");
-	}
-}
     
-    
-function loadImg(obj) {
+function loadImg(obj, doctorNo) {
 	const index = $("[name=doctor_picture]").index(obj);
 	//input type file dom 객체의 files라는 속성이 첨부한 파일 정보
 	console.log(obj.files); //multiple옵션이 있으므로 배열과 유사한 형태로 처리
@@ -391,6 +392,15 @@ function loadImg(obj) {
 		reader.onload = function(e) { //ajax로 요청날렸을 때 success를 위한 동작
 			//읽어온 파일정보로 img태그의 src 값 세팅
 			$(".img-view").eq(index).attr("src", e.target.result);
+		
+		
+			const input = $("<input>");
+			input.attr("name", "updateDoctorNo");
+			input.attr("type", "text");
+			input.val(doctorNo);
+			$("#uploadForm").append(input);
+		
+		
 		}
 	} else {
 		$(".img-view").eq(index).attr("src", "");
@@ -399,7 +409,8 @@ function loadImg(obj) {
 
 
 
-//옵션 없이 지도 객체를 생성하면 서울 시청을 중심으로 하는 16 레벨의 지도가 생성됩니다.
+
+
 
 </script>
 

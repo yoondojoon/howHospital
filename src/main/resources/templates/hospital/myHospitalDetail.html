@@ -202,10 +202,15 @@
 const hospital = [[${h}]];
 const holiday = String(hospital.time.holiday);
 $('input[name="hol"]').each(function(index, item){
-	if(holiday.includes(index+2)){
-    	  $(item).prop("checked", true);
+    // 일요일을 체크하는 로직을 수정합니다.
+    let dayValue = index + 2; // 기본적으로 월요일부터 시작합니다.
+    if(dayValue > 7) { // 인덱스가 6일 때, 즉 일요일을 나타내면
+        dayValue = 1; // 일요일의 값을 1로 설정합니다.
     }
-	$(item).prop("disabled", true);
+    if(holiday.includes(dayValue)){
+        $(item).prop("checked", true);
+    }
+    $(item).prop("disabled", true);
 });
 
 
