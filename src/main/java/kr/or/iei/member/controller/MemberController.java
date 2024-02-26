@@ -240,7 +240,7 @@ public class MemberController {
 	//회탈
 	@ResponseBody
 	@PostMapping(value="/delete")
-	public String confirmDelete(@SessionAttribute(required = false) Member member, Member m) {
+	public int confirmDelete(@SessionAttribute(required = false) Member member, Member m,HttpSession session) {
 		
 		String memberEmail = member.getMemberEmail();
 		String memberPassword = member.getMemberPassword();
@@ -248,10 +248,13 @@ public class MemberController {
 		
 		int cnt = memberService.confirmDelete(memberEmail,memberPassword);
 		
-		
-		return "cnt";
+		if(session != null) {
+			session.invalidate();
+			
+		}
+			
+			return cnt;
 	
-		
 	}
 	
 	

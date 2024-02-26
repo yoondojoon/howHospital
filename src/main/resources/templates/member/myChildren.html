@@ -45,9 +45,9 @@
 	           				
 	           				
 	           				
-	           				<span id="childRrn" th:text="${children.childRrn}" style="display:none;"></span><!-- 뷰에 세션으로 주민번호 꺼내오 -->
+	           				<span class="childRrn" id="childRrn" th:text="${children.childRrn}" style="display:none;"></span><!-- 뷰에 세션으로 주민번호 꺼내오 -->
 	           					<ul>
-	           						<li><span id="birthDate"></span><span id="age"></span><span id="gender"></span></li>
+	           						<li><span class="birthDate" id="birthDate"></span><span class="age" id="age"></span><span class="gender" id="gender"></span></li>
 	           						<li>주소 : <span th:text="${session.member.memberAddress}"></span></li>
 	           						
 	           					</ul>
