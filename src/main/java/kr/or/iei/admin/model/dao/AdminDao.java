@@ -15,6 +15,8 @@ import kr.or.iei.admin.model.dto.MemberReportRowMapper;
 import kr.or.iei.admin.model.dto.Notice;
 import kr.or.iei.admin.model.dto.NoticeListData;
 import kr.or.iei.admin.model.dto.NoticeRowMapper;
+import kr.or.iei.admin.model.dto.Review;
+import kr.or.iei.admin.model.dto.ReviewRowMapper;
 import kr.or.iei.hospital.model.dto.BusinessAuth;
 import kr.or.iei.hospital.model.dto.BusinessAuthFileRowMapper;
 import kr.or.iei.hospital.model.dto.BusinessAuthRowMapper;
@@ -43,6 +45,9 @@ public class AdminDao {
 	
 	@Autowired
 	private FaqRowMapper faqRowMapper;
+	
+	@Autowired
+	private ReviewRowMapper reviewRowMapper;
 
 	public List selectAllNotice(int start, int end) {
 		String query = "SELECT  * FROM (SELECT ROWNUM AS RNUM, N.* FROM (SELECT NOTICE_NO, MEMBER_TBL.MEMBER_NO, NOTICE_TITLE, NOTICE_CONTENT, READ_COUNT, REQ_DATE, MEMBER_NAME FROM MEMBER_TBL RIGHT OUTER JOIN NOTICE_TBL ON MEMBER_TBL.MEMBER_NO = NOTICE_TBL.MEMBER_NO ORDER BY NOTICE_NO DESC)N) WHERE RNUM BETWEEN ? AND ?";
@@ -206,6 +211,19 @@ public class AdminDao {
 		String query="select * from faq_tbl where faq_ref is not null";
 		List list = jdbc.query(query, faqRowMapper);
 		return list;
+	}
+
+	public List<Review> selectAllReview() {
+		String query = "select * from member_tbl join review_tbl on member_tbl.member_no = review_tbl.member_no";
+		List list = jdbc.query(query, reviewRowMapper);
+		return list;
+	}
+
+	public int deleteReview(int reviewNo) {
+		String query = "delete from review_tbl where review_no=?";
+		Object[] params = {reviewNo};
+		int result = jdbc.update(query,params);
+		return result;
 	}
 
 	

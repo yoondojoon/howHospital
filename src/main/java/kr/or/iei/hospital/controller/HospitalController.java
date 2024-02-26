@@ -107,6 +107,7 @@ public class HospitalController {
 			doctorList.add(doctor);
 			Subject subject = new Subject();
 			subject.setSubjectName(subjectSelect[i]);
+
 			subjectList.add(subject);
 		}
 
@@ -141,6 +142,7 @@ public class HospitalController {
 		Hospital h = hospitalService.findHospitalInfo(hospitalNo);
 		System.out.println(h.getSubjectList());
 		System.out.println(h.getDoctorList());
+
 		model.addAttribute("h", h);
 		return "hospital/myHospitalUpdateFrm";
 	}
@@ -152,10 +154,10 @@ public class HospitalController {
 			String hospitalTelLast, int[] existDoctor_no, String[] doctor_name, String[] doctor_education,
 			String[] doctor_experience, String[] subjectSelect, MultipartFile hospital_picture,
 			MultipartFile[] doctor_picture, String CostOne, String CostTwo, Model model, int[] updateDoctorNo,
-			int[] delDoctorNo) {
+			int[] delDoctorNo, int[] existSubject_no) {
+	    System.out.println("컨트롤러 멀티파트: " + doctor_picture);
 
-		
-		//병원정보 및 시간 Update
+		// 병원정보 및 시간 Update
 		hospital.setHospitalTel(hospitalTelFirst + "-" + hospitalTelLast);
 		Time time = new Time();
 		time.setDayHour(dayOpenHour + "~" + dayCloseHour);
@@ -168,56 +170,59 @@ public class HospitalController {
 		List<Subject> subjectList = new ArrayList<Subject>();
 
 		int result = 0;
-		result += hospitalService.updateHospital(hospital, time);	
+		result += hospitalService.updateHospital(hospital, time);
 
-		
-		//의사정보, 진료과목정보, 의사사진 수정
-		for(int i = 0; i<doctor_name.length; i++) {
+		// 의사정보, 진료과목정보 수정
+		for (int i = 0; i < doctor_name.length; i++) {
 			Doctor doctor = new Doctor();
 			doctor.setDoctorName(doctor_name[i]);
 			doctor.setDoctorEducation(doctor_education[i]);
 			doctor.setDoctorExperience(doctor_experience[i]);
 			doctor.setDoctorNo(existDoctor_no[i]);
 			doctor.setSubjectName(subjectSelect[i]);
+			doctor.setSubjectNo(existSubject_no[i]);
 			doctorList.add(doctor);
 		}
-		
-			if(updateDoctorNo.length > 0) {
-				for (MultipartFile d : doctor_picture) {
-					String savepath = root + "/doctor/";	
-//					String filepath = fileUtils.upload(savepath, doctor_picture[i]);
-//					doctor.setDoctorPicture(filepath);
-//				
-			
-//				// 업로드한 파일명을 추출
-//				String filename = file.getOriginalFilename();
-//				String filepath = fileUtils.upload(savepath, file);
-//				
-//
-//
-//				String filepath = fileUtils.upload(savepath, doctor_picture[i]);
-//				doctor.setDoctorPicture(filepath);
-//				doctorList.add(doctor);
-//			}
+
+		result += hospitalService.updateDoctorSubject(doctorList);
+
+		// 의사사진 수정 (변경된 의사번호랑, 변경된 파일명 받아서 업데이트)
+		if (updateDoctorNo != null) {
+		    String savepath = root + "/doctor/";
+		    List<Doctor> doctorPictureList = new ArrayList<>(); // List를 초기화
+
+		    for (int i = 0; i < updateDoctorNo.length; i++) {
+		        Doctor doctor = new Doctor();
+		        doctor.setDoctorNo(updateDoctorNo[i]); // 의사번호 설정
+
+		        // 의사 사진 업로드
+		        if (i < doctor_picture.length) {
+		            MultipartFile file = doctor_picture[i];
+		            String filename = file.getOriginalFilename();
+		            String filepath = fileUtils.upload(savepath, file);
+		            System.out.println("컨트롤러 파일패스 " + filepath);
+		            doctor.setDoctorPicture(filepath); // 의사사진 설정
+		        }
+		        
+		        doctorPictureList.add(doctor); // 리스트에 의사 객체 추가
+		    }
+		    
+		    result += hospitalService.updateDoctorPicture(doctorPictureList);
 		}
 		
 		
-			}
 		
-				
-		//의사사진 Update
-				
+		
+	if (updateDoctorNo != null) {
+		if (result == (doctorList.size() + subjectList.size() + updateDoctorNo.length + 2)) {
+			System.out.println("성공");
+			return "redirect:/";
 
-//				
-//		}
-//		
-//		
-
-		
-		
-		
-		
-
+		} else {
+			System.out.println("실패");
+			return "redirect:/";
+		}
+	}else {
 		if (result == (doctorList.size() + subjectList.size() + 2)) {
 			System.out.println("성공");
 			return "redirect:/";
@@ -226,9 +231,7 @@ public class HospitalController {
 			System.out.println("실패");
 			return "redirect:/";
 		}
-
-		// 의사정보, 과목 Insert
-		// 의사정보, 과목 Delete
+	}
 
 	}
 

@@ -279,12 +279,30 @@ public class HospitalDao {
 
 
 	public int updateDoctor(Doctor doctor) {
+		System.out.println("다오:" + doctor);
         String query = "UPDATE doctor_tbl SET doctor_name=?, doctor_education=?, doctor_experience=? WHERE doctor_no=?";
         Object[] params = {doctor.getDoctorName(), doctor.getDoctorEducation(), doctor.getDoctorExperience(), doctor.getDoctorNo()};
         int result = jdbc.update(query, params);
 	    return result;
 	  
 	}
+
+	public int updateSubject(Doctor doctor) {
+		String query = "UPDATE subject_tbl SET subject_name = ? WHERE subject_no =?";
+        Object[] params = {doctor.getSubjectName(), doctor.getSubjectNo()};
+        int result = jdbc.update(query, params);
+	    return result;
+	}
+
+	public int updateDoctorPicture(Doctor doctor) {
+		String query = "UPDATE doctor_tbl SET doctor_picture = ? WHERE doctor_no =?";
+		System.out.println("다오 사진:" + doctor.getDoctorPicture());
+        Object[] params = {doctor.getDoctorPicture(), doctor.getDoctorNo()};
+        int result = jdbc.update(query, params);
+	    return result;
+	}
+
+
 
 
 	

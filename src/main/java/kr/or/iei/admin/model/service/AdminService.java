@@ -16,6 +16,7 @@ import kr.or.iei.admin.model.dto.MemberReport;
 import kr.or.iei.admin.model.dto.MemberReportListData;
 import kr.or.iei.admin.model.dto.Notice;
 import kr.or.iei.admin.model.dto.NoticeListData;
+import kr.or.iei.admin.model.dto.Review;
 import kr.or.iei.hospital.model.dto.BusinessAuth;
 
 @Service
@@ -393,6 +394,19 @@ public class AdminService {
 		fld.setCategoryList(categoryList);
 		fld.setContentList(contentList);
 		return fld;
+	}
+
+
+	public List<Review> selectAllReview() {
+		List<Review> list = adminDao.selectAllReview();
+		return list;
+	}
+
+	@Transactional
+	public int deleteReview(int reviewNo) {
+		
+		int result = adminDao.deleteReview(reviewNo);
+		return result;
 	}
 	
 

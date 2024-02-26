@@ -178,19 +178,29 @@ public class HospitalService {
 	}
 
 
-//	public int searchSubjectNo(int doctorNo) {
-//		int subjectNumb = hospitalDao.searchSubjectNo(doctorNo);
-//		System.out.println("서비스"+doctorNo);
-//		return subjectNumb;
-//	}
-//
-//
-//	public int updateSubjectName(int subjectNumb, String subjectNameVal) {
-//		int result = hospitalDao.updateSubjectName(subjectNumb, subjectNameVal);
-//		
-////		
-////		return result;
-//	}
+	@Transactional
+	public int updateDoctorSubject(List<Doctor> doctorList) {
+		//진료과목수정: 변경된 진료과목명(닥터vo) + 변경된 진료과목번호(닥터vo)
+		int result = 0;
+		for(int i=0; i<doctorList.size(); i++) {
+			result = hospitalDao.updateDoctor(doctorList.get(i));
+			result += hospitalDao.updateSubject(doctorList.get(i));
+		}		
+		
+		return result;
+	}
+
+	@Transactional
+	public int updateDoctorPicture(List<Doctor> doctorPictureList) {
+		int result = 0;
+		for(int i=0; i<doctorPictureList.size(); i++) {
+			System.out.println(doctorPictureList.get(i));
+				result += hospitalDao.updateDoctorPicture(doctorPictureList.get(i));
+		}
+		return result;
+	}
+
+
 
 
 

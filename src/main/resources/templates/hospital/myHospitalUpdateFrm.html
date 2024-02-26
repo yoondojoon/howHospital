@@ -199,7 +199,7 @@
 <div class="input_wrap doctor_wrap">
     <div class="input_title">
         의사정보
-        <button type="button" class="btn_primary sm addDoctorBtn">추가</button>
+        <!--   <button type="button" class="btn_primary sm addDoctorBtn">추가</button> -->
     </div>
 </div>
 
@@ -217,11 +217,12 @@
                         <td>
                             <div class="input_item">
                             	<input type="hidden" name="existDoctor_no" th:value="${d.doctorNo}">
+                            	<input type="hidden" name="existSubject_no" th:value="${d.subjectNo}">
                                 <input type="text" class="doc" name="doctor_name" th:placeholder="${d.doctorName}" required>
                                 <!-- input type=file은  value 설정 불가(보안상의 이유)-->
                                     <input type="file" id="docImgInput" class="doc" name="doctor_picture" accept=".jpg, .png, .jpeg" th:onchange="loadImg(this, [[${d.doctorNo}]]);">
                                     <!--  <button type="button" class="btn_primary outline sm deleteDoctorBtn" th:onclick="deleteDoctor(this, [[${d.doctorNo}]])">삭제</button>-->
-                                </div>
+                             </div>
                             </td>
                         </tr>
                         <tr>
@@ -311,7 +312,7 @@
 					</div>
 			
 	
-					<input type="hidden" name="hospitalNo" th:value="${h.hospitalNo}">
+					<input type="hidden" class="hosno" name="hospitalNo" th:value="${h.hospitalNo}">
 				</form>
 			</div>
 		</div>
@@ -327,16 +328,9 @@
 
 <script th:inline="javascript">
 
-function deleteDoctor(obj, doctorNo){
-	if(confirm("파일을 삭제하시겠습니까?")){
-		const input = $("<input>");
-		input.attr("name", "delDoctorNo");
-		input.attr("type", "text");
-		input.val(doctorNo);
-		$("#uploadForm").append(input);
-		$(obj).closest('.doctor_info').remove(); // 클릭된 삭제 버튼의 부모 요소인 .doctor_info를 삭제
-	}
-}
+
+
+
 
 
 
@@ -378,39 +372,37 @@ function searchAddr() {
 			}).open();
 }
 
-    
-function loadImg(obj, doctorNo) {
-	const index = $("[name=doctor_picture]").index(obj);
-	//input type file dom 객체의 files라는 속성이 첨부한 파일 정보
-	console.log(obj.files); //multiple옵션이 있으므로 배열과 유사한 형태로 처리
-	//파일갯수가 0개가 아니고 && 해당 파일이 정상이면
-	if (obj.files.length != 0 && obj.files[0] != 0) {
-		const reader = new FileReader();//파일 정보를 읽어올 수 있는 js객체		
-		reader.readAsDataURL(obj.files[0]); //파일 정보 읽어옴 (비동기) -> ajax로 요청을 날림
-		//readAsData는 텍스트 숫자엄청많은 걸 가져옴 
-		//파일 리더가 정보를 다읽어오고 나면 동작할 함수
-		reader.onload = function(e) { //ajax로 요청날렸을 때 success를 위한 동작
-			//읽어온 파일정보로 img태그의 src 값 세팅
-			$(".img-view").eq(index).attr("src", e.target.result);
-		
-		
-			const input = $("<input>");
-			input.attr("name", "updateDoctorNo");
-			input.attr("type", "text");
-			input.val(doctorNo);
-			$("#uploadForm").append(input);
-		
-		
-		}
-	} else {
-		$(".img-view").eq(index).attr("src", "");
-	}
+function loadImg(obj, doctorNo){
+    const index =$("[name=doctor_picture]").index(obj);
+    if(obj.files.length != 0 && obj.files[0] != 0){
+        const reader = new FileReader();
+        reader.readAsDataURL(obj.files[0]);
+        reader.onload = function(e){
+            $(".img-view").eq(index).attr("src",e.target.result);
+            
+            // 이미지가 업데이트될 때마다 숨겨진 input 요소를 생성합니다.
+            const input = $("<input>");
+            input.attr("name", "updateDoctorNo");
+            input.attr("type", "hidden");
+            input.val(doctorNo);
+            
+            // 기존에 존재하는 동일한 doctorNo 값을 가진 숨겨진 input 요소를 삭제합니다.
+           $(obj).closest('.doctor_info').find('input[name="updateDoctorNo"]').remove();
+
+            
+            // 새로운 숨겨진 input 요소를 추가합니다.
+            $(obj).closest('.doctor_info').append(input);
+        }
+    }
 }
 
 
-
-
-
+document.querySelector('#uploadForm').addEventListener('submit', function(e) {
+    if (!document.getElementById('post_code').value) {
+        e.preventDefault();
+        alert('병원 주소를 입력하세요.');
+    }
+});
 
 </script>
 

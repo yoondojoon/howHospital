@@ -24,6 +24,7 @@
                             <input type="hidden" name="memberName" th:value="${session.member.memberName}"><!-- 예약완료 모달에 정보 알려주기 위함 -->
                             <input type="hidden" name="doctorNo" value="0"><!-- 의사는 null -->
                             <input type="hidden" name="memberNo" th:value="${session.member.memberNo}"><!-- 접수자 본인 -->
+                            <input type="hidden" name="reservationType" value="1"><!-- 예약타입: 대면(1) -->
 
                             <div class="input_wrap">
                                 <h4 class="input_title">진료 대상자</h4>
@@ -129,8 +130,6 @@
             onSelect: selectDay,
             beforeShowDay: disableHoliday
         });
-
-        $(".ui-state-default").eq(0).click();
 
         //휴무일 초기 세팅
         function disableHoliday(date){
@@ -250,6 +249,8 @@
                 $(this).val(`${dpDate} ${thisVal}`);
             })
         }
+        //진입시 클릭 트리거
+        $(".ui-state-active").click();
     });
 
     //자녀 번호 가져오기

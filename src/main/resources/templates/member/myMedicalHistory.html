@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<th:block th:include="common/header"></th:block>
+
+<link rel="stylesheet" href="/css/member/myMedicalHistory.css">
+
+	<!-- container -->
+    <main id="container" class="container myMedicalHistory">
+
+		<!-- contents -->
+        <section id="contents" class="contents">
+            <div class="inner_wrap">
+                <h2>내 진료내역</h2>
+                <p th:if="${session.member != null}" th:text="${session.member.memberName}">세션이 있냐</p>
+
+                .my
+            </div>
+        </section>
+        <!--// contents -->
+        
+    </main>
+    <!--// container -->
+	
+<th:block th:include="common/footer"></th:block>
+<!-- js 링크 -->
+</body>
+</html>
