@@ -14,4 +14,5 @@ public class Reservation {
 	private int reservationStatus;
 	private String regReservation;
 	private int reservationType;
+	private String reservationTime;
 }

@@ -2,8 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <th:block th:include="common/header"></th:block>
 
-<!-- <link rel="stylesheet" href="/css/lib/jquery-ui.min.css"> -->
-<link rel="stylesheet" href="/css/service/reserveContact.css">
+<link rel="stylesheet" href="/css/service/reserveFrm.css">
 <script src="/js/lib/jquery-ui.min.js"></script>
 
 	<!-- container -->
@@ -15,19 +14,22 @@
                 <h2>진료 예약</h2>
                 <div class="reserve_area">
                     <!-- 트리거 만들지? -->
-                    <!-- 예약테이블: 예약번호(시퀀스), 병원번호(h.hospitalNo), 회원번호(session), 예약상태(항상 1), 예약접수시간(선택)(sysdate yyyy-mm-dd hh:24:mi:ss), 예약타입(여기선 1), 예약시간(선택) -->
+                    <!-- 예약테이블: 예약번호(시퀀스), 병원번호(h.hospitalNo), 회원번호(session), 예약상태(항상 1), 예약접수시간(선택)(sysdate yyyy-mm-dd hh:24:mi:ss), 예약타입(1:대면), 예약시간(선택) -->
                     <!-- 예약상세테이블: 예약상세번호(시퀀스), 예약번호(직전예약테이블번호), 의사번호(null), 과목번호(선택), 증상(null 가능), 자녀번호(null 가능) -->
                     <div class="hospital_name" th:text="${h.hospitalName}"></div>
                     <form action="/service/reserveContact" method="post" class="reserve_form">
                         <div class="form_area">
+                            <input type="hidden" name="hospitalNo" th:value="${h.hospitalNo}">
+                            <input type="hidden" name="hospitalName" th:value="${h.hospitalName}"><!-- 예약완료 모달에 정보 알려주기 위함 -->
+                            <input type="hidden" name="memberName" th:value="${session.member.memberName}"><!-- 예약완료 모달에 정보 알려주기 위함 -->
+                            <input type="hidden" name="doctorNo" value="0"><!-- 의사는 null -->
+                            <input type="hidden" name="memberNo" th:value="${session.member.memberNo}"><!-- 접수자 본인 -->
 
                             <div class="input_wrap">
                                 <h4 class="input_title">진료 대상자</h4>
-                                <div class="select" th:if="${session}">
-                                    <!-- 세션에서 값 가져오기 -->
-                                    <select>
-                                        <option th:text="${session.memberName}" th:value="${session.memberNo}">본인</option>
-                                        <option th:text="${session.memberName}" th:value="${session.memberNo}">자녀</option>
+                                <div class="select">
+                                    <select id="nameSelect" name="childNo">
+                                        <option th:value="0" th:text="${session.member.memberName}"></option><!-- 자녀 없을시 childNo는 null -->
                                     </select>
                                 </div>
                             </div>
@@ -35,7 +37,7 @@
                             <div class="input_wrap">
                                 <h4 class="input_title">진료 과목</h4>
                                 <div class="select">
-                                    <select>
+                                    <select name="subjectNo">
                                         <option th:each="s : ${h.subjectList}" th:value="${s.subjectNo}" th:text="${s.subjectName}"></option>
                                     </select>
                                 </div>
@@ -49,37 +51,42 @@
                             <div class="time_wrap">
                                 <h4 class="input_title">예약 시간</h4>
                                 
-                                <h5 class="item_title">오전</h5>
+                                <h5 class="item_title" style="display:none;">오전</h5>
                                 <div class="radio_wrap box_type am_time">
                                     <!-- <div class="radio boxtype">
-                                        <input type="radio" name="radio_boxtype" id="boxtype1_1">
+                                        <input type="radio" name="reservationTime" id="boxtype1_1">
                                         <label for="boxtype1_1">09:30</label>
                                     </div>-->
                                 </div>
 
-                                <h5 class="item_title">오후</h5>
+                                <h5 class="item_title" style="display:none;">오후</h5>
                                 <div class="radio_wrap box_type pm_time">
                                     <!-- <div class="radio boxtype">
-                                        <input type="radio" name="radio_boxtype" id="boxtype1_11">
+                                        <input type="radio" name="reservationTime" id="boxtype1_11">
                                         <label for="boxtype1_11">09:30</label>
                                     </div>-->
-                                </div>    
+                                </div>
+
+                                <div class="no_data_wrap">
+                                    <i class="icon no_data"></i>
+                                    <p>날짜를 선택하세요.</p>
+                                </div>
                             </div>
 
                             <div class="input_wrap">
                                 <h4 class="input_title">증상 입력<em>(선택)</em></h4>
                                 <div class="textarea">
-                                    <textarea placeholder="증상을 입력해주세요(최대 120자)"></textarea>
+                                    <textarea name="symptom" placeholder="증상을 입력해주세요(최대 120자)"></textarea>
                                 </div>
                             </div>
 
                         </div>
 
                         <div class="btn_area">
-                            <button type="submit" class="btn_primary lg">완료</button>
+                            <button type="submit" class="btn_primary lg" onclick="return checkForm();">완료</button>
                         </div>
                     </form>
-                </div>            
+                </div>
             </div>
         </section>
         <!--// contents -->
@@ -97,7 +104,8 @@
     const holiday = String(hospital.time.holiday);
     let holidayArr = [];
     const date = new Date();
-    const today = date.getDay();//0:일 ~ 6:토
+    const currHour = date.getHours();
+    const currMinutes = date.getMinutes();
 
     console.log(hospital);
 
@@ -122,19 +130,7 @@
             beforeShowDay: disableHoliday
         });
 
-        //날짜 선택시 실행할 함수
-        function selectDay(){
-            const day = $("#datepicker").datepicker("getDate").getDay();
-            if(day == 0 || day == 6){
-                //주말 선택
-                timeSetting(weekendHour, day);
-            }else{
-                //평일 선택
-                timeSetting(dayHour, day);
-            }
-        }
-        //최초 날짜 선택 트리거(당일)
-        $(".ui-state-active").click();
+        $(".ui-state-default").eq(0).click();
 
         //휴무일 초기 세팅
         function disableHoliday(date){
@@ -153,8 +149,23 @@
             return [true];
         }
 
+        //날짜 선택시 실행할 함수
+        function selectDay(){
+            const dpDate = $.datepicker.formatDate("yy-mm-dd", $("#datepicker").datepicker("getDate"));
+            const day =  $("#datepicker").datepicker("getDate").getDay();
+            $(".time_wrap .item_title").show();
+            $(".no_data_wrap").hide();
+            if(day == 0 || day == 6){
+                //주말 선택
+                timeSetting(weekendHour, day, dpDate);
+            }else{
+                //평일 선택
+                timeSetting(dayHour, day, dpDate);
+            }
+        }
+
         //평일/주말 선택시 타임테이블 뿌려주기
-        function timeSetting(hour, day){
+        function timeSetting(hour, day, dpDate){
             const hourArr = hour.split("~");
             const timeStart = hourArr[0];
             const timeEnd = hourArr[1];
@@ -200,7 +211,7 @@
                 let timeValue = timeArr[i]+":"+minutes;
                 let radioDivString = [
                     "<div class='radio boxtype'>",
-                        "<input type='radio' name='radio_boxtype' id='boxtype_"+i+"' value='"+timeValue+"'>",
+                        "<input type='radio' name='reservationTime' id='boxtype_"+i+"' value='"+timeValue+"'>",
                         "<label for='boxtype_"+i+"'>"+timeValue+"</label>",
                     "</div>"
                 ].join("");
@@ -215,28 +226,65 @@
             //점심시간 끝나는 시점부턴 예약 가능
             if(day != 0 && day != 6){
                 const lunchHourArr = lunchHour.split("~");
-                const lunchHourStart = $("[name='radio_boxtype'][value='"+lunchHourArr[0]+"']").closest(".boxtype");
-                const lunchHourEnd = $("[name='radio_boxtype'][value='"+lunchHourArr[1]+"']").closest(".boxtype");
-                lunchHourStart.find("[name='radio_boxtype']").prop("disabled", true);
-                lunchHourStart.nextUntil(lunchHourEnd).find("[name='radio_boxtype']").prop("disabled", true);
+                const lunchHourStart = $("[name='reservationTime'][value='"+lunchHourArr[0]+"']").closest(".boxtype");
+                const lunchHourEnd = $("[name='reservationTime'][value='"+lunchHourArr[1]+"']").closest(".boxtype");
+                lunchHourStart.find("[name='reservationTime']").prop("disabled", true);
+                lunchHourStart.nextUntil(lunchHourEnd).find("[name='reservationTime']").prop("disabled", true);
             }
+            //오늘 날짜 선택시 현재시각 기준 지나간 시간은 비활성화(1시간 단위. 예약은 당일 1시간 전까지만 가능)
+            const today = $.datepicker.formatDate('yy-mm-dd', date);
+            if(today == dpDate){
+                for(let i=timeStartHour;i<currHour+1;i++){
+                    if(i < 10){
+                        $("[name='reservationTime'][value^='0"+i+"']").closest(".boxtype").find("[name='reservationTime']").prop("disabled", true);
+                    }
+                    $("[name='reservationTime'][value^='"+(i+1)+"']").closest(".boxtype").find("[name='reservationTime']").prop("disabled", true);
+                    if(currMinutes < 30){
+                        $("[name='reservationTime'][value^='"+(currHour+1)+":30']").closest(".boxtype").find("[name='reservationTime']").prop("disabled", false);    
+                    }
+                }
+            }
+            //시간 선택시 value 부여(YYYY-MM-DD HH24:MM)
+            $(".radio_wrap").find("[name='reservationTime']").on("click", function(){
+                const thisVal = $(this).val();
+                $(this).val(`${dpDate} ${thisVal}`);
+            })
         }
     });
 
-    const memberNo = [[${session.memberNo}]];
     //자녀 번호 가져오기
-    // $.ajax({
-    //     url: "/service/selectMyChildInfo", 
-    //     type: "POST",
-    //     dataType: "JSON",
-    //     data: {memberNo: memberNo},
-    //     success: function(data){
-    //         console.log(data);
-    //     },
-    //     error: function(){
-    //         console.log("에러");
-    //     }
-    // })
+    const memberNo = [[${session.member.memberNo}]];
+    $.ajax({
+        url: "/service/selectMyChildInfo", 
+        type: "POST",
+        dataType: "JSON",
+        data: {memberNo: memberNo},
+        success: function(data){
+            $(data).each(function(index, item){
+                const option = $("<option>");
+                option.val(Number(item.childNo));
+                option.text(item.childName);
+                $("#nameSelect").append(option);
+            })
+        },
+        error: function(){
+            console.log("에러");
+        }
+    })
+
+    //폼 전송시 값 체크
+    function checkForm(){
+        if(!$("[name='reservationTime']:checked").val()){
+            alert("시간을 선택해주세요.");
+            return false;
+        }else{
+            if(confirm("해당 날짜로 예약하시겠습니까?")){
+                return true;
+            }else{
+                return false;
+            }
+        }
+    }
 </script>
 </body>
 </html>
