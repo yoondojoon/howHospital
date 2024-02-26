@@ -2,16 +2,90 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <th:block th:include="common/header"></th:block>
 
-<link rel="stylesheet" href="/css/main.css">
+<link rel="stylesheet" href="/css/lib/swiper-bundle.min.css">
+<link rel="stylesheet" href="/css/main/main.css">
 
 	<!-- container -->
     <main id="container" class="container">
 
 		<!-- contents -->
         <section id="contents" class="contents main">
-            <div class="inner_wrap">
-                <h2>메인</h2>
-            </div>
+            
+            <section class="hero_banner_section">
+                <div class="main_banner">
+                    <div class="swiper-wrapper">
+                        <div class="swiper-slide">
+                            <img src="" alt="">
+                        </div>
+                        <div class="swiper-slide">
+                            <img src="" alt="">
+                        </div>
+                        <div class="swiper-slide">
+                            <img src="" alt="">
+                        </div>
+                        <div class="swiper-slide">
+                            <img src="" alt="">
+                        </div>
+                    </div>
+
+                    <div class="swiper-pagination"></div>
+
+                    <div class="swiper-button-prev"></div>
+                    <div class="swiper-button-next"></div>
+                </div>
+            </section>
+
+            <section class="subject_list_section">
+                <ul class="subject_list">
+                    <li>
+                        <a href="#">무슨무슨과</a>
+                    </li>
+                    <li>
+                        <a href="#">무슨무슨과</a>
+                    </li>
+                    <li>
+                        <a href="#">무슨무슨과</a>
+                    </li>
+                    <li>
+                        <a href="#">무슨무슨과</a>
+                    </li>
+                    <li>
+                        <a href="#">무슨무슨과</a>
+                    </li>
+                    <li>
+                        <a href="#">무슨무슨과</a>
+                    </li>
+                    <li>
+                        <a href="#">무슨무슨과</a>
+                    </li>
+                    <li>
+                        <a href="#">무슨무슨과</a>
+                    </li>
+                    <li>
+                        <a href="#">무슨무슨과</a>
+                    </li>
+                    <li>
+                        <a href="#">무슨무슨과</a>
+                    </li>
+                </ul>
+            </section>
+
+            <section class="community_board_section">
+                <ul class="board_list">
+                    <li>
+                        <a href="#">
+                            <div class="thumb_wrap">
+                                <img src="" alt="">
+                            </div>
+                            <div class="title_wrap">
+                                <strong class="board_title">글제목</strong>
+                                <span class="board_txt">글내용 글내용</span>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+            </section>
+
         </section>
 	    <!--// contents -->
         
@@ -20,5 +94,31 @@
 	
 <th:block th:include="common/footer"></th:block>
 <!-- js 링크 -->
+<script src="/js/lib/swiper-bundle.min.js"></script>
+<script>
+    const mainBanner = new Swiper('.main_banner', {
+        slidesPerView: 1,
+        pagination: {
+            el: '.swiper-pagination',
+        },
+
+        navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+        },
+    });
+
+    const communityBanner = new Swiper('.community_banner', {
+        slidesPerView: 1,
+        pagination: {
+            el: '.swiper-pagination',
+        },
+
+        navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+        },
+    });
+</script>
 </body>
 </html>

@@ -13,8 +13,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import jakarta.servlet.http.HttpServletResponse;
 import kr.or.iei.FileUtils;
 import kr.or.iei.hospital.model.dto.Hospital;
+import kr.or.iei.hospital.model.dto.PrescriptionFile;
 import kr.or.iei.hospital.model.service.HospitalService;
 import kr.or.iei.member.model.service.MemberService;
 import kr.or.iei.reservation.model.dto.Reservation;
@@ -146,6 +148,33 @@ public class ServiceController {
 	public List selectMyResHistory(int memberNo, int start, int amount) {
 		List myHistoryList = reservationService.selectMyResHistory(memberNo, start, amount);
 		return myHistoryList;
+	}
+	
+	@ResponseBody
+	@PostMapping(value="/selectMyResDetail")
+	public ReservationDetail selectMyResDetail(int reservationNo, Model model) {
+		ReservationDetail rd = reservationService.selectMyResDetail(reservationNo);
+		return rd;
+	}
+	
+	@ResponseBody
+	@PostMapping(value="/cancelMyReservation")
+	public int cancelMyReservation(int reservationNo, Model model) {
+		int result = reservationService.cancelMyReservation(reservationNo);
+		return result;
+	}
+	
+	@ResponseBody
+	@GetMapping(value="/selectMyPrescription")
+	public PrescriptionFile selectMyPrescription(int reservationNo, Model model) {
+		PrescriptionFile file = reservationService.selectMyPrescription(reservationNo);
+		return file;
+	}
+	
+	@GetMapping(value="/prescriptionDown")
+	public void prescriptionDown(PrescriptionFile file, HttpServletResponse response) {
+		String savepath = root + "/reservation/";
+		fileUtils.downloadFile(savepath, file.getPrescriptionName(), file.getPrescriptionPath(), response);
 	}
 }
 

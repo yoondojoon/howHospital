@@ -380,13 +380,6 @@ public class MemberController {
 		return "/member/myMedicalHistory";
 	}
 	
-	//내 진료내역 상세
-	@PostMapping(value="/myMedicalDetail")
-	public String myMedicalDetail(int reservationNo, Model model) {
-		ReservationDetail rd = reservationService.selectMyReservationDetail(reservationNo);
-		model.addAttribute("rd", rd);
-		return "/member/myMedicalDetail";
-	}
 }
 
 
