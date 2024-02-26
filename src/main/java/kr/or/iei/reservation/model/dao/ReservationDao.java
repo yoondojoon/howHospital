@@ -12,6 +12,7 @@ import kr.or.iei.hospital.model.dto.DoctorRowMapper;
 import kr.or.iei.reservation.model.dto.H_ReservationRowMapper;
 import kr.or.iei.reservation.model.dto.Reservation;
 import kr.or.iei.reservation.model.dto.ReservationDetail;
+import kr.or.iei.reservation.model.dto.ReservationFile;
 import kr.or.iei.reservation.model.dto.ReservationRowMapper;
 
 @Repository
@@ -94,8 +95,8 @@ public class ReservationDao {
 	}
 
 	public int insertReservation(Reservation r) {
-		String query = "insert into reservation_tbl values(reservation_seq.nextval,?,?,1,to_char(sysdate,'yyyy-mm-dd hh24:mm:ss'),1,?)";
-		Object[] params = {r.getHospitalNo(),r.getMemberNo(),r.getReservationTime()};
+		String query = "insert into reservation_tbl values(reservation_seq.nextval,?,?,1,to_char(sysdate,'yyyy-mm-dd hh24:mm:ss'),?,?)";
+		Object[] params = {r.getHospitalNo(),r.getMemberNo(),r.getReservationType(),r.getReservationTime()};
 		int result = jdbc.update(query, params);
 		return result;
 	}
@@ -106,6 +107,7 @@ public class ReservationDao {
 		return currResNo;
 	}
 	
+	
 	public int insertReservationDetail(int currResNo, ReservationDetail rd) {
 		String query = "insert into reservation_detail_tbl values(reservation_detail_seq.nextval,?,?,?,?,?)";
 		String doctorNo = rd.getDoctorNo() == 0 ? null : String.valueOf(rd.getDoctorNo());
@@ -115,6 +117,19 @@ public class ReservationDao {
 		int result = jdbc.update(query, params);
 		return result;
 	}
-
+	
+	public int insertReservationFile(ReservationFile rFile) {
+		String query = "insert into reservation_file values(reservation_file_seq.nextval,?,?,?)";
+		Object[] params = {rFile.getReservationNo(), rFile.getFilename(), rFile.getFilepath()};
+		int result = jdbc.update(query, params);
+		return result;
+	}
+	
+	public int insertReservationContactless(Reservation r) {
+		String query = "insert into reservation_tbl values(reservation_seq.nextval,?,?,1,to_char(sysdate,'yyyy-mm-dd hh24:mm:ss'),?,to_char(sysdate,'yyyy-mm-dd hh24:mm:ss'))";
+		Object[] params = {r.getHospitalNo(),r.getMemberNo(),r.getReservationType()};
+		int result = jdbc.update(query, params);
+		return result;
+	}
 	
 }

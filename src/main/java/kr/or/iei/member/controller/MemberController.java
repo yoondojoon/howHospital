@@ -363,6 +363,11 @@ public class MemberController {
 	
 	
 	
+	//내 진료내역 보기
+	@GetMapping(value="/myMedicalDetail")
+	public String myMedicalDetail() {
+		return "/member/myMedicalDetail";
+	}
 	
 	
 }
