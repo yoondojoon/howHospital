@@ -1,0 +1,42 @@
+.title{
+	border-bottom:1px solid gray;
+	height:40px;
+	line-height:40px;
+}
+
+.star-wrap{
+	width:200px;
+    overflow: hidden;
+}
+
+.star-wrap>span{
+	margin-top:10px;
+    float: left;
+    color: lightgray;
+    font-size: 30px;
+}
+
+
+.star-on-wrap>span{
+    color: gold;
+}
+
+.star-on{
+    position: absolute;
+    left: 0px;
+    overflow: hidden;
+}
+
+.star-on-wrap{
+    width: 150px;
+}
+
+.star-wrap2{
+    position: relative;
+}
+
+
+.content{
+	display:flex;
+	justify-content:flex-start;
+}

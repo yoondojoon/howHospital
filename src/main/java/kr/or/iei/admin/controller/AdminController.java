@@ -7,6 +7,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.google.gson.JsonObject;
 
 import kr.or.iei.admin.model.dto.AdminBusinessAuth;
 import kr.or.iei.admin.model.dto.AdminBusinessAuthListData;
@@ -15,6 +18,7 @@ import kr.or.iei.admin.model.dto.MemberReport;
 import kr.or.iei.admin.model.dto.MemberReportListData;
 import kr.or.iei.admin.model.dto.Notice;
 import kr.or.iei.admin.model.dto.NoticeListData;
+import kr.or.iei.admin.model.dto.Review;
 import kr.or.iei.admin.model.service.AdminService;
 
 @Controller
@@ -181,5 +185,21 @@ public class AdminController {
 		model.addAttribute("icon","warning");
 		model.addAttribute("loc","/");
 		return "common/msg";
+	}
+	
+	@GetMapping("/manageReview")
+	public String manageReview(Model model) {
+		List<Review> reviewList = adminService.selectAllReview();
+		model.addAttribute("reviewList", reviewList);
+		return "admin/manageReview";
+	}
+	
+	@ResponseBody
+	@GetMapping("/deleteReview")
+	public int deleteReview(int reviewNo) {
+		int result = adminService.deleteReview(reviewNo);
+		
+		
+		return result;
 	}
 }
