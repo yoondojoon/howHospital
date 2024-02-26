@@ -155,6 +155,7 @@ public class HospitalController {
 			String[] doctor_experience, String[] subjectSelect, MultipartFile hospital_picture,
 			MultipartFile[] doctor_picture, String CostOne, String CostTwo, Model model, int[] updateDoctorNo,
 			int[] delDoctorNo, int[] existSubject_no) {
+	    System.out.println("컨트롤러 멀티파트: " + doctor_picture);
 
 		// 병원정보 및 시간 Update
 		hospital.setHospitalTel(hospitalTelFirst + "-" + hospitalTelLast);
@@ -186,10 +187,10 @@ public class HospitalController {
 		result += hospitalService.updateDoctorSubject(doctorList);
 
 		// 의사사진 수정 (변경된 의사번호랑, 변경된 파일명 받아서 업데이트)
-		if (updateDoctorNo.length > 0) {
+		if (updateDoctorNo != null) {
 		    String savepath = root + "/doctor/";
 		    List<Doctor> doctorPictureList = new ArrayList<>(); // List를 초기화
-		    
+
 		    for (int i = 0; i < updateDoctorNo.length; i++) {
 		        Doctor doctor = new Doctor();
 		        doctor.setDoctorNo(updateDoctorNo[i]); // 의사번호 설정
@@ -206,19 +207,13 @@ public class HospitalController {
 		        doctorPictureList.add(doctor); // 리스트에 의사 객체 추가
 		    }
 		    
-		    System.out.println("컨트롤러닥터사진: " + doctorPictureList);
 		    result += hospitalService.updateDoctorPicture(doctorPictureList);
 		}
 		
 		
 		
 		
-		
-		
-		
-		
-		
-		
+	if (updateDoctorNo != null) {
 		if (result == (doctorList.size() + subjectList.size() + updateDoctorNo.length + 2)) {
 			System.out.println("성공");
 			return "redirect:/";
@@ -227,9 +222,16 @@ public class HospitalController {
 			System.out.println("실패");
 			return "redirect:/";
 		}
+	}else {
+		if (result == (doctorList.size() + subjectList.size() + 2)) {
+			System.out.println("성공");
+			return "redirect:/";
 
-		// 의사정보, 과목 Insert
-		// 의사정보, 과목 Delete
+		} else {
+			System.out.println("실패");
+			return "redirect:/";
+		}
+	}
 
 	}
 
