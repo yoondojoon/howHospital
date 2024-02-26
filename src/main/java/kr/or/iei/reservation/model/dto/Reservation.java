@@ -15,4 +15,10 @@ public class Reservation {
 	private String regReservation;
 	private int reservationType;
 	private String reservationTime;
+	private String hospitalName;
+	private String resTimeDate;
+	private String resTimeDay;
+	private String resTimeTime;
+	private String memberName;
+	private String childName;
 }

@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import kr.or.iei.hospital.model.dto.DoctorRowMapper;
 import kr.or.iei.reservation.model.dto.H_ReservationRowMapper;
+import kr.or.iei.reservation.model.dto.MyReservationHistoryRowMapper;
 import kr.or.iei.reservation.model.dto.Reservation;
 import kr.or.iei.reservation.model.dto.ReservationDetail;
 import kr.or.iei.reservation.model.dto.ReservationFile;
@@ -23,6 +24,8 @@ public class ReservationDao {
 	private H_ReservationRowMapper h_ReservationRowMapper;
 	@Autowired
 	private DoctorRowMapper doctorRowMapper;
+	@Autowired
+	private MyReservationHistoryRowMapper myReservationHistoryRowMapper;
 	public List selectReservation(int startPage, int endPage,int memberNo) {
 		String query = 
 				"select * from\r\n" + 
@@ -131,5 +134,49 @@ public class ReservationDao {
 		int result = jdbc.update(query, params);
 		return result;
 	}
+
+	public int myResTotalCount(int memberNo) {
+		String query = "select count(*) from reservation_tbl where member_no=?";
+		Object[] params = {memberNo};
+		int result = jdbc.queryForObject(query, Integer.class, params);
+		return result;
+	}
+	
+	public List selectMyResHistory(int memberNo, int start, int end) {
+		String query = "select * from\r\n" + 
+				"(select rownum rnum, r2.* from \r\n" + 
+				"(select reservation_no, reservation_status, reservation_type,\r\n" + 
+				"(select member_name from member_tbl where member_no=r.member_no) member_name,\r\n" + 
+				"(select child_name from child_tbl where child_no in (select child_no from reservation_detail_tbl where reservation_no=r.reservation_no)) child_name, hospital_no,\r\n" + 
+				"(select hospital_name from hospital_tbl where hospital_no=r.hospital_no) hospital_name,\r\n" + 
+				"substr(reservation_time,1,instr(reservation_time,' ',1,1)-1) res_time_date,\r\n" + 
+				"to_char(to_date(substr(reservation_time,1,instr(reservation_time,' ',1,1)-1),'yyyy-mm-dd'),'dy') res_time_day,\r\n" + 
+				"substr(reservation_time,instr(reservation_time,' ',1,1)+1) res_time_time from reservation_tbl r where member_no=? order by 1 desc) r2)\r\n" + 
+				"where rnum between ? and ?";
+		Object[] params = {memberNo, start, end};
+		List myHistoryList = jdbc.query(query, myReservationHistoryRowMapper, params);
+		return myHistoryList;
+	}
+
+	public ReservationDetail selectMyReservationDetail(int reservationNo) {
+		String query = "select reservation_status, reservation_type,\r\n" + 
+				"(select member_name from member_tbl where member_no=r.member_no) member_name,\r\n" + 
+				"(select child_name from child_tbl where child_no in (select child_no from reservation_detail_tbl where reservation_no=r.reservation_no)) child_name, hospital_no,\r\n" + 
+				"substr(reg_reservation,1,instr(reg_reservation,' ',1,1)-1) reg_date,\r\n" + 
+				"to_char(to_date(substr(reg_reservation,1,instr(reg_reservation,' ',1,1)-1),'yyyy-mm-dd'),'dy') reg_day,\r\n" + 
+				"substr(reg_reservation,instr(reg_reservation,' ',1,1)+1) reg_time,\r\n" + 
+				"substr(reservation_time,1,instr(reservation_time,' ',1,1)-1) res_time_date,\r\n" + 
+				"to_char(to_date(substr(reservation_time,1,instr(reservation_time,' ',1,1)-1),'yyyy-mm-dd'),'dy') res_time_day,\r\n" + 
+				"substr(reservation_time,instr(reservation_time,' ',1,1)+1) res_time_time,\r\n" + 
+				"(select doctor_name from doctor_tbl where doctor_no in(select doctor_no from reservation_detail_tbl where reservation_no=r.reservation_no)) doctor_name,\r\n" + 
+				"(select hospital_name from hospital_tbl where hospital_no=r.hospital_no) hospital_name,\r\n" + 
+				"(select symptom from reservation_detail_tbl where reservation_no=r.reservation_no) symptom\r\n" + 
+				"from reservation_tbl r where reservation_no=?";
+		Object[] params = {reservationNo};
+		List myReservationDetail = jdbc.query(query, myReservationHistoryRowMapper, params);//수정 예정
+		return null;
+	}
+
+	
 	
 }

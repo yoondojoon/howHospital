@@ -140,6 +140,13 @@ public class ServiceController {
 		}
 		return "/common/modalMsg";
 	}
+	
+	@ResponseBody
+	@PostMapping(value="/selectMyResHistory")
+	public List selectMyResHistory(int memberNo, int start, int amount) {
+		List myHistoryList = reservationService.selectMyResHistory(memberNo, start, amount);
+		return myHistoryList;
+	}
 }
 
 
