@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import kr.or.iei.reservation.model.dao.ReservationDao;
 import kr.or.iei.reservation.model.dto.Reservation;
 import kr.or.iei.reservation.model.dto.ReservationDetail;
+import kr.or.iei.reservation.model.dto.ReservationFile;
 import kr.or.iei.reservation.model.dto.ReservationListData;
 
 @Service
@@ -105,11 +106,15 @@ public class ReservationService {
 		return result;
 	}
 	@Transactional
-	public int insertReserveContactless(Reservation r, ReservationDetail rd) {
-		int result = reservationDao.insertReservation(r);
+	public int insertReserveContactless(Reservation r, ReservationDetail rd, List<ReservationFile> fileList) {
+		int result = reservationDao.insertReservationContactless(r);
 		if(result > 0) {
 			int currResNo = reservationDao.selecteCurrResNo();
-			result = reservationDao.insertReservationDetail(currResNo, rd);
+			for(ReservationFile rFile : fileList) {
+				rFile.setReservationNo(currResNo);
+				result += reservationDao.insertReservationFile(rFile); 
+			}
+			result += reservationDao.insertReservationDetail(currResNo, rd);
 		}
 		return result;
 	}

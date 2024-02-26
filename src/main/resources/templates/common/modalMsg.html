@@ -22,7 +22,7 @@
 			<div class="modal_content">
 				<ul class="result_info">
 					<li th:utext="${hospitalName}"></li>
-					<li th:utext="${reservationTime}"></li>
+					<li th:if=${reservationTime} th:utext="${reservationTime}"></li>
 					<li th:utext="${memberName}"></li>
 				</ul>
 			</div>

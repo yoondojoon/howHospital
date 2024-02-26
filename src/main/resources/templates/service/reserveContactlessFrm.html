@@ -22,6 +22,7 @@
                             <input type="hidden" name="hospitalName" th:value="${h.hospitalName}"><!-- 예약완료 모달에 정보 알려주기 위함 -->
                             <input type="hidden" name="memberName" th:value="${session.member.memberName}"><!-- 예약완료 모달에 정보 알려주기 위함 -->
                             <input type="hidden" name="memberNo" th:value="${session.member.memberNo}"><!-- 접수자 본인 -->
+                            <input type="hidden" name="reservationType" value="2"><!-- 예약타입: 비대면(2) -->
 
                             <div class="input_wrap">
                                 <h4 class="input_title">진료 대상자</h4>
@@ -50,7 +51,7 @@
 
                             <div class="input_wrap">
                                 <div class="input_item">
-                                    <input type="file" name="imgFile" accept=".jpg, .png, .jpeg" id="fileInput" multiple>
+                                    <input type="file" name="imgFile" accept=".jpg, .png, .jpeg" id="fileInput" multiple th:onchange="loadImg(this);">
                                     <label for="fileInput"><span class="blind">사진 선택</span></label>
                                 </div>
                             </div>
@@ -248,6 +249,10 @@
                 return false;
             }
         }
+    }
+
+    function loadImg(obj){
+        console.log(obj);
     }
 </script>
 </body>
