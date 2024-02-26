@@ -124,4 +124,21 @@ public class ReservationService {
 		int result = reservationDao.updateReservationDetail(hr);
 		return result;
 	}
+	
+	public int myResTotalCount(int memberNo) {
+		int myResTotalCount = reservationDao.myResTotalCount(memberNo);
+		return myResTotalCount;
+	}
+	
+	public List selectMyResHistory(int memberNo, int start, int amount) {
+		int end = start+amount-1;
+		List myHistoryList = reservationDao.selectMyResHistory(memberNo, start, end);
+		return myHistoryList;
+	}
+	
+	public ReservationDetail selectMyReservationDetail(int reservationNo) {
+		ReservationDetail rd = reservationDao.selectMyReservationDetail(reservationNo);
+		return null;
+	}
+	
 }
