@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 
-<link rel='stylesheet'
-	href='https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/css/bootstrap.min.css'>
 
 <th:block th:include="common/header"></th:block>
+<link rel="stylesheet" href="/css/admin/faqList.css">
+
+<script src="/js/lib/jquery-ui.min.js"></script>
 
 
 <!-- container -->
@@ -15,43 +16,17 @@
 		<div class="inner_wrap">
 			<h2>자주묻는질문</h2>
 			<th:block th:each="category : ${categoryList}">
-				<div class="accordion" id="accordionExample">
-					<div class="accordion-item">
-						<h2 class="accordion-header" id="headingOne">
-							<button class="accordion-button" type="button"
-								data-bs-toggle="collapse" data-bs-target="#collapseOne"
-								aria-expanded="true" aria-controls="collapseOne"
-								th:text="${category.faqTitle}"></button>
-						</h2>
+				<div class="menu">
+					<ul class="main-menu" th:text="${category.faqTitle}">
 						<th:block th:if="${category.category== content.faqRef}"
 							th:each="content : ${contentList}">
-							<div id="collapseOne" class="accordion-collapse collapse show"
-								aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-								<div class="accordion-body">
-
-									<div class="accordion" id="sub-accordionExample">
-										<div class="accordion-item">
-											<h2 class="accordion-header" id="sub-headingOne">
-												<button class="accordion-button" type="button"
-													data-bs-toggle="collapse" data-bs-target="#sub-collapseOne"
-													aria-expanded="true" aria-controls="collapseOne" th:text="${content.faqTitle}"></button>
-											</h2>
-											<div id="sub-collapseOne"
-												class="accordion-collapse collapse show"
-												aria-labelledby="sub-headingOne"
-												data-bs-parent="#sub-accordionExample">
-												<div class="accordion-body">
-													<strong th:text="${content.faqContent}">
-													<code>.accordion-body</code>
-													, though the transition does limit overflow.
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
+							<ul class="sub-menu" th:text="${content.faqTitle}">
+								<ul class="sub-menu">
+									<li th:text="${content.faqContent}"></li>
+								</ul>
+							</ul>
 						</th:block>
-					</div>
+					</ul>
 				</div>
 			</th:block>
 		</div>
@@ -65,7 +40,8 @@
 
 <th:block th:include="common/footer"></th:block>
 <!-- js 링크 -->
-<script
-	src='https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/js/bootstrap.min.js'></script>
+<script src='/js/common/faqList.js'></script>
+
+
 </body>
 </html>
