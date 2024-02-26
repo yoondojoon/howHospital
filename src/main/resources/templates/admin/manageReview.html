@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<!-- <link rel="stylesheet" href=""> 이 자리에 자기 css 넣기-->
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+	rel="stylesheet">
+
+<link rel="stylesheet" href="/css/admin/manageReview.css">
+<th:block th:include="common/header"></th:block>
+<style>
+.item-review {
+	width: 800px;
+	height: 150px;
+	margin: 30px auto;
+	outline: 1px solid red;
+	border: 1px solid gray;
+	border-radius: 20px;
+	margin: 30px auto;
+	position: relative
+}
+
+h2 {
+	margin: 0;
+}
+
+.garbage {
+	position: absolute;
+	top: 10px;
+	right: 10px;
+}
+</style>
+
+<!-- container -->
+<main id="container" class="container">
+	<section id="contents" class="contents adminMain">
+		<div class="inner_wrap">
+			<h2>리뷰 관리</h2>
+			<th:block th:each="review : ${reviewList}">
+				<input type="hidden" th:value="${review.reviewNo}">
+				<div class="item-review">
+					<h2 class="title"
+						th:text="${review.memberName} + '님이 작성하신 [' + ${review.reviewTitle} + ']'"></h2>
+
+					<label for="point" style="margin: 50px;">별점</label>
+					<div class="content">
+						<div class="star-wrap star-wrap2" name="point">
+							<span class="material-icons">star</span> <span
+								class="material-icons">star</span> <span class="material-icons">star</span>
+							<span class="material-icons">star</span> <span
+								class="material-icons">star</span>
+							<div class="star-on">
+								<div class="star-wrap star-on-wrap"
+									th:style="'width:'+${review.reviewRating}*30 + 'px;'">
+									<span class="material-icons">star</span> <span
+										class="material-icons">star</span> <span
+										class="material-icons">star</span> <span
+										class="material-icons">star</span> <span
+										class="material-icons">star</span>
+								</div>
+							</div>
+						</div>
+						<div class="content">
+							<p th:text="${review.reviewContent}"></p>
+						</div>
+						<div class="content garbage">
+							<span class="material-icons" style="color: red;"
+								th:value="${review.reviewNo}" onclick="deleteFunc(this)">delete</span>
+						</div>
+					</div>
+				</div>
+			</th:block>
+		</div>
+	</section>
+</main>
+<!--// container -->
+
+<th:block th:include="common/footer"></th:block>
+<!-- js 링크 -->
+<script>
+	function deleteFunc(element) {
+		const reviewNo = element.getAttribute('value');
+		
+		$.ajax({
+			url : "/admin/deleteReview",
+			type : "get",
+			data:{reviewNo, reviewNo},
+			dataType : "json",
+			success : function(data){
+				console.log("성공");
+			},
+			error : function(){
+				console.log("에러");
+			}
+		});
+		
+	}
+</script>
+
+</body>
