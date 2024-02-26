@@ -10,12 +10,13 @@ import org.springframework.transaction.annotation.Transactional;
 import kr.or.iei.admin.model.dao.AdminDao;
 import kr.or.iei.admin.model.dto.AdminBusinessAuth;
 import kr.or.iei.admin.model.dto.AdminBusinessAuthListData;
+import kr.or.iei.admin.model.dto.Faq;
+import kr.or.iei.admin.model.dto.FaqListData;
 import kr.or.iei.admin.model.dto.MemberReport;
 import kr.or.iei.admin.model.dto.MemberReportListData;
 import kr.or.iei.admin.model.dto.Notice;
 import kr.or.iei.admin.model.dto.NoticeListData;
 import kr.or.iei.hospital.model.dto.BusinessAuth;
-import kr.or.iei.member.model.dto.Member;
 
 @Service
 public class AdminService {
@@ -381,6 +382,17 @@ public class AdminService {
 			result = false;
 		}
 		return result;
+	}
+
+
+	public FaqListData selectAllFaq() {
+		List<Faq> categoryList = adminDao.selectCategory();
+		List<Faq> contentList = adminDao.selectContentList();
+		
+		FaqListData fld = new FaqListData();
+		fld.setCategoryList(categoryList);
+		fld.setContentList(contentList);
+		return fld;
 	}
 	
 

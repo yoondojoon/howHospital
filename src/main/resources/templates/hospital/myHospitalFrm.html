@@ -68,7 +68,7 @@
 			<div class="input_wrap">
 				<div class="input_title">병원주소</div>
 				<div class="input_item">
-					<input type="text" name="hospitalPostCode" id="post_code"  readonly>
+					<input type="text" name="hospitalPostcode" id="post_code"  readonly>
 					<button type="button" class="btn_primary" onclick="searchAddr()">주소찾기</button>
 				</div>
 				<div class="input_item">
@@ -123,7 +123,6 @@
 
 
 							<!-- 점심 시간 -->
-
 							<div class="input_item time_zone">
 								<div class="time_table">
 									<label for="select">점심</label>
@@ -155,7 +154,6 @@
 							</div>
 						</div>
 
-
 						<!-- 전화번호 입력 -->
 						<div class="input_wrap">
 							<div class="input_title">전화번호</div>
@@ -181,8 +179,6 @@
 									placeholder="전화번호를 입력하세요." required>
 							</div>
 						</div>
-
-
 
 						<!-- 의사정보 등록  -->
 			<div class="input_wrap">
@@ -240,10 +236,9 @@
 <!--// container -->
 
 
-<script src="/js/common/myHospitalFrm.js"></script>
+
 
 <script>
-
 function searchAddr() {
 	new daum.Postcode(
 			{
@@ -313,7 +308,7 @@ function loadImg(obj) {
 //옵션 없이 지도 객체를 생성하면 서울 시청을 중심으로 하는 16 레벨의 지도가 생성됩니다.
 
 </script>
-
+<script src="/js/common/myHospitalFrm.js"></script>
 
 <th:block th:include="common/footer"></th:block>
 </body>

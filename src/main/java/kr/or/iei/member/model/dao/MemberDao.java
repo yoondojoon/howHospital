@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import kr.or.iei.member.model.dto.Child;
+import kr.or.iei.member.model.dto.ChildRowMapper;
 import kr.or.iei.member.model.dto.Member;
 import kr.or.iei.member.model.dto.MemberRowMapper;
 
@@ -19,7 +21,12 @@ public class MemberDao {
 	@Autowired
 	public MemberRowMapper memberRowMapper;
 	
+
 	//로그인
+
+	@Autowired
+	public ChildRowMapper childRowMapper;
+
 	public Member signIn(String memberEmail, String memberPassword) {
 		
 		
@@ -82,6 +89,7 @@ public class MemberDao {
 		return cnt;
 	}
 
+
 	//비밀번호 중복 체크
 	public int checkPassword(String memberPassword, String memberEmail) {
 		
@@ -116,6 +124,15 @@ public class MemberDao {
 		
 		
 		return result;
+		
+	}
+
+	public List selectMyChildInfo(int memberNo) {
+		String query = "select * from child_tbl where member_no=?";
+		Object[] params = {memberNo};
+		List childList = jdbc.query(query, childRowMapper, params);
+		return childList;
+
 	}
 	
 	

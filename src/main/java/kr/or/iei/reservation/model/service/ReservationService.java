@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import kr.or.iei.reservation.model.dao.ReservationDao;
+import kr.or.iei.reservation.model.dto.Reservation;
+import kr.or.iei.reservation.model.dto.ReservationDetail;
 import kr.or.iei.reservation.model.dto.ReservationListData;
 
 @Service
@@ -91,6 +93,24 @@ public class ReservationService {
 	@Transactional
 	public int updateReservation(int selectValue, int reservationNo) {
 		int result = reservationDao.updateReservation(selectValue,reservationNo);
+		return result;
+	}
+	@Transactional
+	public int insertReserveContact(Reservation r, ReservationDetail rd) {
+		int result = reservationDao.insertReservation(r);
+		if(result > 0) {
+			int currResNo = reservationDao.selecteCurrResNo();
+			result = reservationDao.insertReservationDetail(currResNo, rd);
+		}
+		return result;
+	}
+	@Transactional
+	public int insertReserveContactless(Reservation r, ReservationDetail rd) {
+		int result = reservationDao.insertReservation(r);
+		if(result > 0) {
+			int currResNo = reservationDao.selecteCurrResNo();
+			result = reservationDao.insertReservationDetail(currResNo, rd);
+		}
 		return result;
 	}
 }

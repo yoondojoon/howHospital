@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>병원어때</title>
+<link rel="stylesheet" href="/css/common/font.css">
+<link rel="stylesheet" href="/css/common/reset.css">
+<link rel="stylesheet" href="/css/common/common.css">
+<script src="/js/lib/jquery-3.7.1.js"></script>
+</head>
+<body>
+
+<div class="modal">
+	<div class="modal_wrap">
+		
+		<div class="modal_header">
+			<div class="modal_title" th:text="${titleMsg}"></div>
+			<div class="title_sub" th:text="${titleSub}"></div>
+		</div>
+
+		<div class="modal_container">
+			<div class="modal_content">
+				<ul class="result_info">
+					<li th:utext="${hospitalName}"></li>
+					<li th:utext="${reservationTime}"></li>
+					<li th:utext="${memberName}"></li>
+				</ul>
+			</div>
+		</div>
+		
+		<div class="modal_footer">
+			<div class="btn_area">
+				<a th:href="${loc}" class="btn_primary lg">확인</a>
+			</div>
+		</div>
+		
+	</div>
+</div>
+
+</body>
+</html>

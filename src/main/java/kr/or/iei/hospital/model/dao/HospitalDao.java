@@ -186,12 +186,11 @@ public class HospitalDao {
 	}
 
 	public int insertHospitalEnroll(Hospital hospital) {
-		String query = "INSERT INTO HOSPITAL_TBL VALUES(HOSPITAL_SEQ.nextval, ?, ?, ?, ?, ?, ?, ?, ? ,?, ?, ?, ?, ?)";
-		Object[] params = {hospital.getMemberNo(), hospital.getHospitalName(), hospital.getHospitalIntro(), hospital.getHospitalAddress(), hospital.getLat(), hospital.getLng(), hospital.getHospitalTel(), hospital.getCostOne(), hospital.getCostTwo(), hospital.getHospitalPicture(), hospital.getHospitalPostCode(), hospital.getHospitalAddrMain(), hospital.getHospitalAddrSub()};
+		String query = "INSERT INTO HOSPITAL_TBL VALUES(HOSPITAL_SEQ.nextval, ?, ?, ?, ?, ?, ? ,?, ?, ?, ?, ?, ?)";
+		Object[] params = {hospital.getMemberNo(), hospital.getHospitalName(), hospital.getHospitalIntro(), hospital.getLat(), hospital.getLng(), hospital.getHospitalTel(), hospital.getCostOne(), hospital.getCostTwo(), hospital.getHospitalPicture(), hospital.getHospitalPostcode(), hospital.getHospitalAddrMain(), hospital.getHospitalAddrSub()};
 		int reuslt = jdbc.update(query, params);
 		return reuslt;
 	}
-
 
 
 	public int insertHospitalTime(int hospitalNo, Time time) {
@@ -259,6 +258,36 @@ public class HospitalDao {
 		return (Hospital)list.get(0);
 	}
 
+	//병원 테이블 Update
+	public int updateHospital(Hospital hospital) {
+		String query = "update hospital_tbl set hospital_intro=?, lat=?, lng=?, hospital_tel=?, cost_one=?, cost_two=?, hospital_postcode=?, hospital_addr_main=?, hospital_addr_sub=? where hospital_no = ?"; 
+		Object[] params = {hospital.getHospitalIntro(), hospital.getLat(), hospital.getLng(), hospital.getHospitalTel(), hospital.getCostOne(), hospital.getCostTwo(), hospital.getHospitalPostcode(), hospital.getHospitalAddrMain(), hospital.getHospitalAddrSub(), hospital.getHospitalNo()}; 
+		int result = jdbc.update(query, params);
+		return result;
+	}
+
+
+	//시간 테이블 Update
+	public int updateHospitalTime(int hospitalNo, Time time) {
+		String query = "update time_tbl set day_hour=?, weekend_hour=?, lunch_hour=?, holiday=? where hospital_no=?";
+		Object[] params = {time.getDayHour(), time.getWeekendHour(), time.getLunchHour(), time.getHoliday(), hospitalNo};
+		int result = jdbc.update(query, params);
+		return result;
+	}
+
+
+
+
+	public int updateDoctor(Doctor doctor) {
+        String query = "UPDATE doctor_tbl SET doctor_name=?, doctor_education=?, doctor_experience=? WHERE doctor_no=?";
+        Object[] params = {doctor.getDoctorName(), doctor.getDoctorEducation(), doctor.getDoctorExperience(), doctor.getDoctorNo()};
+        int result = jdbc.update(query, params);
+	    return result;
+	  
+	}
+
+
+	
 
 	
 }

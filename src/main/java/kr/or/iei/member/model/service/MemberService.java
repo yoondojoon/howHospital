@@ -74,6 +74,7 @@ public class MemberService {
 		return cnt;
 	}
 
+
 	
 
 	public int checkPassword(String memberPassword, String memberEmail) {
@@ -98,4 +99,11 @@ public class MemberService {
 		int result = memberDao.childAdd(memberNo,childName,childRrn);
 		
 		return result;
+
+	}
+		
+	public List selectMyChildInfo(int memberNo) {
+		List childList = memberDao.selectMyChildInfo(memberNo);
+		return childList;
+
 	}}

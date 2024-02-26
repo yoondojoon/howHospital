@@ -128,7 +128,7 @@ public class HospitalService {
 		hospital.setTime(time);
 		hospital.setDoctorList(doctorList);
 		return hospital;
-		
+
 	}
 
 
@@ -158,26 +158,45 @@ public class HospitalService {
 		time.setLunchEndTime(lunchEndTime);
 		hospital.setTime(time);
 		
+		
 		List doctorList = hospitalDao.searchSubjectDoctorList(hospitalNo);
 		hospital.setSubjectList(subjectList);
-
 		hospital.setDoctorList(doctorList);
 		return hospital;
 	}
 
+	@Transactional
+	public int updateHospital(Hospital hospital, Time time) {
+
+		//병원 테이블 Update
+		int result = hospitalDao.updateHospital(hospital);
+
+		//시간 테이블 Update
+		result += hospitalDao.updateHospitalTime(hospital.getHospitalNo(), time);
+
+		return result;
+	}
+
+
+//	public int searchSubjectNo(int doctorNo) {
+//		int subjectNumb = hospitalDao.searchSubjectNo(doctorNo);
+//		System.out.println("서비스"+doctorNo);
+//		return subjectNumb;
+//	}
+//
+//
+//	public int updateSubjectName(int subjectNumb, String subjectNameVal) {
+//		int result = hospitalDao.updateSubjectName(subjectNumb, subjectNameVal);
+//		
+////		
+////		return result;
+//	}
+
 
 
 	
 	
+
 
 }
-
-
-
-
-
-
-
-
-
 

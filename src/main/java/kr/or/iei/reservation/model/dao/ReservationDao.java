@@ -10,6 +10,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import kr.or.iei.hospital.model.dto.DoctorRowMapper;
 import kr.or.iei.reservation.model.dto.H_ReservationRowMapper;
+import kr.or.iei.reservation.model.dto.Reservation;
+import kr.or.iei.reservation.model.dto.ReservationDetail;
 import kr.or.iei.reservation.model.dto.ReservationRowMapper;
 
 @Repository
@@ -90,5 +92,29 @@ public class ReservationDao {
 		List list = jdbc.query(query, h_ReservationRowMapper,params);
 		return list;
 	}
+
+	public int insertReservation(Reservation r) {
+		String query = "insert into reservation_tbl values(reservation_seq.nextval,?,?,1,to_char(sysdate,'yyyy-mm-dd hh24:mm:ss'),1,?)";
+		Object[] params = {r.getHospitalNo(),r.getMemberNo(),r.getReservationTime()};
+		int result = jdbc.update(query, params);
+		return result;
+	}
+
+	public int selecteCurrResNo() {
+		String query = "select max(reservation_no) from reservation_tbl";
+		int currResNo = jdbc.queryForObject(query, Integer.class);
+		return currResNo;
+	}
+	
+	public int insertReservationDetail(int currResNo, ReservationDetail rd) {
+		String query = "insert into reservation_detail_tbl values(reservation_detail_seq.nextval,?,?,?,?,?)";
+		String doctorNo = rd.getDoctorNo() == 0 ? null : String.valueOf(rd.getDoctorNo());
+		String subjectNo = rd.getSubjectNo() == 0 ? null : String.valueOf(rd.getSubjectNo());
+		String childNo = rd.getChildNo() == 0 ? null : String.valueOf(rd.getChildNo());
+		Object[] params = {currResNo, doctorNo, subjectNo, rd.getSymptom(), childNo};
+		int result = jdbc.update(query, params);
+		return result;
+	}
+
 	
 }

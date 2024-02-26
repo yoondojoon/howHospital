@@ -14,8 +14,7 @@ public class Hospital {
 	private int memberNo;
 	private String hospitalName;
 	private String hospitalIntro;
-	private String hospitalAddress;
-	private String hospitalPostCode;
+	private String hospitalPostcode;
 	private String hospitalAddrMain;
 	private String hospitalAddrSub;
 	private String hospitalPicture;

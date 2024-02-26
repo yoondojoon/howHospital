@@ -8,11 +8,11 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Data
 public class ReservationDetail {
-
 	private int reservationDetailNo;
 	private int reservationNo;
 	private int doctorNo;
 	private int subjectNo;
 	private String symptom;
 	private String memberName;
+	private int childNo;
 }

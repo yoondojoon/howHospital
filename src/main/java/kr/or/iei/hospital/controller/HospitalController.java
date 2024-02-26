@@ -53,7 +53,7 @@ public class HospitalController {
 
 	@Value("${file.root}")
 	private String root; // 자바 전체에서 쓸수있는 변수, application.properties에 선언되어있는 값을 문자열로 가져옴.
-	
+
 	@Value("${file.prescriptionRoot}")
 	private String prescriptionRoot;
 
@@ -65,88 +65,172 @@ public class HospitalController {
 		return "hospital/myHospitalMain";
 	}
 
-	@PostMapping(value="/myHospitalEnroll")
-	public String myHospitalEnroll(Hospital hospital, String hospitalPostCode, String hospitalAddrMain, String hospitalAddrSub,
-			String dayOpenHour, String dayCloseHour, String weekendOpenHour, String weekendCloseHour, String lunchOpenHour, String lunchCloseHour, String[] hol, 
-			String hospitalTelFirst, String hospitalTelLast,
-			String[] doctor_name, String[] doctor_education, String[] doctor_experience, String[] subjectSelect, MultipartFile hospital_picture ,MultipartFile[] doctor_picture, String CostOne, String CostTwo, Model model) {
-				
-			//VO 값 세팅
-			hospital.setHospitalAddress(hospitalPostCode +" "+ hospitalAddrMain + " " + hospitalAddrSub);
+	@PostMapping(value = "/myHospitalEnroll")
+	public String myHospitalEnroll(Hospital hospital, String hospitalPostcode, String hospitalAddrMain,
+			String hospitalAddrSub, String dayOpenHour, String dayCloseHour, String weekendOpenHour,
+			String weekendCloseHour, String lunchOpenHour, String lunchCloseHour, String[] hol, String hospitalTelFirst,
+			String hospitalTelLast, String[] doctor_name, String[] doctor_education, String[] doctor_experience,
+			String[] subjectSelect, MultipartFile hospital_picture, MultipartFile[] doctor_picture, String CostOne,
+			String CostTwo, Model model) {
 
-			//병원사진
-			String savepath1 = root+"/hospital/";
-			String filepath1 = fileUtils.upload(savepath1, hospital_picture); //파일 업로드 및 경로 반환
-			hospital.setHospitalPicture(filepath1); //중복처리된 이름 여기에 넣어줌. 번호는 시퀀스쓴다.
-			
-			
-			Time time = new Time();
-			time.setDayHour(dayOpenHour + "~" +  dayCloseHour);
-			time.setWeekendHour(weekendOpenHour + "~" + weekendCloseHour);
-			time.setLunchHour(lunchOpenHour + "~" + lunchCloseHour);
-			
-			String holiday = String.join("", hol);
-			time.setHoliday(Integer.parseInt(holiday));
-			
-			System.out.println("회원번호:"+hospital.getMemberNo());
-			hospital.setHospitalTel(hospitalTelFirst + "-" + hospitalTelLast);
-			System.out.println(hospital.getLat());
-			//의사정보 등록
-			List<Doctor> doctorList = new ArrayList<Doctor>();
-			List<Subject> subjectList = new ArrayList<Subject>();
-	        for(int i = 0; i < doctor_name.length; i++) {
-	            Doctor doctor = new Doctor(); 
-	            doctor.setDoctorName(doctor_name[i]);
-	            doctor.setDoctorEducation(doctor_education[i]); 
-	            doctor.setDoctorExperience(doctor_experience[i]);
-	            
-    			String savepath = root + "/doctor/";
-    			// 업로드한 파일명을 추출
-				String filename = doctor_picture[i].getOriginalFilename();
-				String filepath = fileUtils.upload(savepath, doctor_picture[i]);
-				doctor.setDoctorPicture(filepath);
-				doctorList.add(doctor);
-				Subject subject = new Subject();
-				subject.setSubjectName(subjectSelect[i]);
-	            subjectList.add(subject);
-	        }
-	        
-	        int result = hospitalService.insertHospitalEnroll(hospital, time, doctorList, subjectList);
-	        if (result == (doctorList.size() + subjectList.size() + 2)) {
-				System.out.println("성공");
-	
-				return "redirect:/";
+		// VO 값 세팅
+//		hospital.setHospitalAddress(hospitalPostcode + " " + hospitalAddrMain + " " + hospitalAddrSub);
 
-	        } else {
-				System.out.println("실패");
-				return "redirect:/";
-			}
+		// 병원사진
+		String savepath1 = root + "/hospital/";
+		String filepath1 = fileUtils.upload(savepath1, hospital_picture); // 파일 업로드 및 경로 반환
+		hospital.setHospitalPicture(filepath1); // 중복처리된 이름 여기에 넣어줌. 번호는 시퀀스쓴다.
+
+		Time time = new Time();
+		time.setDayHour(dayOpenHour + "~" + dayCloseHour);
+		time.setWeekendHour(weekendOpenHour + "~" + weekendCloseHour);
+		time.setLunchHour(lunchOpenHour + "~" + lunchCloseHour);
+		String holiday = String.join("", hol);
+		time.setHoliday(Integer.parseInt(holiday));
+
+		hospital.setHospitalTel(hospitalTelFirst + "-" + hospitalTelLast);
+		System.out.println(hospital.getLat());
+		// 의사정보 등록
+		List<Doctor> doctorList = new ArrayList<Doctor>();
+		List<Subject> subjectList = new ArrayList<Subject>();
+		for (int i = 0; i < doctor_name.length; i++) {
+			Doctor doctor = new Doctor();
+			doctor.setDoctorName(doctor_name[i]);
+			doctor.setDoctorEducation(doctor_education[i]);
+			doctor.setDoctorExperience(doctor_experience[i]);
+
+			String savepath = root + "/doctor/";
+			// 업로드한 파일명을 추출
+			String filename = doctor_picture[i].getOriginalFilename();
+			String filepath = fileUtils.upload(savepath, doctor_picture[i]);
+			doctor.setDoctorPicture(filepath);
+			doctorList.add(doctor);
+			Subject subject = new Subject();
+			subject.setSubjectName(subjectSelect[i]);
+			subjectList.add(subject);
+		}
+
+		int result = hospitalService.insertHospitalEnroll(hospital, time, doctorList, subjectList);
+		if (result == (doctorList.size() + subjectList.size() + 2)) {
+			System.out.println("성공");
+
+			return "redirect:/";
+
+		} else {
+			System.out.println("실패");
+			return "redirect:/";
+		}
 	}
-	
-	
+
 	@GetMapping(value = "/myHospitalDetail")
-	//hospital enroll 진입: hospitalNo
-	//마이페이지에서 진입: hospitalNo
+	// hospital enroll 진입: hospitalNo
+	// 마이페이지에서 진입: hospitalNo
 	public String myHospitalDetail(Model model, @SessionAttribute(required = false) Member member) {
 		Hospital h = hospitalService.selectHospital(member.getMemberNo());
-		if(h != null) {
+		if (h != null) {
 			model.addAttribute("h", h);
 			return "hospital/myHospitalDetail";
 		}
 		return "redirect:/hospitalAuth";
-		
+
 	}
-	
-	
+
 	@PostMapping(value = "/myHospitalUpdateFrm")
-	public String myHospitalUpdateFrm(Model model, @RequestParam(value = "hospitalNo", required = false) int hospitalNo) {
+	public String myHospitalUpdateFrm(Model model,
+			@RequestParam(value = "hospitalNo", required = false) int hospitalNo) {
 		Hospital h = hospitalService.findHospitalInfo(hospitalNo);
-		model.addAttribute("h", h);
+		System.out.println(h.getSubjectList());
 		System.out.println(h.getDoctorList());
+		model.addAttribute("h", h);
 		return "hospital/myHospitalUpdateFrm";
 	}
-	
-	
+
+	@PostMapping(value = "/myHospitalUpdate")
+	public String myHospitalUpdate(Hospital hospital, String hospitalPostcode, String hospitalAddrMain,
+			String hospitalAddrSub, String dayOpenHour, String dayCloseHour, String weekendOpenHour,
+			String weekendCloseHour, String lunchOpenHour, String lunchCloseHour, String[] hol, String hospitalTelFirst,
+			String hospitalTelLast, int[] existDoctor_no, String[] doctor_name, String[] doctor_education,
+			String[] doctor_experience, String[] subjectSelect, MultipartFile hospital_picture,
+			MultipartFile[] doctor_picture, String CostOne, String CostTwo, Model model, int[] updateDoctorNo,
+			int[] delDoctorNo) {
+
+		
+		//병원정보 및 시간 Update
+		hospital.setHospitalTel(hospitalTelFirst + "-" + hospitalTelLast);
+		Time time = new Time();
+		time.setDayHour(dayOpenHour + "~" + dayCloseHour);
+		time.setWeekendHour(weekendOpenHour + "~" + weekendCloseHour);
+		time.setLunchHour(lunchOpenHour + "~" + lunchCloseHour);
+		String holiday = String.join("", hol);
+		time.setHoliday(Integer.parseInt(holiday));
+
+		List<Doctor> doctorList = new ArrayList<Doctor>();
+		List<Subject> subjectList = new ArrayList<Subject>();
+
+		int result = 0;
+		result += hospitalService.updateHospital(hospital, time);	
+
+		
+		//의사정보, 진료과목정보, 의사사진 수정
+		for(int i = 0; i<doctor_name.length; i++) {
+			Doctor doctor = new Doctor();
+			doctor.setDoctorName(doctor_name[i]);
+			doctor.setDoctorEducation(doctor_education[i]);
+			doctor.setDoctorExperience(doctor_experience[i]);
+			doctor.setDoctorNo(existDoctor_no[i]);
+			doctor.setSubjectName(subjectSelect[i]);
+			doctorList.add(doctor);
+		}
+		
+			if(updateDoctorNo.length > 0) {
+				for (MultipartFile d : doctor_picture) {
+					String savepath = root + "/doctor/";	
+//					String filepath = fileUtils.upload(savepath, doctor_picture[i]);
+//					doctor.setDoctorPicture(filepath);
+//				
+			
+//				// 업로드한 파일명을 추출
+//				String filename = file.getOriginalFilename();
+//				String filepath = fileUtils.upload(savepath, file);
+//				
+//
+//
+//				String filepath = fileUtils.upload(savepath, doctor_picture[i]);
+//				doctor.setDoctorPicture(filepath);
+//				doctorList.add(doctor);
+//			}
+		}
+		
+		
+			}
+		
+				
+		//의사사진 Update
+				
+
+//				
+//		}
+//		
+//		
+
+		
+		
+		
+		
+
+		if (result == (doctorList.size() + subjectList.size() + 2)) {
+			System.out.println("성공");
+			return "redirect:/";
+
+		} else {
+			System.out.println("실패");
+			return "redirect:/";
+		}
+
+		// 의사정보, 과목 Insert
+		// 의사정보, 과목 Delete
+
+	}
 
 	@PostMapping(value = "/businessAuthEnroll")
 	public String businessAuthEnroll(BusinessAuth ba, MultipartFile[] upfile, Model model) {
@@ -168,9 +252,9 @@ public class HospitalController {
 		// 총 3차례 insert
 
 		int result = hospitalService.insertBusinessAuth(ba, fileList);
-		
+
 		// insert 성공 테이블 결과(1) + 파일 테이블 결과(파일갯수)
-		if (result == (fileList.size() + 2)) { 
+		if (result == (fileList.size() + 2)) {
 			System.out.println("성공");
 			return "redirect:/";
 		} else {
@@ -189,10 +273,9 @@ public class HospitalController {
 		return "hospital/myHospitalFrm";
 	}
 
-	
 	@GetMapping("/myHospitalReservation")
 	public String myHospitalReservation(int reqPage, Model model, @SessionAttribute Member member, int doctorNo) {
-		//회원 번호로 해당하는 병원 정보 가져오기.
+		// 회원 번호로 해당하는 병원 정보 가져오기.
 		int memberNo = member.getMemberNo();
 		// 병원 예약 조회해오기
 		ReservationListData nld = reservationService.selectReservation(reqPage, memberNo, doctorNo);
@@ -230,15 +313,12 @@ public class HospitalController {
 			return 0;
 		}
 	}
-	
+
 	@GetMapping("/detailReservation")
 	public String detailReservation(H_Reservation hr, Model model) {
 		ReservationDetail rd = reservationDetailService.selectOneReservation(hr);
 		model.addAttribute("reservationDetail", rd);
 		return "hospital/detailReservationFrm";
 	}
-	
-
-	
 
 }

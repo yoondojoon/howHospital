@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import kr.or.iei.admin.model.dto.AdminBusinessAuth;
 import kr.or.iei.admin.model.dto.AdminBusinessAuthListData;
+import kr.or.iei.admin.model.dto.FaqListData;
 import kr.or.iei.admin.model.dto.MemberReport;
 import kr.or.iei.admin.model.dto.MemberReportListData;
 import kr.or.iei.admin.model.dto.Notice;
@@ -26,6 +27,15 @@ public class AdminController {
 	@GetMapping(value="/adminMain")
 	public String adminMain() {
 		return "/admin/adminMain";
+	}
+	
+	@GetMapping(value="/faqList")
+	public String faqList(Model model) {
+		FaqListData fld = adminService.selectAllFaq();
+		model.addAttribute("categoryList",fld.getCategoryList());
+		model.addAttribute("contentList", fld.getContentList());
+		System.out.println(fld);
+		return "/admin/faqList";
 	}
 
 	@GetMapping(value="/manageReport")

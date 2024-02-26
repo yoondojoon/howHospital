@@ -176,6 +176,7 @@ document.getElementById("phoneNumber").addEventListener("input", function() {
 
 
 
+    let doctorCount = 1; // 초기 의사 카운트 값
 $(document).ready(function() {
     // 의사 정보 추가 버튼 클릭 시
     $('.addDoctorBtn').click(function() {
@@ -192,7 +193,7 @@ $(document).ready(function() {
 		                <td>
 			                <div class="input_item">
 							    <input type="text" class="doc" name="doctor_name" placeholder="이름을 입력하세요." required></li>
-								<input type="file" id="docImgInput" class="doc" name="doctor_picture"  onchange="loadImg(this);" >
+								<input type="file" id="docImgInput" class="doc" name="doctor_picture" accept=".jpg, .png, .jpeg" onchange="loadImg(this);" >
 				                <button type="button" class="btn_primary outline sm deleteDoctorBtn">삭제</button>
 							</div>
 		                </td>
@@ -255,8 +256,10 @@ $(document).ready(function() {
         `;
 
         // 새로운 의사 정보를 컨테이너에 추가
-    $('#doctorContainer').append(newDoctorInfo);
+    $('.doctor_wrap').after(newDoctorInfo);
 
+        // 의사 카운트 증가
+        doctorCount++;
     });
 
 });
