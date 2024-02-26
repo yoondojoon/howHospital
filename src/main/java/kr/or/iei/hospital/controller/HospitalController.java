@@ -31,6 +31,7 @@ import kr.or.iei.member.model.dto.Member;
 import kr.or.iei.member.model.service.MemberService;
 import kr.or.iei.reservation.model.dto.H_Reservation;
 import kr.or.iei.reservation.model.dto.ReservationDetail;
+import kr.or.iei.reservation.model.dto.ReservationDetailList;
 import kr.or.iei.reservation.model.dto.ReservationListData;
 import kr.or.iei.reservation.model.service.ReservationDetailService;
 import kr.or.iei.reservation.model.service.ReservationService;
@@ -60,7 +61,7 @@ public class HospitalController {
 	@Autowired
 	private FileUtils fileUtils;
 
-	@GetMapping(value = "/myHospitalMain")
+	@GetMapping(value = "/myHospitalMain" )
 	public String myHospitalMain() {
 		return "hospital/myHospitalMain";
 	}
@@ -271,11 +272,20 @@ public class HospitalController {
 		return "hospital/businessAuth";
 	}
 
+
+	
 	@GetMapping(value = "/myHospitalFrm")
 	public String myHospitalFrm() {
 		return "hospital/myHospitalFrm";
 	}
 
+	@GetMapping("/myHospitalReviewList")
+	public String myHospitalReivewList() {
+		return "hospital/myHospitalReviewList";
+	}
+		
+	
+	
 	@GetMapping("/myHospitalReservation")
 	public String myHospitalReservation(int reqPage, Model model, @SessionAttribute Member member, int doctorNo) {
 		// 회원 번호로 해당하는 병원 정보 가져오기.
@@ -319,9 +329,12 @@ public class HospitalController {
 
 	@GetMapping("/detailReservation")
 	public String detailReservation(H_Reservation hr, Model model) {
-		ReservationDetail rd = reservationDetailService.selectOneReservation(hr);
-		model.addAttribute("reservationDetail", rd);
+		ReservationDetailList rdl = reservationDetailService.selectOneReservation(hr);
+		model.addAttribute("reservationDetailList", rdl);
 		return "hospital/detailReservationFrm";
 	}
+	
+	
+	
 
 }

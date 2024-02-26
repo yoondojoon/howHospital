@@ -18,7 +18,12 @@ import kr.or.iei.hospital.model.dto.Hospital;
 import kr.or.iei.member.model.dto.Child;
 import kr.or.iei.member.model.dto.Member;
 import kr.or.iei.member.model.service.MemberService;
+
 import kr.or.iei.reservation.model.dto.Reservation;
+
+import kr.or.iei.reservation.model.dto.ReservationDetail;
+import kr.or.iei.reservation.model.service.ReservationService;
+
 import lombok.Getter;
 
 @Controller
@@ -30,6 +35,9 @@ public class MemberController {
 	
 	@Autowired
 	private EmailSender emailSender;
+	
+	@Autowired
+	private ReservationService reservationService;
 	
 	
 	
@@ -373,10 +381,14 @@ public class MemberController {
 	
 	//내 진료내역 보기
 	@GetMapping(value="/myMedicalHistory")
-	public String myMedicalHistory() {
+	public String myMedicalHistory(@SessionAttribute(required=false) Member member, Model model) {
+		int memberNo = member.getMemberNo();
+		int totalCount = reservationService.myResTotalCount(memberNo);
+		model.addAttribute("totalCount", totalCount);
 		return "/member/myMedicalHistory";
 	}
 	
+
 	
 	//내 자녀 삭제
 	@ResponseBody
@@ -427,6 +439,15 @@ public class MemberController {
 	
 	
 	
+
+	//내 진료내역 상세
+	@PostMapping(value="/myMedicalDetail")
+	public String myMedicalDetail(int reservationNo, Model model) {
+		ReservationDetail rd = reservationService.selectMyReservationDetail(reservationNo);
+		model.addAttribute("rd", rd);
+		return "/member/myMedicalDetail";
+	}
+
 }
 
 

@@ -7,18 +7,14 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class Reservation {
+public class ReservationDetailList {
 	private int reservationNo;
-	private int hospitalNo;
-	private int memberNo;
 	private int reservationStatus;
-	private String regReservation;
 	private int reservationType;
 	private String reservationTime;
-	private String hospitalName;
-	private String resTimeDate;
-	private String resTimeDay;
-	private String resTimeTime;
+	private String filename;
+	private String filepath;
 	private String memberName;
-	private String childName;
+	private String symptom;
+	private int prescriptionStatus;
 }

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import kr.or.iei.reservation.model.dao.ReservationDao;
+import kr.or.iei.reservation.model.dto.H_Reservation;
 import kr.or.iei.reservation.model.dto.Reservation;
 import kr.or.iei.reservation.model.dto.ReservationDetail;
 import kr.or.iei.reservation.model.dto.ReservationFile;
@@ -118,4 +119,26 @@ public class ReservationService {
 		}
 		return result;
 	}
+	@Transactional
+	public int updateReservationDetail(H_Reservation hr) {
+		int result = reservationDao.updateReservationDetail(hr);
+		return result;
+	}
+	
+	public int myResTotalCount(int memberNo) {
+		int myResTotalCount = reservationDao.myResTotalCount(memberNo);
+		return myResTotalCount;
+	}
+	
+	public List selectMyResHistory(int memberNo, int start, int amount) {
+		int end = start+amount-1;
+		List myHistoryList = reservationDao.selectMyResHistory(memberNo, start, end);
+		return myHistoryList;
+	}
+	
+	public ReservationDetail selectMyReservationDetail(int reservationNo) {
+		ReservationDetail rd = reservationDao.selectMyReservationDetail(reservationNo);
+		return null;
+	}
+	
 }

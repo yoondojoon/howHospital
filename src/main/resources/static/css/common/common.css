@@ -129,6 +129,8 @@ input:not([type=checkbox],[type=radio]):-internal-autofill-selected {background-
 .btn_secondary.outline{background-color:#fff; color:var(--main_04);}
 [class^=btn_].lg{padding:11px 20px; border-radius:24px; font-size:16px;}
 [class^=btn_].sm{min-width:48px; padding:4px 12px; border-radius:4px; font-size:12px; font-weight:normal;}
+[class^=btn_].view_more{padding-left:36px; background:url(/images/icon_plus_gray.svg) no-repeat center left 24px / 12px;}
+[class^=btn_].out_line.view_more{color:var(--main_04);}
 .btn_area{display:flex; gap:8px; margin-top:40px; justify-content:center;}
 .btn_area [class^=btn_].lg{margin:0 2px;}
 
@@ -139,6 +141,8 @@ input:not([type=checkbox],[type=radio]):-internal-autofill-selected {background-
 .badge.blue.outline{border-color:var(--main_05); background-color:#fff; color:var(--main_05);}
 .badge.red.outline{border-color:var(--main_02); color:var(--main_02);}
 .badge.green{border-color:#2ecc71; background-color:#2ecc71; color:#fff;}
+.badge.contact{border-color:var(--main_01); color:var(--main_01);}
+.badge.contactless{border-color:var(--main_04); color:var(--main_04);}
 .badge_area{display:flex; flex-wrap:wrap; align-items:center; gap:8px;}
 .badge_area .name{display:inline-block; padding:0 8px; color:var(--gray_03); font-size:12px; line-height:20px;}
 .badge+.name{position:relative;}
