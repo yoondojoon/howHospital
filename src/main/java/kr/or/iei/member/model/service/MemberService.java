@@ -101,9 +101,9 @@ public class MemberService {
 		return result;
 
 	}
-		
+		//내 자녀 보기
 	public List selectMyChildInfo(int memberNo) {
-		List childList = memberDao.selectMyChildInfo(memberNo);
-		return childList;
+		List child = memberDao.selectMyChildInfo(memberNo);
+		return child;
 
 	}}

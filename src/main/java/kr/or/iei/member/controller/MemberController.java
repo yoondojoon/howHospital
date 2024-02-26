@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.SessionAttribute;
 
 import jakarta.servlet.http.HttpSession;
 import kr.or.iei.EmailSender;
+import kr.or.iei.member.model.dto.Child;
 import kr.or.iei.member.model.dto.Member;
 import kr.or.iei.member.model.service.MemberService;
 import lombok.Getter;
@@ -96,14 +97,7 @@ public class MemberController {
 		
 	}
 		
-	//회원가입 성공 페이지
-	@GetMapping(value="/successSignUp")
-	public String successSignUp() {
-		
-		return "member/successSignUp";
-		
-		
-	}
+
 	
 	//회원가입 실패 페이지
 	@GetMapping(value="/failSignUp")
@@ -132,7 +126,7 @@ public class MemberController {
 		
 		if(result > 0 ) {
 			
-			return "member/successSignUp";
+			return "redirect:/member/signInFrm";
 			
 		}else {
 			
@@ -318,8 +312,17 @@ public class MemberController {
 	
 	//내 자녀 보기
 	@GetMapping(value="/myChildren")
-	public String myChildren() {
+	public String myChildren(Child Child, Model model, HttpSession session) {
 		
+		int memberNo = (int)session.getAttribute("memberNo");
+		
+		List child = memberService.selectMyChildInfo(memberNo);
+		
+		
+		System.out.println(child);
+		
+		
+		model.addAttribute("child", child);
 		
 		return "/member/myChildren";
 		

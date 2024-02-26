@@ -1,0 +1,86 @@
+@charset "UTF-8";
+
+
+
+
+#container {
+    width:100%;
+    background: #fff;
+    padding: 34px;
+    border-radius: 6px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    justify-content: center;
+    
+    margin: auto;
+    margin-top: 115px;
+    
+}
+
+
+
+#contents{
+	padding:0 !important;
+	display:flex;
+	justify-content: center; 
+    
+	
+}
+
+.signUp {
+	
+	display:flex;
+	justify-content: center;
+	
+	
+}
+
+
+.textWrap>h2{
+	
+	
+	padding: 30px;
+	padding-right:20px;
+}
+
+.ref_section {
+	display:flex;
+	
+	padding-right:150px;
+	
+}
+
+.textWrap{
+	
+	display:flex;
+	flex-direction: column;
+	
+}
+
+
+.ref_section p{
+	display:flex;
+	
+	
+	
+	
+}
+
+
+.goToMainBtn{
+	
+	padding:30px;	
+	display: flex;
+    justify-content: center;
+	
+	
+	
+}
+
+.textBox{
+	display:flex;
+	flex-direction: column;
+	
+	flex-start:
+	
+}
+

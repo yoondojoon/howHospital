@@ -1,27 +1,35 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-
-
 <th:block th:include="common/header"></th:block>
+<link rel="stylesheet" href="/css/member/successSignUp.css">
+
+
 
 	<!-- container -->
     <main id="container" class="container">
 
 		<!-- contents -->
         <section id="contents" class="contents successSignUp">
-            <div class="inner_wrap">
-                <span th:if="session.memberName"></span><h2>님의 회원 가입이완료되었습니다.</h2>
+            
+            
+            <div class="inner_wrap signUp">
+            	<div class="textWrap">
+                <h2><span th:text="${member.memberName}"></span>님의 회원 가입이 완료되었습니다.</h2>
+                
                 
                 <div class="ref_section">
-                회원이름 : 
-               	<br>이메일 : 
-               	<br>전화번호 :
-               	<br>주소 :
+                	<div class="textBox">
+                		<p>회원이름 :</p><span th:text="${member.memberName}"></span> 
+               			<p>이메일 : </p><span th:text="${member.memberEmail}"></span>
+               			<p>전화번호 :</p><span th:text="${member.memberPhone}"></span>
+               			<p>주소 :</p><span th:text="${member.memberAddress}"></span>
+               		</div>
                 </div>
             
-            
-            <a href="/"><button class="btn_primary lg">확인</button></a>
-                
+            <div class="goToMainBtn">
+            <a href="/"><button class="btn_primary lg btn">확인</button></a>
+            </div>
+            </div>    
             </div>
             
             
@@ -36,6 +44,8 @@
     <!--// container -->
 	
 <th:block th:include="common/footer"></th:block>
-<!-- js 링크 -->
+
+
+
 </body>
 </html>
