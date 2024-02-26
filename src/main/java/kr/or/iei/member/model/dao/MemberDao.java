@@ -126,12 +126,12 @@ public class MemberDao {
 		return result;
 		
 	}
-
+	//내 자녀 보기
 	public List selectMyChildInfo(int memberNo) {
 		String query = "select * from child_tbl where member_no=?";
 		Object[] params = {memberNo};
-		List childList = jdbc.query(query, childRowMapper, params);
-		return childList;
+		List child = jdbc.query(query, childRowMapper, params);
+		return child;
 
 	}
 	

@@ -2,69 +2,63 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <link rel="stylesheet" href="/css/admin/adminMain.css">
 <style>
-
-.tr-content{
-	border:1px solid black;
+.tr-content {
+	border: 1px solid black;
 	background: #eaeaed;
-	width:100%;
-	height:500px;
+	width: 100%;
+	height: 500px;
 }
-
-
-
-
 </style>
 
-	<th:block th:include="common/header"></th:block>
+<th:block th:include="common/header"></th:block>
 
-	<!-- container -->
-    <main id="container" class="container">
+<!-- container -->
+<main id="container" class="container">
 
-		<!-- contents -->
-        <section id="contents" class="contents adminMain">
-            <div class="inner_wrap">
-                <h2>신고 상세보기</h2>
-            </div>
-	        <div class="inner_wrap">
-	        	<table class="btl">
-	        		<tr class="tr-header">
-	        			<th style="width:20%;">사업자</th>
-	        			<th colspan="3" style="width:80%; text-align:left;">
-	        				<span style="width:90%;" type="text" th:text="${authInfo.memberName}" name="memberName">
-	        			</th>
-	        		</tr>
-	        		
-	        		<tr class="tr-header">
-	        			<th style="width:15%">사업자 이메일</th>
-	        			<th style="width:35%; text-align:left;">
-	        				<span th:text="${authInfo.memberEmail}"></span>
-	        			</th>
-	        			<th style="width:15%">사업자 전화번호</th>
-	        			<th style="width:35%; text-align:left;">
-	        				<span th:text="${authInfo.memberPhone}"></span>
-	        			</th>
-	        		</tr>
-	        		<tr class="tr-content">
-			    		<th:block th:each="file : ${authInfo.fileList}">
-	   		    			<td colspan="2">
-								<img th:src="@{'C:/Temp/hospital/auth/' +${file.filepath}}">
-							</td>
-					    </th:block>
-	        		</tr>
-	        	</table>
-	        	<div class="btn_area">
-	        		<button type="button" class="btn_secondary lg" th:onclick="|location.href='/admin/authConfirmFail?businessAuthNo=${authInfo.businessAuthNo}'|">승인거부</button>
-	        		<button type="button" class="btn_primary lg" th:onclick="|location.href='/admin/authConfirmSuccess?businessAuthNo=${authInfo.businessAuthNo}'|">승인</button>
-	        	</div>	        	
-	        </div>
-        </section>
-	    <!--// contents -->
-    </main>
-    <!--// container -->
-    
-	<th:block th:include="common/footer"></th:block>
+	<!-- contents -->
+	<section id="contents" class="contents adminMain">
+		<div class="inner_wrap">
+			<h2>신고 상세보기</h2>
+		</div>
+		<div class="inner_wrap">
+			<table class="btl">
+				<tr class="tr-header">
+					<th style="width: 20%;">사업자</th>
+					<th colspan="3" style="width: 80%; text-align: left;"><span
+						style="width: 90%;" type="text" th:text="${authInfo.memberName}"
+						name="memberName"></th>
+				</tr>
+
+				<tr class="tr-header">
+					<th style="width: 15%">사업자 이메일</th>
+					<th style="width: 35%; text-align: left;"><span
+						th:text="${authInfo.memberEmail}"></span></th>
+					<th style="width: 15%">사업자 전화번호</th>
+					<th style="width: 35%; text-align: left;"><span
+						th:text="${authInfo.memberPhone}"></span></th>
+				</tr>
+				<tr class="tr-content">
+					<th:block th:each="file : ${authInfo.fileList}">
+						<td colspan="2"><img th:src="@{/auth/} + ${file.filepath}">
+						</td>
+					</th:block>
+				</tr>
+			</table>
+			<div class="btn_area">
+				<button type="button" class="btn_secondary lg"
+					th:onclick="|location.href='/admin/authConfirmFail?businessAuthNo=${authInfo.businessAuthNo}'|">승인거부</button>
+				<button type="button" class="btn_primary lg"
+					th:onclick="|location.href='/admin/authConfirmSuccess?businessAuthNo=${authInfo.businessAuthNo}'|">승인</button>
+			</div>
+		</div>
+	</section>
+	<!--// contents -->
+</main>
+<!--// container -->
+
+<th:block th:include="common/footer"></th:block>
+
+<script>
 	
-	<script>
-	
-	</script>
+</script>
 </html>

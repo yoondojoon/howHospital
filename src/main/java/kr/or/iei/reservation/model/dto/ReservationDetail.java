@@ -15,4 +15,9 @@ public class ReservationDetail {
 	private String symptom;
 	private String memberName;
 	private int childNo;
+	private int reservation_status;
+	private int reservation_type;
+	private String reservation_time;
+	private String filename;
+	private String filepath;
 }
