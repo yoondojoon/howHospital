@@ -297,6 +297,11 @@ function loadImg(obj) {
 		reader.onload = function(e) { //ajax로 요청날렸을 때 success를 위한 동작
 			//읽어온 파일정보로 img태그의 src 값 세팅
 			$(".img-view").eq(index).attr("src", e.target.result);
+			const input = $("<input>");
+			input.attr("name", "updateDoctorNo");
+			input.attr("type", "text");
+			input.val(doctorNo);
+			$("#uploadForm").append(input);
 		}
 	} else {
 		$(".img-view").eq(index).attr("src", "");
