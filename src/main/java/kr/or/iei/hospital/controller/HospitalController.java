@@ -60,7 +60,7 @@ public class HospitalController {
 	@Autowired
 	private FileUtils fileUtils;
 
-	@GetMapping(value = "/myHospitalMain")
+	@GetMapping(value = "/myHospitalMain" )
 	public String myHospitalMain() {
 		return "hospital/myHospitalMain";
 	}
@@ -271,11 +271,20 @@ public class HospitalController {
 		return "hospital/businessAuth";
 	}
 
+
+	
 	@GetMapping(value = "/myHospitalFrm")
 	public String myHospitalFrm() {
 		return "hospital/myHospitalFrm";
 	}
 
+	@GetMapping("/myHospitalReviewList")
+	public String myHospitalReivewList() {
+		return "hospital/myHospitalReviewList";
+	}
+		
+	
+	
 	@GetMapping("/myHospitalReservation")
 	public String myHospitalReservation(int reqPage, Model model, @SessionAttribute Member member, int doctorNo) {
 		// 회원 번호로 해당하는 병원 정보 가져오기.
@@ -323,5 +332,8 @@ public class HospitalController {
 		model.addAttribute("reservationDetail", rd);
 		return "hospital/detailReservationFrm";
 	}
+	
+	
+	
 
 }
