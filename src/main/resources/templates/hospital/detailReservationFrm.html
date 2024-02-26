@@ -27,15 +27,31 @@
 		            			<textarea readonly th:text="${reservationDetailList.symptom}"></textarea>
 		            		</div>
 		            	</div>
+		            	<div class="detail_reservation_symptom_img_title">
+	            			<span id="symptom_img_title">사진</span>
+	            		</div>
+		            	<div class="detail_reservation_symptom_img">
+		            		<div class="symptom_img1">
+		            			
+		            		</div>
+		            		<div class="symptom_img2">
+		            		
+		            		</div>
+		            		<div class="symptom_img3">
+		            		
+		            		</div>
+		            	</div>
 		            	<div class="detail_reservation_bottom">
 		            		<div class="button_wrap" th:if="${reservationDetailList.reservationStatus == 1}">
 		            			<button type="button" class="btn_secondary cancelBtn" th:value="2">예약 거부</button>
 		            			<button type="button" class="btn_primary confirmBtn" th:value="3">예약 확정</button>	
 		            		</div>
+		            		
 		            		<div class="button_wrap" th:if="${reservationDetailList.reservationStatus == 3}">
 		            			<button type="button" class="btn_primary outline successBtn" th:value="4">진료완료</button>	
-		            			<button type="button" class="btn_secondary prescription_btn">처방전 등록</button>
+		            			
 		            		</div>
+							
 		            		<div class="button_wrap" th:if="${reservationDetailList.reservationStatus == 4 && reservationDetailList.reservationType == 2 && reservation.prescriptionStatus == 0}">	
 		            			<button type="button" class="btn_secondary prescription_btn">처방전 등록</button>
 		            		</div>
@@ -106,11 +122,24 @@
 						const successBtn = 	$("<button type='button' class='btn_primary outline successBtn' th:value='4'></button>");
 						successBtn.text("진료완료");
 						buttonWrapDiv.append(successBtn);
+						/*
 						const prescriptionBtn = $("<button>").attr("type","button").addClass("btn_secondary prescription_btn").text("처방전 등록");
 						buttonWrapDiv.append(prescriptionBtn);
+						*/
+						successBtn.on("click",function(){
+							$(this).parent().parent().parent().find(".badge").eq(0).text("진료완료");
+							$(this).parent().parent().parent().find(".badge").eq(0).attr("class","badge gray");
+							$(this).remove();
+							
+						})
+						prescriptionBtn.on("click",function(){
+							prescriptionUpload(prescriptionBtn)
+						})	
+						
 					}else if(reservationStatus == 4){
 						obj.parent().parent().parent().find(".badge").eq(0).text("진료완료");
 						obj.parent().parent().parent().find(".badge").eq(0).attr("class","badge gray");
+						
 					}
 					
 				}

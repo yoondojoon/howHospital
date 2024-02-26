@@ -26,3 +26,36 @@
 .button_wrap>button{
 	margin: 40px 40px;
 }
+
+.detail_reservation>.detail_reservation_symptom_img{
+	border: 1px solid var(--line_02);
+	border-radius: 10px;
+	box-sizing: border-box;
+	width: 100%;
+	padding: 20px 30px;
+	display: flex;
+	margin-top: 10px;
+}
+.detail_reservation_symptom_img>*{
+	height: 300px;
+	border: 1px solid var(--line_02);
+	width: 50%;
+	margin: 0 10px;
+}
+.detail_reservation_symptom_img_title{
+	margin-top: 20px;
+}
+#symptom_img_title{
+	font-size: 18px;
+	font-weight: bold;
+}
+
+
+
+
+
+
+
+
+
+
