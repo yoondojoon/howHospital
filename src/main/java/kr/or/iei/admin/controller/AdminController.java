@@ -14,6 +14,7 @@ import com.google.gson.JsonObject;
 import kr.or.iei.admin.model.dto.AdminBusinessAuth;
 import kr.or.iei.admin.model.dto.AdminBusinessAuthListData;
 import kr.or.iei.admin.model.dto.FaqListData;
+import kr.or.iei.admin.model.dto.HospitalReport;
 import kr.or.iei.admin.model.dto.HospitalReportListData;
 import kr.or.iei.admin.model.dto.MemberReport;
 import kr.or.iei.admin.model.dto.MemberReportListData;
@@ -235,6 +236,14 @@ public class AdminController {
 		HospitalReportListData hrld = adminService.selectAllHospitalReport(reqPage);
 		model.addAttribute("hospitalReportList", hrld.getList());
 		model.addAttribute("pageNavi", hrld.getPageNavi());
+		return "admin/manageHospitalReport";
+	}
+	
+	//병원신고 상세 가져오는 코드
+	@GetMapping(value = "/hospitalReportDetail")
+	public String hospitalReportDetail(int reportNo, Model model) {
+		HospitalReport hr = adminService.selectOneHospitalReport(reportNo);
+		model.addAttribute("hospitalReport", hr);
 		return "admin/manageHospitalReport";
 	}
 }

@@ -12,6 +12,7 @@ import kr.or.iei.admin.model.dto.AdminBusinessAuth;
 import kr.or.iei.admin.model.dto.AdminBusinessAuthListData;
 import kr.or.iei.admin.model.dto.Faq;
 import kr.or.iei.admin.model.dto.FaqListData;
+import kr.or.iei.admin.model.dto.HospitalReport;
 import kr.or.iei.admin.model.dto.HospitalReportListData;
 import kr.or.iei.admin.model.dto.MemberReport;
 import kr.or.iei.admin.model.dto.MemberReportListData;
@@ -492,6 +493,12 @@ public class AdminService {
 		HospitalReportListData hrld = new HospitalReportListData(list, pageNavi);
 		return hrld;
 	
+	}
+
+
+	public HospitalReport selectOneHospitalReport(int reportNo) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 
