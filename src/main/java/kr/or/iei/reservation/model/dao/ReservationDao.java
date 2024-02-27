@@ -185,9 +185,9 @@ public class ReservationDao {
 		String query = "select substr(reg_reservation,1,instr(reg_reservation,' ',1,1)-1) reg_date,\r\n" + 
 				"to_char(to_date(substr(reg_reservation,1,instr(reg_reservation,' ',1,1)-1),'yyyy-mm-dd'),'dy') reg_day,\r\n" + 
 				"substr(reg_reservation,instr(reg_reservation,' ',1,1)+1) reg_time,\r\n" + 
-				"(select doctor_name from doctor_tbl where doctor_no in(select doctor_no from reservation_detail_tbl where reservation_no=r.reservation_no)) doctor_name,\r\n" + 
-				"(select subject_name from subject_tbl where subject_no in (select subject_no from doctor_tbl where doctor_no in (select doctor_no from reservation_detail_tbl where reservation_no=r.reservation_no))) subject_name,\r\n" + 
-				"(select symptom from reservation_detail_tbl where reservation_no=r.reservation_no) symptom\r\n" + 
+				"nvl((select doctor_name from doctor_tbl where doctor_no in(select doctor_no from reservation_detail_tbl where reservation_no=r.reservation_no)),'미정') doctor_name,\r\n" + 
+				"nvl((select subject_name from subject_tbl where subject_no in (select subject_no from reservation_detail_tbl where reservation_no=r.reservation_no)),(select subject_name from subject_tbl where subject_no in (select subject_no from doctor_tbl where doctor_no in (select doctor_no from reservation_detail_tbl where reservation_no=r.reservation_no)))) subject_name,\r\n" + 
+				"nvl((select symptom from reservation_detail_tbl where reservation_no=r.reservation_no),' ') symptom\r\n" + 
 				"from reservation_tbl r where reservation_no=?";
 		Object[] params = {reservationNo};
 		List list = jdbc.query(query, myReservationDetailRowMapper, params);

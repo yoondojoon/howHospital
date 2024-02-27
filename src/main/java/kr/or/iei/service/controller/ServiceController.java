@@ -39,6 +39,9 @@ public class ServiceController {
 	@Value("${file.root}")
 	private String root;
 	
+	@Value("${file.prescriptionRoot}")
+	private String prescriptionRoot;
+	
 	@Autowired
 	private FileUtils fileUtils;
 	
@@ -175,8 +178,10 @@ public class ServiceController {
 	
 	@GetMapping(value="/prescriptionDown")
 	public void prescriptionDown(PrescriptionFile file, HttpServletResponse response) {
-		String savepath = root + "/reservation/";
+		String savepath = prescriptionRoot + "/prescription/";
 		fileUtils.downloadFile(savepath, file.getPrescriptionName(), file.getPrescriptionPath(), response);
+		System.out.println(file.getPrescriptionName());
+		System.out.println(file.getPrescriptionPath());
 	}
 }
 

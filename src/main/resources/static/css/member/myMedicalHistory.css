@@ -12,3 +12,5 @@
 .myMedicalHistory .info_area .res_time{display:flex; gap:4px; margin-top:4px; color:var(--gray_04); font-size:14px; line-height:1.5;}
 .myMedicalHistory .history_list>li .btn_area{grid-row:1/4; grid-column:2/3; margin:auto 0 auto auto;}
 .myMedicalHistory .history_list>li .btn_area [class^=btn_]{height:41px;}
+.modal .icon{display:block; width:60px; height:60px; margin:40px auto;}
+.modal .icon.prescription{background:url(/images/icon_prescription.svg) no-repeat center / contain;}
