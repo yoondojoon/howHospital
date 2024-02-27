@@ -28,6 +28,10 @@
 		            		<span id="patientName">환자 이름</span>
 	           				<span th:text="${reservationDetailList.memberName}"></span>
 		            	</div>
+		            	<div class="detail_reservation_doctor" th:if="${reservationDetailList.reservationType == 1}">
+		            		<span id="doctorName">진료선생님</span>
+		            		<span></span>
+		            	</div>
 		            	<div class="detail_reservation_middle">
 		            		<span id="patientSymptom">증상</span>
 		            		<div class="textarea">
@@ -110,7 +114,6 @@
 	
 	$(".cancelBtn,.confirmBtn,.successBtn").on("click",function(){
 		const reservationStatus = $(this).val();
-		console.log(reservationStatus)
 		const obj = $(this);
 		const reservationNo = $("#reservationNo").val();
 		const reservationType = $("#reservationType").val();
@@ -136,6 +139,15 @@
 						obj.prev().remove();
 						obj.remove();
 						
+						const selectDoctor = $(".doctor_select").val();
+						const doctorName = $(".doctor_select option:selected").text();
+						const doctorDiv = $(".detail_reservation_doctor");
+						const span = $("<span>").text(doctorName);
+						doctorDiv.append(span);
+						obj.parent().parent().parent().find(".detail_reservation_doctor").eq(1).text(doctorName);
+						
+						doctorInfo();
+						
 						const successBtn = 	$("<button>").attr("type","button").addClass("btn_primary outline successBtn").text("진료완료").val("4");
 						buttonWrapDiv.append(successBtn);
 
@@ -149,6 +161,8 @@
 							$(this).parent().parent().parent().find(".badge").eq(0).text("진료완료");
 							$(this).parent().parent().parent().find(".badge").eq(0).attr("class","badge gray");
 							$(this).parent().remove();
+							
+							
 						})
 
 					}else if(reservationStatus == 4){
@@ -218,6 +232,19 @@
 		}
 	});
 	
-	
+	function doctorInfo(){
+		const reservationNo = $("#reservationNo").val();
+		$.ajax({
+			url : "/ReservationDetail/getDoctorInfo",
+			type: "get",
+	        data: {reservationNo: reservationNo},
+	        success : function(data){
+	        	console.log(data)
+	        },
+	        error : function(){
+	        	
+	        }
+		});
+	}
 </script>
 </html>

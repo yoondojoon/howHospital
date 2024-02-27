@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import kr.or.iei.hospital.model.dto.DoctorInfo;
+import kr.or.iei.hospital.model.dto.DoctorInfoRowMapper;
 import kr.or.iei.reservation.model.dto.H_Reservation;
 import kr.or.iei.reservation.model.dto.ReservationDetail;
 import kr.or.iei.reservation.model.dto.ReservationDetailList;
@@ -26,6 +28,8 @@ public class ReservationDetailDao {
 	private ReservationFileDataRowMapper reservationFileDataRowMapper;
 	@Autowired
 	private ReservationDoctorListRowMapper reservationDoctorListRowMapper;
+	@Autowired
+	private DoctorInfoRowMapper doctorInfoRowMapper;
 	public String selectDoctor() {
 		String query = "select doctor_name from reservation_detail_tbl join doctor_tbl using (doctor_no)";
 		String doctorName = jdbc.queryForObject(query, String.class);
@@ -43,7 +47,7 @@ public class ReservationDetailDao {
 				"    MEMBER_TBL M ON R.MEMBER_NO = M.MEMBER_NO\r\n" + 
 				"LEFT JOIN\r\n" + 
 				"    RESERVATION_DETAIL_TBL RD ON R.RESERVATION_NO = RD.RESERVATION_NO\r\n" + 
-				"WHERE R.RESERVATION_NO = 2";
+				"WHERE R.RESERVATION_NO = ?";
 		Object[] params = {hr.getReservationNo()};
 		List list = jdbc.query(query, reservationDetailListRowMapper,params);
 		if(list.isEmpty()) {
@@ -66,4 +70,15 @@ public class ReservationDetailDao {
 		List list = jdbc.query(query, reservationDoctorListRowMapper, params);
 		return list;
 	}
+	public List getDoctorInfo(int reservationNo) {
+		String query = "SELECT\r\n" + 
+				"    RD.RESERVATION_DETAIL_NO,RD.DOCTOR_NO,D.DOCTOR_NAME \r\n" + 
+				"from RESERVATION_DETAIL_TBL RD\r\n" + 
+				"JOIN DOCTOR_TBL D ON RD.DOCTOR_NO = D.DOCTOR_NO\r\n" + 
+				"WHERE RESERVATION_NO=?";
+		Object[] params = {reservationNo};
+		List list = jdbc.query(query, doctorInfoRowMapper, params);
+		return list;
+	}
+
 }

@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import kr.or.iei.reservation.model.dao.ReservationDetailDao;
 import kr.or.iei.reservation.model.dto.H_Reservation;
@@ -31,5 +32,9 @@ public class ReservationDetailService {
 		return rdl;
 	}
 
-	
+	public List getDoctorInfo(int reservationNo) {
+		List list = reservationDetailDao.getDoctorInfo(reservationNo);
+		return list;
+	}
+
 }
