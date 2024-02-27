@@ -234,5 +234,19 @@ public class AdminDao {
 		return list;
 	}
 
+	public int unBlock(int memberNo) {
+		String query = "update member_tbl set member_status = 1 where member_no=?";
+		Object[] params = {memberNo};
+		int result = jdbc.update(query,params);
+		return result;
+	}
+
+	public int block(int memberNo) {
+		String query = "update member_tbl set member_status = 3 where member_no=?";
+		Object[] params = {memberNo};
+		int result = jdbc.update(query,params);
+		return result;
+	}
+
 	
 }
