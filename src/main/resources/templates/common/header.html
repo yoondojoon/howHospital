@@ -48,6 +48,9 @@
                             <li><a href="/admin/noticeList?reqPage=1">공지사항</a></li>
                             <li><a href="/admin/faqList">자주묻는질문</a></li>
                             <li th:if="${session.member != null && session.member.memberType == 3}">
+                            	<a href="/admin/manageMember">회원관리</a></li>
+                            </li>
+                            <li th:if="${session.member != null && session.member.memberType == 3}">
                             	<a href="/admin/manageReport?reqPage=1">신고관리</a></li>
                             </li>
                             <li th:if="${session.member != null && session.member.memberType == 3}">

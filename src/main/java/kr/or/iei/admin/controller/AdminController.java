@@ -33,6 +33,7 @@ public class AdminController {
 		return "/admin/adminMain";
 	}
 	
+	//자주묻는 질문 받아오는 코드
 	@GetMapping(value="/faqList")
 	public String faqList(Model model) {
 		FaqListData fld = adminService.selectAllFaq();
@@ -41,7 +42,9 @@ public class AdminController {
 		System.out.println(fld);
 		return "/admin/faqList";
 	}
-
+	
+	
+	//신고내역 받아오는 코드
 	@GetMapping(value="/manageReport")
 	public String adminMain(int reqPage, Model model) {
 		MemberReportListData mrld = adminService.selectAllMemberReport(reqPage);
@@ -50,7 +53,15 @@ public class AdminController {
 		return "/admin/manageReport";
 	}
 	
+	//회원정보 전체 받아오는 코드
+	@GetMapping(value="/manageMember")
+	public String manageMember(Model model) {
+		List list = adminService.selectAllMember();
+		model.addAttribute("memberList",list);
+		return "/admin/manageMember";
+	}
 	
+	//공지사항 리스트 받아오는 코드
 	@GetMapping(value="/noticeList")
 	public String noticeList(int reqPage, Model model) {
 		NoticeListData nld = adminService.selectAllNotice(reqPage); 
@@ -59,6 +70,7 @@ public class AdminController {
 		return "admin/noticeList";
 	}
 	
+	//키워드에 따라 공지사항 검색하는 코드
 	@GetMapping(value="/searchNotice")
 	public String search(int reqPage, String type, String keyword, Model model) {
 		NoticeListData nld = adminService.searchNoitce(reqPage,type,keyword);
@@ -194,12 +206,27 @@ public class AdminController {
 		return "admin/manageReview";
 	}
 	
+	//리뷰삭제시키는 코드
 	@ResponseBody
 	@GetMapping("/deleteReview")
 	public int deleteReview(int reviewNo) {
 		int result = adminService.deleteReview(reviewNo);
-		
-		
+		return result;
+	}
+	
+	//이용정지 해제시키는 코드
+	@ResponseBody
+	@GetMapping("/unBlock")
+	public int unBlock(int memberNo) {
+		int result = adminService.unBlock(memberNo);
+		return result;
+	}
+	
+	//관리자가 이용정지시키는 코드
+	@ResponseBody
+	@GetMapping("/block")
+	public int block(int memberNo) {
+		int result = adminService.block(memberNo);
 		return result;
 	}
 }

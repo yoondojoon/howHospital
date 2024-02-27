@@ -466,7 +466,7 @@ public class MemberController {
 	//내 진료내역 상세
 	@PostMapping(value="/myMedicalDetail")
 	public String myMedicalDetail(int reservationNo, Model model) {
-		ReservationDetail rd = reservationService.selectMyReservationDetail(reservationNo);
+		ReservationDetail rd = reservationService.selectMyResDetail(reservationNo);
 		model.addAttribute("rd", rd);
 		return "/member/myMedicalDetail";
 	}
