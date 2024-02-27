@@ -16,17 +16,23 @@
 		<div class="inner_wrap">
 			<h2>자주묻는질문</h2>
 			<th:block th:each="category : ${categoryList}">
-				<div class="menu">
-					<ul class="main-menu" th:text="${category.faqTitle}">
-						<th:block th:if="${category.category== content.faqRef}"
-							th:each="content : ${contentList}">
-							<ul class="sub-menu" th:text="${content.faqTitle}">
-								<ul class="sub-menu">
+				<div class="accordion-item">
+					<div class="accordion-header">
+						<ul class="main-menu" th:text="${category.faqTitle}">
+					</div>
+					<th:block th:if="${category.category== content.faqRef}"
+						th:each="content : ${contentList}">
+						<div class="accordion-sub">
+							<div class="accordion-item">
+								<div class="accordion-header">
+									<ul class="sub-menu" th:text="${content.faqTitle}"></ul>
+								</div>
+								<div class="accordion-content">
 									<li th:text="${content.faqContent}"></li>
-								</ul>
-							</ul>
-						</th:block>
-					</ul>
+								</div>
+							</div>
+						</div>
+					</th:block>
 				</div>
 			</th:block>
 		</div>
