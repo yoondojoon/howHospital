@@ -43,7 +43,9 @@ public class ServiceController {
 	private FileUtils fileUtils;
 	
 	@GetMapping(value="/searchHospitalMain")
-	public String searchHospitalMain() {
+	public String searchHospitalMain(String keyword, Model model) {
+		
+		model.addAttribute("keyword", keyword);
 		return "/service/searchHospitalMain";
 	}
 	

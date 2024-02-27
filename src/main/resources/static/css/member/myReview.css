@@ -44,7 +44,7 @@
 	
 }
 
-.myReviewWrap{
+.myInfoWrap{
 	flex-grow: 1;
     padding: 30px;
     display: flex;
@@ -54,7 +54,7 @@
 }
 
 
-.myReviewBox{
+.myInfoBox{
 	width:750px;
     
     padding:30px;
@@ -78,43 +78,35 @@
 	
 }
 
-.textBox{
+
+.reviewListBox{
 	
 	
-	background-color: #D6D6D6;
+	width: 75%;
+	box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
 	border-radius: 6px;
-	padding: 10px;
-	
-}
-.textBox h4,h3{
-	
-	text-align: center;
 	margin: 0 auto;
-	
+	margin-bottom: 20px !important;
+	padding-bottom:25px;
 	
 	
 }
 
-.submitBtn{
+.reviewListBox P {
 	
-	padding: 30px;
-	
-}
+	padding: 10px;
 
-#warning{
-	
-	font-size : 30px;
-	
+
 }
 
 
-#building{
+.close{
 	
-	font-size :80px;
 	
+	position: relative;
+    top: 10px;
+    left: 485px;
+    font-size: 20px;
+    color :#D6D6D6;
+    
 }
-
-
-
-
-

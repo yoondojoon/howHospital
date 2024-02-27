@@ -33,7 +33,7 @@ public class WebConfig implements WebMvcConfigurer{
 		
 		registry.addInterceptor(new BlockInterceptor())
 		.addPathPatterns("/admin/**","/etc/**","/hospital/**")
-		.excludePathPatterns("/admin/adminMsg","/admin/blockMsg");
+		.excludePathPatterns("/admin/adminMsg","/admin/blockMsg","/admin/faqList","admin/noticeList?");
 		
 		registry.addInterceptor(new AdminInterceptor())
 		.addPathPatterns("/admin/**")

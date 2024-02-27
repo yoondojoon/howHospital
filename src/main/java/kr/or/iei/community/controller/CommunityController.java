@@ -12,5 +12,9 @@ public class CommunityController {
 	public String searchAll() {
 		return "index";
 	}
-	
+
+	@GetMapping(value="/communityMain")
+	public String communityMain() {
+		return "/community/communityMain";
+	}
 }

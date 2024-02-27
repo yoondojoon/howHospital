@@ -10,10 +10,11 @@ import kr.or.iei.admin.model.dto.AdminBusinessAuth;
 import kr.or.iei.admin.model.dto.AdminBusinessAuthRowMapper;
 import kr.or.iei.admin.model.dto.Faq;
 import kr.or.iei.admin.model.dto.FaqRowMapper;
+import kr.or.iei.admin.model.dto.HospitalReport;
+import kr.or.iei.admin.model.dto.HospitalReportRowMapper;
 import kr.or.iei.admin.model.dto.MemberReport;
 import kr.or.iei.admin.model.dto.MemberReportRowMapper;
 import kr.or.iei.admin.model.dto.Notice;
-import kr.or.iei.admin.model.dto.NoticeListData;
 import kr.or.iei.admin.model.dto.NoticeRowMapper;
 import kr.or.iei.admin.model.dto.Review;
 import kr.or.iei.admin.model.dto.ReviewRowMapper;
@@ -32,6 +33,9 @@ public class AdminDao {
 	private BusinessAuthRowMapper baRowMapper;
 	
 	@Autowired
+	private MemberRowMapper mRowMapper;
+	
+	@Autowired
 	private NoticeRowMapper noticeRowMapper;
 	
 	@Autowired
@@ -48,6 +52,9 @@ public class AdminDao {
 	
 	@Autowired
 	private ReviewRowMapper reviewRowMapper;
+	
+	@Autowired
+	private HospitalReportRowMapper hrRowMapper;
 
 	public List selectAllNotice(int start, int end) {
 		String query = "SELECT  * FROM (SELECT ROWNUM AS RNUM, N.* FROM (SELECT NOTICE_NO, MEMBER_TBL.MEMBER_NO, NOTICE_TITLE, NOTICE_CONTENT, READ_COUNT, REQ_DATE, MEMBER_NAME FROM MEMBER_TBL RIGHT OUTER JOIN NOTICE_TBL ON MEMBER_TBL.MEMBER_NO = NOTICE_TBL.MEMBER_NO ORDER BY NOTICE_NO DESC)N) WHERE RNUM BETWEEN ? AND ?";
@@ -169,7 +176,6 @@ public class AdminDao {
 		String query = "SELECT * FROM MEMBER_TBL RIGHT OUTER JOIN BUSINESSAUTH_TBL ON MEMBER_TBL.MEMBER_NO = BUSINESSAUTH_TBL.MEMBER_NO WHERE MEMBER_STATUS = 4 AND BUSINESSAUTH_NO=?";
 		Object[] params = {businessAuthNo};
 		AdminBusinessAuth aba = jdbc.queryForObject(query, abaRowMapper,params);
-		System.out.println("접속:"+aba);
 		return aba;
 	}
 
@@ -222,6 +228,61 @@ public class AdminDao {
 	public int deleteReview(int reviewNo) {
 		String query = "delete from review_tbl where review_no=?";
 		Object[] params = {reviewNo};
+		int result = jdbc.update(query,params);
+		return result;
+	}
+
+	public List<Member> selectAllMember() {
+		String query = "select * from member_tbl";
+		List<Member> list = jdbc.query(query, mRowMapper);
+		return list;
+	}
+
+	public int unBlock(int memberNo) {
+		String query = "update member_tbl set member_status = 1 where member_no=?";
+		Object[] params = {memberNo};
+		int result = jdbc.update(query,params);
+		return result;
+	}
+
+	public int block(int memberNo) {
+		String query = "update member_tbl set member_status = 3 where member_no=?";
+		Object[] params = {memberNo};
+		int result = jdbc.update(query,params);
+		return result;
+	}
+
+	public List selectAllHospitalReport(int start, int end) {
+		String query ="SELECT * FROM (SELECT ROWNUM AS RNUM, N.* FROM(SELECT REPORT_NO, REPORT_TITLE, REPORT_CONTENT,REPORT_STATUS,J_TBL.MEMBER_NO, HOSPITAL_NAME FROM(SELECT * FROM HOSPITAL_REPORT_TBL JOIN RESERVATION_TBL ON HOSPITAL_REPORT_TBL.RESERVATION_NO = RESERVATION_TBL.RESERVATION_NO) J_TBL JOIN HOSPITAL_TBL ON J_TBL.MEMBER_NO = HOSPITAL_TBL.MEMBER_NO ORDER BY REPORT_NO DESC)N) WHERE RNUM BETWEEN ? AND ?";
+		Object[] params = {start, end};
+		List list = jdbc.query(query, hrRowMapper, params);
+		return list;
+	}
+
+	public int selectAllHospitalReportCount() {
+		String query="select count(*) from hospital_report_tbl";
+		int result = jdbc.queryForObject(query, Integer.class);
+		return result;
+	}
+
+	public HospitalReport selectOneHospitalReport(int reportNo) {
+		String query = "SELECT REPORT_NO, REPORT_TITLE, REPORT_CONTENT,REPORT_STATUS,J_TBL.MEMBER_NO, HOSPITAL_NAME FROM(SELECT * FROM HOSPITAL_REPORT_TBL JOIN RESERVATION_TBL ON HOSPITAL_REPORT_TBL.RESERVATION_NO = RESERVATION_TBL.RESERVATION_NO) J_TBL JOIN HOSPITAL_TBL ON J_TBL.MEMBER_NO = HOSPITAL_TBL.MEMBER_NO WHERE REPORT_NO = ?";
+		Object[] params = {reportNo};
+		HospitalReport hr = jdbc.queryForObject(query, hrRowMapper, params);
+		System.out.println(hr);
+		return hr;
+	}
+
+	public int deleteHospitalReport(int reportNo) {
+		String query = "delete from hospital_report_tbl where report_no=?";
+		Object[] params = {reportNo};
+		int result = jdbc.update(query,params);
+		return result;
+	}
+
+	public int confirmHospitalReport(int reportNo) {
+		String query = "update hospital_report_tbl set report_status = 1 where report_no=?";
+		Object[] params = {reportNo};
 		int result = jdbc.update(query,params);
 		return result;
 	}

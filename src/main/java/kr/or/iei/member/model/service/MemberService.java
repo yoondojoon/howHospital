@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import kr.or.iei.hospital.model.dto.Hospital;
 import kr.or.iei.member.model.dao.MemberDao;
 import kr.or.iei.member.model.dto.Member;
 
@@ -117,15 +118,7 @@ public class MemberService {
 		return cnt;
 	}
 
-	//내 리뷰 보기
-	public List myReviewList(int memberNo, int reservationNo) {
-		
-		
-		List list = memberDao.myReviewList(memberNo ,reservationNo); 
-		
-		
-		return list;
-	}
+	
 	/*
 	// 내 리뷰 작성
 	public String getHospitalName(int rsNo) {
@@ -138,5 +131,21 @@ public class MemberService {
 	}
 	
 	*/
+
+	public List reviewLsit(int memberNo) {
+		
+		List list = memberDao.reivewList(memberNo);
+		
+		
+		return list;
+	}
+
+	public List<Hospital> hospitalTbl() {
+		
+		List<Hospital> hospital = memberDao.hospitalTbl();
+		
+		
+		return hospital;
+	}
 	
 	}

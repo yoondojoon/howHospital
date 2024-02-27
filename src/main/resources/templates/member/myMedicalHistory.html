@@ -174,7 +174,7 @@
                 console.log(data);
 
                 $(data).each(function(index, item){
-                    console.log(typeof item.reviewNo);
+                    console.log(typeof item.reviewCount);
                     const li = $("<li>");
                     const detailLink = $("<a href='javascript:void(0);'>");
                     const badgeArea = $("<div class='badge_area'>");
@@ -211,7 +211,7 @@
                             const ctaBtn = $("<a href='#' class='btn_primary outline'>수납하기</a>");
                             btnArea.append(ctaBtn);
                         }else{
-                            if(item.reviewNo == 0){
+                            if(item.reviewCount == 0){
                                 const ctaBtn = $("<a href='#' class='btn_primary outline'>리뷰 작성</a>");
                                 btnArea.append(ctaBtn);
                                 ctaBtn.on("click", function(e){
@@ -228,7 +228,7 @@
                             e.stopPropagation();
                             showPreScription();
                         });
-                        if(item.reviewNo == 0){
+                        if(item.reviewCount == 0){
                             const ctaBtn2 = $("<a href='#' class='btn_primary outline'>리뷰 작성</a>");
                             btnArea.append(ctaBtn2);
                             ctaBtn2.on("click", function(e){

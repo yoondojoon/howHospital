@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import kr.or.iei.hospital.model.dto.Hospital;
+import kr.or.iei.hospital.model.dto.HospitalRowMapper;
 import kr.or.iei.member.model.dto.Child;
 import kr.or.iei.member.model.dto.ChildRowMapper;
 import kr.or.iei.member.model.dto.Member;
@@ -25,6 +27,9 @@ public class MemberDao {
 	@Autowired
 	public MyReviewRowMapper myReviewRowMapper;
 	
+	
+	@Autowired
+	public HospitalRowMapper hospitalRowMapper;
 
 	//로그인
 
@@ -153,17 +158,32 @@ public class MemberDao {
 		return cnt;
 	}
 
-	public List myReviewList(int memberNo, int reservationNo) {
+	
+	
+	//내리뷰 보기
+	public List reivewList(int memberNo) {
 		
+		String query = "select * from review_tbl where member_no=?";
 		
-		String query = "select * from review_tbl where member_no = ? and reservation_no =?";
-		
-		Object[] params = {memberNo, reservationNo};
+		Object[] params = {memberNo};
 		
 		List list = jdbc.query(query, myReviewRowMapper,params);
 		
 		
 		return list;
+	}
+
+	public List<Hospital> hospitalTbl() {
+		
+		String query = "select * from hospital_tbl";
+		
+		List<Hospital> hospital = jdbc.query(query, hospitalRowMapper);
+		
+		
+		
+		
+		
+		return hospital;
 	}
 
 	/*

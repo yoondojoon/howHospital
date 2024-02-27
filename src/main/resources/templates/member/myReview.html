@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <th:block th:include="common/header"></th:block>
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-<link rel="stylesheet" href="/css/member/myChildren.css">
+<link rel="stylesheet" href="/css/member/myReview.css">
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
 	<!-- container -->
@@ -32,6 +32,27 @@
            <div class="myInfoWrap">
            		<div class="myInfoBox">
            			<h2>나의 리뷰</h2>
+           			         <th:block th:each="review : ${list}">
+           			         <th:block th:each="hospital : ${hospital}">
+           			         	<span id="memberNo" th:text="${session.member.memberNo}" style="display:none;"></span><!-- 뷰에 세션으로 주민번호 꺼내오 -->
+           			          	<span class="reviewNo" id="reviewNo" th:text="${review.reviewNo}" style="display:none;"></span><!-- 뷰에 세션으로 주민번호 꺼내오 -->
+           			          
+           			          
+           			          <div class="reviewListBox">
+           			          	<button type="button" class="closeBtn"><span class="material-icons close">close</span></button>
+           			          		<p>병원 : <span th:text="${hospital.hospitalName}"></span></p>
+           			          		<p>주소 : <span th:text="${hospital.hospitalAddrMain}"></span></p>
+           			          		<p>리뷰 제목: <span th:text="${review.reviewTitle}"></span></p>
+        							<p>평점: <span th:text="${review.reviewRating}"></span></p>
+        							<p>내용: <span th:text="${review.reviewContent}"></span></p>
+        							<p>작성일자: <span th:text="${review.reviewDate}"></span></p>
+           			          
+           			          	
+           			          </div>
+           			          
+           			          
+           			          </th:block>
+           			          </th:block>
            			           			
 	           			
            					

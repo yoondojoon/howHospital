@@ -12,12 +12,15 @@ import kr.or.iei.admin.model.dto.AdminBusinessAuth;
 import kr.or.iei.admin.model.dto.AdminBusinessAuthListData;
 import kr.or.iei.admin.model.dto.Faq;
 import kr.or.iei.admin.model.dto.FaqListData;
+import kr.or.iei.admin.model.dto.HospitalReport;
+import kr.or.iei.admin.model.dto.HospitalReportListData;
 import kr.or.iei.admin.model.dto.MemberReport;
 import kr.or.iei.admin.model.dto.MemberReportListData;
 import kr.or.iei.admin.model.dto.Notice;
 import kr.or.iei.admin.model.dto.NoticeListData;
 import kr.or.iei.admin.model.dto.Review;
 import kr.or.iei.hospital.model.dto.BusinessAuth;
+import kr.or.iei.member.model.dto.Member;
 
 @Service
 public class AdminService {
@@ -406,6 +409,108 @@ public class AdminService {
 	public int deleteReview(int reviewNo) {
 		
 		int result = adminDao.deleteReview(reviewNo);
+		return result;
+	}
+
+
+	public List selectAllMember() {
+		List<Member> list = adminDao.selectAllMember(); 
+		return list;
+	}
+
+	@Transactional
+	public int unBlock(int memberNo) {
+		int result = adminDao.unBlock(memberNo);
+		return result;
+	}
+
+	@Transactional
+	public int block(int memberNo) {
+		int result = adminDao.block(memberNo);
+		return result;
+	}
+
+
+	public HospitalReportListData selectAllHospitalReport(int reqPage) {
+		int numPerPage = 10;
+		
+		int end = reqPage*numPerPage;
+		int start = end - numPerPage + 1;
+		List list = adminDao.selectAllHospitalReport(start,end);
+		int totalCount = adminDao.selectAllHospitalReportCount();
+		
+		
+		int totalPage = 0;
+		if(totalCount%numPerPage == 0) {
+			totalPage = totalCount/numPerPage;
+		}else {
+			totalPage = totalCount/numPerPage+1;			
+		}
+		
+		
+		int pageNaviSize = 10;
+		
+		
+		int pageNo =((reqPage -1)/pageNaviSize)*pageNaviSize + 1;
+		
+		String pageNavi = "<ul class='pagination box'>";
+		if(pageNo !=1) {
+			pageNavi += "<li>";
+			pageNavi += "<a class='page-item' href='/admin/manageHospitalReport?reqPage="+ (pageNo-1) +"'>";
+			pageNavi += "<span class='material-icons'>chevron_left</span>";
+			pageNavi += "</a></li>";
+		}
+		
+		for(int i = 0;i<pageNaviSize;i++) {
+			if(pageNo == reqPage) {
+				pageNavi += "<li>";
+				pageNavi += "<a class='active' href='/admin/manageHospitalReport?reqPage="+ (pageNo) +"'>";
+				pageNavi += pageNo;
+				pageNavi += "</a></li>";
+			}else {				
+				pageNavi += "<li>";
+				pageNavi += "<a href='/admin/manageHospitalReport?reqPage="+ (pageNo) +"'>";
+				pageNavi += pageNo;
+				pageNavi += "</a></li>";
+			}
+			pageNo++;
+			
+			if(pageNo > totalPage) {
+				break;
+			}
+		}
+		
+		
+		if(pageNo <= totalPage) {
+			pageNavi += "<li>";
+			pageNavi += "<a class='page-item' href='/admin/manageHospitalReport?reqPage="+ (pageNo) +"'>";
+			pageNavi += "<span class='material-icons'>chevron_right</span>";
+			pageNavi += "</a></li>";
+		}
+		
+		pageNavi += "</ul>";
+		
+		HospitalReportListData hrld = new HospitalReportListData(list, pageNavi);
+		return hrld;
+	
+	}
+
+
+	public HospitalReport selectOneHospitalReport(int reportNo) {
+		HospitalReport hr = adminDao.selectOneHospitalReport(reportNo);
+		return hr;
+	}
+
+
+	@Transactional
+	public int deleteHospitalReport(int reportNo) {
+		int result = adminDao.deleteHospitalReport(reportNo);
+		return result;
+	}
+
+	@Transactional
+	public int confirmHospitalReport(int reportNo) {
+		int result = adminDao.confirmHospitalReport(reportNo);
 		return result;
 	}
 	

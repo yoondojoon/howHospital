@@ -29,15 +29,15 @@
 					<th style="width: 20%;">피신고자</th>
 					<th style="width: 20%;">처리상태</th>
 				</tr>
-				<tr class="tr-content" th:each="report : ${reportList}">
+				<tr class="tr-content" th:each="report : ${hospitalReportList}">
 					<td>
 						<input style="appearance:auto; position:relative; width:20px;height:20px; left:40px;" type="checkbox" name="clear" class="chk"> 
 					</td>
 					<td name="reportNo" th:text="${report.reportNo}"></td>
 					<td name="noticeTitle">
-						<a th:href="@{/admin/reportDetail(reportNo=${report.reportNo})}" th:text="${report.reportTitle}"></a>
+						<a th:href="@{/admin/hospitalReportDetail(reportNo=${report.reportNo})}" th:text="${report.reportTitle}"></a>
 					</td>
-					<td name="memberName" th:text="${report.memberName}"></td>
+					<td name="hospitalName" th:text="${report.hospitalName}"></td>
 					<td name="reportStatus">
 						<span th:if="${report.reportStatus == 0}">미처리</span> 
 						<span th:if="${report.reportStatus == 1}">처리</span>

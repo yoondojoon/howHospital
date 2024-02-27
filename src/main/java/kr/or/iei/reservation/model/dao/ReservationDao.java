@@ -173,7 +173,7 @@ public class ReservationDao {
 				"substr(reservation_time,1,instr(reservation_time,' ',1,1)-1) res_time_date,\r\n" + 
 				"to_char(to_date(substr(reservation_time,1,instr(reservation_time,' ',1,1)-1),'yyyy-mm-dd'),'dy') res_time_day,\r\n" + 
 				"substr(reservation_time,instr(reservation_time,' ',1,1)+1) res_time_time,\r\n" + 
-				"(select review_no from review_tbl where reservation_no=r.reservation_no) review_no\r\n" + 
+				"(select count(*) from review_tbl where reservation_no=r.reservation_no) review_count\r\n" + 
 				"from reservation_tbl r where member_no=? order by 1 desc) r2)\r\n" + 
 				"where rnum between ? and ?";
 		Object[] params = {memberNo, start, end};
