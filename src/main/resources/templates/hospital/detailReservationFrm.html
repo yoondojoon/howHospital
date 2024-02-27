@@ -158,6 +158,9 @@
 						obj.parent().parent().parent().find(".badge").eq(0).text("진료완료");
 						obj.parent().parent().parent().find(".badge").eq(0).attr("class","badge gray");
 						
+					}else if(reservationStatus == 5){
+						obj.parent().parent().parent().find(".badge").eq(0).text("수납완료");
+						obj.parent().parent().parent().find(".badge").eq(0).attr("class","badge gray");
 					}
 					
 				}
