@@ -1,4 +1,4 @@
-@charset "UTF-8";@charset "UTF-8";
+@charset "UTF-8";
 
 
 #contents{
@@ -66,7 +66,7 @@
 .mypageMenu {
 	
 	display: flex;
-	flex-direction: column;
+	flex-direction: column
 	
 	
 }
@@ -76,47 +76,4 @@
 	font-size: 100px;
 	color:var(--main_03);
 	
-}
-
-
-.reviewListBox{
-	
-	
-	width: 75%;
-	box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
-	border-radius: 6px;
-	margin: 0 auto;
-	margin-bottom: 20px !important;
-	padding-bottom:25px;
-	
-	
-}
-
-.reviewListBox P {
-	
-	padding: 10px;
-
-
-}
-
-
-.close{
-	
-	
-	position: relative;
-    top: 10px;
-    left: 485px;
-    font-size: 20px;
-    color :#D6D6D6;
-    
-}
-
-.box{
-	display: flex;
-	flex-direction: row;
-	
-}
-.menuBox{
-	
-	box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
 }

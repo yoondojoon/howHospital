@@ -20,7 +20,7 @@
                 			<li><a href="/member/myChildAddFrm">내 자녀 추가</a></li>
                 			<li><a href="/member/myMedicalHistory">내 진료내역 보기</a></li>
                 			<li><a href="/member/myReview">나의 리뷰 보기</a></li>
-                			<li><a href="#">즐겨찾기</a></li>
+                			<li><a href="/member/favorites">즐겨찾기</a></li>
                 			<li><a href="/member/memberDelete">회원 탈퇴</a></li>
                 		</ul>
                 	</div>
@@ -33,9 +33,17 @@
            			<h2>내 정보</h2>
            			           			
 	           			<div class="myInfoContents">
+	           			<div class="box">
+	           			<div class="nameWrap">
            					<span class="material-icons">emoji_emotions</span>
+           				</div>	
+           				<div class="emailWrap">
            				<h3><span th:text="${session.member.memberName}"></span>님</h3>
+           				
+           				
            				<h4><span th:text="${session.member.memberEmail}"></span></h4>
+           				</div>
+           				</div>
            				<div class="info">
            				<span id="memberRrn" th:text="${session.member.memberRrn}" style="display:none;"></span><!-- 뷰에 세션으로 주민번호 꺼내오 -->
            					<ul>
@@ -45,10 +53,11 @@
            						<li>연락처 : <span th:text="${session.member.memberPhone}"></span></li>
            					</ul>
            				</div>
+           				<div class=btnSub>
            				<form action="/member/updateMyInfo" method="post">
            					<button type="submit" class="btn_primary lg">내 정보 수정하기</button>
            				</form>
-           				
+           				</div>
            			</div>
            		</div>
            </div>

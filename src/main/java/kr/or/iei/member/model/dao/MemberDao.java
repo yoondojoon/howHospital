@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import kr.or.iei.admin.model.dto.Review;
 import kr.or.iei.hospital.model.dto.Hospital;
 import kr.or.iei.hospital.model.dto.HospitalRowMapper;
 import kr.or.iei.member.model.dto.Child;
@@ -13,6 +14,8 @@ import kr.or.iei.member.model.dto.ChildRowMapper;
 import kr.or.iei.member.model.dto.Member;
 import kr.or.iei.member.model.dto.MemberRowMapper;
 import kr.or.iei.member.model.dto.MyReviewRowMapper;
+import kr.or.iei.reservation.model.dto.Reservation;
+import kr.or.iei.reservation.model.dto.ReservationRowMapper;
 
 @Repository
 public class MemberDao {
@@ -30,6 +33,10 @@ public class MemberDao {
 	
 	@Autowired
 	public HospitalRowMapper hospitalRowMapper;
+	
+	@Autowired
+	public ReservationRowMapper reservationRowMapper;
+	
 
 	//로그인
 
@@ -175,10 +182,7 @@ public class MemberDao {
 
 	public List<Hospital> hospitalTbl(int memberNo) {
 		
-		String query = "select hospital_tbl.hospital_name " + 
-				"from review_tbl " + 
-				"inner join hospital_tbl ON review_tbl.hospital_no = hospital_tbl.hospital_no " + 
-				"where review_tbl.member_no = ?";
+		String query = "select * from hospital_tbl where member_no =?";
 		
 		
  		Object[] params = {memberNo};
@@ -186,11 +190,39 @@ public class MemberDao {
 		List<Hospital> hospital = jdbc.query(query, hospitalRowMapper,params);
 		
 		
-		
-		
-		
 		return hospital;
 	}
+
+	public List<Reservation> reservation(int memberNo) {
+		
+		String query = "select * from reservation_tbl where member_no =?";
+		
+		
+ 		Object[] params = {memberNo};
+		
+		List<Reservation> reservation = jdbc.query(query, reservationRowMapper,params);
+		
+		
+		return reservation;
+		
+		
+		
+	}
+
+	public int submit(int hospitalNo, int memberNo, int reviewNo, Review review, Hospital hospital, int reservationNo) {
+		
+		
+		String query = "insert into review_tbl values(review_seq.nextval,?,?,?,?,?,?,to_char(sysdate,'yyyy-mm-dd'),?)";
+		
+		Object[] params = {reservationNo, memberNo, hospitalNo,review.getReviewTitle(),review.getReviewContent(),review.getReviewRating(),review.getReviewImg()};
+		
+		int result = jdbc.update(query,params);
+		
+		
+		return result;
+	}
+
+
 
 	/*
 	public String getHospitalName(int rsNo) {

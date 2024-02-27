@@ -1,4 +1,4 @@
-@charset "UTF-8";@charset "UTF-8";
+@charset "UTF-8";
 
 
 #contents{
@@ -50,9 +50,14 @@
     display: flex;
     justify-content: flex-start; /* 가로 가운데 정렬 */
     width:1000px;
+    
 	
 }
-
+.info{
+	
+	padding : 20px;
+	
+}
 
 .myInfoBox{
 	width:750px;
@@ -60,13 +65,24 @@
     padding:30px;
 }
 
+.myInfoContents{
+	
+	justify-content: center;
+	padding-left: 220px;
+	
+}
 
+.box{
+	
+	display: flex;
+	
+}
 
 
 .mypageMenu {
 	
 	display: flex;
-	flex-direction: column
+	flex-direction: column;
 	
 	
 }
@@ -75,5 +91,123 @@
 	
 	font-size: 100px;
 	color:var(--main_03);
+	padding-right: 20px;
 	
+}
+/* 이름과 이메일 스타일 */
+.nameWrap {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px; /* 이름과 이메일 사이 간격 조절 */
+}
+
+.nameWrap .material-icons {
+    font-size: 100px;
+    margin-right: 10px;
+}
+
+.emailWrap {
+    margin-bottom: 10px; /* 이메일과 다음 정보 사이 간격 조절 */
+}
+.emailWrap h3{
+	
+	margin: 0;
+	padding-top: 20px;
+	
+}
+.emailWrap h4 {
+    margin: 0;
+}
+
+/* 정보 스타일 유지 */
+.info ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.info ul li {
+    margin-bottom: 10px;
+}
+
+
+.btnSub{
+	
+	display: flex;
+	justify-content: center;
+	padding-right : 220px;
+	
+	padding-top: 30px;
+    
+}
+
+
+/* 인풋박스와 텍스트 스타일 */
+.input_wrap {
+    display: flex;
+    margin-bottom: 20px; /* 각 인풋박스 사이의 간격 조절 */
+}
+
+.input_item {
+    display: flex;
+    flex-direction: column;
+    margin-right: 20px; /* 텍스트와 인풋박스 사이 간격 조절 */
+}
+
+.input_item span {
+    margin-bottom: 5px; /* 텍스트와 인풋박스 간의 간격 조절 */
+}
+
+/* 비밀번호 입력과 확인 인풋박스의 스타일 */
+.password,
+.rePassword {
+    margin-bottom: 0; /* 비밀번호 입력과 확인 간격을 따로 조절 */
+}
+.btnSub{
+	
+	display: flex;
+	justify-content: center;
+	padding-right : 220px;
+	
+	padding-top: 30px;
+    
+}
+
+/* 이름과 이메일 스타일 */
+.nameWrap {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px; /* 이름과 이메일 사이 간격 조절 */
+}
+
+.nameWrap .material-icons {
+    font-size: 100px;
+    margin-right: 10px;
+}
+
+.emailWrap {
+    margin-bottom: 10px; /* 이메일과 다음 정보 사이 간격 조절 */
+}
+.emailWrap h3{
+	
+	margin: 0;
+	padding-top: 20px;
+	
+}
+.emailWrap h4 {
+    margin: 0;
+}
+
+
+
+.box{
+	
+	display: flex;
+	
+}
+
+
+.menuBox{
+	
+	
+	padding-top: 40px;
 }

@@ -10,9 +10,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import kr.or.iei.admin.model.dto.Review;
 import kr.or.iei.hospital.model.dto.Hospital;
 import kr.or.iei.member.model.dao.MemberDao;
 import kr.or.iei.member.model.dto.Member;
+import kr.or.iei.reservation.model.dto.Reservation;
 
 @Service
 public class MemberService {
@@ -148,5 +150,24 @@ public class MemberService {
 		
 		return hospital;
 	}
+
+	public List<Reservation> reservation(int memberNo) {
+		
+		List<Reservation> reservation = memberDao.reservation(memberNo);
+				
+		
+		return reservation;
+	}
+	
+	@Transactional
+	public int submit(int hospitalNo, int memberNo, int reviewNo, Review review, Hospital hospital,int reservationNo) {
+		
+		int result = memberDao.submit(hospitalNo,memberNo,reviewNo,review,hospital,reservationNo);
+		
+		return result;
+	}
+
+
+	
 	
 	}

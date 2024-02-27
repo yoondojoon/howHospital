@@ -21,7 +21,7 @@
                 			<li><a href="/member/myChildAddFrm">내 자녀 추가</a></li>
                 			<li><a href="/member/myMedicalHistory">내 진료내역 보기</a></li>
                 			<li><a href="/member/myReview">나의 리뷰 보기</a></li>
-                			<li><a href="#">즐겨찾기</a></li>
+                			<li><a href="/member/favorites">즐겨찾기</a></li>
                 			<li><a href="/member/memberDelete">회원 탈퇴</a></li>
                 		</ul>
                 	</div>
@@ -34,7 +34,7 @@
            			<h2>나의 리뷰</h2>
            			         <th:block th:each="review : ${list}">
            			         	<span id="memberNo" th:text="${session.member.memberNo}" style="display:none;"></span><!-- 뷰에 세션으로 주민번호 꺼내오 -->
-           			         <th:block th:if="" th:each="hospital : ${hospital}">
+           			         <th:block th:each="hospital : ${hospital}">
            			          	<span class="reviewNo" id="reviewNo" th:text="${review.reviewNo}" style="display:none;"></span><!-- 뷰에 세션으로 주민번호 꺼내오 -->
            			          
            			          
@@ -46,8 +46,7 @@
         							<p>평점: <span th:text="${review.reviewRating}"></span></p>
         							<p>내용: <span th:text="${review.reviewContent}"></span></p>
         							<p>작성일자: <span th:text="${review.reviewDate}"></span></p>
-           			          
-           			          	
+           			        
            			          </div>
            			          
            			          

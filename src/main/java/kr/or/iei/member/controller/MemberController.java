@@ -3,6 +3,7 @@ package kr.or.iei.member.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,9 +12,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
+import org.springframework.web.multipart.MultipartFile;
 
 import jakarta.servlet.http.HttpSession;
 import kr.or.iei.EmailSender;
+import kr.or.iei.FileUtils;
+import kr.or.iei.admin.model.dto.Review;
 import kr.or.iei.hospital.model.dto.Hospital;
 import kr.or.iei.member.model.dto.Child;
 import kr.or.iei.member.model.dto.Member;
@@ -25,6 +29,7 @@ import kr.or.iei.reservation.model.dto.ReservationDetail;
 import kr.or.iei.reservation.model.service.ReservationService;
 
 import lombok.Getter;
+import sun.reflect.generics.visitor.Reifier;
 
 @Controller
 @RequestMapping(value="/member")
@@ -39,7 +44,11 @@ public class MemberController {
 	@Autowired
 	private ReservationService reservationService;
 	
+	@Autowired
+	private FileUtils fileUtils;
 	
+	@Value("${file.hyokyungroot}")
+	private String root;
 	
 	//회원가입 페이지
 	@GetMapping(value="/signUpFrm")
@@ -418,9 +427,7 @@ public class MemberController {
 		
 		List<Hospital> hospital = memberService.hospitalTbl(memberNo);
 		
-		
-		
-		
+	
 				
 		System.out.println(hospital);
 		
@@ -441,7 +448,7 @@ public class MemberController {
 	
 	//나의 리뷰 작성
 	@GetMapping(value="myReviewFrm")
-	public String myReviewFrm(Member member, Reservation reservation, Model model, HttpSession session) {
+	public String myReviewFrm(Member member, Model model, HttpSession session) {
 		
 		
 		int memberNo = (int)session.getAttribute("memberNo");
@@ -450,13 +457,18 @@ public class MemberController {
 		
 		List<Hospital> hospital = memberService.hospitalTbl(memberNo);
 		
+		List<Reservation> reservation = memberService.reservation(memberNo);
+		
+		List<Review> review = memberService.reviewLsit(memberNo);
 		
 		System.out.println(hospital);
-	    
+		System.out.println(reservation);
+		System.out.println(review);
 	    
 	    
 		model.addAttribute("hospital", hospital);
-	    
+		model.addAttribute("reservation", reservation);
+		model.addAttribute("review", review);
 		
 		
 		return "/member/myReviewFrm";
@@ -464,6 +476,72 @@ public class MemberController {
 		
 	}
 	
+	
+	@PostMapping(value="/submitReview")
+	public String submitReview(@RequestParam("memberNo") int memberNo,
+	                           @RequestParam("reservationNo") int reservationNo,
+	                           MultipartFile imageFile,
+	                           Model model,
+	                           Review review,
+	                           Hospital hospital,
+	                           HttpSession session) {
+	    // 파일 저장 경로 설정
+	    String savepath = root + "/photo/";
+
+	    // 파일이 업로드되었는지 확인 후 파일 경로 설정
+	    String filepath = null;
+	    if (imageFile != null && !imageFile.isEmpty()) {
+	        filepath = fileUtils.hyokyungUpLoad(savepath, imageFile);
+	        review.setReviewImg(filepath);
+	    }
+
+	    // 리뷰 객체에 예약 번호 설정
+	    review.setReservationNo(reservationNo);
+
+	    // 병원 번호 가져오기
+	    int hospitalNo = hospital.getHospitalNo();
+
+	    // 서비스 계층으로 전송하여 리뷰 정보 등록
+	    int result = memberService.submit(hospitalNo, memberNo, review, hospital, reservationNo);
+
+	    // 콘솔에 리뷰 번호 출력
+	    System.out.println("생성된 리뷰의 번호: " + result);
+
+	    // 모델에 병원 및 리뷰 객체 추가
+	    model.addAttribute("hospital", hospital);
+	    model.addAttribute("review", review);
+
+	    // 리뷰 작성 페이지로 이동
+	    return "/member/myReviewFrm";
+	}
+
+	
+	
+	//즐겨찾기
+	@ResponseBody
+	@GetMapping(value="/favorites")	
+ 	public int favorites(@SessionAttribute(required = false) Member member) {
+		
+		int memberNo = member.getMemberNo();
+		
+		
+		
+		
+		List<Hospital> hospital = memberService.hospitalTbl();
+		
+		int hospitalNo = hospital.get(0).getHospitalNo();
+		
+		int result = memberService.insertLike(memberNo, hospitalNo);
+		
+		
+		
+			return result;
+				
+	}
+	
+	
+	
+
 	
 	
 	

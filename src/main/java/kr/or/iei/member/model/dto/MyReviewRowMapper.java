@@ -23,6 +23,7 @@ public class MyReviewRowMapper implements RowMapper<MyReview>{
 		myReview.setReviewNo(rs.getInt("review_no"));
 		myReview.setReviewRating(rs.getInt("review_rating"));
 		myReview.setReviewTitle(rs.getString("review_title"));
+		myReview.setHospitalNo(rs.getInt("hospital_no"));
 		
 		return myReview;
 		
