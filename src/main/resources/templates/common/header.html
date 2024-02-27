@@ -1,74 +1,85 @@
 <!-- header -->
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
-<meta charset="UTF-8">
-<title>병원어때</title>
-<link rel="stylesheet" href="/css/common/font.css">
-<link rel="stylesheet" href="/css/common/reset.css">
-<link rel="stylesheet" href="/css/common/common.css">
-<script src="/js/lib/jquery-3.7.1.js"></script>
+    <meta charset="UTF-8">
+    <title>병원어때</title>
+    <link rel="stylesheet" href="/css/common/font.css">
+    <link rel="stylesheet" href="/css/common/reset.css">
+    <link rel="stylesheet" href="/css/common/common.css">
+    <script src="/js/lib/jquery-3.7.1.js"></script>
 </head>
+
 <body>
 
-<div class="wrap">
-    <header id="header">
-        <div class="header_top_area">
-            <div class="inner_wrap">
-                <h1 class="logo"><a href="/"><span class="blind">병원어때</span></a></h1>
-                <form class="header_search_form" action="/community/searchAll" method="get">
-                    <div class="input_item">
-                        <input type="search" name="keyword" placeholder="손목이 아파요, 허리가 나갔어요">
-	                    <button type="submit" class="btn_search"><span class="blind">검색</span></button>
+    <div class="wrap">
+        <header id="header">
+            <div class="header_top_area">
+                <div class="inner_wrap">
+                    <h1 class="logo"><a href="/"><span class="blind">병원어때</span></a></h1>
+                    <form class="header_search_form" action="/community/searchAll" method="get">
+                        <div class="input_item">
+                            <input type="search" name="keyword" placeholder="손목이 아파요, 허리가 나갔어요">
+                            <button type="submit" class="btn_search"><span class="blind">검색</span></button>
+                        </div>
+                    </form>
+                    <div class="user_menu_area">
+                        <ul th:if="${session.member == null}">
+                            <li><a href="/member/signUpFrm">회원가입</a></li>
+                            <li><a href="/member/signInFrm">로그인</a></li>
+                        </ul>
+                        <ul th:unless="${session.member == null}">
+                            <li><a href="/member/myInfo" class="mypage">마이페이지</a></li>
+                            <!-- 밑에 이거 지울거에요!! 테스트용입니다. -->
+                            <li><a th:if="${session.member != null && session.member.memberType == 2}" href="/hospital/myHospitalReservation?reqPage=1&doctorNo=0">병원예약조회</a></li>
+                            <li><a href="/member/logout">로그아웃</a></li>
+                        </ul>
                     </div>
-                </form>
-                <div class="user_menu_area">
-                	<ul th:if="${session.member == null}">
-                       	<li><a href="/member/signUpFrm">회원가입</a></li>
-                       	<li><a href="/member/signInFrm">로그인</a></li>
-                    </ul>
-                    <ul th:unless="${session.member == null}">
-                       	<li><a href="/member/myInfo" class="mypage">마이페이지</a></li>
-                       	<!-- 밑에 이거 지울거에요!! 테스트용입니다. -->
-                       	<li><a th:if="${session.member != null && session.member.memberType == 2}" href="/hospital/myHospitalReservation?reqPage=1&doctorNo=0">병원예약조회</a></li>           	
-                       	<li><a href="/member/logout">로그아웃</a></li>
-                    </ul>
                 </div>
             </div>
-        </div>
-        <div class="header_bottom_area">
-            <nav class="gnb_area">
-                <ul class="gnb_list">
-                    <li><a href="/service/searchHospitalMain">병원찾기</a></li>
-                    <li><a href="#">커뮤니티</a></li>
-                    <li><a href="/etc/pharmacy">약국찾기</a></li>
-                    <li>
-                        <a href="/admin/noticeList?reqPage=1">고객센터</a>
-                        <ul class="sub_menu">
-                            <li><a href="/admin/noticeList?reqPage=1">공지사항</a></li>
-                            <li><a href="/admin/faqList">자주묻는질문</a></li>
-                            <li th:if="${session.member != null && session.member.memberType == 3}">
-                            	<a href="/admin/manageMember">회원관리</a></li>
-                            </li>
-                            <li th:if="${session.member != null && session.member.memberType == 3}">
-                            	<a href="/admin/manageReport?reqPage=1">회원신고관리</a></li>
-                            </li>
-                            <li th:if="${session.member != null && session.member.memberType == 3}">
-                            	<a href="/admin/manageHospitalReport?reqPage=1">병원신고관리</a></li>
-                            </li>
-                            <li th:if="${session.member != null && session.member.memberType == 3}">
-                            	<a href="/admin/businessAuthList?reqPage=1">승인관리</a></li>
-                            </li>
-                            <li th:if="${session.member != null && session.member.memberType == 3}">
-                            	<a href="/admin/manageReview">리뷰관리</a></li>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
-            </nav>
-        </div>
-        <div class="blur"></div>
-    </header>
+            <div class="header_bottom_area">
+                <nav class="gnb_area">
+                    <ul class="gnb_list">
+                        <li><a href="/service/searchHospitalMain">병원찾기</a></li>
+                        <li><a href="/community/communityMain">커뮤니티</a></li>
+                        <li><a href="/etc/pharmacy">약국찾기</a></li>
+                        <li>
+                            <a href="/admin/noticeList?reqPage=1">고객센터</a>
+                            <ul class="sub_menu">
+                                <li>
+                                    <a href="/admin/noticeList?reqPage=1">공지사항</a>
+                                </li>
+                                <li>
+                                    <a href="/admin/faqList">자주묻는질문</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li th:if="${session.member != null && session.member.memberType == 3}">
+                            <a href="javascript:void(0);">관리자 메뉴</a>
+                            <ul class="sub_menu">
+                                <li>
+                                    <a href="/admin/manageMember">회원관리</a>
+                                </li>
+                                <li>
+                                    <a href="/admin/manageReport?reqPage=1">회원신고관리</a>
+                                </li>
+                                <li>
+                                    <a href="/admin/manageHospitalReport?reqPage=1">병원신고관리</a>
+                                </li>
+                                <li>
+                                    <a href="/admin/businessAuthList?reqPage=1">승인관리</a>
+                                </li>
+                                <li>
+                                    <a href="/admin/manageReview">리뷰관리</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+            <div class="blur"></div>
+        </header>
 
 </html>
 <!--// header -->
