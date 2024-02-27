@@ -37,10 +37,13 @@
 	margin-top: 10px;
 }
 .detail_reservation_symptom_img>.symptom_img{
-	height: 300px;
 	border: 1px solid var(--line_02);
 	width: 50%;
 	margin: 0 10px;
+}
+.detail_reservation_symptom_img>.symptom_img>img{
+	display:block;
+	width:100%;
 }
 .detail_reservation_symptom_img_title{
 	margin-top: 20px;

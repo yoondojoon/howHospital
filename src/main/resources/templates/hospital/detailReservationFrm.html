@@ -18,6 +18,12 @@
         					<span th:case="4" class="badge gray">진료완료</span>
         					<span th:case="5" class="badge gray">수납완료</span>
 	            		</div>
+                        <div class="select">
+	          				<select class="doctor_select">
+	          					<option value="0">전체</option>
+	          					<option th:each="doctor : ${reservationDetailList.doctorList}" th:text="${doctor.doctorName}" th:value="${doctor.doctorNo}" th:selected="${doctor.doctorNo == doctorNo}"></option>
+	          				</select>
+	          			</div>
 		            	<div class="detail_reservation_top">
 		            		<span id="patientName">환자 이름</span>
 	           				<span th:text="${reservationDetailList.memberName}"></span>

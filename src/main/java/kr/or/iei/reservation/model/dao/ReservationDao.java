@@ -48,10 +48,12 @@ public class ReservationDao {
 				"            (select rownum as rnum, res.* from\r\n" + 
 				"                (select reservation_no,reservation_status,reg_reservation,RESERVATION_TIME,reservation_type,(select member_name from member_tbl where member_no=r.member_no) as member_name,\r\n" + 
 				"                (select DOCTOR_NAME from DOCTOR_TBL where doctor_no = (select doctor_no from reservation_detail_tbl where reservation_no=r.reservation_no)) as doctor_name,\r\n" + 
-				"                (select count(*) from prescription_tbl where reservation_no = r.reservation_no) as prescription_status\r\n" + 
+				"                (select count(*) from prescription_tbl where reservation_no = r.reservation_no) as prescription_status,\r\n" + 
+				"                (select hospital_no from hospital_tbl where r.member_no = member_no) as hospital_no\r\n" + 
 				"FROM \r\n" + 
 				"reservation_tbl r \r\n" + 
-				"where hospital_no in (select hospital_no from hospital_tbl where member_no= ?)\r\n" + 
+				"where hospital_no in (select hospital_no from hospital_tbl where member_no=?)\r\n" + 
+				"\r\n" + 
 				"ORDER BY 1 DESC)RES) WHERE Rnum BETWEEN ? AND ?";
 		Object[] params = {memberNo,startPage, endPage};
 		List list = jdbc.query(query, h_ReservationRowMapper, params);
@@ -101,7 +103,8 @@ public class ReservationDao {
 				"            (select rownum as rnum, res.* from\r\n" + 
 				"                (select reservation_no,reservation_status,reg_reservation,RESERVATION_TIME,reservation_type,(select member_name from member_tbl where member_no=r.member_no) as member_name,\r\n" + 
 				"                (select DOCTOR_NAME from DOCTOR_TBL where doctor_no = (select doctor_no from reservation_detail_tbl where reservation_no=r.reservation_no)) as doctor_name,\r\n" + 
-				"                (select count(*) from prescription_tbl where reservation_no = r.reservation_no) as prescription_status\r\n" + 
+				"                (select count(*) from prescription_tbl where reservation_no = r.reservation_no) as prescription_status,\r\n" + 
+				"                (select hospital_no from hospital_tbl where r.member_no = member_no) as hospital_no\r\n" + 
 				"FROM \r\n" + 
 				"reservation_tbl r \r\n" + 
 				"where hospital_no in (select hospital_no from hospital_tbl where member_no=?)\r\n" + 
