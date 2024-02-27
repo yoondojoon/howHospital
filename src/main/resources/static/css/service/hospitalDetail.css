@@ -90,3 +90,7 @@
 .hospitalDetail .review_list .detail_btm_wrap>span+span::before{content:''; display:block; position:absolute; left:-10px; top:5px; width:1px; height:10px; background-color:var(--line_02);}
 .hospitalDetail .review_list .detail_btm_wrap>.btm_btn_wrap{margin-left:auto;}
 .hospitalDetail .review_list .detail_btm_wrap>.btm_btn_wrap .report_btn{color:var(--gray_04); font-size:13px; line-height:21px;}
+
+.title_wrap{position:relative; max-width:1080px; margin:0 auto;}
+.btn_like{position:absolute; right:0; top:0; width:24px; height:24px; margin-left:auto; background:url(/images/icon_like_line.svg) no-repeat center / contain;}
+.btn_like.active{background:url(/images/icon_like_filled.svg) no-repeat center / contain;}

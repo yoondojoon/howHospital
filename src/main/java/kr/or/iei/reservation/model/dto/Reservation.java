@@ -21,5 +21,5 @@ public class Reservation {
 	private String resTimeTime;
 	private String memberName;
 	private String childName;
-	private int reviewNo;
+	private int reviewCount;
 }
