@@ -409,15 +409,25 @@ public class MemberController {
 	
 	//나의 리뷰 보기
 	@GetMapping(value="/myReview")
-	public String myReview(Member member, Reservation reservation) {
-		
-		int memberNo = member.getMemberNo();
-		
-		int reservationNo = reservation.getReservationNo();
+	public String myReview(HttpSession session, Member member, Reservation reservation, Model model) {
 		
 		
+		int memberNo = (int)session.getAttribute("memberNo");
 		
-		List list = memberService.myReviewList(memberNo,reservationNo);
+		
+		
+		List<Hospital> hospital = memberService.hospitalTbl();
+		
+				
+		System.out.println(hospital);
+		
+		
+		List list = memberService.reviewLsit(memberNo);
+		
+		
+		
+		model.addAttribute("list", list);
+		model.addAttribute("hospital", hospital);
 		
 		
 		return "/member/myReview";
@@ -428,13 +438,17 @@ public class MemberController {
 	
 	//나의 리뷰 작성
 	@GetMapping(value="myReviewFrm")
-	public String myReviewFrm(Member member, Reservation reservation, Model model) {
+	public String myReviewFrm(Member member, Reservation reservation, Model model, HttpSession session) {
+		
+		
 		
 		
 		//int rsNo = reservation.getReservationNo();
+		
+		
 	    
 	    
-	    //String hospitalName = memberService.getHospitalName(rsNo);
+	    //String hospitalName = memberService.getHospitalName();
 	  
 	    
 		
@@ -447,7 +461,7 @@ public class MemberController {
 	
 	
 	
-	
+	/*
 
 	//내 진료내역 상세
 	@PostMapping(value="/myMedicalDetail")
@@ -457,7 +471,7 @@ public class MemberController {
 		return "/member/myMedicalDetail";
 	}
 
-
+*/
 
 }
 
