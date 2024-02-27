@@ -22,6 +22,8 @@ import kr.or.iei.hospital.model.dto.SubjectDoctorRowMapper;
 import kr.or.iei.hospital.model.dto.SubjectRowMapper;
 import kr.or.iei.hospital.model.dto.Time;
 import kr.or.iei.hospital.model.dto.TimeRowMapper;
+import kr.or.iei.member.model.dto.MemberRowMapper;
+import kr.or.iei.member.model.dto.MyReviewRowMapper;
 
 
 
@@ -49,7 +51,11 @@ public class HospitalDao {
 	private ReviewRowMapper reviewRowMapper;
 	@Autowired
 	private ReviewMemberNameRowMapper reviewMemberNameRowMapper;
-
+	@Autowired
+	private MyReviewRowMapper myReviewRowMapper;
+	@Autowired
+	private MemberRowMapper memberRowMapper;
+	
 	
 	
 	public List searchHospital(String keyword) {	
@@ -305,23 +311,41 @@ public class HospitalDao {
 	}
 
 
-	public List selectMyResHistory(int memberNo, int start, int end) {
-		String query = "select * from\r\n" + 
-				"(select rownum rnum, r2.* from\r\n" + 
-				"(select reservation_no, reservation_status, reservation_type,\r\n" + 
-				"(select member_name from member_tbl where member_no=r.member_no) member_name,\r\n" + 
-				"(select child_name from child_tbl where child_no in (select child_no from reservation_detail_tbl where reservation_no=r.reservation_no)) child_name, hospital_no,\r\n" + 
-				"(select hospital_name from hospital_tbl where hospital_no=r.hospital_no) hospital_name,\r\n" + 
-				"substr(reservation_time,1,instr(reservation_time,' ',1,1)-1) res_time_date,\r\n" + 
-				"to_char(to_date(substr(reservation_time,1,instr(reservation_time,' ',1,1)-1),'yyyy-mm-dd'),'dy') res_time_day,\r\n" + 
-				"substr(reservation_time,instr(reservation_time,' ',1,1)+1) res_time_time,\r\n" + 
-				"(select review_no from review_tbl where reservation_no=r.reservation_no) review_no\r\n" + 
-				"from reservation_tbl r where member_no=? order by 1 desc) r2)\r\n" + 
-				"where rnum between ? and ?";
-		Object[] params = {memberNo, start, end};
-		List myHistoryList = jdbc.query(query, myReservationHistoryRowMapper, params);
-		return myHistoryList;
+	//회원번호 -> 
+	//회원 입장에서 회원이 리뷰한 리뷰 테이블을 조회하기 위해서는 해당 병원의 번호로 조회하고자 하는 리뷰의 회원 번호를 조건으로 사용 
+	//아래는 병원 번호가 1001인 병원의 리뷰들을 조회하는 쿼리
+	//회원번호(member_tbl) -> 병원번호(hostpial_tbl) -> 예약(reservation_tbl) -> 리뷰(review_tbl) 
+	
+	public List selectMyReviewHistory(int memberNo) {
+		String query = "select * from review_tbl where hospital_no = (select hospital_no from hospital_tbl where member_no = ?)";
+		Object[] params = {memberNo};
+		List myReviewList = jdbc.query(query, myReviewRowMapper, params);
+		return myReviewList;
 	}
+
+	public List selectReservationInfo(int memberNo) {
+		String query = "SELECT * \r\n" + 
+				"FROM doctor_tbl \r\n" + 
+				"WHERE doctor_no = (\r\n" + 
+				"    SELECT doctor_no \r\n" + 
+				"    FROM reservation_detail_tbl \r\n" + 
+				"    WHERE reservation_no = (\r\n" + 
+				"        SELECT reservation_no \r\n" + 
+				"        FROM review_tbl \r\n" + 
+				"        WHERE hospital_no = (\r\n" + 
+				"            SELECT hospital_no \r\n" + 
+				"            FROM hospital_tbl \r\n" + 
+				"            WHERE member_no = ?\r\n" + 
+				"        )\r\n" + 
+				"    )\r\n" + 
+				")";
+		Object[] params = {memberNo};
+		List reservationInfo  = jdbc.query(query, doctorRowMapper, params);
+		System.out.println(reservationInfo);
+		return reservationInfo;
+	}
+
+
 
 	
 

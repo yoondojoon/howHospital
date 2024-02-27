@@ -226,13 +226,13 @@ $(document).ready(function() {
 		                <option value="마취통증의학과">마취통증의학과</option>
 		                <option value="산부인과">산부인과</option>
 		                <option value="소아청소년과">소아청소년과</option>
-		                <option value="소아청소년과">안과</option>
+		                <option value="안과">안과</option>
 		                <option value="이비인후과">이비인후과</option>
 		                <option value="피부과">피부과</option>
 		                <option value="비뇨의학과">비뇨의학과</option>
 		                <option value="영상의학과">영상의학과</option>
 		                <option value="방사선종양학과">방사선종양학과</option>
-		                <option value="방사선종양학과">병리과</option>
+		                <option value="병리과">병리과</option>
 		                <option value="진단검사의학과">진단검사의학과</option>
 		                <option value="재활의학과">재활의학과</option>
 		                <option value="결핵과">결핵과</option>

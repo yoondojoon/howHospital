@@ -1,5 +1,6 @@
 package kr.or.iei.hospital.model.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -206,14 +207,20 @@ public class HospitalService {
 
 
 
-	public List selectMyReviewHistory(int memberNo, int start, int amount) {
-		int end = start+amount-1;
-		List myHistoryList = reservationDao.selectMyResHistory(memberNo, start, end);
-		return myHistoryList;
+	public List selectMyReviewHistory(int memberNo) {
+	    System.out.println(memberNo);
+	    List myReviewList = hospitalDao.selectMyReviewHistory(memberNo);
+		System.out.println(myReviewList);
+	    return myReviewList;
+	    
 	}
 
-	
-	
+
+	public List selectReservationInfo(int memberNo) {
+		List reservationInfo = hospitalDao.selectReservationInfo(memberNo);
+		System.out.println(reservationInfo);
+		return reservationInfo;
+	}
 
 
 }

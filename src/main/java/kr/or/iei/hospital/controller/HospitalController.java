@@ -336,9 +336,19 @@ public class HospitalController {
 	
 	@ResponseBody
 	@PostMapping(value="/selectMyReviewHistory")
-	public List selectMyResHistory(int memberNo, int start, int amount) {
-		List myHistoryList = hospitalService.selectMyReviewHistory(memberNo, start, amount);
+	public List selectMyResHistory(int memberNo) {
+		List myHistoryList = hospitalService.selectMyReviewHistory(memberNo);
+		System.out.println("리뷰정보:" + myHistoryList);
 		return myHistoryList;
+	}
+	
+
+	@ResponseBody
+	@PostMapping(value="/selectReservationInfo")
+	public List selectReservationInfo(int memberNo) {
+		List reservationInfo = hospitalService.selectReservationInfo(memberNo);
+		System.out.println("예약정보:" + reservationInfo);
+		return reservationInfo;
 	}
 	
 
