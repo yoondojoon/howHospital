@@ -415,6 +415,18 @@ public class AdminService {
 		List<Member> list = adminDao.selectAllMember(); 
 		return list;
 	}
+
+	@Transactional
+	public int unBlock(int memberNo) {
+		int result = adminDao.unBlock(memberNo);
+		return result;
+	}
+
+	@Transactional
+	public int block(int memberNo) {
+		int result = adminDao.block(memberNo);
+		return result;
+	}
 	
 
 }

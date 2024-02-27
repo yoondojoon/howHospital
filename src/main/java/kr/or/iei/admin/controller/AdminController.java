@@ -206,12 +206,27 @@ public class AdminController {
 		return "admin/manageReview";
 	}
 	
+	//리뷰삭제시키는 코드
 	@ResponseBody
 	@GetMapping("/deleteReview")
 	public int deleteReview(int reviewNo) {
 		int result = adminService.deleteReview(reviewNo);
-		
-		
+		return result;
+	}
+	
+	//이용정지 해제시키는 코드
+	@ResponseBody
+	@GetMapping("/unBlock")
+	public int unBlock(int memberNo) {
+		int result = adminService.unBlock(memberNo);
+		return result;
+	}
+	
+	//관리자가 이용정지시키는 코드
+	@ResponseBody
+	@GetMapping("/block")
+	public int block(int memberNo) {
+		int result = adminService.block(memberNo);
 		return result;
 	}
 }
