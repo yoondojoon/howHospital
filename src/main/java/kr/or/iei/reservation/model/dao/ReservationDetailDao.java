@@ -11,6 +11,7 @@ import kr.or.iei.reservation.model.dto.ReservationDetail;
 import kr.or.iei.reservation.model.dto.ReservationDetailList;
 import kr.or.iei.reservation.model.dto.ReservationDetailListRowMapper;
 import kr.or.iei.reservation.model.dto.ReservationDetailRowMapper;
+import kr.or.iei.reservation.model.dto.ReservationFileDataRowMapper;
 
 @Repository
 public class ReservationDetailDao {
@@ -20,6 +21,8 @@ public class ReservationDetailDao {
 	private ReservationDetailRowMapper reservationDetailRowMapper;
 	@Autowired
 	private ReservationDetailListRowMapper reservationDetailListRowMapper;
+	@Autowired
+	private ReservationFileDataRowMapper reservationFileDataRowMapper;
 	
 	public String selectDoctor() {
 		String query = "select doctor_name from reservation_detail_tbl join doctor_tbl using (doctor_no)";
@@ -47,5 +50,14 @@ public class ReservationDetailDao {
 			return null;
 		}
 		return (ReservationDetailList)list.get(0);
+	}
+	public List getSymptomImg(H_Reservation hr) {
+		String query = "SELECT RD.RESERVATION_NO AS RESERVATION_NO, RF.FILEPATH AS FILEPATH\r\n" + 
+				"FROM RESERVATION_DETAIL_TBL RD\r\n" + 
+				"JOIN RESERVATION_FILE RF ON RD.RESERVATION_NO = RF.RESERVATION_NO\r\n" + 
+				"WHERE RD.RESERVATION_NO = ?";
+		Object[] params = {hr.getReservationNo()};
+		List list = jdbc.query(query, reservationFileDataRowMapper, params);
+		return list;
 	}
 }

@@ -497,8 +497,21 @@ public class AdminService {
 
 
 	public HospitalReport selectOneHospitalReport(int reportNo) {
-		// TODO Auto-generated method stub
-		return null;
+		HospitalReport hr = adminDao.selectOneHospitalReport(reportNo);
+		return hr;
+	}
+
+
+	@Transactional
+	public int deleteHospitalReport(int reportNo) {
+		int result = adminDao.deleteHospitalReport(reportNo);
+		return result;
+	}
+
+	@Transactional
+	public int confirmHospitalReport(int reportNo) {
+		int result = adminDao.confirmHospitalReport(reportNo);
+		return result;
 	}
 	
 

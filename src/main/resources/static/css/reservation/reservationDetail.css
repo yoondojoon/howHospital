@@ -27,7 +27,7 @@
 	margin: 40px 40px;
 }
 
-.detail_reservation>.detail_reservation_symptom_img{
+.detail_reservation_symptom>.detail_reservation_symptom_img{
 	border: 1px solid var(--line_02);
 	border-radius: 10px;
 	box-sizing: border-box;
@@ -36,7 +36,7 @@
 	display: flex;
 	margin-top: 10px;
 }
-.detail_reservation_symptom_img>*{
+.detail_reservation_symptom_img>.symptom_img{
 	height: 300px;
 	border: 1px solid var(--line_02);
 	width: 50%;
@@ -50,7 +50,9 @@
 	font-weight: bold;
 }
 
-
+.detail_reservation_symptom_img>.ref_section{
+	margin: 0 auto;
+}
 
 
 

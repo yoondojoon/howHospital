@@ -22,6 +22,10 @@ public class ReservationDetailService {
 
 	public ReservationDetailList selectOneReservation(H_Reservation hr) {
 		ReservationDetailList rdl = reservationDetailDao.selectOneReservation(hr);
+		List fileDataList = reservationDetailDao.getSymptomImg(hr);
+		rdl.setFileDataList(fileDataList);
 		return rdl;
 	}
+
+	
 }

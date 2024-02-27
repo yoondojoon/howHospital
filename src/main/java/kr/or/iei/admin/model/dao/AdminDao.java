@@ -10,6 +10,7 @@ import kr.or.iei.admin.model.dto.AdminBusinessAuth;
 import kr.or.iei.admin.model.dto.AdminBusinessAuthRowMapper;
 import kr.or.iei.admin.model.dto.Faq;
 import kr.or.iei.admin.model.dto.FaqRowMapper;
+import kr.or.iei.admin.model.dto.HospitalReport;
 import kr.or.iei.admin.model.dto.HospitalReportRowMapper;
 import kr.or.iei.admin.model.dto.MemberReport;
 import kr.or.iei.admin.model.dto.MemberReportRowMapper;
@@ -175,7 +176,6 @@ public class AdminDao {
 		String query = "SELECT * FROM MEMBER_TBL RIGHT OUTER JOIN BUSINESSAUTH_TBL ON MEMBER_TBL.MEMBER_NO = BUSINESSAUTH_TBL.MEMBER_NO WHERE MEMBER_STATUS = 4 AND BUSINESSAUTH_NO=?";
 		Object[] params = {businessAuthNo};
 		AdminBusinessAuth aba = jdbc.queryForObject(query, abaRowMapper,params);
-		System.out.println("접속:"+aba);
 		return aba;
 	}
 
@@ -262,6 +262,28 @@ public class AdminDao {
 	public int selectAllHospitalReportCount() {
 		String query="select count(*) from hospital_report_tbl";
 		int result = jdbc.queryForObject(query, Integer.class);
+		return result;
+	}
+
+	public HospitalReport selectOneHospitalReport(int reportNo) {
+		String query = "SELECT REPORT_NO, REPORT_TITLE, REPORT_CONTENT,REPORT_STATUS,J_TBL.MEMBER_NO, HOSPITAL_NAME FROM(SELECT * FROM HOSPITAL_REPORT_TBL JOIN RESERVATION_TBL ON HOSPITAL_REPORT_TBL.RESERVATION_NO = RESERVATION_TBL.RESERVATION_NO) J_TBL JOIN HOSPITAL_TBL ON J_TBL.MEMBER_NO = HOSPITAL_TBL.MEMBER_NO WHERE REPORT_NO = ?";
+		Object[] params = {reportNo};
+		HospitalReport hr = jdbc.queryForObject(query, hrRowMapper, params);
+		System.out.println(hr);
+		return hr;
+	}
+
+	public int deleteHospitalReport(int reportNo) {
+		String query = "delete from hospital_report_tbl where report_no=?";
+		Object[] params = {reportNo};
+		int result = jdbc.update(query,params);
+		return result;
+	}
+
+	public int confirmHospitalReport(int reportNo) {
+		String query = "update hospital_report_tbl set report_status = 1 where report_no=?";
+		Object[] params = {reportNo};
+		int result = jdbc.update(query,params);
 		return result;
 	}
 
