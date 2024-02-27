@@ -16,6 +16,8 @@ import kr.or.iei.reservation.model.dto.H_Reservation;
 import kr.or.iei.reservation.model.dto.H_ReservationRowMapper;
 import kr.or.iei.reservation.model.dto.MyReservationDetailRowMapper;
 import kr.or.iei.reservation.model.dto.MyReservationHistoryRowMapper;
+import kr.or.iei.reservation.model.dto.ReceiptData;
+import kr.or.iei.reservation.model.dto.ReceiptDataRowMapper;
 import kr.or.iei.reservation.model.dto.Reservation;
 import kr.or.iei.reservation.model.dto.ReservationDetail;
 import kr.or.iei.reservation.model.dto.ReservationFile;
@@ -38,6 +40,8 @@ public class ReservationDao {
 	private ReservationFileRowMapper reservationFileRowMapper;
 	@Autowired
 	private PrescriptionFileRowMapper prescriptionFileRowMapper;
+	@Autowired
+	private ReceiptDataRowMapper receiptDataRowMapper;
 	public List selectReservation(int startPage, int endPage,int memberNo) {
 		String query = 
 				"select * from\r\n" + 
@@ -221,6 +225,27 @@ public class ReservationDao {
 		}else {
 			return (PrescriptionFile)list.get(0);
 		}
+	}
+
+	public ReceiptData getReceipt(int reservationNo) {
+		String query = "SELECT \r\n" + 
+				"    R.RESERVATION_NO,R.MEMBER_NO,R.REG_RESERVATION,H.HOSPITAL_NO,M.MEMBER_NAME,M.MEMBER_ADDRESS,RD.DOCTOR_NO,D.DOCTOR_NAME,H.HOSPITAL_NAME,H.COST_ONE,M.MEMBER_PHONE\r\n" + 
+				"FROM RESERVATION_TBL R \r\n" + 
+				"JOIN HOSPITAL_TBL H ON R.HOSPITAL_NO = H.HOSPITAL_NO\r\n" + 
+				"JOIN MEMBER_TBL M ON R.MEMBER_NO = M.MEMBER_NO\r\n" + 
+				"left JOIN RESERVATION_DETAIL_TBL RD ON R.RESERVATION_NO = RD.RESERVATION_NO\r\n" + 
+				"left JOIN DOCTOR_TBL D ON RD.DOCTOR_NO = D.DOCTOR_NO\r\n" + 
+				"WHERE R.RESERVATION_NO=?";
+		Object[] params = {reservationNo};
+		List list = jdbc.query(query, receiptDataRowMapper,params);
+		return (ReceiptData)list.get(0);
+	}
+
+	public int updateReservationStatus(int reservationNo) {
+		String query = "update reservation_tbl set reservation_status=5 where reservation_no=?";
+		Object[] params = {reservationNo};
+		int result = jdbc.update(query,params);
+		return result;
 	}
 
 	

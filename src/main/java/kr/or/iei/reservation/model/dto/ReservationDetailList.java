@@ -1,5 +1,7 @@
 package kr.or.iei.reservation.model.dto;
 
+import java.util.List;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,4 +19,5 @@ public class ReservationDetailList {
 	private String memberName;
 	private String symptom;
 	private int prescriptionStatus;
+	private List fileDataList;
 }

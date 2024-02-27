@@ -27,20 +27,27 @@
 		            			<textarea readonly th:text="${reservationDetailList.symptom}"></textarea>
 		            		</div>
 		            	</div>
-		            	<div class="detail_reservation_symptom_img_title">
-	            			<span id="symptom_img_title">사진</span>
-	            		</div>
-		            	<div class="detail_reservation_symptom_img">
-		            		<div class="symptom_img1">
-		            			
-		            		</div>
-		            		<div class="symptom_img2">
-		            		
-		            		</div>
-		            		<div class="symptom_img3">
-		            		
-		            		</div>
+		            	<div class="detail_reservation_symptom" th:if="${reservationDetailList.reservationType == 2}">
+		            		<div class="detail_reservation_symptom_img_title">
+	            				<span id="symptom_img_title">환부 사진</span>
+	            			</div>
+            				<div class="detail_reservation_symptom_img">
+            				<th:block th:if="${reservationDetailList.fileDataList.size() == 0}">	
+           						<div class="ref_section">
+									<div class="no_data_wrap">
+										<i class="icon no_data"></i>
+										<p>첨부된 사진이 없습니다.</p>
+									</div>
+								</div>
+        					</th:block>
+            					<div class="symptom_img"  th:each="filedata : ${reservationDetailList.fileDataList}">
+            						<th:block th:if="${filedata.filepath != null}">
+            							<img th:src="@{/reservation/}+${filedata.filepath}">
+            						</th:block>
+            					</div>
+            				</div>
 		            	</div>
+		            	
 		            	<div class="detail_reservation_bottom">
 		            		<div class="button_wrap" th:if="${reservationDetailList.reservationStatus == 1}">
 		            			<button type="button" class="btn_secondary cancelBtn" th:value="2">예약 거부</button>
@@ -49,10 +56,9 @@
 		            		
 		            		<div class="button_wrap" th:if="${reservationDetailList.reservationStatus == 3}">
 		            			<button type="button" class="btn_primary outline successBtn" th:value="4">진료완료</button>	
-		            			
 		            		</div>
 							
-		            		<div class="button_wrap" th:if="${reservationDetailList.reservationStatus == 4 && reservationDetailList.reservationType == 2 && reservation.prescriptionStatus == 0}">	
+		            		<div class="button_wrap" th:if="${reservationDetailList.reservationStatus == 5 && reservationDetailList.reservationType == 2 && reservationDetailList.prescriptionStatus == 0}">	
 		            			<button type="button" class="btn_secondary prescription_btn">처방전 등록</button>
 		            		</div>
 		            	</div>
@@ -61,6 +67,7 @@
             	</div>
             	<input type="hidden" id="reservationStatus" class="reservationStatus" name="reservationStatus" th:value="${reservationDetailList.reservationStatus}">
             	<input type="hidden" id="reservationNo" class="reservationNo" name="reservationNo" th:value="${reservationDetailList.reservationNo}">
+            	<input type="hidden" id="reservationType" class="reservationType" name="reservationType" th:value="${reservationDetailList.reservationType}">
             </div>
             
         </section>
@@ -94,17 +101,20 @@
 	</div>
 <th:block th:include="common/footer"></th:block>
 <script>
+	
 	$(".cancelBtn,.confirmBtn,.successBtn").on("click",function(){
 		const reservationStatus = $(this).val();
+		console.log(reservationStatus)
 		const obj = $(this);
 		const reservationNo = $("#reservationNo").val();
-		updateReservationDetail(reservationStatus,obj,reservationNo);
+		const reservationType = $("#reservationType").val();
+		updateReservationDetail(reservationStatus,obj,reservationNo,reservationType);
 	});
 	
-	function updateReservationDetail(reservationStatus, obj, reservationNo){
+	function updateReservationDetail(reservationStatus, obj, reservationNo,reservationType){
 		const buttonWrapDiv = $(".button_wrap");
 		$.ajax({
-			url:"/ReservationDetail/updateReservation",
+			url : "/ReservationDetail/updateReservation",
 			type : "get",
 			data : {reservationStatus : reservationStatus , reservationNo : reservationNo},
 			success : function(data){
@@ -119,23 +129,31 @@
 						obj.parent().parent().parent().find(".badge").eq(0).attr("class","badge blue");
 						obj.prev().remove();
 						obj.remove();
-						const successBtn = 	$("<button type='button' class='btn_primary outline successBtn' th:value='4'></button>");
-						successBtn.text("진료완료");
+						
+						const successBtn = 	$("<button>").attr("type","button").addClass("btn_primary outline successBtn").text("진료완료").val("4");
 						buttonWrapDiv.append(successBtn);
-						/*
-						const prescriptionBtn = $("<button>").attr("type","button").addClass("btn_secondary prescription_btn").text("처방전 등록");
-						buttonWrapDiv.append(prescriptionBtn);
-						*/
+						
+						if(reservationType == 2){
+							const prescriptionBtn = $("<button>").attr("type","button").addClass("btn_secondary prescription_btn").text("처방전 등록");
+							buttonWrapDiv.append(prescriptionBtn);
+							
+							prescriptionBtn.on("click",function(){
+								prescriptionUpload(prescriptionBtn)
+							})	
+						}
+						
 						successBtn.on("click",function(){
+							const value=$(this).val();
+							const reservationStatus = $(this).val();
+							const obj = $(this);
+							const reservationNo = $("#reservationNo").val();
+							const reservationType = $("#reservationType").val();
+							updateReservationDetail(reservationStatus,obj,reservationNo,reservationType)
 							$(this).parent().parent().parent().find(".badge").eq(0).text("진료완료");
 							$(this).parent().parent().parent().find(".badge").eq(0).attr("class","badge gray");
 							$(this).remove();
-							
 						})
-						prescriptionBtn.on("click",function(){
-							prescriptionUpload(prescriptionBtn)
-						})	
-						
+
 					}else if(reservationStatus == 4){
 						obj.parent().parent().parent().find(".badge").eq(0).text("진료완료");
 						obj.parent().parent().parent().find(".badge").eq(0).attr("class","badge gray");
@@ -149,87 +167,7 @@
 			}
 		});
 	}
-/*
-	$(".cancelBtn").on("click",function(){
-		const reservationStatus = $(".cancelBtn").val();
-		const obj = $(this);
-		const reservationNo = $(".reservationNo").val();
-		if(confirm("예약을 거부하시겠습니까?")){
-			$.ajax({
-				url:"/ReservationDetail/updateReservation",
-				type:"get",
-				data:{reservationStatus : reservationStatus , reservationNo : reservationNo},
-				success : function(data){
-					if(data == 1){
-						if(reservationStatus == 2){
-							obj.parent().parent().parent().find(".badge").eq(0).text("예약취소");
-							obj.parent().parent().parent().find(".badge").eq(0).attr("class","badge red outline");
-							obj.parent().remove();
-							window.location.href = "/hospital/myHospitalReservation?reqPage=1&doctorNo=0";
-							
-						}
-					}
-				},
-				error : function(){
-					console.log("에러발생")
-				}
-			});	
-		}
-		
-	});
-	
-	$(".confirmBtn").on("click",function(){
-		const reservationStatus = $(".confirmBtn").val();
-		const obj = $(this);
-		const reservationNo = $(".reservationNo").val();
-		const buttonWrapDiv = obj.parent();
-		$.ajax({
-			url:"/ReservationDetail/updateReservation",
-			type:"get",
-			data:{reservationStatus : reservationStatus , reservationNo : reservationNo},
-			success : function(data){
-				if(data == 1){
-					if(reservationStatus == 3){
-						obj.parent().parent().parent().find(".badge").eq(0).text("예약확정");
-						obj.parent().parent().parent().find(".badge").eq(0).attr("class","badge blue");
-						obj.prev().remove();
-						obj.remove();
-						const successBtn = 	$("<button type='button' class='btn_primary outline successBtn' th:value='4'></button>");
-						successBtn.text("진료완료");
-						buttonWrapDiv.append(successBtn);
-						const prescriptionBtn = $("<button>").attr("type","button").addClass("btn_secondary prescription_btn").text("처방전 등록");
-						buttonWrapDiv.append(prescriptionBtn);
-					}
-				}
-			},
-			error : function(){
-				console.log("에러발생")
-			}
-		});
-	});
-	
-	$(".successBtn").on("click",function(){
-		const reservationStatus = $(".successBtn").val();
-		const obj = $(this);
-		const reservationNo = $(".reservationNo").val();
-		$.ajax({
-			url:"/ReservationDetail/updateReservation",
-			type:"get",
-			data:{reservationStatus : reservationStatus , reservationNo : reservationNo},
-			success : function(data){
-				if(data == 1){
-					if(reservationStatus == 4){
-						obj.parent().parent().parent().find(".badge").eq(0).text("진료완료");
-						obj.parent().parent().parent().find(".badge").eq(0).attr("class","badge gray");
-					}
-				}
-			},
-			error : function(){
-				console.log("에러발생")
-			}
-		});
-	});
-*/
+
 	$(".prescription_btn").on("click",function(){
 		prescriptionUpload(this);
 		
@@ -238,7 +176,6 @@
 	let reservationNo = 0;
 	function prescriptionUpload(obj){
 		const revNo = $(obj).parent().parent().parent().parent().next().next().val();
-		console.log(revNo)
 		reservationNo = revNo;
 		$(".modal").attr("style","display:block");
 
@@ -272,6 +209,7 @@
 			alert("처방전을 등록해주세요");
 		}
 	});
+	
 	
 </script>
 </html>

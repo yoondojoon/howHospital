@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import kr.or.iei.hospital.model.dto.PrescriptionFile;
 import kr.or.iei.reservation.model.dao.ReservationDao;
 import kr.or.iei.reservation.model.dto.H_Reservation;
+import kr.or.iei.reservation.model.dto.ReceiptData;
 import kr.or.iei.reservation.model.dto.Reservation;
 import kr.or.iei.reservation.model.dto.ReservationDetail;
 import kr.or.iei.reservation.model.dto.ReservationFile;
@@ -155,6 +156,15 @@ public class ReservationService {
 	public PrescriptionFile selectMyPrescription(int reservationNo) {
 		PrescriptionFile file = reservationDao.selectMyPrescription(reservationNo);
 		return file;
+	}
+	public ReceiptData getReceipt(int reservationNo) {
+		ReceiptData list = reservationDao.getReceipt(reservationNo);
+		return list;
+	}
+	@Transactional
+	public int updateReservationStatus(int reservationNo) {
+		int result = reservationDao.updateReservationStatus(reservationNo);
+		return result;
 	}
 	
 }
