@@ -389,6 +389,7 @@ public class MemberController {
 	}
 	
 
+
 	
 	//내 자녀 삭제
 	@ResponseBody
@@ -455,6 +456,8 @@ public class MemberController {
 		model.addAttribute("rd", rd);
 		return "/member/myMedicalDetail";
 	}
+
+
 
 }
 

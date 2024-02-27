@@ -22,6 +22,7 @@ public class MyReservationHistoryRowMapper implements RowMapper<Reservation>{
 		r.setResTimeDate(rs.getString("res_time_date"));
 		r.setResTimeDay(rs.getString("res_time_day"));
 		r.setResTimeTime(rs.getString("res_time_time"));
+		r.setReviewNo(rs.getInt("review_no"));
 		return r;
 	}
 

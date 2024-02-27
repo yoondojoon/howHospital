@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<link rel="stylesheet" href="/css/service/searchHospital.css">
-
 <th:block th:include="common/header"></th:block>
+
+<link rel="stylesheet" href="/css/service/searchHospital.css">
 
 <!-- container -->
 <main id="container" class="container">
@@ -15,8 +15,7 @@
 				<div class="search_wrap">
 					<div class="input_item">
 						<input class="search_input" type="search" name="keyword" placeholder="지역, 진료과 또는 병명을 입력해보세요">
-						<button type="button" class="btn_search" onclick="return searchHospital(this);"><span
-								class="blind">검색</span></button>
+						<button type="button" class="btn_search" onclick="return searchHospital(this);"><span class="blind">검색</span></button>
 					</div>
 				</div>
 				<div class="list_wrap">

@@ -5,7 +5,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import kr.or.iei.hospital.model.dto.PrescriptionFile;
 import kr.or.iei.reservation.model.dao.ReservationDao;
 import kr.or.iei.reservation.model.dto.H_Reservation;
 import kr.or.iei.reservation.model.dto.Reservation;
@@ -136,9 +139,22 @@ public class ReservationService {
 		return myHistoryList;
 	}
 	
-	public ReservationDetail selectMyReservationDetail(int reservationNo) {
-		ReservationDetail rd = reservationDao.selectMyReservationDetail(reservationNo);
-		return null;
+	public ReservationDetail selectMyResDetail(int reservationNo) {
+		ReservationDetail rd = reservationDao.selectMyResDetail(reservationNo);
+		List fileList = reservationDao.selectMyReservationFiles(reservationNo);
+		rd.setFileList(fileList);
+		return rd;
+	}
+	
+	@Transactional
+	public int cancelMyReservation(int reservationNo) {
+		int result = reservationDao.cancelMyReservation(reservationNo);
+		return result;
+	}
+	
+	public PrescriptionFile selectMyPrescription(int reservationNo) {
+		PrescriptionFile file = reservationDao.selectMyPrescription(reservationNo);
+		return file;
 	}
 	
 }

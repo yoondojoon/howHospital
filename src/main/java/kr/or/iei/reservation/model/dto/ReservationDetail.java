@@ -1,5 +1,7 @@
 package kr.or.iei.reservation.model.dto;
 
+import java.util.List;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,4 +22,10 @@ public class ReservationDetail {
 	private String reservation_time;
 	private String filename;
 	private String filepath;
+	private String regDate;
+	private String regDay;
+	private String regTime;
+	private String doctorName;
+	private String subjectName;
+	private List<ReservationFile> fileList;
 }
