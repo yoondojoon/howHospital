@@ -14,11 +14,16 @@ import org.springframework.web.bind.annotation.SessionAttribute;
 
 import jakarta.servlet.http.HttpSession;
 import kr.or.iei.EmailSender;
+import kr.or.iei.hospital.model.dto.Hospital;
 import kr.or.iei.member.model.dto.Child;
 import kr.or.iei.member.model.dto.Member;
 import kr.or.iei.member.model.service.MemberService;
+
+import kr.or.iei.reservation.model.dto.Reservation;
+
 import kr.or.iei.reservation.model.dto.ReservationDetail;
 import kr.or.iei.reservation.model.service.ReservationService;
+
 import lombok.Getter;
 
 @Controller
@@ -245,7 +250,7 @@ public class MemberController {
 	//회탈
 	@ResponseBody
 	@PostMapping(value="/delete")
-	public String confirmDelete(@SessionAttribute(required = false) Member member, Member m) {
+	public int confirmDelete(@SessionAttribute(required = false) Member member, Member m,HttpSession session) {
 		
 		String memberEmail = member.getMemberEmail();
 		String memberPassword = member.getMemberPassword();
@@ -253,10 +258,13 @@ public class MemberController {
 		
 		int cnt = memberService.confirmDelete(memberEmail,memberPassword);
 		
-		
-		return "cnt";
+		if(session != null) {
+			session.invalidate();
+			
+		}
+			
+			return cnt;
 	
-		
 	}
 	
 	
@@ -380,6 +388,77 @@ public class MemberController {
 		return "/member/myMedicalHistory";
 	}
 	
+
+
+	
+	//내 자녀 삭제
+	@ResponseBody
+	@PostMapping(value="/deleteChild")
+	public int deleteChild(int childNo) {
+		
+		int cnt = memberService.deleteChild(childNo);
+		
+		System.out.println(childNo);
+		
+		return cnt;
+		
+		
+	}
+	
+	
+	
+	//나의 리뷰 보기
+	@GetMapping(value="/myReview")
+	public String myReview(Member member, Reservation reservation) {
+		
+		int memberNo = member.getMemberNo();
+		
+		int reservationNo = reservation.getReservationNo();
+		
+		
+		
+		List list = memberService.myReviewList(memberNo,reservationNo);
+		
+		
+		return "/member/myReview";
+		
+		
+	}
+	
+	
+	//나의 리뷰 작성
+	@GetMapping(value="myReviewFrm")
+	public String myReviewFrm(Member member, Reservation reservation, Model model) {
+		
+		
+		//int rsNo = reservation.getReservationNo();
+	    
+	    
+	    //String hospitalName = memberService.getHospitalName(rsNo);
+	  
+	    
+		
+		
+		return "/member/myReviewFrm";
+		
+		
+	}
+	
+	
+	
+	
+	
+
+	//내 진료내역 상세
+	@PostMapping(value="/myMedicalDetail")
+	public String myMedicalDetail(int reservationNo, Model model) {
+		ReservationDetail rd = reservationService.selectMyReservationDetail(reservationNo);
+		model.addAttribute("rd", rd);
+		return "/member/myMedicalDetail";
+	}
+
+
+
 }
 
 

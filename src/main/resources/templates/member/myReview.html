@@ -31,37 +31,17 @@
            <!-- 내 정보 내용 -->
            <div class="myInfoWrap">
            		<div class="myInfoBox">
-           			<h2>내 정보</h2>
+           			<h2>나의 리뷰</h2>
            			           			
-	           			<div class="myInfoContents">
-           					<span class="material-icons">emoji_emotions</span>
-           				<h3><span th:text="${session.member.memberName}"></span></h3>
-           				
-           				
-           				<th:block th:each="children : ${child}">
-	           				<div class="info childInfo"><button type="button" class="closeBtn"><span class="material-icons close">close</span></button>
-	           				<span class="material-icons">child_care</span>
-	           				<span th:text="${children.childName}"></span>
-	           				<span id="memberRrn" th:text="${session.member.memberRrn}" style="display:none;"></span><!-- 뷰에 세션으로 주민번호 꺼내오 -->
-	           				
-	           				
-	           				<span class="childNo" id="childRrn" th:text="${children.childNo}" style="display:none;"></span><!-- 뷰에 세션으로 주민번호 꺼내오 -->
-	           				<span class="childRrn" id="childRrn" th:text="${children.childRrn}" style="display:none;"></span><!-- 뷰에 세션으로 주민번호 꺼내오 -->
-	           					<ul>
-	           						<li><span class="birthDate" id="birthDate"></span><span class="gender" id="gender"></span><span class="age" id="age"></span></li>
-	           						<li>주소 : <span th:text="${session.member.memberAddress}"></span></li>
-	           						
-	           					</ul>
-	           				
-	           				</div>
-           				</th:block>
+	           			
+           					
            				
            				
            				
            				
+           				<a href="/member/myReviewFrm"><button type="button" class="btn_primary lg">리뷰 작성하기</button></a>
            				
-           				
-           			</div><!-- myInfoContents -->
+           			
            		</div>
            </div>
            

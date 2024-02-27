@@ -106,4 +106,37 @@ public class MemberService {
 		List child = memberDao.selectMyChildInfo(memberNo);
 		return child;
 
-	}}
+	}
+
+	public int deleteChild(int childNo) {
+		
+		
+		int cnt = memberDao.deleteChild(childNo);
+		
+		
+		return cnt;
+	}
+
+	//내 리뷰 보기
+	public List myReviewList(int memberNo, int reservationNo) {
+		
+		
+		List list = memberDao.myReviewList(memberNo ,reservationNo); 
+		
+		
+		return list;
+	}
+	/*
+	// 내 리뷰 작성
+	public String getHospitalName(int rsNo) {
+		
+		
+		String hospitalName = memberDao.getHospitalName(rsNo);
+		
+		
+		return null;
+	}
+	
+	*/
+	
+	}
