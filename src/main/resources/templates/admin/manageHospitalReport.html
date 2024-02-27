@@ -35,7 +35,7 @@
 					</td>
 					<td name="reportNo" th:text="${report.reportNo}"></td>
 					<td name="noticeTitle">
-						<a th:href="@{/admin/reportDetail(reportNo=${report.reportNo})}" th:text="${report.reportTitle}"></a>
+						<a th:href="@{/admin/hospitalReportDetail(reportNo=${report.reportNo})}" th:text="${report.reportTitle}"></a>
 					</td>
 					<td name="hospitalName" th:text="${report.hospitalName}"></td>
 					<td name="reportStatus">
