@@ -99,6 +99,7 @@
                             console.log(data);
                             if(data == 1){
                                 $(obj).text("수납완료");
+                                $(obj).prop("disabled",true);
                             }
                        },
                        error : function(){

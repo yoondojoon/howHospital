@@ -16,6 +16,7 @@
             				<span th:case="2" class="badge red outline">예약취소</span>
            					<span th:case="3" class="badge blue">예약확정</span>
         					<span th:case="4" class="badge gray">진료완료</span>
+        					<span th:case="5" class="badge gray">수납완료</span>
 	            		</div>
 		            	<div class="detail_reservation_top">
 		            		<span id="patientName">환자 이름</span>
@@ -57,7 +58,6 @@
 		            		<div class="button_wrap" th:if="${reservationDetailList.reservationStatus == 3}">
 		            			<button type="button" class="btn_primary outline successBtn" th:value="4">진료완료</button>	
 		            		</div>
-							
 		            		<div class="button_wrap" th:if="${reservationDetailList.reservationStatus == 5 && reservationDetailList.reservationType == 2 && reservationDetailList.prescriptionStatus == 0}">	
 		            			<button type="button" class="btn_secondary prescription_btn">처방전 등록</button>
 		            		</div>
@@ -132,16 +132,7 @@
 						
 						const successBtn = 	$("<button>").attr("type","button").addClass("btn_primary outline successBtn").text("진료완료").val("4");
 						buttonWrapDiv.append(successBtn);
-						
-						if(reservationType == 2){
-							const prescriptionBtn = $("<button>").attr("type","button").addClass("btn_secondary prescription_btn").text("처방전 등록");
-							buttonWrapDiv.append(prescriptionBtn);
-							
-							prescriptionBtn.on("click",function(){
-								prescriptionUpload(prescriptionBtn)
-							})	
-						}
-						
+
 						successBtn.on("click",function(){
 							const value=$(this).val();
 							const reservationStatus = $(this).val();
@@ -151,12 +142,20 @@
 							updateReservationDetail(reservationStatus,obj,reservationNo,reservationType)
 							$(this).parent().parent().parent().find(".badge").eq(0).text("진료완료");
 							$(this).parent().parent().parent().find(".badge").eq(0).attr("class","badge gray");
-							$(this).remove();
+							$(this).parent().remove();
 						})
 
 					}else if(reservationStatus == 4){
 						obj.parent().parent().parent().find(".badge").eq(0).text("진료완료");
 						obj.parent().parent().parent().find(".badge").eq(0).attr("class","badge gray");
+						if(reservationType == 2){
+							const prescriptionBtn = $("<button>").attr("type","button").addClass("btn_secondary prescription_btn").text("처방전 등록");
+							buttonWrapDiv.append(prescriptionBtn);
+							
+							prescriptionBtn.on("click",function(){
+								prescriptionUpload(prescriptionBtn)
+							})	
+						}
 						
 					}else if(reservationStatus == 5){
 						obj.parent().parent().parent().find(".badge").eq(0).text("수납완료");
