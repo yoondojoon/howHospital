@@ -45,7 +45,7 @@ h4{margin-bottom:20px; color:var(--gray_01); font-size:16px; font-weight:bold; l
 h5{margin-bottom:8px; color:var(--gray_01); font-size:14px; font-weight:bold; line-height:1.5;}
 
 /* header */
-#header{z-index:1000; position:fixed; top:0; left:0; right:0; border-bottom:1px solid /*rgba(67,137,186,0.4)*/ rgba(0,129,180,0.4);}
+#header{z-index:1000; position:fixed; top:0; left:0; right:0; border-bottom:1px solid /*rgba(67,137,186,0.4)*/ rgba(0,129,180,0.4); background-color:rgba(235,247,255,0.6);}
 #header .header_top_area{position:relative; z-index:1;}
 #header .header_bottom_area{display:block; position:relative; z-index:1;}
 #header.fixed .header_bottom_area{display:none;}
@@ -63,7 +63,7 @@ h5{margin-bottom:8px; color:var(--gray_01); font-size:14px; font-weight:bold; li
 #header .user_menu_area>ul{display:flex; justify-content:flex-end;}
 #header .user_menu_area>ul>li+li{position:relative;}
 #header .user_menu_area>ul>li+li::before{content:''; display:block; position:absolute; top:15px; left:0; width:1px; height:10px; background-color:var(--main_03);}
-#header .user_menu_area a{display:block; padding:10px 12px; color:var(--main_03); font-size:13px; line-height:19px;}
+#header .user_menu_area a{display:block; padding:10px 12px; color:var(--main_03); font-size:14px; line-height:1.5;}
 #header .user_menu_area .mypage{display:block; padding:10px 12px 10px 24px; background:url(/images/icon_account.svg) no-repeat left center / 20px 20px;}
 
 #header .gnb_area .gnb_list{display:flex; justify-content:center; align-items:center;}
@@ -81,7 +81,7 @@ h5{margin-bottom:8px; color:var(--gray_01); font-size:14px; font-weight:bold; li
 #footer .inner_wrap{position:relative;}
 #footer .logo{margin-left:-15px;}
 #footer .logo>a{display:block; width:200px; height:48px; background:url(/images/logo.png) no-repeat center left / auto 48px; color:var(--main_01); font-size:28px; font-weight:bold; line-height:48px;}
-#footer .footer_main_area{padding:36px 0 48px;}
+#footer .footer_main_area{padding:48px 0 60px;}
 #footer .footer_menu_list{display:flex; gap:20px; margin-top:16px; }
 #footer .footer_menu_list a{color:var(--gray_02); font-size:14px; font-weight:bold; line-height:21px;}
 #footer .footer_main_area p{margin-top:32px; color:var(--gray_04); font-size:14px; line-height:21px;}

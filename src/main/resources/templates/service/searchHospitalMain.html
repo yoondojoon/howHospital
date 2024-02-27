@@ -14,7 +14,7 @@
 			<div class="list_area">
 				<div class="search_wrap">
 					<div class="input_item">
-						<input class="search_input" type="search" name="keyword" placeholder="지역, 진료과 또는 병명을 입력해보세요">
+						<input class="search_input" type="search" name="keyword" th:value="${keyword}" placeholder="지역, 진료과 또는 병명을 입력해보세요">
 						<button type="button" class="btn_search" onclick="return searchHospital(this);"><span class="blind">검색</span></button>
 					</div>
 				</div>
@@ -45,6 +45,11 @@
 <!-- js 링크 -->
 <script type="text/javascript" src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=bizfvb77ie"></script>
 <script>
+$(function(){
+	if($(".search_input").val() != ""){
+		$(".btn_search").eq(1).click();		
+	}
+});
 	//엔터키 이벤트
 	$(".search_input").on("keyup", function (e) {
 		if (e.keyCode == 13) {
@@ -68,7 +73,7 @@
 			url: "/service/searchHospital",
 			type: "GET",
 			dataType: "JSON",
-			data: { keyword: keyword },
+			data: {keyword: keyword},
 			success: function (hospitalList) {
 				$(".hospital_list").empty();
 				$(markerArr).each(function (index, item) {

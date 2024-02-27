@@ -62,7 +62,7 @@ h2 {
 							<p th:text="${review.reviewContent}"></p>
 						</div>
 						<div class="content garbage">
-							<span class="material-icons" style="color: red;"
+							<span class="material-icons" style="color: red; cursor:pointer;"
 								th:value="${review.reviewNo}" onclick="deleteFunc(this)">delete</span>
 						</div>
 					</div>
@@ -77,21 +77,24 @@ h2 {
 <!-- js 링크 -->
 <script>
 	function deleteFunc(element) {
-		const reviewNo = element.getAttribute('value');
-		
-		$.ajax({
-			url : "/admin/deleteReview",
-			type : "get",
-			data:{reviewNo, reviewNo},
-			dataType : "json",
-			success : function(data){
-				console.log("성공");
-			},
-			error : function(){
-				console.log("에러");
-			}
-		});
-		
+		if(confirm("삭제하시겠습니까?")){
+			const reviewNo = element.getAttribute('value');
+			
+			$.ajax({
+				url : "/admin/deleteReview",
+				type : "get",
+				data:{reviewNo, reviewNo},
+				dataType : "json",
+				success : function(data){
+					alert("정상적으로 삭제되었습니다.");
+				},
+				error : function(){
+					alert("삭제실패");
+				}
+			});
+		}else{
+
+		}
 	}
 </script>
 

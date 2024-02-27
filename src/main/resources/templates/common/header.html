@@ -51,7 +51,10 @@
                             	<a href="/admin/manageMember">회원관리</a></li>
                             </li>
                             <li th:if="${session.member != null && session.member.memberType == 3}">
-                            	<a href="/admin/manageReport?reqPage=1">신고관리</a></li>
+                            	<a href="/admin/manageReport?reqPage=1">회원신고관리</a></li>
+                            </li>
+                            <li th:if="${session.member != null && session.member.memberType == 3}">
+                            	<a href="/admin/manageHospitalReport?reqPage=1">병원신고관리</a></li>
                             </li>
                             <li th:if="${session.member != null && session.member.memberType == 3}">
                             	<a href="/admin/businessAuthList?reqPage=1">승인관리</a></li>
