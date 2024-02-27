@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.multipart.MultipartFile;
 
 import jakarta.servlet.http.HttpServletResponse;
@@ -18,6 +19,7 @@ import kr.or.iei.FileUtils;
 import kr.or.iei.hospital.model.dto.Hospital;
 import kr.or.iei.hospital.model.dto.PrescriptionFile;
 import kr.or.iei.hospital.model.service.HospitalService;
+import kr.or.iei.member.model.dto.Member;
 import kr.or.iei.member.model.service.MemberService;
 import kr.or.iei.reservation.model.dto.Reservation;
 import kr.or.iei.reservation.model.dto.ReservationDetail;
@@ -46,8 +48,7 @@ public class ServiceController {
 	private FileUtils fileUtils;
 	
 	@GetMapping(value="/searchHospitalMain")
-	public String searchHospitalMain(String keyword, Model model) {
-		
+	public String searchHospitalMain(String keyword, Model model) {	
 		model.addAttribute("keyword", keyword);
 		return "/service/searchHospitalMain";
 	}
@@ -60,8 +61,15 @@ public class ServiceController {
 	}
 	
 	@GetMapping(value="/hospitalDetail")
-	public String hospitalDetail(int hospitalNo, Model model) {
+	public String hospitalDetail(@SessionAttribute(required=false) Member member, int hospitalNo, Model model) {
 		Hospital h = hospitalService.searchHospitalDetail(hospitalNo);
+		if(member != null) {
+			int memberNo = member.getMemberNo();
+			int myResCount = hospitalService.selectMyResCount(memberNo, hospitalNo);
+			int myReviewCount = hospitalService.selectMyReviewCount(memberNo, hospitalNo);			
+			model.addAttribute("myResCount", myResCount);
+			model.addAttribute("myReviewCount", myReviewCount);
+		}
 		model.addAttribute("h", h);
 		return "/service/hospitalDetail";
 	}

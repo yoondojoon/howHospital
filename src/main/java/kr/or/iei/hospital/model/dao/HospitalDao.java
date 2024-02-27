@@ -302,10 +302,18 @@ public class HospitalDao {
 	    return result;
 	}
 
-
-
-
+	public int selectMyResCount(int memberNo, int hospitalNo) {
+		String query = "select count(*) from reservation_tbl where member_no=? and hospital_no=?";
+		Object[] params = {memberNo, hospitalNo};
+		int result = jdbc.queryForObject(query, Integer.class, params);
+		return result;
+	}
 	
-
+	public int selectMyReviewCount(int memberNo, int hospitalNo) {
+		String query = "select count(*) from review_tbl where member_no=? and hospital_no=?";
+		Object[] params = {memberNo, hospitalNo};
+		int result = jdbc.queryForObject(query, Integer.class, params);
+		return result;
+	}
 	
 }
