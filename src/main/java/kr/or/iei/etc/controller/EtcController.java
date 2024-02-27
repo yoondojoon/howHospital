@@ -8,16 +8,22 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.or.iei.etc.model.dto.Pharmacy;
+import kr.or.iei.reservation.model.dto.ReceiptData;
+import kr.or.iei.reservation.model.service.ReservationService;
 
 @Controller
 @RequestMapping("/etc")
 public class EtcController {
+	@Autowired
+	private ReservationService reservationService;
 	@GetMapping("/pharmacy")
 	public String pharmacy() {
 		return "etc/searchPharmacy";
@@ -61,6 +67,13 @@ public class EtcController {
 			e.printStackTrace();
 		}
 		return list;
+	}
+	
+	@GetMapping("/receipt")
+	public String receipt(int reservationNo, Model model) {
+		ReceiptData list = reservationService.getReceipt(reservationNo);
+		model.addAttribute("receipt", list);
+		return "etc/receipt";
 	}
 
 }

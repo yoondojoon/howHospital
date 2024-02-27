@@ -208,8 +208,11 @@
                         resStatus.addClass("gray");
                         resStatus.text("진료완료");
                         if(item.reservationType == 2){
-                            const ctaBtn = $("<a href='#' class='btn_primary outline'>수납하기</a>");
+                            const ctaBtn = $("<a href='/etc/receipt?reservationNo="+item.reservationNo+"' class='btn_primary outline'>수납하기</a>");
                             btnArea.append(ctaBtn);
+                            ctaBtn.on("click", function(e){
+                                e.stopPropagation();
+                            })
                         }else{
                             if(item.reviewNo == 0){
                                 const ctaBtn = $("<a href='#' class='btn_primary outline'>리뷰 작성</a>");
