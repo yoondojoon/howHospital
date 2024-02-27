@@ -50,6 +50,8 @@ public class HospitalDao {
 	@Autowired
 	private ReviewMemberNameRowMapper reviewMemberNameRowMapper;
 
+	
+	
 	public List searchHospital(String keyword) {	
 		String query = "select hospital_no, hospital_name, hospital_tel, hospital_postcode, hospital_addr_main, hospital_addr_sub, lat, lng,\r\n" + 
 				"(select distinct\r\n" + 
@@ -303,7 +305,23 @@ public class HospitalDao {
 	}
 
 
-
+	public List selectMyResHistory(int memberNo, int start, int end) {
+		String query = "select * from\r\n" + 
+				"(select rownum rnum, r2.* from\r\n" + 
+				"(select reservation_no, reservation_status, reservation_type,\r\n" + 
+				"(select member_name from member_tbl where member_no=r.member_no) member_name,\r\n" + 
+				"(select child_name from child_tbl where child_no in (select child_no from reservation_detail_tbl where reservation_no=r.reservation_no)) child_name, hospital_no,\r\n" + 
+				"(select hospital_name from hospital_tbl where hospital_no=r.hospital_no) hospital_name,\r\n" + 
+				"substr(reservation_time,1,instr(reservation_time,' ',1,1)-1) res_time_date,\r\n" + 
+				"to_char(to_date(substr(reservation_time,1,instr(reservation_time,' ',1,1)-1),'yyyy-mm-dd'),'dy') res_time_day,\r\n" + 
+				"substr(reservation_time,instr(reservation_time,' ',1,1)+1) res_time_time,\r\n" + 
+				"(select review_no from review_tbl where reservation_no=r.reservation_no) review_no\r\n" + 
+				"from reservation_tbl r where member_no=? order by 1 desc) r2)\r\n" + 
+				"where rnum between ? and ?";
+		Object[] params = {memberNo, start, end};
+		List myHistoryList = jdbc.query(query, myReservationHistoryRowMapper, params);
+		return myHistoryList;
+	}
 
 	
 

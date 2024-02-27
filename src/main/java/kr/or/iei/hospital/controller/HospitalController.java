@@ -334,7 +334,12 @@ public class HospitalController {
 		return "hospital/detailReservationFrm";
 	}
 	
-	
+	@ResponseBody
+	@PostMapping(value="/selectMyReviewHistory")
+	public List selectMyResHistory(int memberNo, int start, int amount) {
+		List myHistoryList = hospitalService.selectMyReviewHistory(memberNo, start, amount);
+		return myHistoryList;
+	}
 	
 
 }

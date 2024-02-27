@@ -13,6 +13,7 @@ import kr.or.iei.hospital.model.dto.Doctor;
 import kr.or.iei.hospital.model.dto.Hospital;
 import kr.or.iei.hospital.model.dto.Subject;
 import kr.or.iei.hospital.model.dto.Time;
+import kr.or.iei.reservation.model.dao.ReservationDao;
 
 @Service
 public class HospitalService {
@@ -20,6 +21,9 @@ public class HospitalService {
 	@Autowired
 	private HospitalDao hospitalDao;
 
+	@Autowired
+	private ReservationDao reservationDao;
+	
 	public List searchHospital(String keyword) {
 		List hospitalList = hospitalDao.searchHospital(keyword);
 		if(!hospitalList.isEmpty()) {
@@ -202,7 +206,11 @@ public class HospitalService {
 
 
 
-
+	public List selectMyReviewHistory(int memberNo, int start, int amount) {
+		int end = start+amount-1;
+		List myHistoryList = reservationDao.selectMyResHistory(memberNo, start, end);
+		return myHistoryList;
+	}
 
 	
 	

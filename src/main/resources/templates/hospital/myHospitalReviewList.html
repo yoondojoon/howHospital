@@ -1,41 +1,281 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <th:block th:include="common/header"></th:block>
-<link rel="stylesheet" href="/css/hospital/myHospitalFrm.css">
-<script	src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-<script type="text/javascript" src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=3jwhpqglw9&submodules=geocoder"></script>
 
+<link rel="stylesheet" href="/css/member/myMedicalHistory.css">
 
-<!-- container -->
-<main id="container" class="container">
-	<!-- contents -->
-<section id="contents" class="contents main">
-	<div id="hospital_wrap">
-		<div class="side_menu">
-			<ul class="side_list">
-				<li><a href="#">병원정보</a></li>
-				<li><a href="#">예약관리</a></li>
-				<li><a href="#">리뷰관리</a></li>
-			</ul>
-		</div>
-		<div class="main_content">
-		
-		
-			<div class="hospital_info_form">
-				<!-- 병원정보 입력 -->
-		<h2>병원정보 입력</h2>
+	<!-- container -->
+    <main id="container" class="container myMedicalHistory">
 
-			</div>
-		</div>
-	</div>
-</section>
-<!--// contents -->
+		<!-- contents -->
+        <section id="contents" class="contents">
+            <div class="inner_wrap">
+                <h2>내 진료내역</h2>
+                <!-- <p th:if="${session.member != null}" th:text="${session.member.memberName}">세션이 있냐</p> -->
 
-</main>
-<!--// container -->
+                <div class="history_area">
+                    <div class="history_wrap">
+                        <p class="history_info_txt">진료내역은 최신순으로 노출됩니다.</p>
+                        <ul class="history_list">
+                           
+                           
+                           
+                        </ul>
 
-
+                        <div class="btn_area">
+                            <button type="button" id="viewMore" class="btn_secondary outline view_more">더보기</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!--// contents -->
+        
+    </main>
+    <!--// container -->
+	
 <th:block th:include="common/footer"></th:block>
+<!-- js 링크 -->
+<script th:inline="javascript">
+    const memberNo = [[${session.member.memberNo}]];
+    const totalCount = [[${totalCount}]];
+    let currentCount = 0;
+    let start = 1;
+
+    $("#viewMore").on("click", function(){
+        const amount = 5;
+        $.ajax({
+            url: "/service/selectMyResHistory",
+            type: "POST",
+            dataType: "JSON",
+            data: {
+                memberNo: memberNo,
+                start: start,
+                amount: amount
+            },
+            success: function(data){
+                console.log(data);
+
+                $(data).each(function(index, item){
+                    console.log(typeof item.reviewNo);
+                    const li = $("<li>");
+                    const detailLink = $("<a href='javascript:void(0);'>");
+                    const badgeArea = $("<div class='badge_area'>");
+                    const resStatus = $("<span class='badge'>");
+                    const resType = $("<span class='res_type badge'>");
+                    const memberName = $("<span class='name'>");
+                    const btnArea = $("<div class='btn_area'>");
+                    //예약 상태(예약 상태에 따라 필요한 버튼 생성 및 노출)
+                    if(item.reservationStatus == 1){
+                        resStatus.addClass("blue outline");
+                        resStatus.text("접수대기");
+                        const ctaBtn = $("<button type='button' class='btn_secondary' id='cancelBtn'>예약 취소</button>");
+                        ctaBtn.on("click", function(e){
+                            e.stopPropagation();
+                            cancelFunc($(this));
+                        })
+                        btnArea.append(ctaBtn);
+                    }else if(item.reservationStatus == 2){
+                        resStatus.addClass("red outline");
+                        resStatus.text("예약취소");
+                    }else if(item.reservationStatus == 3){
+                        resStatus.addClass("blue");
+                        resStatus.text("예약확정");
+                        const ctaBtn = $("<button type='button' class='btn_secondary' id='cancelBtn'>예약 취소</button>");
+                        ctaBtn.on("click", function(e){
+                            e.stopPropagation();
+                            cancelFunc($(this));
+                        })
+                        btnArea.append(ctaBtn);
+                    }else if(item.reservationStatus == 4){
+                        resStatus.addClass("gray");
+                        resStatus.text("진료완료");
+                        if(item.reservationType == 2){
+                            const ctaBtn = $("<a href='#' class='btn_primary outline'>수납하기</a>");
+                            btnArea.append(ctaBtn);
+                        }else{
+                            if(item.reviewNo == 0){
+                                const ctaBtn = $("<a href='#' class='btn_primary outline'>리뷰 작성</a>");
+                                btnArea.append(ctaBtn);
+                                ctaBtn.on("click", function(e){
+                                    e.stopPropagation();
+                                })
+                            }
+                        }
+                    }else{
+                        resStatus.addClass("gray");
+                        resStatus.text("수납완료");
+                        const ctaBtn1 = $("<button type='button' class='btn_primary' id='showPrescription'>처방전 보기</button>");
+                        btnArea.append(ctaBtn1);
+                        ctaBtn1.on("click", function(e){
+                            e.stopPropagation();
+                            showPreScription();
+                        });
+                        if(item.reviewNo == 0){
+                            const ctaBtn2 = $("<a href='#' class='btn_primary outline'>리뷰 작성</a>");
+                            btnArea.append(ctaBtn2);
+                            ctaBtn2.on("click", function(e){
+                                e.stopPropagation();
+                            })
+                        }
+                    }
+                    //예약 타입(대면/비대면)
+                    if(item.reservationType == 1){
+                        resType.addClass("contact");
+                        resType.text("대면진료");
+                    }else{
+                        resType.addClass("contactless");
+                        resType.text("비대면진료");
+                    }
+                    //진료대상자 이름
+                    if(item.childName != null){
+                        memberName.text(item.childName);
+                    }else{
+                        memberName.text(item.memberName);
+                    }
+                    badgeArea.append(resStatus).append(resType).append(memberName);
+                    //예약 정보(병원이름/예약일시)
+                    const infoArea = $("<div class='info_area'>");
+                    const hospitalName = $("<strong class='hospital_name'>");
+                    hospitalName.text(item.hospitalName);
+                    const resTime = $("<div class='res_time'>");
+                    const resTimeDate = $("<span class='res_time_date'>");
+                    const resTimeDay = $("<span class='res_time_day'>");
+                    const resTimeTime = $("<span class='res_time_time'>");
+                    resTimeDate.text(item.resTimeDate);
+                    resTimeDay.text(item.resTimeDay);
+                    resTimeTime.text(item.resTimeTime);
+                    resTime.append(resTimeDate).append(resTimeDay).append(resTimeTime);
+                    infoArea.append(hospitalName).append(resTime);
+                    //합치기
+                    detailLink.append(badgeArea);
+                    detailLink.append(infoArea);
+                    detailLink.append(btnArea);
+                    li.append(detailLink);
+                    $(".history_list").append(li);
+
+                    //리스트 클릭시 상세내역 모달 노출
+                    const reservationNo = item.reservationNo;
+                    detailLink.on("click", function(){
+                        $("body").find(".modal").remove();
+                        $.ajax({
+                            url: "/service/selectMyResDetail",
+                            type: "post",
+                            dataType: "JSON",
+                            data: {reservationNo: reservationNo},
+                            success: function(data){
+                                console.log(data);
+                                let modal = [
+                                    "<div class='modal lg' id='detail_"+reservationNo+"'>",
+                                        "<div class='modal_wrap'>",
+                                            "<div class='modal_header'>",
+                                                "<div class='modal_title'>예약 상세 내역</div>",
+                                            "</div>",
+                                            "<div class='modal_container'>",
+                                                "<div class='modal_content'>",
+                                                    "<ul class='result_info'>",
+                                                        "<li><span>접수일시</span><strong><span>"+data.regDate+"</span><span>("+data.regDay+")</span><span>"+data.regTime+"</span></strong></li>",
+                                                        "<li><span>예약일시</span><strong><span>"+item.resTimeDate+"</span><span>("+item.resTimeDay+")</span><span>"+item.resTimeTime+"</span></strong></li>",
+                                                        "<li><span>진료대상</span><strong>"+memberName.text()+"</strong></li>",
+                                                        "<li><span>진료과</span><strong>"+data.subjectName+"</strong></li>",
+                                                        "<li><span>담당의사</span><strong>"+data.doctorName+"</strong></li>",
+                                                        "<li><span>병원명</span><strong>"+item.hospitalName+"</strong></li>",
+                                                    "</ul>",
+                                                "</div>",
+                                            "</div>",
+                                            "<div class='modal_footer'>",
+                                                "<div class='btn_area'>",
+                                                    "<button type='button' class='btn_primary lg' onclick='closeModal(this)'>확인</button>",
+                                                "</div>",
+                                            "</div>",
+                                            "<button type='button' onclick='closeModal(this);' class='btn_close'><span class='blind'>닫기</span></button>",
+                                        "</div>",
+                                    "</div>"
+                                ].join("");
+                                $("body").append(modal);
+                                $("html").addClass("scroll_fixed");
+                            },
+                            error: function(){
+                                console.log("에러");
+                            }
+                        })
+                    })
+
+                    //예약취소 버튼 클릭시 예약취소
+                    function cancelFunc(obj){
+                        if(confirm("예약을 취소하시겠습니까?")){
+                            $.ajax({
+                                url: "/service/cancelMyReservation",
+                                type: "post",
+                                dataType: "JSON",
+                                data: {reservationNo: reservationNo},
+                                success: function(data){
+                                    resStatus.removeClass("blue").addClass("red outline");
+                                    resStatus.text("예약취소야");
+                                    $(obj).remove();
+                                },
+                                error: function(){
+                                    console.log("에러");
+                                }
+                            })
+                            return true;
+                        }else{
+                            return false;
+                        }
+                    }
+
+                    //처방전 보기 클릭시 처방전 모달 노출
+                    function showPreScription(){
+                        $("body").find(".modal").remove();
+                        $.ajax({
+                            url: "/service/selectMyPrescription",
+                            type: "GET",
+                            dataType: "JSON",
+                            data: {reservationNo: reservationNo},
+                            success: function(data){
+                                console.log(data);
+                                let modal = [
+                                    "<div class='modal lg' id='prescription_"+reservationNo+"'>",
+                                        "<div class='modal_wrap'>",
+                                            "<div class='modal_container'>",
+                                                "<div class='modal_content'>",
+                                                    "<div class='img_wrap'>",
+                                                        "<img src='/reservation/"+data.prescriptionPath+"' alt='처방전 사진'>",
+                                                    "</div>",
+                                                "</div>",
+                                            "</div>",
+                                            "<div class='modal_footer'>",
+                                                "<div class='btn_area'>",
+                                                    "<a href='/service/prescriptionDown?prescriptionName="+data.prescriptionName+"&prescriptionPath="+data.prescriptionPath+"' class='btn_primary lg' onclick=''>처방전 다운로드</a>",
+                                                "</div>",
+                                            "</div>",
+                                            "<button type='button' onclick='closeModal(this);' class='btn_close'><span class='blind'>닫기</span></button>",
+                                        "</div>",
+                                    "</div>"
+                                ].join("");
+                                $("body").append(modal);
+                                $("html").addClass("scroll_fixed");
+                            },
+                            error: function(){
+                                console.log("에러");
+                            }
+                        })
+                    }
+
+                })
+
+                start = start+amount;
+                currentCount = currentCount+data.length;
+                if(currentCount == totalCount){
+                    $("#viewMore").parent(".btn_area").remove();
+                }
+            },
+            error: function(){
+                console.log("에러");
+            }
+        })
+    })
+    $("#viewMore").click();
+</script>
 </body>
 </html>
-
