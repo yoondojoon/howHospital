@@ -165,7 +165,23 @@ public class MemberDao {
 		
 		return list;
 	}
+
+	/*
+	public String getHospitalName(int rsNo) {
+		
+		String query = "select hospital_tbl.hospital_name from hospital_tbl "
+				+ "		inner join reservation_tbl "
+				+ "		on hospital_tbl.hospital_no = reservation_tbl.hospital_no "
+				+ "		where reservation_tbl.reservation_no = ? and reservation_tbl.reservation_status = 4";
+		
+		Object[] params = {rsNo};
+		
+		
+		
+		
+		return hospitalName;
+	}
 	
 	
-	
+	*/
 }

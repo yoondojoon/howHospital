@@ -117,6 +117,7 @@ public class MemberService {
 		return cnt;
 	}
 
+	//내 리뷰 보기
 	public List myReviewList(int memberNo, int reservationNo) {
 		
 		
@@ -124,4 +125,18 @@ public class MemberService {
 		
 		
 		return list;
-	}}
+	}
+	/*
+	// 내 리뷰 작성
+	public String getHospitalName(int rsNo) {
+		
+		
+		String hospitalName = memberDao.getHospitalName(rsNo);
+		
+		
+		return null;
+	}
+	
+	*/
+	
+	}

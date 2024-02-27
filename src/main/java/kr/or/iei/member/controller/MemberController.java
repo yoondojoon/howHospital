@@ -427,7 +427,15 @@ public class MemberController {
 	
 	//나의 리뷰 작성
 	@GetMapping(value="myReviewFrm")
-	public String myReviewFrm() {
+	public String myReviewFrm(Member member, Reservation reservation, Model model) {
+		
+		
+		//int rsNo = reservation.getReservationNo();
+	    
+	    
+	    //String hospitalName = memberService.getHospitalName(rsNo);
+	  
+	    
 		
 		
 		return "/member/myReviewFrm";

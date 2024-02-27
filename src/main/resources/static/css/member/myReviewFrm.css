@@ -100,3 +100,39 @@
 	padding: 30px;
 	
 }
+
+
+
+
+
+
+.star-wrap{
+    overflow: hidden;
+    
+}
+
+.star-wrap>span{
+    float: left;
+    color: lightgray;
+    font-size: 30px; /*별하나 사이즈*/
+}
+
+
+.star-on-wrap>span{
+    color: gold;
+}
+
+.star-on{
+    width: 75px;
+    position: absolute;
+    left: 0;
+    overflow: hidden; /*색깔별 안보여주게*/
+}
+.star-wrap2{
+    position: relative;
+    
+}
+.star-on-wrap{ /*별이 아래로 떨어지지 않게 너비를 정해줌*/
+    width: 150px;
+}
+

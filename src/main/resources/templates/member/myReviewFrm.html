@@ -39,11 +39,33 @@
            					
            					<div class="hospitalInfo">
            					<span class="material-icons">domain_add</span>
+           						<h2><span th:text="${hospitalName}"></span></h2>
            						
-           					
+           						<div class="star-wrap start-wrap2 noRating">
+           							<span class="material-icons">star_outline</span>
+           							<span class="material-icons">star_outline</span>
+           							<span class="material-icons">star_outline</span>
+           							<span class="material-icons">star_outline</span>
+           							<span class="material-icons">star_outline</span>
+           						</div>
+           						
+           						<div class="star-wrap star-on-wrap rating">
+           							<span class="material-icons">star</span>
+           							<span class="material-icons">star</span>
+           							<span class="material-icons">star</span>
+           							<span class="material-icons">star</span>
+           							<span class="material-icons">star</span>
+           						</div>
+           						
+           						
            					</div>
-           				
+           					
+           					<div class="reviewtitle">
+           					<h3>상세한 리뷰를 써주세요</h3>
+           					</div>
+           					
            					<div class="textarea reviewForm">
+           						
            						<textarea>
            						
            						</textarea>
@@ -51,7 +73,8 @@
            					</div>
            					
            					<div class="danger">
-           						<h5>부적절한 단어 및 비속어 사용 시 통보없이 삭제될 수 있으니 유의해주세요.</h5>
+           					<span class="material-icons">error_outline</span>
+           					<h5>부적절한 단어 및 비속어 사용 시 통보없이 삭제될 수 있으니 유의해주세요.</h5>
            					</div>
            					
            					<div class="imgBox">
