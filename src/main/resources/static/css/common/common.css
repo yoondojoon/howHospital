@@ -123,6 +123,7 @@ input:not([type=checkbox],[type=radio]):-internal-autofill-selected {background-
 .radio.boxtype input[type=radio][disabled]+label{opacity:0.4; cursor:default;}
 
 /* button */
+button[disabled]{opacity:0.2;}
 .btn_primary{min-width:112px; padding:9px 20px; border:1px solid var(--main_01); border-radius:4px; background-color:var(--main_01); color:#fff; font-size:14px; font-weight:bold; line-height:1.5; text-align:center;}
 .btn_secondary{min-width:112px; padding:9px 20px; border:1px solid var(--main_04); border-radius:4px; background-color:var(--main_04); color:#fff; font-size:14px; font-weight:bold; line-height:1.5; text-align:center; transition:all 0.2s;}
 .btn_primary.outline{background-color:#fff; color:var(--main_01);}
@@ -133,6 +134,11 @@ input:not([type=checkbox],[type=radio]):-internal-autofill-selected {background-
 [class^=btn_].outline.view_more{color:var(--main_04);}
 .btn_area{display:flex; gap:8px; margin-top:40px; justify-content:center;}
 .btn_area [class^=btn_].lg{margin:0 2px;}
+/* a태그가 링크일 때 */
+.btn_link,
+.btn_link:hover,
+.btn_link:active,
+.btn_link:visited{text-decoration:underline; text-underline-offset:4px;}
 
 /* badge */
 .badge{display:inline-block; padding:0 5px; border:1px solid var(--gray_05); border-radius:4px; background-color:#fff; color:var(--gray_05); font-size:12px; font-weight:bold; line-height:18px;}

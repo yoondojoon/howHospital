@@ -23,6 +23,7 @@
                             <input type="search" name="keyword" placeholder="손목이 아파요, 허리가 나갔어요">
                             <button type="submit" class="btn_search"><span class="blind">검색</span></button>
                         </div>
+                        <input type="hidden" name="reqPage" value="1">
                     </form>
                     <div class="user_menu_area">
                         <ul th:if="${session.member == null}">

@@ -12,52 +12,11 @@
             <div class="inner_wrap">
                 <h2>커뮤니티</h2>
                 
-                <div class="board_area">
-                    <div class="row-top-area">
-                        <a th:if="${session.member != null}" href="/board/boardWriteFrm" class="btn_primary">글쓰기</a>
-                        <form action="/board/boardSearch" method="get" id="searchFrm">
-                            <th:block th:switch="${type}">
-                                <select th:case="writer" class="input-form" name="type">
-                                    <option value="title">제목</option>
-                                    <option value="writer" selected>작성자</option>
-                                </select>
-                                <select th:case="*" class="input-form" name="type">
-                                    <option value="title" selected>제목</option>
-                                    <option value="writer">작성자</option>
-                                </select>
-                            </th:block>
-                            <input type="search" class="input-form" name="keyword" th:value="${keyword}">
-                            <input type="hidden" name="reqPage" value="1">
-                            <button type="submit" class="btn-search" onclick="return checkKeyword(this);"><span class="material-icons">search</span></button>
-                        </form>
+                <div class="community_board_area">
+                    <div class="board_top_area">
+                        <a th:if="${session.member != null}" href="/community/communityWriteFrm" class="btn_primary">글쓰기</a>
                     </div>
-                    <table class="tbl tbl-hover board-tbl">
-                        <colgroup>
-                            <col style="width:10%;">
-                            <col style="width:auto;">
-                            <col style="width:15%;">
-                            <col style="width:20%;">
-                            <col style="width:10;">
-                        </colgroup>
-                        <thead>
-                            <tr class="tr-2">
-                                <th>번호</th>
-                                <th>제목</th>
-                                <th>작성자</th>
-                                <th>작성일</th>
-                                <th>조회수</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr class="tr-1" th:each="b : ${boardList}">
-                                <td th:text="${b.boardNo}"></td>
-                                <td><a th:href="@{/board/boardView(boardNo=${b.boardNo})}" th:text="${b.boardTitle}"></a></td>
-                                <td th:text="${b.boardWriter}"></td>
-                                <td th:text="${b.writeDate}"></td>
-                                <td th:text="${b.readCount}"></td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    
                 </div>
                 <div id="pageNavi" th:utext="${pageNavi}"></div>
             </div>
