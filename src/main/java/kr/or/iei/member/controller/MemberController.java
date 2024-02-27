@@ -409,14 +409,17 @@ public class MemberController {
 	
 	//나의 리뷰 보기
 	@GetMapping(value="/myReview")
-	public String myReview(HttpSession session, Member member, Reservation reservation, Model model) {
+	public String myReview(HttpSession session, Member member, Reservation reservation ,Model model) {
 		
 		
 		int memberNo = (int)session.getAttribute("memberNo");
 		
+		System.out.println(memberNo);
+		
+		List<Hospital> hospital = memberService.hospitalTbl(memberNo);
 		
 		
-		List<Hospital> hospital = memberService.hospitalTbl();
+		
 		
 				
 		System.out.println(hospital);
@@ -441,15 +444,18 @@ public class MemberController {
 	public String myReviewFrm(Member member, Reservation reservation, Model model, HttpSession session) {
 		
 		
+		int memberNo = (int)session.getAttribute("memberNo");
+		
+		System.out.println(memberNo);
+		
+		List<Hospital> hospital = memberService.hospitalTbl(memberNo);
 		
 		
-		//int rsNo = reservation.getReservationNo();
-		
-		
+		System.out.println(hospital);
 	    
 	    
-	    //String hospitalName = memberService.getHospitalName();
-	  
+	    
+		model.addAttribute("hospital", hospital);
 	    
 		
 		

@@ -33,8 +33,8 @@
            		<div class="myInfoBox">
            			<h2>나의 리뷰</h2>
            			         <th:block th:each="review : ${list}">
-           			         <th:block th:each="hospital : ${hospital}">
            			         	<span id="memberNo" th:text="${session.member.memberNo}" style="display:none;"></span><!-- 뷰에 세션으로 주민번호 꺼내오 -->
+           			         <th:block th:if="" th:each="hospital : ${hospital}">
            			          	<span class="reviewNo" id="reviewNo" th:text="${review.reviewNo}" style="display:none;"></span><!-- 뷰에 세션으로 주민번호 꺼내오 -->
            			          
            			          

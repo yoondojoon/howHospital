@@ -173,11 +173,17 @@ public class MemberDao {
 		return list;
 	}
 
-	public List<Hospital> hospitalTbl() {
+	public List<Hospital> hospitalTbl(int memberNo) {
 		
-		String query = "select * from hospital_tbl";
+		String query = "select hospital_tbl.hospital_name " + 
+				"from review_tbl " + 
+				"inner join hospital_tbl ON review_tbl.hospital_no = hospital_tbl.hospital_no " + 
+				"where review_tbl.member_no = ?";
 		
-		List<Hospital> hospital = jdbc.query(query, hospitalRowMapper);
+		
+ 		Object[] params = {memberNo};
+		
+		List<Hospital> hospital = jdbc.query(query, hospitalRowMapper,params);
 		
 		
 		

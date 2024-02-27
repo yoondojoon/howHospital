@@ -132,6 +132,7 @@ public class MemberService {
 	
 	*/
 
+	
 	public List reviewLsit(int memberNo) {
 		
 		List list = memberDao.reivewList(memberNo);
@@ -140,9 +141,9 @@ public class MemberService {
 		return list;
 	}
 
-	public List<Hospital> hospitalTbl() {
+	public List<Hospital> hospitalTbl(int memberNo) {
 		
-		List<Hospital> hospital = memberDao.hospitalTbl();
+		List<Hospital> hospital = memberDao.hospitalTbl(memberNo);
 		
 		
 		return hospital;
