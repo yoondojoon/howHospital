@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<th:block th:include="common/header"></th:block>
+<link rel="stylesheet" href="/css/admin/adminMain.css">
+<style>
+
+#content-td{
+	border:1px solid black;
+	background: #eaeaed;
+}
+
+.textarea{
+  margin : 30px;
+}
+
+
+#reportContent{
+	background-color:white;
+	justify-content:center;
+	height : 400px;
+	overflow-y:scroll;
+}
+
+</style>
+
+
+	<!-- container -->
+    <main id="container" class="container">
+
+		<!-- contents -->
+        <section id="contents" class="contents adminMain">
+            <div class="inner_wrap">
+                <h2>신고 상세보기</h2>
+            </div>
+	        <div class="inner_wrap">
+	        	<table class="btl">
+	        		<tr class="tr-header">
+	        			<th style="width:20%;">제목</th>
+	        			<th style="width:80%; text-align:left;">
+	        				<span style="width:90%;" type="text" th:text="${hr.reportTitle}" name="reportTitle">
+	        			</th>
+	        		</tr>
+	        		<tr class="tr-header">
+	        			<th style="width:20%">작성자</th>
+	        			<th style="width:80%; text-align:left;">
+	        				<span th:text="${hr.hospitalName}"></span>
+	        			</th>
+	        		</tr>
+	        		<tr>
+	        			<td colspan="2" style="text-align:left;" id="content-td">
+	        				<div class="textarea">
+			        			<textarea id="reportContent" name="reportContent" th:text="${hr.reportContent}" disabled></textarea>		        			
+	        				</div>
+	        			</td>
+	        		</tr>
+	        	</table>
+	        	<div class="btn_area">
+		        		<button type="button" class="btn_secondary lg" th:onclick="|location.href='/admin/hospitalReportDelete?reportNo=${hr.reportNo}'|">거부</button>
+		        		<button type="button" class="btn_primary lg" th:if="${hr.reportStatus == 0}" th:onclick="|location.href='/admin/hospitalReportConfirm?reportNo=${hr.reportNo}'|">처리</button>
+	        	</div>	        	
+	        </div>
+        </section>
+	    <!--// contents -->
+    </main>
+    <!--// container -->
+    
+	<th:block th:include="common/footer"></th:block>
+	
+	<script>
+	
+	</script>
+</html>

@@ -137,7 +137,7 @@ public class AdminController {
 	}
 
 	@GetMapping(value = "/reportConfirm")
-	public String reportDetail(int reportNo) {
+	public String reportConfirm(int reportNo) {
 		int result = adminService.confirmReport(reportNo);
 		return "redirect:/admin/manageReport?reqPage=1";
 	}
@@ -243,7 +243,21 @@ public class AdminController {
 	@GetMapping(value = "/hospitalReportDetail")
 	public String hospitalReportDetail(int reportNo, Model model) {
 		HospitalReport hr = adminService.selectOneHospitalReport(reportNo);
-		model.addAttribute("hospitalReport", hr);
-		return "admin/manageHospitalReport";
+		model.addAttribute("hr", hr);
+		return "admin/hospitalReportDetail";
+	}
+	
+	//병원신고 거부
+	@GetMapping(value = "/hospitalReportDelete")
+	public String hospitalReportDelete(int reportNo) {
+		int result = adminService.deleteHospitalReport(reportNo);
+		return "redirect:/admin/manageHospitalReport?reqPage=1";
+	}
+	
+	//병원신고 확인
+	@GetMapping(value = "/hospitalReportConfirm")
+	public String hospitalReportConfirm(int reportNo) {
+		int result = adminService.confirmHospitalReport(reportNo);
+		return "redirect:/admin/manageHospitalReport?reqPage=1";
 	}
 }
