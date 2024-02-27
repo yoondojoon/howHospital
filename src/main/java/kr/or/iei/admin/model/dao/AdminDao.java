@@ -13,7 +13,6 @@ import kr.or.iei.admin.model.dto.FaqRowMapper;
 import kr.or.iei.admin.model.dto.MemberReport;
 import kr.or.iei.admin.model.dto.MemberReportRowMapper;
 import kr.or.iei.admin.model.dto.Notice;
-import kr.or.iei.admin.model.dto.NoticeListData;
 import kr.or.iei.admin.model.dto.NoticeRowMapper;
 import kr.or.iei.admin.model.dto.Review;
 import kr.or.iei.admin.model.dto.ReviewRowMapper;
@@ -30,6 +29,9 @@ public class AdminDao {
 	
 	@Autowired
 	private BusinessAuthRowMapper baRowMapper;
+	
+	@Autowired
+	private MemberRowMapper mRowMapper;
 	
 	@Autowired
 	private NoticeRowMapper noticeRowMapper;
@@ -224,6 +226,12 @@ public class AdminDao {
 		Object[] params = {reviewNo};
 		int result = jdbc.update(query,params);
 		return result;
+	}
+
+	public List<Member> selectAllMember() {
+		String query = "select * from member_tbl";
+		List<Member> list = jdbc.query(query, mRowMapper);
+		return list;
 	}
 
 	
