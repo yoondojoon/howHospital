@@ -154,6 +154,7 @@ button[disabled]{opacity:0.2;}
 .badge.green{border-color:#2ecc71; background-color:#2ecc71; color:#fff;}
 .badge.contact{border-color:var(--main_01); color:var(--main_01);}
 .badge.contactless{border-color:var(--main_04); color:var(--main_04);}
+.badge.lg{padding:9px 20px; font-size:14px;}
 .badge_area{display:flex; flex-wrap:wrap; align-items:center; gap:8px;}
 .badge_area .name{display:inline-block; padding:0 8px; color:var(--gray_03); font-size:12px; line-height:20px;}
 .badge+.name{position:relative;}
