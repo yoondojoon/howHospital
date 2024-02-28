@@ -126,27 +126,29 @@
 
 
 	$(".closeBtn").on("click", function () {
+	    var childInfoElement = $(this).closest('.childInfo'); // 클릭된 버튼의 부모인 .childInfo 요소를 찾음
+	    var childNoElement = childInfoElement.find(".childNo"); // 해당 아이 정보의 아이 번호 요소를 찾음
+	    var childNo = childNoElement.text(); // 아이 번호 값을 가져옴
 
-		var childNoElement = document.getElementById("childRrn");
-		var childNo = childNoElement.textContent || childNoElement.innerText;
-
-		$.ajax({
-
-			url: "/member/deleteChild",
-			type: "post",
-			data: { childNo: childNo },
-			success: function () {
-				$(childNoElement).closest('.info').fadeOut();
-			},
-			error: function () {
-
-
-			}
-
-
-		});
-
-
+	    $.ajax({
+	        url: "/member/deleteChild",
+	        type: "POST",
+	        data: { childNo: childNo },
+	        success: function (result) {
+	            if (result > 0) {
+	                // 삭제 성공 시
+	                childInfoElement.remove(); // 해당 아이 정보 요소를 삭제
+	                alert("아이 정보가 삭제되었습니다.");
+	            } else {
+	                // 삭제 실패 시
+	                alert("아이 정보 삭제에 실패했습니다.");
+	            }
+	        },
+	        error: function () {
+	            // 에러 발생 시
+	            alert("서버와의 통신에 문제가 발생했습니다. 다시 시도해주세요.");
+	        }
+	    });
 	});
 
 

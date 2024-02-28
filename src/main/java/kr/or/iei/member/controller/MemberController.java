@@ -501,7 +501,7 @@ public class MemberController {
 	
 	@ResponseBody
 	@PostMapping(value="/reviewDel")
-	public int reviewDel(int memberNo , int reviewNo) {
+	public int reviewDel(int reviewNo, int memberNo ) {
 		
 		
 		

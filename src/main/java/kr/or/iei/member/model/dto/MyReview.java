@@ -9,7 +9,6 @@ import lombok.NoArgsConstructor;
 @Data
 public class MyReview {
 	private int reviewNo;
-	private String memberName;
 	private int reservationNo;
 	private int memberNo;
 	private int hospitalNo;

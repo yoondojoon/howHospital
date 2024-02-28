@@ -225,7 +225,7 @@ public class MemberDao {
 		return result;
 	}
 
-	public int reviewDel(int memberNo, int reviewNo) {
+	public int reviewDel( int reviewNo,int memberNo) {
 		
 		
 		String query = "delete from review_tbl where member_no=? and review_no=?";
