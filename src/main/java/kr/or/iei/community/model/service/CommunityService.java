@@ -54,9 +54,19 @@ public class CommunityService {
 			pageNavi += "<li><a class='page_item btn_next' href='/community/communityMain?reqPage="+pageNo+"'></a></li>"; 
 		}
 		pageNavi += "</ul>";
+		
 		CommunityListData cld = new CommunityListData();
-		cld.setList(list);
 		cld.setPageNavi(pageNavi);
+		for(Object obj : list) {
+			Community c = (Community) obj;
+			List fileList = communityDao.selectCommunityFile(c.getBoardNo());
+			if(fileList.isEmpty()) {
+				c.setFileList(null);
+			}else {
+				c.setFileList(fileList);				
+			}
+		}
+		cld.setList(list);
 		return cld;
 	}
 

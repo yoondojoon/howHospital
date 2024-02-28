@@ -27,11 +27,18 @@
                                 <a href="/community/communityMain?reqPage=1" class="btn_primary">건강 매거진 전체보기</a>
                             </div>
                         </div>
+                        <!-- <span th:text="${boardList}"></span> -->
                         <ul class="board_list" th:if="${boardList}">
                             <li th:each="b : ${boardList}">
                                 <a th:href="@{/community/communityView(boardNo=${b.boardNo})}">
                                     <div class="thumb_wrap">
-                                        <img src="/images/img_hospital.svg" alt="병원사진아무거나">
+                                        <th:block th:each="file : ${b.fileList}">
+                                            <img th:src="@{/community/}+${file.filepath}">
+                                        </th:block>
+                                        
+                                        <th:block th:if="${b.fileList == null}">
+                                            <img src="/images/img_hospital.svg" alt="기본썸네일">
+                                        </th:block>
                                     </div>
                                     <div class="content_wrap">
                                         <div class="board_title" th:text="${b.boardTitle}"></div>
@@ -55,13 +62,18 @@
 	
 <th:block th:include="common/footer"></th:block>
 <!-- js 링크 -->
-<script>
+<script th:inline="javascript">
     function checkKeyword(obj){
 		if($(obj).parent("form").find("[name=keyword]").val() == ""){
 			alert("검색어를 입력하세요.");
 			return false;
 		}
 	}
+    const boardList = [[${boardList}]];
+    console.log(boardList);
+    $(boardList).each(function(index, item){
+        console.log(item.fileList == null);
+    })
 </script>
 </body>
 </html>

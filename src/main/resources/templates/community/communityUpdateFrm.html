@@ -19,13 +19,13 @@
                 
                 <div class="community_board_area view">
 					<div class="communityView">
-						<form action="/community/write" method="post" enctype="multipart/form-data">
-							<div class="communityWrite">
-								
+						<form action="/community/update" method="post" enctype="multipart/form-data" class="communityUpdateFrm">
+							<div class="communityUpdate">
 								<div class="input_wrap">
 									<div class="input_title">제목</div>
 									<div class="input_item">
-										<input type="text" name="boardTitle" placeholder="글 제목을 입력하세요>
+										<input type="text" name="boardTitle" placeholder="글 제목을 입력하세요" th:value="${c.boardTitle}">
+										<input type="hidden" name="boardNo" th:value="${c.boardNo}">
 									</div>
 								</div>
 								
@@ -39,17 +39,23 @@
 								
 								<div class="input_wrap">
 									<div class="input_title">썸네일 이미지</div>
+									<div class="file-wrap">
+										<div th:each="file : ${c.fileList}" class="files">
+											<span th:text="${file.filename}"></span>
+											<button th:onclick="deleteFile(this,[[${file.fileNo}]])" type="button" class="btn_primary outline sm">삭제</button>
+										</div>
+									</div>
 									<div class="input_item">
 										<input type="file" name="upfile" multiple>
 									</div>
 								</div>
 								
 								<div class="textarea">
-									<textarea id="boardContent" name="boardContent"></textarea>
+									<textarea id="boardContent" name="boardContent" th:text="${c.boardContent}"></textarea>
 								</div>
 										
 								<div class="btn_area">
-									<button type="submit" class="btn_primary">작성 완료</button>
+									<button type="submit" class="btn_primary">수정 완료</button>
 								</div>
 							</div>			
 						</form>
@@ -93,6 +99,16 @@
 				console.log("에러");
 			}
 		});
+	}
+	function deleteFile(obj, fileNo){
+		if(confirm("파일을 삭제하시겠습니까?")){
+			const input = $("<input>");
+			input.attr("name","delFileNo");
+			input.attr("type","hidden");
+			input.val(fileNo);
+			$(".communityUpdateFrm").append(input);
+			$(obj).parent().remove();
+		}
 	}
 </script>
 </body>

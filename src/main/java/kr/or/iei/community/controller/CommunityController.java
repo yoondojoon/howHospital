@@ -36,7 +36,7 @@ public class CommunityController {
 	public String communityMain(String keyword, int reqPage, Model model) {
 		CommunityListData cld = communityService.selectCommunityList(keyword, reqPage);
 		if(!cld.getList().isEmpty()) {
-			model.addAttribute("boardList", cld.getList());			
+			model.addAttribute("boardList", cld.getList());
 			model.addAttribute("pageNavi", cld.getPageNavi());
 		}
 		return "community/communityMain";
@@ -98,6 +98,7 @@ public class CommunityController {
 			model.addAttribute("loc", "/community/communityMain?reqPage=1");
 			return "common/modalMsg";
 		}else {
+			c.setMemberNo(memberNo);
 			model.addAttribute("c", c);
 			return "community/communityView";
 		}
@@ -131,11 +132,8 @@ public class CommunityController {
 	}
 	
 	@GetMapping(value="/updateFrm")
-	public String updateFrm(int boardNo, @SessionAttribute(required=false) Member member, Model model) {
+	public String updateFrm(int boardNo, Model model) {
 		int memberNo = 0;
-		if(member != null) {
-			memberNo = member.getMemberNo();
-		}
 		Community c = communityService.getOneBoard(boardNo);
 		model.addAttribute("c", c);
 		return "community/communityUpdateFrm";
@@ -185,7 +183,7 @@ public class CommunityController {
 			return "common/modalMsg";
 		}else {
 			model.addAttribute("c", c);
-			return "community/communityView2";
+			return "community/communityView";
 		}
 	}
 }
