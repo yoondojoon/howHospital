@@ -16,6 +16,7 @@
 .community .board_list>li .content_wrap{flex:1;}
 .community .board_list>li .content_wrap .board_title{font-size:16px; font-weight:bold; line-height:1.5;}
 .community .board_list>li .content_wrap .board_txt{display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; text-overflow:ellipsis; margin-top:8px; height:42px; color:var(--gray_04); font-size:14px; line-height:1.5;}
+.community .board_list>li .content_wrap .board_txt *{color:var(--gray_04)!important; font-size:14px!important; line-height:1.5!important; font-family:inherit!important; font-size:14px!important;}
 .community .board_list>li .content_wrap .board_txt img{display:none;}
 .community .board_list>li .content_wrap .write_date{margin-top:4px; color:var(--gray_04); font-size:13px; line-height:1.5;}
 .community .board_list>li+li{border-top:1px solid var(--line_02);}
@@ -40,3 +41,4 @@
 .community .community_board_area.view .tit_wrap .title_info>.read_count::before{content:''; display:block; position:absolute; left:-10px; top:5px; width:1px; height:10px; background-color:var(--line_02);}
 .community .community_board_area.view .thumb_wrap>img{display:block; width:100%;}
 .community .community_board_area.view .content_wrap{min-height:560px; padding:24px 0; border-bottom:1px solid var(--line_02);}
+.community .community_board_area.view .content_wrap *{font-family:inherit!important; font-size:14px!important;}

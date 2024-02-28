@@ -83,7 +83,9 @@
 .hospitalDetail .review_main_wrap .review_list .rating_wrap .rating{display:block; font-size:14px; font-weight:bold; line-height:20px;}
 .hospitalDetail .review_main_wrap .review_list .rating_wrap .star_wrap{width:100px; height:20px; background:url(/images/icon_star.svg) repeat-x left top;}
 .hospitalDetail .review_main_wrap .review_list .rating_wrap .star_wrap .star{display:block; width:0; height:100%; background:url(/images/icon_star_on.svg) repeat-x left top;}
-.hospitalDetail .review_list .detail_cont_wrap{height:110px; margin:12px 0; font-size:15px; line-height:1.5; overflow-y:auto;}
+.hospitalDetail .review_list .detail_cont_wrap{display:flex; gap:12px; height:110px; margin:12px 0; font-size:15px; line-height:1.5; overflow-y:auto;}
+.hospitalDetail .review_list .detail_cont_wrap .review_thumb{position:sticky; top:0; height:100%;}
+.hospitalDetail .review_list .detail_cont_wrap .review_thumb>img{display:block; width:160px; height:100%; object-fit:cover; object-position:center;}
 .hospitalDetail .review_list .detail_btm_wrap{display:flex; align-items:center; gap:20px;}
 .hospitalDetail .review_list .detail_btm_wrap>span{color:var(--gray_04); font-size:14px; line-height:1.5;}
 .hospitalDetail .review_list .detail_btm_wrap>span+span{position:relative;}
