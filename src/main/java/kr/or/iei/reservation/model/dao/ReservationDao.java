@@ -251,6 +251,13 @@ public class ReservationDao {
 		return result;
 	}
 
+	public int updateDoctorSelect(H_Reservation hr) {
+		String query = "update reservation_detail_tbl set doctor_no = ? where reservation_no=?";
+		Object[] params = {hr.getDoctorNo(),hr.getReservationNo()};
+		int result = jdbc.update(query, params);
+		return result;
+	}
+
 	
 	
 }

@@ -22,4 +22,5 @@ public class ReservationDetailList {
 	private List fileDataList;
 	private List doctorList;
 	private int hospitalNo;
+	private String doctorName;
 }

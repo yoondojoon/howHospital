@@ -38,7 +38,7 @@ public class ReservationDetailDao {
 	public ReservationDetailList selectOneReservation(H_Reservation hr) {
 		String query = "SELECT DISTINCT\r\n" + 
 				"    R.RESERVATION_NO, R.HOSPITAL_NO, R.RESERVATION_STATUS, R.RESERVATION_TYPE, R.RESERVATION_TIME,\r\n" + 
-				"    RD.SYMPTOM, RF.FILENAME, RF.FILEPATH, M.MEMBER_NAME,(select count(*) from prescription_tbl where reservation_no = r.reservation_no) as prescription_status\r\n" + 
+				"    RD.SYMPTOM, RF.FILENAME, RF.FILEPATH, M.MEMBER_NAME,(select count(*) from prescription_tbl where reservation_no = r.reservation_no) as prescription_status,D.DOCTOR_NAME\r\n" + 
 				"FROM \r\n" + 
 				"    RESERVATION_TBL R\r\n" + 
 				"LEFT JOIN \r\n" + 
@@ -47,6 +47,8 @@ public class ReservationDetailDao {
 				"    MEMBER_TBL M ON R.MEMBER_NO = M.MEMBER_NO\r\n" + 
 				"LEFT JOIN\r\n" + 
 				"    RESERVATION_DETAIL_TBL RD ON R.RESERVATION_NO = RD.RESERVATION_NO\r\n" + 
+				"LEFT JOIN\r\n" + 
+				"    DOCTOR_TBL D ON RD.DOCTOR_NO = D.DOCTOR_NO\r\n" + 
 				"WHERE R.RESERVATION_NO = ?";
 		Object[] params = {hr.getReservationNo()};
 		List list = jdbc.query(query, reservationDetailListRowMapper,params);
@@ -68,16 +70,6 @@ public class ReservationDetailDao {
 		String query = "SELECT DOCTOR_NO,DOCTOR_NAME FROM DOCTOR_TBL WHERE HOSPITAL_NO = ?";
 		Object[] params = {hr.getHospitalNo()};
 		List list = jdbc.query(query, reservationDoctorListRowMapper, params);
-		return list;
-	}
-	public List getDoctorInfo(int reservationNo) {
-		String query = "SELECT\r\n" + 
-				"    RD.RESERVATION_DETAIL_NO,RD.DOCTOR_NO,D.DOCTOR_NAME \r\n" + 
-				"from RESERVATION_DETAIL_TBL RD\r\n" + 
-				"JOIN DOCTOR_TBL D ON RD.DOCTOR_NO = D.DOCTOR_NO\r\n" + 
-				"WHERE RESERVATION_NO=?";
-		Object[] params = {reservationNo};
-		List list = jdbc.query(query, doctorInfoRowMapper, params);
 		return list;
 	}
 

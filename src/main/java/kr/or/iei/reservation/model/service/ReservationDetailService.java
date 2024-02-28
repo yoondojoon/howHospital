@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import kr.or.iei.hospital.model.dto.DoctorInfo;
 import kr.or.iei.reservation.model.dao.ReservationDetailDao;
 import kr.or.iei.reservation.model.dto.H_Reservation;
 import kr.or.iei.reservation.model.dto.ReservationDetail;
@@ -28,13 +29,7 @@ public class ReservationDetailService {
 		List fileDataList = reservationDetailDao.getSymptomImg(hr);
 		rdl.setFileDataList(fileDataList);
 		rdl.setDoctorList(doctorList);
-		System.out.println(doctorList.toString());
 		return rdl;
-	}
-
-	public List getDoctorInfo(int reservationNo) {
-		List list = reservationDetailDao.getDoctorInfo(reservationNo);
-		return list;
 	}
 
 }
