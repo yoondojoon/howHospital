@@ -513,6 +513,12 @@ public class AdminService {
 		int result = adminDao.confirmHospitalReport(reportNo);
 		return result;
 	}
+
+	@Transactional
+	public int writeFaq(int memberNo, int category, String title, String content) {
+		int result = adminDao.writeFaq(memberNo, category,title,content);
+		return result;
+	}
 	
 
 }

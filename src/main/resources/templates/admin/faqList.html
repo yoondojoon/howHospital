@@ -94,6 +94,23 @@
             }
         });
     }
+    
+    function wirteFaq(category, faqTitle,faqContent){
+    	
+    	$.ajax({
+			url : "/admin/writeFaq",
+			type : "get",
+			data : {category : category, title : faqTitle, content : faqContent},
+			dataType : "JSON",
+			success : function(data){
+				
+				console.log(data, typeof data);
+			},
+			error : function(){
+				console.log("에러발생");
+			}
+		});
+    }
 </script>
 
 
