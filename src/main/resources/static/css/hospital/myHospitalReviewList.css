@@ -1,0 +1,8 @@
+#hospital_wrap {
+    width: 1200px !important;
+    display: flex;
+    justify-content: center;
+    padding: 0px !important;
+}
+
+

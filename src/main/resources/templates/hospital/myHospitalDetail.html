@@ -15,9 +15,9 @@
 	<div id="hospital_wrap">
 		<div class="side_menu">
 			<ul class="side_list">
-				<li><a href="#">병원정보</a></li>
+				<li><a href="/hospital/myHospitalDetail">병원정보</a></li>
 				<li><a href="#">예약관리</a></li>
-				<li><a href="#">리뷰관리</a></li>
+				<li><a href="/hospital/myHospitalReviewList">리뷰관리</a></li>
 			</ul>
 		</div>
 		<div class="main_content">
@@ -25,166 +25,166 @@
 
 			<div class="hospital_info_form">
 				<!-- 병원정보 입력 -->
-				
-		<h2>병원정보 입력</h2>
-		<form id="infoForm" method="post">
-		<!-- 병원이름 입력 -->
-		<div class="input_wrap">
-			<div class="input_title">
-				<label for="hospital_name">병원이름</label>
-			</div>
-			<div class="input_value">
-				<span th:text="${h.hospitalName}">병원이름</span>
-			</div>
+		
+<h2>병원정보</h2>
+<form id="infoForm" method="post">
+<!-- 병원이름 입력 -->
+<div class="input_wrap">
+	<div class="input_title">
+		<label for="hospital_name">병원이름</label>
+	</div>
+	<div class="input_value">
+		<span th:text="${h.hospitalName}">병원이름</span>
+	</div>
+</div>
+
+<!-- 병원사진  -->
+<div class="input_wrap">
+	<div class="input_title">
+		<label for="hospital_name">병원사진</label>
+	</div>
+	<div class="imghospital">
+	<img th:src="@{/hospital/} + ${h.hospitalPicture}" style='width: 100%; border-radius: 20px'>
+	</div>
+</div>
+
+
+<!-- 병원소개 입력 -->
+<div class="input_wrap">
+	<div class="input_title">
+		병원소개<em>(Hooking Point)</em>
+	</div>
+	<div class="input_value">
+		<span th:text="${h.hospitalIntro}">병원이름</span>
+	</div>
+</div>
+
+
+
+<!-- 병원주소 입력 -->
+<div class="input_wrap">
+	<div class="input_title">병원주소</div>
+	<div class="input_value">
+		<div th:text="${h.hospitalPostcode}">우편번호</div>
+		<div th:text="${h.hospitalAddrMain}">메인주소</div>
+		<div th:text="${h.hospitalAddrSub}">주소상세</div>
+	</div>
+
+</div>
+
+
+<!-- 진료시간 입력 -->
+<div class="input_wrap">
+	<div class="input_title">
+		<label for="time_table">진료시간</label>
+	</div>
+	<div class="input_item">
+		<div class="time_table">
+			<label for="select">평일</label>
 		</div>
-
-		<!-- 병원사진  -->
-		<div class="input_wrap">
-			<div class="input_title">
-				<label for="hospital_name">병원사진</label>
-			</div>
-			<div class="imghospital">
-				<img src="/images/banner_img_01.jpg" class="hospic" width="100%">
-			</div>
+		<div class="select">
+			<select disabled>
+				<option th:text="${h.time.dayHour}">평일</option>
+			</select>
 		</div>
+	</div>
+
+	<!-- 주말  -->
+<div class="input_item time_zone">
+	<div class="time_table">
+		<label for="select">주말</label>
+	</div>
+	<div class="select">
+		<select disabled>
+			<option th:text="${h.time.weekendHour}">주말</option>
+		</select>
+	</div>
+</div>
 
 
-		<!-- 병원소개 입력 -->
-		<div class="input_wrap">
-			<div class="input_title">
-				병원소개<em>(Hooking Point)</em>
-			</div>
-			<div class="input_value">
-				<span th:text="${h.hospitalIntro}">병원이름</span>
-			</div>
+
+<!-- 점심  -->
+	<div class="input_item time_zone">
+		<div class="time_table">
+			<label for="select">점심</label>
 		</div>
-
-
-
-		<!-- 병원주소 입력 -->
-		<div class="input_wrap">
-			<div class="input_title">병원주소</div>
-			<div class="input_value">
-				<div th:text="${h.hospitalPostcode}">우편번호</div>
-				<div th:text="${h.hospitalAddrMain}">메인주소</div>
-				<div th:text="${h.hospitalAddrSub}">주소상세</div>
-			</div>
-
+		<div class="select">
+			<select disabled>
+				<option th:text="${h.time.lunchHour}">주말</option>
+			</select>
 		</div>
+	</div>
+</div>
 
 
-		<!-- 진료시간 입력 -->
-		<div class="input_wrap">
-			<div class="input_title">
-				<label for="time_table">진료시간</label>
-			</div>
-			<div class="input_item">
-				<div class="time_table">
-					<label for="select">평일</label>
+<div class="input_wrap">
+	<div class="input_title">휴무일</div>
+	<div class="input_item">
+		<label><input type="checkbox" name="hol" value="2">
+			월</label> <label><input type="checkbox" name="hol" value="3">
+			화</label> <label><input type="checkbox" name="hol" value="4">
+			수</label> <label><input type="checkbox" name="hol" value="5">
+			목</label> <label><input type="checkbox" name="hol" value="6">
+			금</label> <label><input type="checkbox" name="hol" value="7">
+			토</label> <label><input type="checkbox" name="hol" value="1">
+			일</label>
+	</div>
+</div>
+
+
+<!-- 전화번호 입력 -->
+<div class="input_wrap">
+	<div class="input_title">전화번호</div>
+	<div class="input_value">
+		<span th:text="${h.hospitalTel}">전화번호</span>
+	</div>
+</div>
+
+
+
+<!-- 의사정보 등록  -->
+<div class="input_wrap">
+	<div class="input_title">의사정보</div>
+	<div class="input_doctor">
+		<ul class="doctor_list">
+			<li th:each="d : ${h.doctorList}">
+				<div class="doctor_img_wrap">
+					<img th:src="@{/doctor/} + ${d.doctorPicture}"
+						style="width: 100%;  border-radius: 20px">
 				</div>
-				<div class="select">
-					<select disabled>
-						<option th:text="${h.time.dayHour}">평일</option>
-					</select>
-				</div>
-			</div>
-
-			<!-- 주말  -->
-			<div class="input_item time_zone">
-				<div class="time_table">
-					<label for="select">주말</label>
-				</div>
-				<div class="select">
-					<select disabled>
-						<option th:text="${h.time.weekendHour}">주말</option>
-					</select>
-				</div>
-			</div>
-
-
-
-			<!-- 점심  -->
-			<div class="input_item time_zone">
-				<div class="time_table">
-					<label for="select">점심</label>
-				</div>
-				<div class="select">
-					<select disabled>
-						<option th:text="${h.time.lunchHour}">주말</option>
-					</select>
-				</div>
-			</div>
-		</div>
-
-
-		<div class="input_wrap">
-			<div class="input_title">휴무일</div>
-			<div class="input_item">
-				<label><input type="checkbox" name="hol" value="2">
-					월</label> <label><input type="checkbox" name="hol" value="3">
-					화</label> <label><input type="checkbox" name="hol" value="4">
-					수</label> <label><input type="checkbox" name="hol" value="5">
-					목</label> <label><input type="checkbox" name="hol" value="6">
-					금</label> <label><input type="checkbox" name="hol" value="7">
-					토</label> <label><input type="checkbox" name="hol" value="1">
-					일</label>
-			</div>
-		</div>
-
-
-		<!-- 전화번호 입력 -->
-		<div class="input_wrap">
-			<div class="input_title">전화번호</div>
-			<div class="input_value">
-				<span th:text="${h.hospitalTel}">전화번호</span>
-			</div>
-		</div>
-
-
-
-		<!-- 의사정보 등록  -->
-		<div class="input_wrap">
-			<div class="input_title">의사정보</div>
-			<div class="input_doctor">
-				<ul class="doctor_list">
-					<li th:each="d : ${h.doctorList}">
-						<div class="doctor_img_wrap">
-							<img th:src="@{/doctor/} + ${d.doctorPicture}"
-								style="width: 150px; height: 150px">
-						</div>
-						<div class="doctor_info_wrap">
-							<div class="title_wrap">
-								<strong class="doctor_name" th:text="${d.doctorName}">의사이름</strong>
-								<span class="subject_name" th:text="${d.subjectName}">진료과</span>
-							</div>
-							<div class="info_wrap">
-								<p class="education_info" th:text="${d.doctorEducation}">의사
-									학력 정보</p>
-								<p class="experience_info" th:text="${d.doctorExperience}">의사
-									경력 정보</p>
-							</div>
-						</div>
-					</li>
-				</ul>
-			</div>
-		</div>
-
-
-		<!-- 진료비용 -->
-				<div class="input_wrap">
-					<div class="input_title">병원주소</div>
-					<div class="input_value">
-						<div th:text="${'상담비  - '}+${h.costOne}">상담비</div>
-						<div th:text="${'시술비  - '}+${h.costTwo}">시술비</div>
+				<div class="doctor_info_wrap">
+					<div class="title_wrap">
+						<strong class="doctor_name" th:text="${d.doctorName}">의사이름</strong>
+						<span class="subject_name" th:text="${d.subjectName}">진료과</span>
+					</div>
+					<div class="info_wrap">
+						<p class="education_info" th:text="${d.doctorEducation}">의사
+							학력 정보</p>
+						<p class="experience_info" th:text="${d.doctorExperience}">의사
+							경력 정보</p>
 					</div>
 				</div>
+			</li>
+		</ul>
+	</div>
+</div>
 
-				<!--  value전달 -->
-				<input type="hidden" name="hospitalNo" th:value="${h.hospitalNo}">
 
-				<div class="btn_area">
-					<button type="submit" class="btn_secondary lg" onclick="changeFormAction('/hospital/myHospitalDeleteFrm')">정보삭제</button>
-					<button type="button" class="btn_primary lg" onclick="changeFormAction('/hospital/myHospitalUpdateFrm')">정보수정</button>
+<!-- 진료비용 -->
+	<div class="input_wrap">
+		<div class="input_title">병원주소</div>
+		<div class="input_value">
+			<div th:text="${'상담비  - '}+${h.costOne}">상담비</div>
+			<div th:text="${'시술비  - '}+${h.costTwo}">시술비</div>
+		</div>
+	</div>
+
+	<!--  value전달 -->
+	<input type="hidden" name="hospitalNo" th:value="${h.hospitalNo}">
+
+	<div class="btn_area">
+		<button type="submit" class="btn_secondary lg" onclick="changeFormAction('/hospital/myHospitalDeleteFrm')">정보삭제</button>
+		<button type="button" class="btn_primary lg" onclick="changeFormAction('/hospital/myHospitalUpdateFrm')">정보수정</button>
 				</div>
 		</form>
 			</div>

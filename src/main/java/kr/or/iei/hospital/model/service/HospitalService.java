@@ -199,6 +199,39 @@ public class HospitalService {
 		}
 		return result;
 	}
+
+
+	public int myReviewTotalCount(int memberNo) {
+		int myResTotalCount = hospitalDao.myReviewTotalCount(memberNo);
+		return myResTotalCount;
+	}
+
+
+	public List selectMyHospitalReview(int memberNo, int start, int amount) {
+		int end = start+amount-1;
+		List myHistoryList = hospitalDao.selectMyHospitalReview(memberNo, start, end);
+		return myHistoryList;
+	}
+
+
+	
+	public int hospitalMemberReport(String goodByeReason, int memberNo, int hospitalNo, int reviewNo) {
+		int hospitalMemberReport = hospitalDao.hospitalMemberReport(goodByeReason, memberNo, hospitalNo, reviewNo);
+		return hospitalMemberReport ;
+	}
+
+
+	public int checkReport(int reviewNo) {
+		int checkRepo = hospitalDao.checkReport(reviewNo);
+		return checkRepo;
+	}
+
+
+
+
+
+
+
 	
 	public int selectMyResCount(int memberNo, int hospitalNo) {
 		int myResCount = hospitalDao.selectMyResCount(memberNo, hospitalNo);
