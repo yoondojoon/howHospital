@@ -1,3 +1,4 @@
+
 package kr.or.iei.member.model.service;
 
 import java.io.UnsupportedEncodingException;
@@ -87,9 +88,9 @@ public class MemberService {
 	}
 	//회원정보 수정
 	@Transactional
-	public int updateInfo(Member m) {
+	public int updateInfo(int memberNo, Member m) {
 		
-		int result = memberDao.updateInfo(m);
+		int result = memberDao.updateInfo(memberNo,m);
 		
 		return result;
 	}
@@ -111,10 +112,10 @@ public class MemberService {
 
 	}
 
-	public int deleteChild(int childNo) {
+	public int deleteChild(int childNo, int memberNo) {
 		
 		
-		int cnt = memberDao.deleteChild(childNo);
+		int cnt = memberDao.deleteChild(childNo,memberNo);
 		
 		
 		return cnt;
@@ -160,9 +161,18 @@ public class MemberService {
 	}
 	
 	@Transactional
-	public int submit(int hospitalNo, int memberNo, int reviewNo, Review review, Hospital hospital,int reservationNo) {
+	public int submit(int hospitalNo, int memberNo, Review review, int reservationNo) {
 		
-		int result = memberDao.submit(hospitalNo,memberNo,reviewNo,review,hospital,reservationNo);
+		int result = memberDao.submit(hospitalNo,memberNo,review,reservationNo);
+		
+		return result;
+	}
+	
+	@Transactional
+	public int reviewDel(int memberNo, int reviewNo) {
+		
+		
+		int result = memberDao.reviewDel(memberNo,reviewNo);
 		
 		return result;
 	}

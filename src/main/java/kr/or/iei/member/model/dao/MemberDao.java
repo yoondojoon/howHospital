@@ -117,11 +117,11 @@ public class MemberDao {
 		return cnt;
 	}
 
-	public int updateInfo(Member m) {
+	public int updateInfo(int memberNo, Member m) {
 		
 		String query = "update member_tbl set member_address=?, member_phone=?, member_password=? where member_no =?";
 		
-		Object[] params = {m.getMemberAddress(), m.getMemberPhone(), m.getMemberPassword(),m.getMemberNo()};
+		Object[] params = {m.getMemberAddress(), m.getMemberPhone(), m.getMemberPassword(),memberNo};
 		
 		int result = jdbc.update(query,params);
 		
@@ -151,12 +151,12 @@ public class MemberDao {
 
 	}
 
-	public int deleteChild(int childNo) {
+	public int deleteChild(int childNo, int memberNo) {
 		
 		
-		String query = "delete from child_tbl where child_no =?";
+		String query = "delete from child_tbl where child_no =? and member_no=?";
 		
-		Object[] params = {childNo};
+		Object[] params = {childNo, memberNo};
 		
 		int cnt = jdbc.update(query, params);
 		
@@ -208,8 +208,8 @@ public class MemberDao {
 		
 		
 	}
-
-	public int submit(int hospitalNo, int memberNo, int reviewNo, Review review, Hospital hospital, int reservationNo) {
+	//리뷰작성 전송
+	public int submit(int hospitalNo, int memberNo,  Review review, int reservationNo) {
 		
 		
 		String query = "insert into review_tbl values(review_seq.nextval,?,?,?,?,?,?,to_char(sysdate,'yyyy-mm-dd'),?)";
@@ -220,6 +220,32 @@ public class MemberDao {
 		
 		
 		return result;
+	}
+
+	public int reviewDel(int memberNo, int reviewNo) {
+		
+		
+		String query = "delete from review_tbl where member_no=? and review_no=?";
+		
+		Object[] params = {memberNo,reviewNo};
+		
+		int result = jdbc.update(query,params);
+		
+		
+		return result;
+	}
+
+	public int reservationNo(int memberNo) {
+		
+		String query = "select * from reservation_tbl where member_no=?";
+		
+		Object[] params = {memberNo};
+		
+		int reservationNo = jdbc.query(query, reservationRowMapper, params);
+		
+		
+		
+		return 0;
 	}
 
 

@@ -43,10 +43,29 @@
            			          		<p>병원 : <span th:text="${hospital.hospitalName}"></span></p>
            			          		<p>주소 : <span th:text="${hospital.hospitalAddrMain}"></span></p>
            			          		<p>리뷰 제목: <span th:text="${review.reviewTitle}"></span></p>
-        							<p>평점: <span th:text="${review.reviewRating}"></span></p>
+        							<p>평점: <span id="reviewRating" th:text="${review.reviewRating}"></span>
+        								<div class="star-wrap star-wrap2">
+        <span class="material-icons">star</span>
+        <span class="material-icons">star</span>
+        <span class="material-icons">star</span>
+        <span class="material-icons">star</span>
+        <span class="material-icons">star</span>
+        <div class="star-on">  <!--색깔별-->
+            <div class="star-wrap star-on-wrap">
+                <span class="material-icons">star</span>
+                <span class="material-icons">star</span>
+                <span class="material-icons">star</span>
+                <span class="material-icons">star</span>
+                <span class="material-icons">star</span>
+            </div>
+        </div>
+    </div>
+        							
+        							
+									<input type="hidden" id="score" value="${review.reviewRating}">
         							<p>내용: <span th:text="${review.reviewContent}"></span></p>
         							<p>작성일자: <span th:text="${review.reviewDate}"></span></p>
-           			        
+           			        		<p>작성일자: <span th:text="${review.reviewImg}"></span></p>
            			          </div>
            			          
            			          
@@ -74,7 +93,61 @@
     <!--// container -->
 	
 <th:block th:include="common/footer"></th:block>
-<script src="/js/member/myChildren.js"></script>
+<script>
+
+$(document).ready(function() {
+    // 페이지 로드 시 별점 조회하여 채워진 별표 표시
+    $(".reviewListBox").each(function() {
+        var score = parseInt($(this).find("#score").val()) || 0; // 널값이면 0으로 처리
+        fillStars($(this).find(".star-on"), score);
+    });
+});
+
+// 별표 채우기 함수
+function fillStars($starOn, starRating) {
+    $starOn.css("width", starRating * 20 + "%"); // 별 하나의 너비는 20%
+}
+
+
+
+
+
+$(document).ready(function() {
+    
+    $(".closeBtn").click(function() {
+        var $reviewListBox = $(this).closest(".reviewListBox");
+        var reviewNo = $reviewListBox.find("#reviewNo").text(); 
+        var memberNo = $("#memberNo").text(); 
+        
+        
+        
+        $.ajax({
+            url: "/member/reviewDel",
+            method: "POST", // 예시로 POST 방식 사용
+            data: { reviewNo: reviewNo ,memberNo: memberNo}, 
+            success: function(result) {
+                
+                
+                if(result>0){
+                $reviewListBox.remove();
+                alert("리뷰가 삭제되었습니다.");
+                	
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error(error);
+                alert("리뷰 삭제에 실패하였습니다. 다시 시도해주세요.");
+            }
+        });
+    });
+});
+
+
+
+
+
+
+</script>
 <!-- js 링크 -->
 </body>
 </html>
