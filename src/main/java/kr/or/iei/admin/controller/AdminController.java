@@ -199,6 +199,15 @@ public class AdminController {
 		return "common/msg";
 	}
 	
+	@GetMapping("/loginMsg")
+	public String loginMsg(Model model) {
+		model.addAttribute("title", "로그인하세요");
+		model.addAttribute("msg", "로그인을 하지 않았습니다.");
+		model.addAttribute("icon", "warning");
+		model.addAttribute("loc", "/");
+		return "common/msg";
+	}
+	
 
 	@GetMapping("/manageReview")
 	public String manageReview(Model model) {

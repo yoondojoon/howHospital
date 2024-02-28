@@ -34,7 +34,7 @@
 	<section id="contents" class="contents adminMain">
 		<div class="inner_wrap">
 			<h2>자주묻는질문</h2>
-			<button id="writeFaq" onclick="showModal()">FAQ 작성</button>
+			<button id="writeFaq" onclick="showModal()" th:if="${session.member != null && session.member.memberType == 3}">FAQ 작성</button>
 			<th:block th:each="category : ${categoryList}">
 				<div class="accordion-item">
 					<div class="accordion-header">
