@@ -4,7 +4,6 @@
 <link rel="stylesheet" href="/css/hospital/myHospitalReservationList.css">
 <link rel="stylesheet" href="/css/reservation/reservationPaginavi.css">
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-	
 
 <!-- container -->
     <main id="container" class="container">
@@ -99,7 +98,7 @@
 		</div>
 	</div>
 <th:block th:include="common/footer"></th:block>
-<script>
+<script th:inline="javascript">
 	/*
 	$(".hospital_reservation_type").on("change",function(){
 		const index = $(".hospital_reservation_type").index(this);
@@ -145,8 +144,7 @@
 			}
 		});
 	});
-	*/
-
+	
 	$(".prescription_btn").on("click",function(){
 		prescriptionUpload(this);
 		
@@ -188,12 +186,11 @@
 			alert("처방전을 등록해주세요");
 		}
 	});
-	
+	*/
 	$(".doctor_select").on("change",function(){
 		const doctorNo = $(this).val();
 		location.href="/hospital/myHospitalReservation?reqPage=1&doctorNo="+doctorNo;
 	});
-	
-	
+
 </script>
 </html>

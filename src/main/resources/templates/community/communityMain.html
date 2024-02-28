@@ -10,56 +10,42 @@
 		<!-- contents -->
         <section id="contents" class="contents community">
             <div class="inner_wrap">
-                <h2>커뮤니티</h2>
-                
-                <div class="board_area">
-                    <div class="row-top-area">
-                        <a th:if="${session.member != null}" href="/board/boardWriteFrm" class="btn_primary">글쓰기</a>
-                        <form action="/board/boardSearch" method="get" id="searchFrm">
-                            <th:block th:switch="${type}">
-                                <select th:case="writer" class="input-form" name="type">
-                                    <option value="title">제목</option>
-                                    <option value="writer" selected>작성자</option>
-                                </select>
-                                <select th:case="*" class="input-form" name="type">
-                                    <option value="title" selected>제목</option>
-                                    <option value="writer">작성자</option>
-                                </select>
-                            </th:block>
-                            <input type="search" class="input-form" name="keyword" th:value="${keyword}">
-                            <input type="hidden" name="reqPage" value="1">
-                            <button type="submit" class="btn-search" onclick="return checkKeyword(this);"><span class="material-icons">search</span></button>
-                        </form>
-                    </div>
-                    <table class="tbl tbl-hover board-tbl">
-                        <colgroup>
-                            <col style="width:10%;">
-                            <col style="width:auto;">
-                            <col style="width:15%;">
-                            <col style="width:20%;">
-                            <col style="width:10;">
-                        </colgroup>
-                        <thead>
-                            <tr class="tr-2">
-                                <th>번호</th>
-                                <th>제목</th>
-                                <th>작성자</th>
-                                <th>작성일</th>
-                                <th>조회수</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr class="tr-1" th:each="b : ${boardList}">
-                                <td th:text="${b.boardNo}"></td>
-                                <td><a th:href="@{/board/boardView(boardNo=${b.boardNo})}" th:text="${b.boardTitle}"></a></td>
-                                <td th:text="${b.boardWriter}"></td>
-                                <td th:text="${b.writeDate}"></td>
-                                <td th:text="${b.readCount}"></td>
-                            </tr>
-                        </tbody>
-                    </table>
+                <div class="title_wrap">
+                    <h2>건강 매거진</h2>
+                    <p class="title_sub">병원어때 건강 매거진을 통해 다양한 건강 정보를 얻어보세요!</p>
                 </div>
-                <div id="pageNavi" th:utext="${pageNavi}"></div>
+                
+                <div class="community_board_area">
+                    <div class="board_top_area" th:if="${session.member != null}">
+                        <a href="/community/communityWriteFrm" class="btn_primary outline">글쓰기</a>
+                    </div>
+                    <div class="board_list_area">
+                        <div class="no_data_wrap" th:if="${boardList == null}">
+                            <i class="icon no_data"></i>
+                            <p>검색 결과가 없습니다.</p>
+                            <div class="btn_area">
+                                <a href="/community/communityMain?reqPage=1" class="btn_primary">건강 매거진 전체보기</a>
+                            </div>
+                        </div>
+                        <ul class="board_list" th:if="${boardList}">
+                            <li th:each="b : ${boardList}">
+                                <a th:href="@{/community/communityView(boardNo=${b.boardNo})}">
+                                    <div class="thumb_wrap">
+                                        <img src="/images/img_hospital.svg" alt="병원사진아무거나">
+                                    </div>
+                                    <div class="content_wrap">
+                                        <div class="board_title" th:text="${b.boardTitle}"></div>
+                                        <div class="board_txt" th:utext="${b.boardContent}"></div>
+                                        <span class="write_date" th:text="${b.writeDate}"></span>
+                                    </div>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="pagination_wrap" th:if="${pageNavi}">
+                        <div id="pageNavi" th:utext="${pageNavi}"></div>
+                    </div>
+                </div>
             </div>
         </section>
         <!--// contents -->

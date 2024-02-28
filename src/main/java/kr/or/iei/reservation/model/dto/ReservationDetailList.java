@@ -20,4 +20,7 @@ public class ReservationDetailList {
 	private String symptom;
 	private int prescriptionStatus;
 	private List fileDataList;
+	private List doctorList;
+	private int hospitalNo;
+	private String doctorName;
 }

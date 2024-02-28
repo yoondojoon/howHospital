@@ -198,6 +198,7 @@ public class AdminController {
 		model.addAttribute("loc", "/");
 		return "common/msg";
 	}
+	
 
 	@GetMapping("/manageReview")
 	public String manageReview(Model model) {

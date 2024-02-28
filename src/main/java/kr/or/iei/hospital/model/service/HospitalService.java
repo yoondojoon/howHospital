@@ -233,8 +233,15 @@ public class HospitalService {
 
 
 	
+	public int selectMyResCount(int memberNo, int hospitalNo) {
+		int myResCount = hospitalDao.selectMyResCount(memberNo, hospitalNo);
+		return myResCount;
+	}
+
+	public int selectMyReviewCount(int memberNo, int hospitalNo) {
+		int myReviewCount = hospitalDao.selectMyReviewCount(memberNo, hospitalNo);
+		return myReviewCount;
+	}
 	
-
-
 }
 

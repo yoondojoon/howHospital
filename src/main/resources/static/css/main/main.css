@@ -28,7 +28,7 @@
 .main .subject_list_section .subject_list>li>a .icon{display:flex; justify-content:center; align-items:center; width:80px; height:80px; border:1px solid rgba(0,129,180,0.4); border-radius:50%; background-color:rgba(255,255,255,0.6);}
 
 .main .community_board_section{padding:120px 0; background-color:#fff;}
-.main .community_board_section h2{text-align:left;}
+.main .community_board_section h2{color:var(--gray_04); text-align:left;}
 .main .community_board_section .board_list{display:flex; gap:24px;}
 .main .community_board_section .board_list>li{width:calc((100% - 24px)/3); flex:1;}
 .main .community_board_section .board_list>li>a{width:100%;}

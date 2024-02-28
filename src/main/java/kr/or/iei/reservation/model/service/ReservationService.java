@@ -126,6 +126,10 @@ public class ReservationService {
 	@Transactional
 	public int updateReservationDetail(H_Reservation hr) {
 		int result = reservationDao.updateReservationDetail(hr);
+		if(result > 0 && hr.getDoctorNo() != 0) {
+			result = reservationDao.updateDoctorSelect(hr);
+		}
+		
 		return result;
 	}
 	

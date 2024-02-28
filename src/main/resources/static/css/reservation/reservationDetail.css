@@ -4,7 +4,7 @@
 	margin: 0 auto;
 }
 .detail_reservation_top{
-	margin: 10px 0px;
+	margin: 20px 0px;
 }
 #patientName{
 	font-size: 18px;
@@ -18,7 +18,7 @@
 	display: block;
 	font-size: 18px;
 	font-weight: bold;
-	margin-bottom: 10px;
+	margin-bottom: 20px;
 }
 .button_wrap{
 	text-align: center;
@@ -37,10 +37,13 @@
 	margin-top: 10px;
 }
 .detail_reservation_symptom_img>.symptom_img{
-	height: 300px;
 	border: 1px solid var(--line_02);
 	width: 50%;
 	margin: 0 10px;
+}
+.detail_reservation_symptom_img>.symptom_img>img{
+	display:block;
+	width:100%;
 }
 .detail_reservation_symptom_img_title{
 	margin-top: 20px;
@@ -53,8 +56,16 @@
 .detail_reservation_symptom_img>.ref_section{
 	margin: 0 auto;
 }
-
-
+.detail_reservation>.detail_reservation_doctor>#doctorName{
+	font-size: 18px;
+	font-weight: bold;
+}
+.detail_reservation>.detail_reservation_doctor{
+	margin-bottom: 20px;
+}
+.detail_reservation_status{
+	margin-bottom: 8px;
+}
 
 
 

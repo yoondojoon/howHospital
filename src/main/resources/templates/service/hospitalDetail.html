@@ -205,7 +205,7 @@
                                             <div class="star_wrap"><span class="star"></span></div><div class="avg" th:text="${h.ratingAvg}"></div>
                                         </div>
                                     </div>
-                                    <!-- <a href="#" class="btn_primary outline btn_write">리뷰 작성하기</a> -->
+                                    <a href="#" th:if="${myResCount > 0 && myResCount != myReviewCount}" class="btn_primary outline btn_write">리뷰 작성하기</a>
                                 </div>
                                 <div class="review_main_wrap">
                                     <div class="sorting_wrap">
@@ -262,6 +262,7 @@
     //리뷰
     const hospitalNo = [[${h.hospitalNo}]];
     const totalCount = [[${h.reviewCount}]];
+    // console.log(totalCount);
     let sortValue = $(".review_wrap select[name=review_sort]").val();
     let currentCount = 0;
     let start = 1;

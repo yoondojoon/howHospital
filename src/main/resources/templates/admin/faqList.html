@@ -3,6 +3,7 @@
 
 
 <th:block th:include="common/header"></th:block>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <link rel="stylesheet" href="/css/admin/faqList.css">
 
 <script src="/js/lib/jquery-ui.min.js"></script>
@@ -16,17 +17,23 @@
 		<div class="inner_wrap">
 			<h2>자주묻는질문</h2>
 			<th:block th:each="category : ${categoryList}">
-				<div class="menu">
-					<ul class="main-menu" th:text="${category.faqTitle}">
-						<th:block th:if="${category.category== content.faqRef}"
-							th:each="content : ${contentList}">
-							<ul class="sub-menu" th:text="${content.faqTitle}">
-								<ul class="sub-menu">
-									<li th:text="${content.faqContent}"></li>
-								</ul>
-							</ul>
-						</th:block>
-					</ul>
+				<div class="accordion-item">
+					<div class="accordion-header">
+						<p th:text="${category.faqTitle}"></p><span class="toggle-btn material-icons">expand_more</span>
+					</div>
+					<th:block th:if="${category.category== content.faqRef}"
+						th:each="content : ${contentList}">
+						<div class="accordion-sub">
+							<div class="accordion-item">
+								<div class="accordion-header">
+									<p th:text="${content.faqTitle}"></p><span class="toggle-btn material-icons">expand_more</span>
+								</div>
+								<div class="accordion-content">
+									<p th:text="${content.faqContent}"></p>
+								</div>
+							</div>
+						</div>
+					</th:block>
 				</div>
 			</th:block>
 		</div>

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<th:block th:include="common/header"></th:block>
+<script src="/summernote/summernote-lite.js"></script>
+<script src="/summernote/lang/summernote-ko-KR.js"></script>
+<link rel="stylesheet" href="/summernote/summernote-lite.css">
+<link rel="stylesheet" href="/css/community/community.css">
+
+	<!-- container -->
+    <main id="container" class="container">
+
+		<!-- contents -->
+        <section id="contents" class="contents community">
+            <div class="inner_wrap">
+                <div class="title_wrap">
+                    <h2>건강 매거진</h2>
+                    <p class="title_sub">궁금한 건강고민을 자유롭게 물어보세요!</p>
+                </div>
+                
+                <div class="community_board_area">
+
+					<form action="/community/write" method="post" enctype="multipart/form-data">
+						<div class="communityWrite">
+							
+							<div class="input_wrap">
+								<div class="input_title">제목</div>
+								<div class="input_item">
+									<input type="text" name="boardTitle" placeholder="글 제목을 입력하세요">
+								</div>
+								<!-- <p class="msg">기본 메세지 컬러는 그레이</p> -->
+							</div>
+							
+							<div class="input_wrap">
+								<div class="input_title">작성자</div>
+								<div class="input_item">
+									<span th:text="${session.member.memberName}"></span>
+									<input type="hidden" name="memberNo" th:value="${session.member.memberNo}">
+								</div>
+								<!-- <p class="msg">기본 메세지 컬러는 그레이</p> -->
+							</div>
+							
+							<div class="input_wrap">
+								<div class="input_title">첨부파일</div>
+								<div class="input_item">
+									<input type="file" name="upfile" multiple>
+								</div>
+							</div>
+							
+							<div class="textarea">
+								<textarea id="boardContent" name="boardContent"></textarea>
+							</div>
+									
+							<div class="btn_area">
+								<button type="submit" class="btn_primary">작성 완료</button>
+							</div>
+						</div>			
+					</form>
+					
+                </div>
+            </div>
+        </section>
+        <!--// contents -->
+        
+    </main>
+    <!--// container -->
+	
+<th:block th:include="common/footer"></th:block>
+<!-- js 링크 -->
+<script>
+	$("#boardContent").summernote({
+		height: 500,
+		lang: "ko-KR",
+		callbacks: {
+			onImageUpload: function(files){
+				uploadImage(files[0], this);
+			}
+		},
+		disableResize: true,
+		disableResizeEditor: true,
+		resize: false
+	});
+	function uploadImage(file, editor){
+		const form = new FormData();
+		form.append("upfile", file);
+		$.ajax({
+			url: "/community/editor",
+			type: "post",
+			data: form,
+			processData: false,
+			contentType: false,
+			success: function(data){
+				$(editor).summernote("insertImage",data);
+			},
+			error: function(){
+				console.log("에러");
+			}
+		});
+	}
+</script>
+</body>
+</html>

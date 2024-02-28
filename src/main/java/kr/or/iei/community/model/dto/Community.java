@@ -1,5 +1,7 @@
 package kr.or.iei.community.model.dto;
 
+import java.util.List;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,4 +17,9 @@ public class Community {
 	private String writeDate;
 	private String boardWriter;
 	private int readCount;
+	private List<CommunityFile> fileList;
+	
+	public String getBoardContentBr() {
+		return boardContent.replaceAll("\r\n", "<br>");
+	}
 }

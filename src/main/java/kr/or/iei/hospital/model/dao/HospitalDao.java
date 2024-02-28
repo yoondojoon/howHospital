@@ -341,6 +341,7 @@ public class HospitalDao {
 		Object[] params = {memberNo, start, end};
 		List myHistoryList = jdbc.query(query, myHospitalRevieRowMapper, params);
 		return myHistoryList;
+
 	}
 	
 	
