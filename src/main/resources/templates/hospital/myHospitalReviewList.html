@@ -109,12 +109,14 @@ $("#viewMore").on("click", function(){
                 const infoArea = $("<div class='info_area'>");
                 const reviewTitle = $("<span class>"); 
                 reviewTitle.text(item.reviewTitle)
+                
                 const reviewContent = $("<p class>"); 
                 reviewContent.text(item.reviewContent);
-                //const reviewImg = $("<img class>");
-                //infoArea.append(reviewImg);
                 
-           		
+                const reviewImg = $("<img class>");
+                reviewImg.attr("src", "/review/"+item.reviewImg)
+                infoArea.append(reviewImg);
+                
                 infoArea.css("margin-right", "20px");
                 reviewTitle.css({"font-size": "20px",
                 				"font-weight": "bold"});
