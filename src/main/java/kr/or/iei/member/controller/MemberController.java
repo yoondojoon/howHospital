@@ -396,7 +396,7 @@ public class MemberController {
 		int memberNo = member.getMemberNo();
 		int totalCount = reservationService.myResTotalCount(memberNo);
 		model.addAttribute("totalCount", totalCount);
-		return "/member/myMedicalHistory";
+		return "member/myMedicalHistory";
 	}
 	
 
@@ -518,24 +518,11 @@ public class MemberController {
 		
 	}
 	
-	
-	
-
-	
-	
-	
-	/*
-
-	//내 진료내역 상세
-	@PostMapping(value="/myMedicalDetail")
-	public String myMedicalDetail(int reservationNo, Model model) {
-		ReservationDetail rd = reservationService.selectMyResDetail(reservationNo);
-		model.addAttribute("rd", rd);
-		return "/member/myMedicalDetail";
+	@GetMapping(value="/reportHospitalFrm")
+	public String reportHospitalFrm(int reservationNo, Model model) {
+		model.addAttribute("reservationNo", reservationNo);
+		return "member/reportHospitalFrm";
 	}
-
-*/
-
 }
 
 

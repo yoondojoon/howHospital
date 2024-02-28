@@ -174,7 +174,7 @@ button[disabled]{opacity:0.2;}
 .modal .modal_container{/*height:114px;*/ padding:0 20px; overflow-y:auto;}
 .modal .modal_content{display:flex; flex-direction:column; justify-content:center; min-height:100%; font-size:16px; line-height:1.5;}
 .modal .modal_content .center{text-align:center;}
-.modal .modal_content .result_info>li{display:flex; gap:12px; padding:4px 0;}
+.modal .modal_content .result_info>li{display:flex; gap:12px; align-items:center; padding:4px 0;}
 .modal .modal_content .result_info>li>span{min-width:120px;}
 .modal .modal_content .result_info>li>strong{font-weight:normal;}
 .modal .modal_content .result_info>li>strong>span:last-child{margin-left:4px;}

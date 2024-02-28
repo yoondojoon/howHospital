@@ -519,6 +519,13 @@ public class AdminService {
 		int result = adminDao.writeFaq(memberNo, category,title,content);
 		return result;
 	}
+
+
+	@Transactional
+	public int reportHospital(int reservationNo, String reportTitle, String reportContent) {
+		int result = adminDao.reportHospital(reservationNo, reportTitle, reportContent);
+		return result;
+	}
 	
 
 }

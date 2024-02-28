@@ -19,6 +19,7 @@ import kr.or.iei.hospital.model.dto.HospitalSearchRowMapper;
 import kr.or.iei.hospital.model.dto.KeywordRowMapper;
 import kr.or.iei.hospital.model.dto.Subject;
 import kr.or.iei.hospital.model.dto.SubjectDoctorRowMapper;
+import kr.or.iei.hospital.model.dto.SubjectNameRowMapper;
 import kr.or.iei.hospital.model.dto.SubjectRowMapper;
 import kr.or.iei.hospital.model.dto.Time;
 import kr.or.iei.hospital.model.dto.TimeRowMapper;
@@ -36,6 +37,8 @@ public class HospitalDao {
 	private HospitalRowMapper hospitalRowMapper;
 	@Autowired
 	private SubjectRowMapper subjectRowMapper;
+	@Autowired
+	private SubjectNameRowMapper subjectNameRowMapper;
 	@Autowired
 	private KeywordRowMapper keywordRowMapper;
 	@Autowired
@@ -96,6 +99,13 @@ public class HospitalDao {
 		String query = "select * from subject_tbl where subject_no in (select subject_no from doctor_tbl where hospital_no=?)";
 		Object[] params = {hospitalNo};
 		List list = jdbc.query(query, subjectRowMapper, params);
+		return list;
+	}
+	
+	public List searchSubjectNameList(int hospitalNo) {
+		String query = "select distinct subject_name from subject_tbl where subject_no in (select subject_no from doctor_tbl where hospital_no=?)";
+		Object[] params = {hospitalNo};
+		List list = jdbc.query(query, subjectNameRowMapper, params);
 		return list;
 	}
 
@@ -411,7 +421,6 @@ public class HospitalDao {
 	}
 	
 	public int selectMyResCount(int memberNo, int hospitalNo) {
-		System.out.println(memberNo+""+hospitalNo);
 		String query = "select count(*) from reservation_tbl where (member_no=? and hospital_no=?) and ((reservation_type=1 and reservation_status=4) or (reservation_type=2 and reservation_status=5))";
 		Object[] params = {memberNo, hospitalNo};
 		int result = jdbc.queryForObject(query, Integer.class, params);

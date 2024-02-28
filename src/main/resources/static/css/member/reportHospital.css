@@ -1,0 +1,4 @@
+@charset "UTF-8";
+
+.reportHospitalFrm .report_area{max-width:1080px; margin:0 auto; padding:60px; border:1px solid var(--line_02); border-radius:16px;}
+.reportHospitalFrm .reportWrite{display:flex; flex-direction:column; gap:48px;}
