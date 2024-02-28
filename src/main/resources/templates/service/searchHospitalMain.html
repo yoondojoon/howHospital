@@ -1,4 +1,4 @@
-\<!DOCTYPE html>
+<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <th:block th:include="common/header"></th:block>
 
@@ -76,6 +76,8 @@
 			data: {keyword: keyword},
 			success: function (hospitalList) {
 				$(".hospital_list").empty();
+				$(window).scrollTop($(".search_area").offset().top - 72);
+				
 				$(markerArr).each(function (index, item) {
 					item.setMap(null);
 				})
@@ -93,8 +95,8 @@
 				$(".hospital_list_wrap .no_data_wrap").hide();
 				$(".total_count").show();
 				const list = $("<ul class='hospital_list'>");
+				
 				$(hospitalList).each(function (index, item) {
-					$(window).scrollTop($(".search_area").offset().top - 72);
 
 					const latlng = new naver.maps.LatLng(hospitalList[0].lat, hospitalList[0].lng);
 					map.setCenter(latlng);

@@ -202,7 +202,7 @@
                                         <h3>리뷰</h3>
                                         <span class="review_count" th:text="${h.reviewCount}"></span>
                                         <div class="rating_wrap">
-                                            <div class="star_wrap"><span class="star"></span></div><div class="avg" th:text="${h.ratingAvg}"></div>
+                                            <div class="star_wrap"><span class="star" th:style="${'width:'}+${h.ratingAvg*20}+'%'"></span></div><div class="avg" th:text="${h.ratingAvg}"></div>
                                         </div>
                                     </div>
                                     <button type="button" th:if="${myResCount > 0 && myResCount != myReviewCount}" class="btn_primary outline btn_write" onclick="selectResList(this);">리뷰 작성하기</button>
@@ -274,10 +274,12 @@
 
     if(totalCount == 0){
         let noDataDiv = [
-            "<div class='no_data_wrap'>",
-				"<i class='icon no_data'></i>",
-				"<p>리뷰가 없습니다.</p>",
-			"</div>"
+            "<li>",
+                "<div class='no_data_wrap'>",
+                    "<i class='icon no_data'></i>",
+                    "<p>리뷰가 없습니다.</p>",
+                "</div>",
+            "</li>"
         ].join("");
         $(".review_list").append(noDataDiv);
     }
@@ -304,6 +306,18 @@
                 amount: amount
             },
             success: function(data) {
+                if($(data).length == 0){
+                    $(".review_list").empty();
+                    let noDataDiv = [
+                        "<li>",
+                            "<div class='no_data_wrap'>",
+                                "<i class='icon no_data'></i>",
+                                "<p>리뷰가 없습니다.</p>",
+                            "</div>",
+                        "</li>"
+                    ].join("");
+                    $(".review_list").append(noDataDiv);
+                };
                 $(data).each(function(index, item){
                     const starWidth = item.reviewRating*20;
                     let reviewString = [
