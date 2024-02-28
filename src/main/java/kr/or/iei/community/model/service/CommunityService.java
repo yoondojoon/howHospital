@@ -60,11 +60,7 @@ public class CommunityService {
 		for(Object obj : list) {
 			Community c = (Community) obj;
 			List fileList = communityDao.selectCommunityFile(c.getBoardNo());
-			if(fileList.isEmpty()) {
-				c.setFileList(null);
-			}else {
-				c.setFileList(fileList);				
-			}
+			c.setFileList(fileList);
 		}
 		cld.setList(list);
 		return cld;

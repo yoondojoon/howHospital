@@ -16,7 +16,7 @@
                 </div>
                 
                 <div class="community_board_area">
-                    <div class="board_top_area" th:if="${session.member != null}">
+                    <div class="board_top_area" th:if="${session.member != null && session.member.memberType != 1}">
                         <a href="/community/communityWriteFrm" class="btn_primary outline">글쓰기</a>
                     </div>
                     <div class="board_list_area">
@@ -36,7 +36,7 @@
                                             <img th:src="@{/community/}+${file.filepath}">
                                         </th:block>
                                         
-                                        <th:block th:if="${b.fileList == null}">
+                                        <th:block th:if="${#lists.size(b.fileList) == 0}">
                                             <img src="/images/img_hospital.svg" alt="기본썸네일">
                                         </th:block>
                                     </div>

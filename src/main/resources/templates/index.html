@@ -154,40 +154,26 @@
             <section class="community_board_section">
                 <div class="inner_wrap">
                     <h2>건강 매거진</h2>
-                    <ul class="board_list">
-                        <li>
-                            <a href="/community/communityView?">
-                                <div class="thumb_wrap">
-                                    <img src="/images/img_hospital.svg" alt="병원사진아무거나">
-                                </div>
-                                <div class="title_wrap">
-                                    <strong class="board_title">매거진 글 제목</strong>
-                                    <span class="board_txt">글내용 글내용</span>
-                                </div>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="/community/communityView?">
-                                <div class="thumb_wrap">
-                                    <img src="/images/img_hospital.svg" alt="병원사진아무거나">
-                                </div>
-                                <div class="title_wrap">
-                                    <strong class="board_title">매거진 글 제목</strong>
-                                    <span class="board_txt">글내용 글내용</span>
-                                </div>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="/community/communityView?">
-                                <div class="thumb_wrap">
-                                    <img src="/images/img_hospital.svg" alt="병원사진아무거나">
-                                </div>
-                                <div class="title_wrap">
-                                    <strong class="board_title">매거진 글 제목</strong>
-                                    <span class="board_txt">글내용 글내용</span>
-                                </div>
-                            </a>
-                        </li>
+                    <ul class="board_list" th:if="${boardList}">
+                        <th:block th:each="b, status : ${boardList}" th:if="${status.index <= 2}">
+                            <li>
+                                <a th:href="@{/community/communityView(boardNo=${b.boardNo})}">
+                                    <div class="thumb_wrap">
+                                        <th:block th:each="file : ${b.fileList}">
+                                            <img th:src="@{/community/}+${file.filepath}">
+                                        </th:block>
+                                        
+                                        <th:block th:if="${#lists.size(b.fileList) == 0}">
+                                            <img src="/images/img_hospital.svg" alt="기본썸네일">
+                                        </th:block>
+                                    </div>
+                                    <div class="title_wrap">
+                                        <div class="board_title" th:text="${b.boardTitle}"></div>
+                                        <div class="write_date" th:utext="${b.writeDate}"></div>
+                                    </div>
+                                </a>
+                            </li>
+                        </th:block>
                     </ul>
                 </div>
             </section>

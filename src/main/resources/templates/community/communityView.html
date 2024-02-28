@@ -42,7 +42,7 @@
                     </div>
     
                     <div class="btn_area">
-                        <a href="/community/communityMain?reqPage=1" class="btn_secondary">목록</a>
+                        <a href="/community/communityMain?reqPage=1" class="btn_primary outline">목록</a>
                     </div>
                 </div>
 
@@ -56,7 +56,11 @@
 <th:block th:include="common/footer"></th:block>
 <!-- js 링크 -->
 <script>
-
+    function boardDelete(boardNo){
+		if(confirm("게시글을 삭제하시겠습니까?")){
+			location.href="/community/delete?boardNo="+boardNo;
+		}
+	}
 </script>
 </body>
 </html>
