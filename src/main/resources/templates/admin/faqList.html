@@ -10,6 +10,17 @@
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
 
+<style>
+.swal2-wrap{
+	width:400px;
+}
+
+.swal{
+	margin:10px auto;
+	padding:0;
+}
+
+</style>
 <!-- container -->
 <main id="container" class="container">
 
@@ -58,16 +69,16 @@
     function showModal() {
         Swal.fire({
             title: 'FAQ 작성',
-            html:'<div style="width:400px;">' +
-            	'<span>범주 : </span><select  class="swal2-select" name="category">' +
-            	'<option value="1">회원가입 및 이용정지</option>' +
-            	'<option value="2">병원찾기</option>' +
-            	'<option value="3">커뮤니티</option>' +
-            	'<option value="4">기타등등</option>' +
+            html:
+            	'<div class="swal2-wrap">' +
+            	'<span>범주 : </span><select  class="swal2-select swal" name="category">' +
+            	'<option class="swal" value="1">회원가입 및 이용정지</option>' +
+            	'<option class="swal" value="2">병원찾기</option>' +
+            	'<option class="swal" value="3">커뮤니티</option>' +
+            	'<option class="swal" value="4">기타등등</option>' +
             	'</select>' +
-                '<input id="faqTitle" class="swal2-input" style="width:100%;" placeholder="FAQ 제목">' +
-                '<textarea id="faqContent" class="swal2-textarea" style="width:100%; resize:none; height:200px;" placeholder="FAQ 내용"></textarea>' +
-                '</div>',
+                '<input id="faqTitle" class="swal2-input swal" style="width:80%;" placeholder="FAQ 제목">' +
+                '<textarea id="faqContent" class="swal2-textarea swal" style="width:80%; resize:none; height:200px;" placeholder="FAQ 내용"></textarea></div>',
                 showCancelButton: true,
 	            confirmButtonText: 'Submit',
 	            cancelButtonText: 'Cancel',
