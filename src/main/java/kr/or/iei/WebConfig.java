@@ -26,8 +26,16 @@ public class WebConfig implements WebMvcConfigurer{
 				.addResourceHandler("/reservation/**")
 				.addResourceLocations("file:///C:/Temp/hospital/reservation/");
 			registry
+				.addResourceHandler("/reservation/**")
+				.addResourceLocations("file:///C:/Temp/hospital/review/");
+
+			registry
+				.addResourceHandler("/community/**")
+				.addResourceLocations("file:///C:/Temp/hospital/community/");
+
+			registry
 				.addResourceHandler("/community/editor/**")
-				.addResourceLocations("file:///C:/Temp/upload/community/editor/");
+				.addResourceLocations("file:///C:/Temp/hospital/community/editor/");
 	}
 	
 	@Override
@@ -46,7 +54,7 @@ public class WebConfig implements WebMvcConfigurer{
 		//관리자
 		registry.addInterceptor(new AdminInterceptor())
 		.addPathPatterns("/admin/**")
-		.excludePathPatterns("/admin/adminMsg","/admin/noticeList*");
+		.excludePathPatterns("/admin/adminMsg","/admin/faqList","/admin/noticeList*");
 		
 	}
 }

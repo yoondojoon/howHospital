@@ -215,7 +215,7 @@
                             })
                         }else{
                             if(item.reviewCount == 0){
-                                const ctaBtn = $("<a href='#' class='btn_primary outline'>리뷰 작성</a>");
+                                const ctaBtn = $("<a href='/member/myReviewFrm?reservationNo="+item.reservationNo+"' class='btn_primary outline'>리뷰 작성</a>");
                                 btnArea.append(ctaBtn);
                                 ctaBtn.on("click", function(e){
                                     e.stopPropagation();
@@ -232,7 +232,7 @@
                             showPreScription();
                         });
                         if(item.reviewCount == 0){
-                            const ctaBtn2 = $("<a href='#' class='btn_primary outline'>리뷰 작성</a>");
+                            const ctaBtn2 = $("<a href='/member/myReviewFrm?reservationNo="+item.reservationNo+"' class='btn_primary outline'>리뷰 작성</a>");
                             btnArea.append(ctaBtn2);
                             ctaBtn2.on("click", function(e){
                                 e.stopPropagation();
@@ -332,7 +332,7 @@
                                 data: {reservationNo: reservationNo},
                                 success: function(data){
                                     resStatus.removeClass("blue").addClass("red outline");
-                                    resStatus.text("예약취소");
+                                    resStatus.text("예약취소야");
                                     $(obj).remove();
                                 },
                                 error: function(){

@@ -58,24 +58,19 @@
 <!-- js 링크 -->
 <script>
 		$("#clear").click(function(){
-	    
 		//선택한 행 전부 담을 배열
 		var deleteList = [];
-		 	
 		if($('.chk:checked').length==0){
 			alert("삭제할 신고를 선택해주세요");
 		}else{
 			$(".chk:checked").each(function(i) {
-			 
 				var reportNo = $(this).parents('tr').find("[name=reportNo]").text();
-			        
 		    	//param 배열에 reportNo을 담는다.
 			      deleteList.push(reportNo);
 			  });
 		}   
 		console.log(deleteList, typeof deleteList);
 		location.href = "/admin/deleteChk?deleteList="+deleteList.join("/");
-		 
 		});
 	</script>
 

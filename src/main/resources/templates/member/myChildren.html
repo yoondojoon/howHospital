@@ -21,7 +21,7 @@
                 			<li><a href="/member/myChildAddFrm">내 자녀 추가</a></li>
                 			<li><a href="/member/myMedicalHistory">내 진료내역 보기</a></li>
                 			<li><a href="/member/myReview">나의 리뷰 보기</a></li>
-                			<li><a href="#">즐겨찾기</a></li>
+                			<li><a href="/member/favorites">즐겨찾기</a></li>
                 			<li><a href="/member/memberDelete">회원 탈퇴</a></li>
                 		</ul>
                 	</div>
@@ -34,19 +34,22 @@
            			<h2>내 정보</h2>
            			           			
 	           			<div class="myInfoContents">
-           					<span class="material-icons">emoji_emotions</span>
+	           			
+	           			<div class="box">
+           				<span class="material-icons">emoji_emotions</span>	
            				<h3><span th:text="${session.member.memberName}"></span></h3>
+           				</div>
            				
-           				
-           				<th:block th:each="children : ${child}">
-	           				<div class="info childInfo"><button type="button" class="closeBtn"><span class="material-icons close">close</span></button>
-	           				<span class="material-icons">child_care</span>
-	           				<span th:text="${children.childName}"></span>
+           				<th:block th:each="children : ${child}" class="childWrap">
+	           				<div class="info childInfo"><button type="button" class="closeBtn"><span class="material-icons " id="close">close</span></button>
+	           				<span class="material-icons" id="baby">child_care</span>
+	           				<span th:text="${children.childName}" id="childName"></span>
 	           				<span id="memberRrn" th:text="${session.member.memberRrn}" style="display:none;"></span><!-- 뷰에 세션으로 주민번호 꺼내오 -->
 	           				
 	           				
 	           				<span class="childNo" id="childRrn" th:text="${children.childNo}" style="display:none;"></span><!-- 뷰에 세션으로 주민번호 꺼내오 -->
 	           				<span class="childRrn" id="childRrn" th:text="${children.childRrn}" style="display:none;"></span><!-- 뷰에 세션으로 주민번호 꺼내오 -->
+	           					
 	           					<ul>
 	           						<li><span class="birthDate" id="birthDate"></span><span class="gender" id="gender"></span><span class="age" id="age"></span></li>
 	           						<li>주소 : <span th:text="${session.member.memberAddress}"></span></li>
@@ -54,6 +57,7 @@
 	           					</ul>
 	           				
 	           				</div>
+	           				
            				</th:block>
            				
            				
@@ -74,7 +78,103 @@
     <!--// container -->
 	
 <th:block th:include="common/footer"></th:block>
-<script src="/js/member/myChildren.js"></script>
+<script >
+
+document.addEventListener("DOMContentLoaded", function() {
+    var childRrnArr = document.querySelectorAll(".childRrn");
+
+    childRrnArr.forEach(function(childRrnEl, index) {
+        var childRrn = childRrnEl.textContent.trim(); 
+
+        let birthYear = parseInt(childRrn.substr(0, 2));
+
+        const today = new Date();
+        const currentYear = today.getFullYear(); // 오늘 년도
+
+        if (birthYear >= 0 && birthYear <= currentYear % 100) {
+            birthYear += 2000;
+        } else {
+            birthYear += 1900;
+        }
+
+        let age = currentYear - birthYear;
+
+        const birthMonth = parseInt(childRrn.substr(2, 2));
+        const birthDay = parseInt(childRrn.substr(4, 2));
+        const currentMonth = today.getMonth() + 1;
+        const currentDay = today.getDate();
+
+        if (currentMonth < birthMonth || (currentMonth === birthMonth && currentDay < birthDay)) {
+            age--;
+        }
+
+        
+        var parentElement = childRrnEl.parentElement;
+        var birthDateEl = parentElement.querySelector(".birthDate");
+        if (birthDateEl) {
+            birthDateEl.textContent = birthYear + "년 " + birthMonth + "월 " + birthDay + "일";
+        }
+
+        var ageEl = parentElement.querySelector(".age");
+        if (ageEl) {
+            ageEl.textContent = age + "세";
+        }
+
+        var genderEl = parentElement.querySelector(".gender");
+        if (genderEl) {
+            const gender = childRrn.substr(6, 1);
+            const genderText = (gender === "1" || gender === "3") ? "(남) " : "(여) ";
+            genderEl.textContent = genderText;
+        }
+    });
+});
+
+
+
+
+$(".closeBtn").on("click",function(){
+
+	var childNoElement = document.getElementById("childRrn");
+	var childNo = childNoElement.textContent || childNoElement.innerText;
+	
+	$.ajax({
+	
+		url : "/member/deleteChild",
+		type: "post",
+		data: {childNo : childNo},
+		success: function(){
+			 $(childNoElement).closest('.info').fadeOut();
+		},
+		error: function(){
+		
+		
+		}
+	
+	
+	});
+	
+
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</script>
 <!-- js 링크 -->
 </body>
 </html>

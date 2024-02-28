@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttribute;
 
 import com.google.gson.JsonObject;
 
@@ -22,6 +23,7 @@ import kr.or.iei.admin.model.dto.Notice;
 import kr.or.iei.admin.model.dto.NoticeListData;
 import kr.or.iei.admin.model.dto.Review;
 import kr.or.iei.admin.model.service.AdminService;
+import kr.or.iei.member.model.dto.Member;
 
 @Controller
 @RequestMapping(value = "/admin")
@@ -260,5 +262,14 @@ public class AdminController {
 	public String hospitalReportConfirm(int reportNo) {
 		int result = adminService.confirmHospitalReport(reportNo);
 		return "redirect:/admin/manageHospitalReport?reqPage=1";
+	}
+	
+	//FAQ 추가시키는 코드
+	@ResponseBody
+	@GetMapping("/writeFaq")
+	public int writeFAQ(int category, String title, String content, @SessionAttribute Member member) {
+		int memberNo = member.getMemberNo();
+		int result = adminService.writeFaq(memberNo,category,title,content);
+		return result;
 	}
 }

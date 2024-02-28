@@ -12,4 +12,5 @@ import lombok.NoArgsConstructor;
 public class CommunityListData {
 	private List list;
 	private String pageNavi;
+	private List<CommunityFile> fileList; 
 }

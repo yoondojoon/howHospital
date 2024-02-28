@@ -10,7 +10,7 @@ $(".closeBtn").on("click",function(){
 		type: "post",
 		data: {reviewNo : reviewNo},
 		success: function(){
-			 $(childNoElement).closest('.info').fadeOut();
+			 $(reviewNoElement).closest('.info').fadeOut();
 		},
 		error: function(){
 		
