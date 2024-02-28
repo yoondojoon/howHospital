@@ -143,6 +143,7 @@ public class HospitalDao {
 	}
 
 	public Time searchHospitalTime(int hospitalNo) {
+		System.out.println("병원번호 다오:" +hospitalNo);
 		String query = "select * from time_tbl where hospital_no=?";
 		Object[] params = {hospitalNo};
 		List list = jdbc.query(query, timeRowMapper, params);
@@ -255,6 +256,7 @@ public class HospitalDao {
 	}
 
 	public Hospital selectHospital(int memberNo) {
+		System.out.println("다오:"+ memberNo);
 		String query = "select * from hospital_tbl where hospital_tbl.member_no = ?";
 		Object[] params = {memberNo};
 		List list = jdbc.query(query, hospitalRowMapper, params);
@@ -415,4 +417,22 @@ public class HospitalDao {
 		return checkRepo;
 	}
 
+	
+	public int selectMyReviewCount(int memberNo, int hospitalNo) {
+		String query = "select count(*) from review_tbl where member_no=? and hospital_no=?";
+		Object[] params = {memberNo, hospitalNo};
+		int result = jdbc.queryForObject(query, Integer.class, params);
+		return result;
+	}
+	
+	public int selectMyResCount(int memberNo, int hospitalNo) {
+		String query = "select count(*) from reservation_tbl where member_no=? and hospital_no=?";
+		Object[] params = {memberNo, hospitalNo};
+		int result = jdbc.queryForObject(query, Integer.class, params);
+		return result;
+	}
+	
+	
+	
+	
 }

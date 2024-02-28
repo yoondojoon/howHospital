@@ -128,6 +128,7 @@ public class HospitalController {
 	// hospital enroll 진입: hospitalNo
 	// 마이페이지에서 진입: hospitalNo
 	public String myHospitalDetail(Model model, @SessionAttribute(required = false) Member member) {
+		System.out.println("멤버넘버컨트롤러:"+member.getMemberNo());
 		Hospital h = hospitalService.selectHospital(member.getMemberNo());
 		if (h != null) {
 			model.addAttribute("h", h);

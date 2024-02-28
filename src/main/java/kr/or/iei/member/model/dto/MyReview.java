@@ -19,7 +19,6 @@ public class MyReview {
 	private int reviewRating;
 	private String reviewDate;
 	private String reviewImg;
-	private String memberName;
 	private String reservation_time;
 	
 
