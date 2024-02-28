@@ -279,10 +279,7 @@ public class HospitalController {
 		return "hospital/myHospitalFrm";
 	}
 
-	@GetMapping("/myHospitalReviewList")
-	public String myHospitalReivewList() {
-		return "hospital/myHospitalReviewList";
-	}
+
 		
 	
 	
@@ -334,6 +331,47 @@ public class HospitalController {
 		return "hospital/detailReservationFrm";
 	}
 	
+	
+	//내 진료내역 보기= 동기
+	@GetMapping(value="/myHospitalReviewList")
+	public String myMedicalHistory(@SessionAttribute(required=false) Member member, Model model) {
+		int memberNo = member.getMemberNo();
+		int totalCount = hospitalService.myReviewTotalCount(memberNo);
+		System.out.println(totalCount);
+		model.addAttribute("totalCount", totalCount);
+		return "/hospital/myHospitalReviewList";
+	}
+	
+	
+	//비동기
+	@ResponseBody
+	@PostMapping("/selectMyHospitalReview")
+	public List selectMyHospitalReview(int memberNo, int start, int amount) {
+		List myHistoryList = hospitalService.selectMyHospitalReview(memberNo, start, amount);
+		return myHistoryList;
+	}
+	
+	
+	@ResponseBody
+	@PostMapping("/hospitalMemberReport")
+	public int hospitalMemberReport(String goodByeReason, int memberNo, int hospitalNo, int reviewNo) {
+		System.out.println("컨트롤러: "+goodByeReason+ memberNo+ hospitalNo+reviewNo);
+		int hospitalMemberReport = hospitalService.hospitalMemberReport(goodByeReason, memberNo, hospitalNo, reviewNo);
+		System.out.println(hospitalMemberReport);
+		return hospitalMemberReport;
+	}
+	
+	@ResponseBody
+	@PostMapping("/checkReport")
+	public boolean checkReport(int reviewNo) {
+		//신고테이블 내 리뷰번호가 있는지 체크하기 위해 리뷰번호로 신고번호를 가져오고
+		//있으면 신규번호, 없으면 null?인지 체크
+		//있으면 true, 없으면 false처리해서 html쏘기
+		int checkRepo = hospitalService.checkReport(reviewNo);
+		System.out.println("관리자번호: " +reviewNo);
+
+		return false;
+	}
 	
 	
 
