@@ -18,7 +18,7 @@ public class HospitalInterceptor implements HandlerInterceptor{
 		System.out.println("병원 인터셉터 : " + member.getMemberType());
 		//로그인이 되어있다 가정하는 코드 : 로그인안되어있으면 nullpointException 뜸
 		if(member.getMemberType() != 2){
-			response.sendRedirect("/admin/hospitalMsg");
+			response.sendRedirect("/hospital/hospitalMsg");
 			return false;			
 		}else {
 			return true;

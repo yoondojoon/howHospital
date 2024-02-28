@@ -14,7 +14,6 @@ public class BlockInterceptor implements HandlerInterceptor {
 		// TODO Auto-generated method stub
 		HttpSession session = request.getSession();
 		Member member = (Member)session.getAttribute("member");
-		System.out.println("관리자 인터셉터 : " + member.getMemberType());
 		//로그인이 되어있다 가정하는 코드 : 로그인안되어있으면 nullpointException 뜸
 		if(member.getMemberStatus() == 3) {
 			response.sendRedirect("/admin/blockMsg");
