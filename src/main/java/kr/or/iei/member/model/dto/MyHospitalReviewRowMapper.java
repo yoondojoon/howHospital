@@ -21,7 +21,6 @@ public class MyHospitalReviewRowMapper implements RowMapper<MyReview>{
 		myReview.setReviewRating(rs.getInt("review_rating"));
 		myReview.setReviewDate(rs.getString("review_date"));
 		myReview.setReviewImg(rs.getString("review_img"));
-		myReview.setMemberName(rs.getString("member_name"));
 		myReview.setReservation_time(rs.getString("reservation_time"));
 		return myReview;
 		

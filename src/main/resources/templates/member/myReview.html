@@ -21,27 +21,29 @@
                 <div class="myInfoBox">
                     <h2>나의 리뷰</h2>
                     <th:block th:each="review : ${list}">
-                        <span id="memberNo" th:text="${session.member.memberNo}"
-                            style="display:none;"></span><!-- 뷰에 세션으로 주민번호 꺼내오 -->
-                        <span class="reviewNo" id="reviewNo" th:text="${reviewNo}"
-                            style="display:none;"></span><!-- 뷰에 세션으로 주민번호 꺼내오 -->
-
+                        
 
                         <div class="reviewListBox">
+                        <span id="memberNo" th:text="${session.member.memberNo}"
+                            style="display:none"></span>
+                        <span class="reviewNo" id="reviewNo" th:text="${review.reviewNo}"
+                            style="display:none"></span>
+                        
                             <button type="button" class="closeBtn"><span
                                     class="material-icons close">close</span></button>
                             <p>병원 : <span th:text="${review.hospitalName}"></span></p>
                             <p>주소 : <span th:text="${review.hospitalAddrMain}"></span></p>
                             <p>리뷰 제목: <span th:text="${review.reviewTitle}"></span></p>
                             <p>평점: <span id="reviewRating" th:value="${review.reviewRating}"></span>
-                            <div class="star-wrap star-wrap2">
+                            		<span id="reviewRating" th:text="${review.reviewRating}"></span></p>
+                            <!-- <div class="star-wrap star-wrap2">
                                 <span class="material-icons">star</span>
                                 <span class="material-icons">star</span>
                                 <span class="material-icons">star</span>
                                 <span class="material-icons">star</span>
                                 <span class="material-icons">star</span>
                                 <div class="star-on"> <!--색깔별-->
-                                    <div class="star-wrap star-on-wrap">
+                                 <!-- <div class="star-wrap star-on-wrap">
                                         <span class="material-icons">star</span>
                                         <span class="material-icons">star</span>
                                         <span class="material-icons">star</span>
@@ -49,13 +51,13 @@
                                         <span class="material-icons">star</span>
                                     </div>
                                 </div>
-                            </div>
+                            </div> -->
 
 
                             <input type="hidden" id="score" value="${review.reviewRating}">
                             <p>내용: <span th:text="${review.reviewContent}"></span></p>
                             <p>작성일자: <span th:text="${review.reviewDate}"></span></p>
-                            <p>이미지: <span th:text="${review.reviewImg}"></span></p>
+                            <p>이미지: <img th:src="${review.reviewImg}"></img></p>
                         </div>
 
 
@@ -102,19 +104,17 @@
             var reviewNo = $reviewListBox.find("#reviewNo").text();
             var memberNo = $("#memberNo").text();
 
-
-
             $.ajax({
                 url: "/member/reviewDel",
-                method: "POST", // 예시로 POST 방식 사용
-                data: { reviewNo: reviewNo, memberNo: memberNo },
+                method: "POST", 
+                data: { 
+                    reviewNo: reviewNo, 
+                    memberNo: memberNo 
+                },
                 success: function (result) {
-
-
                     if (result > 0) {
                         $reviewListBox.remove();
                         alert("리뷰가 삭제되었습니다.");
-
                     }
                 },
                 error: function (xhr, status, error) {
@@ -124,7 +124,6 @@
             });
         });
     });
-
 
 
 
