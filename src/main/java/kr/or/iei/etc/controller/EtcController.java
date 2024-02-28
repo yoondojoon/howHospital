@@ -34,7 +34,7 @@ public class EtcController {
 	@GetMapping("/pharmacyInfo")
 	public List pharmacyInfo(String pageNo, String sidoCode, String sigoonCode, String pharmName) {
 		String url = "https://apis.data.go.kr/B552657/ErmctInsttInfoInqireService/getParmacyListInfoInqire";
-		String serviceKey = "LxQKysMvvVlGF+KIGwFiZBiZMmIHlq8evNwirB1BUJ/2EXczsoGjLsX4u41ITvSzySrmEvTrQ443KgTEL9JOSQ==";
+		String serviceKey = "UFGrd/O5mTNg+TYGZxNFlnlBLQCKvE9E+GsHp90xe1s3LU0qkZCyFHnPx7d2RFhY2PX97qRd4q5a1gXeOlR/lA==";
 		String numOfRows = "10";
 		String resultType = "xml";
 		ArrayList<Pharmacy> list = new ArrayList<Pharmacy>();
