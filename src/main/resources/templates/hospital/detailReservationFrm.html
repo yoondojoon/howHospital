@@ -12,11 +12,11 @@
                 <div class="detail_reservation_wrap">
 	            	<div class="detail_reservation">
 	            		<div class="detail_reservation_status" th:switch="${reservationDetailList.reservationStatus}">
-	            			<span th:case="1" class="badge blue outline">접수대기</span>
-            				<span th:case="2" class="badge red outline">예약취소</span>
-           					<span th:case="3" class="badge blue">예약확정</span>
-        					<span th:case="4" class="badge gray">진료완료</span>
-        					<span th:case="5" class="badge gray">수납완료</span>
+	            			<span th:case="1" class="badge blue outline lg">접수대기</span>
+            				<span th:case="2" class="badge red outline lg">예약취소</span>
+           					<span th:case="3" class="badge blue lg">예약확정</span>
+        					<span th:case="4" class="badge gray lg">진료완료</span>
+        					<span th:case="5" class="badge gray lg">수납완료</span>
 	            		</div>
                         <div class="select" th:if="${reservationDetailList.reservationType == 1 && reservationDetailList.doctorName == null}">
 	          				<select class="doctor_select">
@@ -26,12 +26,13 @@
 	          			</div>
 		            	<div class="detail_reservation_top">
 		            		<span id="patientName">환자 이름</span>
-		            		<th:block th:if="${reservationDetailList.childNo == 0}">
-		            			<span th:text="${reservationDetailList.memberName}"></span>
-		            		</th:block>
-		            		<th:block th:unless="${reservationDetailList.childNo == 0}">
-		            			<span th:text="${reservationDetailList.childName}"></span>
-		            		</th:block>
+		            		
+	            			<span th:if="${reservationDetailList.childNo == 0}" th:text="${reservationDetailList.memberName}"></span>
+	            			
+		            		
+		            		
+		            		<span th:unless="${reservationDetailList.childNo == 0}" th:text="${reservationDetailList.childName}"></span>
+		            		
 		            	</div>
 		            	<div class="detail_reservation_doctor">
 		            		<span id="doctorName">진료선생님</span>
@@ -137,12 +138,12 @@
 				if(data == 1){
 					if(reservationStatus == 2){
 						obj.parent().parent().parent().find(".badge").eq(0).text("예약취소");
-						obj.parent().parent().parent().find(".badge").eq(0).attr("class","badge red outline");
+						obj.parent().parent().parent().find(".badge").eq(0).attr("class","badge red outline lg");
 						obj.parent().remove();
 						window.location.href = "/hospital/myHospitalReservation?reqPage=1&doctorNo=0";
 					}else if(reservationStatus == 3){
 						obj.parent().parent().parent().find(".badge").eq(0).text("예약확정");
-						obj.parent().parent().parent().find(".badge").eq(0).attr("class","badge blue");
+						obj.parent().parent().parent().find(".badge").eq(0).attr("class","badge blue lg");
 						obj.prev().remove();
 						obj.remove();
 						
@@ -152,7 +153,7 @@
 						const span = $("<span>").text(doctorName);
 						doctorDiv.append(span);
 						obj.parent().parent().parent().find(".detail_reservation_doctor").eq(1).text(doctorName);
-								
+						obj.remove();
 						const successBtn = 	$("<button>").attr("type","button").addClass("btn_primary outline successBtn").text("진료완료").val("4");
 						buttonWrapDiv.append(successBtn);
 
@@ -164,15 +165,15 @@
 							const reservationType = $("#reservationType").val();
 							updateReservationDetail(reservationStatus,obj,reservationNo,reservationType)
 							$(this).parent().parent().parent().find(".badge").eq(0).text("진료완료");
-							$(this).parent().parent().parent().find(".badge").eq(0).attr("class","badge gray");
-							$(this).parent().remove();
-							
+							$(this).parent().parent().parent().find(".badge").eq(0).attr("class","badge gray lg");
+							$(this).remove();
+							window.location.href = "/hospital/myHospitalReservation?reqPage=1&doctorNo=0";
 							
 						})
 
 					}else if(reservationStatus == 4){
 						obj.parent().parent().parent().find(".badge").eq(0).text("진료완료");
-						obj.parent().parent().parent().find(".badge").eq(0).attr("class","badge gray");
+						obj.parent().parent().parent().find(".badge").eq(0).attr("class","badge gray lg");
 						if(reservationType == 2){
 							const prescriptionBtn = $("<button>").attr("type","button").addClass("btn_secondary prescription_btn").text("처방전 등록");
 							buttonWrapDiv.append(prescriptionBtn);
@@ -184,7 +185,7 @@
 						
 					}else if(reservationStatus == 5){
 						obj.parent().parent().parent().find(".badge").eq(0).text("수납완료");
-						obj.parent().parent().parent().find(".badge").eq(0).attr("class","badge gray");
+						obj.parent().parent().parent().find(".badge").eq(0).attr("class","badge gray lg");
 					}
 					
 				}

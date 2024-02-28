@@ -51,7 +51,7 @@ public class ReservationDetailDao {
 				"LEFT JOIN\r\n" + 
 				"    DOCTOR_TBL D ON RD.DOCTOR_NO = D.DOCTOR_NO\r\n" + 
 				"LEFT JOIN\r\n" + 
-				"    CHILD_TBL C ON M.MEMBER_NO = C.MEMBER_NO  \r\n" + 
+				"    CHILD_TBL C ON RD.CHILD_NO = C.CHILD_NO  \r\n" + 
 				"WHERE R.RESERVATION_NO = ?";
 		Object[] params = {hr.getReservationNo()};
 		List list = jdbc.query(query, reservationDetailListRowMapper,params);

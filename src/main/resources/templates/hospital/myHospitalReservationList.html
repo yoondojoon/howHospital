@@ -26,8 +26,8 @@
 		            <div class="hospital_reservation">
 		            	<div class="reservation_wrap_content top">
 		            	<th:block th:switch="${reservation.reservationType}">
-		            		<span th:case="1" class="badge blue">대면진료</span>
-		            		<span th:case="2" class="badge red outline">비대면진료</span>
+		            		<span th:case="1" class="res_type badge contact">대면진료</span>
+		            		<span th:case="2" class="res_type badge contactless">비대면진료</span>
 		            	</th:block>
 		            	<th:block th:switch="${reservation.reservationStatus}">
 		            		<span th:case="1" class="badge blue outline">접수대기</span>
