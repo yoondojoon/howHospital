@@ -44,7 +44,7 @@
 		<label for="hospital_name">병원사진</label>
 	</div>
 	<div class="imghospital">
-	<img th:src="@{/hospital/} + ${h.hospitalPicture}" style='width: 100%; border-radius: 20px'>
+	<img th:src="@{/hospital/} + ${h.hospitalPicture}" style='width: 300px; border-radius: 20px'>
 	</div>
 </div>
 
@@ -150,7 +150,7 @@
 			<li th:each="d : ${h.doctorList}">
 				<div class="doctor_img_wrap">
 					<img th:src="@{/doctor/} + ${d.doctorPicture}"
-						style="width: 100%;  border-radius: 20px">
+						style="width: 300px;  border-radius: 20px">
 				</div>
 				<div class="doctor_info_wrap">
 					<div class="title_wrap">

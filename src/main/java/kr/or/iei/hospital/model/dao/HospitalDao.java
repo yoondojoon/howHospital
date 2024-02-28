@@ -56,7 +56,7 @@ public class HospitalDao {
 	private MyReviewRowMapper myReviewRowMapper;
 	@Autowired
 	private MemberRowMapper memberRowMapper;
-	
+	@Autowired
 	private MyHospitalReviewRowMapper myHospitalReviewRowMapper;
 	
 	
@@ -362,25 +362,10 @@ public class HospitalDao {
 
 	
 	public List selectMyHospitalReview(int memberNo, int start, int end) {
-		String query = "SELECT *\r\n" + 
-				"FROM (\r\n" + 
-				"    SELECT\r\n" + 
-				"        r.*,\r\n" + 
-				"        SUBSTR(m.member_name, 1, 1) || LPAD('*', LENGTH(m.member_name) - 1, '*') AS member_name,\r\n" + 
-				"        (select reservation_time from reservation_tbl where reservation_no = r.reservation_no) as reservation_time,\r\n" + 
-				"        ROWNUM rnum\r\n" + 
-				"    FROM\r\n" + 
-				"        review_tbl r\r\n" + 
-				"        JOIN hospital_tbl h ON r.hospital_no = h.hospital_no\r\n" + 
-				"        JOIN member_tbl m ON m.member_no = r.member_no\r\n" + 
-				"    WHERE\r\n" + 
-				"        h.member_no = ?\r\n" + 
-				"    ORDER BY\r\n" + 
-				"        r.review_date DESC\r\n" + 
-				")\r\n" + 
-				"WHERE rnum BETWEEN ? AND ?";
+		String query = "SELECT * FROM (SELECT r.*, SUBSTR(m.member_name, 1, 1) || LPAD('*', LENGTH(m.member_name) - 1, '*') AS member_name, (SELECT reservation_time FROM reservation_tbl WHERE reservation_no = r.reservation_no) as reservation_time, ROWNUM rnum FROM review_tbl r JOIN hospital_tbl h ON r.hospital_no = h.hospital_no JOIN member_tbl m ON m.member_no = r.member_no WHERE h.member_no = ? ORDER BY r.review_date DESC) WHERE rnum BETWEEN ? AND ?";
 		Object[] params = {memberNo, start, end};
 		List myHistoryList = jdbc.query(query, myHospitalReviewRowMapper, params);
+		System.out.println("다오"+myHistoryList);
 		return myHistoryList;
 
 	}
@@ -426,6 +411,7 @@ public class HospitalDao {
 	}
 	
 	public int selectMyResCount(int memberNo, int hospitalNo) {
+		System.out.println(memberNo+""+hospitalNo);
 		String query = "select count(*) from reservation_tbl where member_no=? and hospital_no=?";
 		Object[] params = {memberNo, hospitalNo};
 		int result = jdbc.queryForObject(query, Integer.class, params);

@@ -129,14 +129,11 @@ public class HospitalService {
 
 		//2. 병원번호로 병원/의사/시간/진료과목 조회
 		List subjectList = hospitalDao.searchSubjectList(hospital.getHospitalNo());
-		System.out.println("진료과목 리스트: "+ subjectList);
-		
+
 		Time time = hospitalDao.searchHospitalTime(hospital.getHospitalNo());
 		System.out.println("서비스 시간: "+ time);
-		
 		List doctorList = hospitalDao.searchSubjectDoctorList(hospital.getHospitalNo());
 		System.out.println("의사 리스트: "+ doctorList);
-		
 		hospital.setSubjectList(subjectList);
 		hospital.setTime(time);
 		hospital.setDoctorList(doctorList);

@@ -20,7 +20,7 @@ public class MyReviewRowMapper implements RowMapper<MyReview>{
 		myReview.setReviewRating(rs.getInt("review_rating"));
 		myReview.setReviewDate(rs.getString("review_date"));
 		myReview.setReviewImg(rs.getString("review_img"));
-		myReview.setHopitalNo(rs.getInt("hospital_no"));
+		myReview.setHospitalNo(rs.getInt("hospital_no"));
 		return myReview;
 		
 	}

@@ -373,7 +373,9 @@ public class HospitalController {
 	@ResponseBody
 	@PostMapping("/selectMyHospitalReview")
 	public List selectMyHospitalReview(int memberNo, int start, int amount) {
+		System.out.println("컨트롤러: "+ memberNo + ""+start+""+amount);
 		List myHistoryList = hospitalService.selectMyHospitalReview(memberNo, start, amount);
+		System.out.println("컨트롤러: " + myHistoryList);
 		return myHistoryList;
 	}
 	
