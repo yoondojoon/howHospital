@@ -81,7 +81,7 @@
 .textBox{
 	
 	
-	background-color: #D6D6D6;
+	background-color: #E9E9E9;
 	border-radius: 6px;
 	padding: 10px;
 	
@@ -98,14 +98,14 @@
 .childAddBtn {
 	
 	text-align: center;
-	padding-top:30px
+	padding-top:30px;
 	
 	
 }
 
 .childAddBtn>button{
 	
-	padding: 14px 250px;
+	
 	
 }
 
@@ -163,4 +163,24 @@
     
 }
 
+.menuBox{
+	
+	box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+}
 
+.childAddBtn{
+	
+	display:flex;
+	justify-content: center; 
+	padding : 20px 0px;
+	
+}
+
+.childAddBtn {
+    margin-top: 20px;
+}
+
+.childAddBtn button {
+    margin-right: 20px;
+    margin-left :20px;
+}

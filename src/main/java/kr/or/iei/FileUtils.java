@@ -102,4 +102,40 @@ public class FileUtils {
 		
 		
 	}
+	
+	public String hyokyungUpLoad(String savepath, MultipartFile file) {
+	    // 파일이 없는 경우에는 파일 업로드 과정을 거치지 않고 빈 파일명을 반환합니다.
+	    if (file == null || file.isEmpty()) {
+	        return "";
+	    }
+
+	    String filename = file.getOriginalFilename();
+	    String onlyFilename = filename.substring(0, filename.lastIndexOf("."));
+	    String extention = filename.substring(filename.lastIndexOf("."));
+
+	    String filepath = null;
+	    int count = 0;
+	    while(true) {
+	        if(count == 0) {
+	            filepath = onlyFilename + extention;
+	        } else {
+	            filepath = onlyFilename + "_" + count + extention;
+	        }
+	        File checkFile = new File(savepath + filepath);
+	        if(!checkFile.exists()) {
+	            break;
+	        }
+	        count++;
+	    }
+
+	    try {
+	        file.transferTo(new File(savepath + filepath));
+	    } catch (IllegalStateException | IOException e) {
+	        e.printStackTrace();
+	        // 파일 업로드 중 오류가 발생한 경우에는 빈 문자열을 반환합니다.
+	        return "";
+	    }
+	    return filepath;
+	}
+
 }

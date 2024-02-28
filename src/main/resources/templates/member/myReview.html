@@ -21,7 +21,7 @@
                 			<li><a href="/member/myChildAddFrm">내 자녀 추가</a></li>
                 			<li><a href="/member/myMedicalHistory">내 진료내역 보기</a></li>
                 			<li><a href="/member/myReview">나의 리뷰 보기</a></li>
-                			<li><a href="#">즐겨찾기</a></li>
+                			<li><a href="/member/favorites">즐겨찾기</a></li>
                 			<li><a href="/member/memberDelete">회원 탈퇴</a></li>
                 		</ul>
                 	</div>
@@ -33,8 +33,8 @@
            		<div class="myInfoBox">
            			<h2>나의 리뷰</h2>
            			         <th:block th:each="review : ${list}">
-           			         <th:block th:each="hospital : ${hospital}">
            			         	<span id="memberNo" th:text="${session.member.memberNo}" style="display:none;"></span><!-- 뷰에 세션으로 주민번호 꺼내오 -->
+           			         <th:block th:each="hospital : ${hospital}">
            			          	<span class="reviewNo" id="reviewNo" th:text="${review.reviewNo}" style="display:none;"></span><!-- 뷰에 세션으로 주민번호 꺼내오 -->
            			          
            			          
@@ -43,11 +43,29 @@
            			          		<p>병원 : <span th:text="${hospital.hospitalName}"></span></p>
            			          		<p>주소 : <span th:text="${hospital.hospitalAddrMain}"></span></p>
            			          		<p>리뷰 제목: <span th:text="${review.reviewTitle}"></span></p>
-        							<p>평점: <span th:text="${review.reviewRating}"></span></p>
+        							<p>평점: <span id="reviewRating" th:text="${review.reviewRating}"></span>
+        								<div class="star-wrap star-wrap2">
+        <span class="material-icons">star</span>
+        <span class="material-icons">star</span>
+        <span class="material-icons">star</span>
+        <span class="material-icons">star</span>
+        <span class="material-icons">star</span>
+        <div class="star-on">  <!--색깔별-->
+            <div class="star-wrap star-on-wrap">
+                <span class="material-icons">star</span>
+                <span class="material-icons">star</span>
+                <span class="material-icons">star</span>
+                <span class="material-icons">star</span>
+                <span class="material-icons">star</span>
+            </div>
+        </div>
+    </div>
+        							
+        							
+									<input type="hidden" id="score" value="${review.reviewRating}">
         							<p>내용: <span th:text="${review.reviewContent}"></span></p>
         							<p>작성일자: <span th:text="${review.reviewDate}"></span></p>
-           			          
-           			          	
+           			        		<p>작성일자: <span th:text="${review.reviewImg}"></span></p>
            			          </div>
            			          
            			          
@@ -75,7 +93,61 @@
     <!--// container -->
 	
 <th:block th:include="common/footer"></th:block>
-<script src="/js/member/myChildren.js"></script>
+<script>
+
+$(document).ready(function() {
+    // 페이지 로드 시 별점 조회하여 채워진 별표 표시
+    $(".reviewListBox").each(function() {
+        var score = parseInt($(this).find("#score").val()) || 0; // 널값이면 0으로 처리
+        fillStars($(this).find(".star-on"), score);
+    });
+});
+
+// 별표 채우기 함수
+function fillStars($starOn, starRating) {
+    $starOn.css("width", starRating * 20 + "%"); // 별 하나의 너비는 20%
+}
+
+
+
+
+
+$(document).ready(function() {
+    
+    $(".closeBtn").click(function() {
+        var $reviewListBox = $(this).closest(".reviewListBox");
+        var reviewNo = $reviewListBox.find("#reviewNo").text(); 
+        var memberNo = $("#memberNo").text(); 
+        
+        
+        
+        $.ajax({
+            url: "/member/reviewDel",
+            method: "POST", // 예시로 POST 방식 사용
+            data: { reviewNo: reviewNo ,memberNo: memberNo}, 
+            success: function(result) {
+                
+                
+                if(result>0){
+                $reviewListBox.remove();
+                alert("리뷰가 삭제되었습니다.");
+                	
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error(error);
+                alert("리뷰 삭제에 실패하였습니다. 다시 시도해주세요.");
+            }
+        });
+    });
+});
+
+
+
+
+
+
+</script>
 <!-- js 링크 -->
 </body>
 </html>

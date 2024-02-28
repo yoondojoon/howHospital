@@ -1,3 +1,4 @@
+
 package kr.or.iei.member.model.service;
 
 import java.io.UnsupportedEncodingException;
@@ -10,9 +11,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import kr.or.iei.admin.model.dto.Review;
 import kr.or.iei.hospital.model.dto.Hospital;
 import kr.or.iei.member.model.dao.MemberDao;
 import kr.or.iei.member.model.dto.Member;
+import kr.or.iei.reservation.model.dto.Reservation;
 
 @Service
 public class MemberService {
@@ -85,9 +88,9 @@ public class MemberService {
 	}
 	//회원정보 수정
 	@Transactional
-	public int updateInfo(Member m) {
+	public int updateInfo(int memberNo, Member m) {
 		
-		int result = memberDao.updateInfo(m);
+		int result = memberDao.updateInfo(memberNo,m);
 		
 		return result;
 	}
@@ -109,10 +112,10 @@ public class MemberService {
 
 	}
 
-	public int deleteChild(int childNo) {
+	public int deleteChild(int childNo, int memberNo) {
 		
 		
-		int cnt = memberDao.deleteChild(childNo);
+		int cnt = memberDao.deleteChild(childNo,memberNo);
 		
 		
 		return cnt;
@@ -132,6 +135,7 @@ public class MemberService {
 	
 	*/
 
+	
 	public List reviewLsit(int memberNo) {
 		
 		List list = memberDao.reivewList(memberNo);
@@ -140,12 +144,72 @@ public class MemberService {
 		return list;
 	}
 
-	public List<Hospital> hospitalTbl() {
+	public List<Hospital> hospitalTbl(int memberNo) {
 		
-		List<Hospital> hospital = memberDao.hospitalTbl();
+		List<Hospital> hospital = memberDao.hospitalTbl(memberNo);
 		
 		
 		return hospital;
 	}
+
+	public List<Reservation> reservation(int memberNo) {
+		
+		List<Reservation> reservation = memberDao.reservation(memberNo);
+				
+		
+		return reservation;
+	}
+	
+	@Transactional
+	public int submit(int hospitalNo, int memberNo, Review review, int reservationNo) {
+		
+		int result = memberDao.submit(hospitalNo,memberNo,review,reservationNo);
+		
+		return result;
+	}
+	
+	@Transactional
+	public int reviewDel(int memberNo, int reviewNo) {
+		
+		
+		int result = memberDao.reviewDel(memberNo,reviewNo);
+		
+		return result;
+	}
+
+
+
+	//예약번호 가져오기
+	public int reservationNo(int memberNo) {
+
+		int reservationNo = memberDao.reservationNo(memberNo);
+		
+		
+		return reservationNo;
+	}
+
+	public int hospitalNo(int reservationNo) {
+		
+		int hospitalNo = memberDao.hospitalNo(reservationNo);
+		
+		
+		return hospitalNo;
+	}
+	
+	@Transactional
+	public int submit(Review review) {
+		
+		int result = memberDao.submit(review);
+		
+		return result;
+	}
+
+
+	
+
+	
+
+
+	
 	
 	}
