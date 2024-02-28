@@ -10,19 +10,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
-import com.google.gson.JsonObject;
-
 import kr.or.iei.admin.model.dto.AdminBusinessAuth;
 import kr.or.iei.admin.model.dto.AdminBusinessAuthListData;
 import kr.or.iei.admin.model.dto.FaqListData;
-import kr.or.iei.admin.model.dto.HospitalReport;
-import kr.or.iei.admin.model.dto.HospitalReportListData;
 import kr.or.iei.admin.model.dto.MemberReport;
 import kr.or.iei.admin.model.dto.MemberReportListData;
 import kr.or.iei.admin.model.dto.Notice;
 import kr.or.iei.admin.model.dto.NoticeListData;
 import kr.or.iei.admin.model.dto.Review;
 import kr.or.iei.admin.model.service.AdminService;
+import kr.or.iei.hospital.model.dto.HospitalMemberReport;
+import kr.or.iei.hospital.model.dto.HospitalMemberReportListData;
 import kr.or.iei.member.model.dto.Member;
 
 @Controller
@@ -234,34 +232,34 @@ public class AdminController {
 	}
 	
 	//병원신고 페이지 가져오는 코드
-	@GetMapping(value = "/manageHospitalReport")
+	@GetMapping(value = "/manageHospitalMemberReport")
 	public String manageHospitalReport(int reqPage, Model model) {
-		HospitalReportListData hrld = adminService.selectAllHospitalReport(reqPage);
-		model.addAttribute("hospitalReportList", hrld.getList());
-		model.addAttribute("pageNavi", hrld.getPageNavi());
-		return "admin/manageHospitalReport";
+		HospitalMemberReportListData hmrld = adminService.selectAllHospitalMemberReport(reqPage);
+		model.addAttribute("hospitalMemberReportList", hmrld.getList());
+		model.addAttribute("pageNavi", hmrld.getPageNavi());
+		return "admin/manageHospitalMemberReport";
 	}
 	
 	//병원신고 상세 가져오는 코드
 	@GetMapping(value = "/hospitalReportDetail")
 	public String hospitalReportDetail(int reportNo, Model model) {
-		HospitalReport hr = adminService.selectOneHospitalReport(reportNo);
-		model.addAttribute("hr", hr);
+		HospitalMemberReport hmr = adminService.selectOneHospitalMemberReport(reportNo);
+		model.addAttribute("hmr", hmr);
 		return "admin/hospitalReportDetail";
 	}
 	
 	//병원신고 거부
 	@GetMapping(value = "/hospitalReportDelete")
 	public String hospitalReportDelete(int reportNo) {
-		int result = adminService.deleteHospitalReport(reportNo);
-		return "redirect:/admin/manageHospitalReport?reqPage=1";
+		int result = adminService.deleteHospitalMemberReport(reportNo);
+		return "redirect:/admin/manageHospitalMemberReport?reqPage=1";
 	}
 	
 	//병원신고 확인
 	@GetMapping(value = "/hospitalReportConfirm")
 	public String hospitalReportConfirm(int reportNo) {
-		int result = adminService.confirmHospitalReport(reportNo);
-		return "redirect:/admin/manageHospitalReport?reqPage=1";
+		int result = adminService.confirmHospitalMemberReport(reportNo);
+		return "redirect:/admin/manageHospitalMemberReport?reqPage=1";
 	}
 	
 	//FAQ 추가시키는 코드

@@ -412,7 +412,7 @@ public class HospitalDao {
 	
 	public int selectMyResCount(int memberNo, int hospitalNo) {
 		System.out.println(memberNo+""+hospitalNo);
-		String query = "select count(*) from reservation_tbl where member_no=? and hospital_no=?";
+		String query = "select count(*) from reservation_tbl where (member_no=? and hospital_no=?) and ((reservation_type=1 and reservation_status=4) or (reservation_type=2 and reservation_status=5))";
 		Object[] params = {memberNo, hospitalNo};
 		int result = jdbc.queryForObject(query, Integer.class, params);
 		return result;

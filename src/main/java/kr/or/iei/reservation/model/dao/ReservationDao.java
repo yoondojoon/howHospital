@@ -42,6 +42,8 @@ public class ReservationDao {
 	private PrescriptionFileRowMapper prescriptionFileRowMapper;
 	@Autowired
 	private ReceiptDataRowMapper receiptDataRowMapper;
+	@Autowired
+	ReservationRowMapper reservationRowMapper;
 	public List selectReservation(int startPage, int endPage,int memberNo) {
 		String query = 
 				"select * from\r\n" + 
@@ -256,6 +258,13 @@ public class ReservationDao {
 		Object[] params = {hr.getDoctorNo(),hr.getReservationNo()};
 		int result = jdbc.update(query, params);
 		return result;
+	}
+
+	public List selectResList(int memberNo, int hospitalNo) {
+		String query = "select * from reservation_tbl where member_no=? and hospital_no=? and reservation_no not in (select reservation_no from review_tbl where member_no=? and hospital_no=?)";
+		Object[] params = {memberNo, hospitalNo, memberNo, hospitalNo};
+		List resList = jdbc.query(query, reservationRowMapper, params);
+		return resList;
 	}
 
 	
