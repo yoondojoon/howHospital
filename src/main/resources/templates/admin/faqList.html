@@ -8,6 +8,7 @@
 
 <script src="/js/lib/jquery-ui.min.js"></script>
 
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
 
 <!-- container -->
 <main id="container" class="container">
@@ -16,6 +17,7 @@
 	<section id="contents" class="contents adminMain">
 		<div class="inner_wrap">
 			<h2>자주묻는질문</h2>
+			<button id="writeFaq" onclick="showModal()">FAQ 작성</button>
 			<th:block th:each="category : ${categoryList}">
 				<div class="accordion-item">
 					<div class="accordion-header">
@@ -48,6 +50,52 @@
 <th:block th:include="common/footer"></th:block>
 <!-- js 링크 -->
 <script src='/js/common/faqList.js'></script>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script>
+    // Function to show SweetAlert2 modal
+    function showModal() {
+        Swal.fire({
+            title: 'FAQ 작성',
+            html:'<div style="width:400px;">' +
+            	'<span>범주 : </span><select  class="swal2-select" name="category">' +
+            	'<option value="1">회원가입 및 이용정지</option>' +
+            	'<option value="2">병원찾기</option>' +
+            	'<option value="3">커뮤니티</option>' +
+            	'<option value="4">기타등등</option>' +
+            	'</select>' +
+                '<input id="faqTitle" class="swal2-input" style="width:100%;" placeholder="FAQ 제목">' +
+                '<textarea id="faqContent" class="swal2-textarea" style="width:100%; resize:none; height:200px;" placeholder="FAQ 내용"></textarea>' +
+                '</div>',
+                showCancelButton: true,
+	            confirmButtonText: 'Submit',
+	            cancelButtonText: 'Cancel',
+	            focusConfirm: false,
+	            preConfirm: () => {
+	           	const category = swal.getPopup().querySelector('[name=category]').value;
+                const faqTitle = Swal.getPopup().querySelector('#faqTitle').value;
+                const faqContent = Swal.getPopup().querySelector('#faqContent').value;
+                if (!category || !faqTitle || !faqContent) {
+                    Swal.showValidationMessage('양식을 모두 채우세요');
+                }
+
+                return { category, faqTitle, faqContent };
+            }
+        }).then((result) => {
+            if (result.isConfirmed) {
+                const { category, faqTitle, faqContent } = result.value;
+                // Output the entered values to the console
+                console.log('category:', category);
+                console.log('FAQ Title:', faqTitle);
+                console.log('FAQ Content:', faqContent);
+                
+                wirteFaq(category, faqTitle,faqContent);
+            }
+        });
+    }
+</script>
+
 
 
 </body>
