@@ -128,6 +128,7 @@ public class HospitalController {
 	// hospital enroll 진입: hospitalNo
 	// 마이페이지에서 진입: hospitalNo
 	public String myHospitalDetail(Model model, @SessionAttribute(required = false) Member member) {
+		System.out.println("멤버넘버컨트롤러:"+member.getMemberNo());
 		Hospital h = hospitalService.selectHospital(member.getMemberNo());
 		if (h != null) {
 			model.addAttribute("h", h);
@@ -341,7 +342,22 @@ public class HospitalController {
 		return "hospital/detailReservationFrm";
 	}
 	
+	@ResponseBody
+	@PostMapping(value="/selectMyReviewHistory")
+	public List selectMyResHistory(int memberNo) {
+		List myHistoryList = hospitalService.selectMyReviewHistory(memberNo);
+		System.out.println("리뷰정보:" + myHistoryList);
+		return myHistoryList;
+	}
 	
+
+	@ResponseBody
+	@PostMapping(value="/selectReservationInfo")
+	public List selectReservationInfo(int memberNo) {
+		List reservationInfo = hospitalService.selectReservationInfo(memberNo);
+		System.out.println("예약정보:" + reservationInfo);
+		return reservationInfo;
+	}
 	//내 진료내역 보기= 동기
 	@GetMapping(value="/myHospitalReviewList")
 	public String myMedicalHistory(@SessionAttribute(required=false) Member member, Model model) {

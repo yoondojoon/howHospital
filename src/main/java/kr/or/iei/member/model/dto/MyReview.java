@@ -8,8 +8,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 public class MyReview {
-	
 	private int reviewNo;
+	private int hopitalNo;
+	private String memberName;
 	private int reservationNo;
 	private int memberNo;
 	private int hospitalNo;
@@ -18,7 +19,6 @@ public class MyReview {
 	private int reviewRating;
 	private String reviewDate;
 	private String reviewImg;
-	private String memberName;
 	private String reservation_time;
 	
 

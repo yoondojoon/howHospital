@@ -1,5 +1,6 @@
 package kr.or.iei.hospital.model.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import kr.or.iei.hospital.model.dto.Doctor;
 import kr.or.iei.hospital.model.dto.Hospital;
 import kr.or.iei.hospital.model.dto.Subject;
 import kr.or.iei.hospital.model.dto.Time;
+import kr.or.iei.reservation.model.dao.ReservationDao;
 
 @Service
 public class HospitalService {
@@ -20,6 +22,9 @@ public class HospitalService {
 	@Autowired
 	private HospitalDao hospitalDao;
 
+	@Autowired
+	private ReservationDao reservationDao;
+	
 	public List searchHospital(String keyword) {
 		List hospitalList = hospitalDao.searchHospital(keyword);
 		if(!hospitalList.isEmpty()) {
@@ -120,13 +125,22 @@ public class HospitalService {
 		Hospital hospital = new Hospital();
 		//1. 병원변호 찾기
 		hospital = hospitalDao.selectHospital(memberNo);
+		System.out.println("서비스 병원자료:" + hospital);
+
 		//2. 병원번호로 병원/의사/시간/진료과목 조회
 		List subjectList = hospitalDao.searchSubjectList(hospital.getHospitalNo());
+		System.out.println("진료과목 리스트: "+ subjectList);
+		
 		Time time = hospitalDao.searchHospitalTime(hospital.getHospitalNo());
+		System.out.println("서비스 시간: "+ time);
+		
 		List doctorList = hospitalDao.searchSubjectDoctorList(hospital.getHospitalNo());
+		System.out.println("의사 리스트: "+ doctorList);
+		
 		hospital.setSubjectList(subjectList);
 		hospital.setTime(time);
 		hospital.setDoctorList(doctorList);
+		System.out.println("서비스:" + hospital);
 		return hospital;
 
 	}
@@ -230,6 +244,20 @@ public class HospitalService {
 
 
 
+	public List selectMyReviewHistory(int memberNo) {
+	    System.out.println(memberNo);
+	    List myReviewList = hospitalDao.selectMyReviewHistory(memberNo);
+		System.out.println(myReviewList);
+	    return myReviewList;
+	    
+	}
+
+
+	public List selectReservationInfo(int memberNo) {
+		List reservationInfo = hospitalDao.selectReservationInfo(memberNo);
+		System.out.println(reservationInfo);
+		return reservationInfo;
+	}
 
 
 	

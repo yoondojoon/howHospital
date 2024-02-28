@@ -287,5 +287,12 @@ public class AdminDao {
 		return result;
 	}
 
+	public int writeFaq(int memberNo, int category, String title, String content) {
+		String query = "insert into faq_tbl values (faq_seq.nextval,?,?,?,?,?)";
+		Object[] params = {memberNo,title,content,category,category};
+		int result=jdbc.update(query, params);
+		return result;
+	}
+
 	
 }
