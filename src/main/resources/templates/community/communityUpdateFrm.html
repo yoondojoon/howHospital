@@ -55,7 +55,7 @@
 								</div>
 										
 								<div class="btn_area">
-									<button type="submit" class="btn_primary">수정 완료</button>
+									<button type="submit" class="btn_primary" onclick="return checkVal();">수정 완료</button>
 								</div>
 							</div>			
 						</form>
@@ -108,6 +108,18 @@
 			input.val(fileNo);
 			$(".communityUpdateFrm").append(input);
 			$(obj).parent().remove();
+		}
+	}
+	function checkVal(){
+		if($("[name=boardTitle]").val() == ""){
+			alert("제목을 입력하세요");
+			return false;
+		}
+		if($("#boardContent").val() == "<p><br></p>"){
+			alert("내용을 입력하세요");
+			return false;
+		}else{
+			return true;
 		}
 	}
 </script>

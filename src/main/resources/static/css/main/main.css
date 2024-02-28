@@ -28,12 +28,12 @@
 .main .subject_list_section .subject_list>li>a .icon{display:flex; justify-content:center; align-items:center; width:80px; height:80px; border:1px solid rgba(0,129,180,0.4); border-radius:50%; background-color:rgba(255,255,255,0.6);}
 
 .main .community_board_section{padding:120px 0; background-color:#fff;}
-.main .community_board_section h2{color:var(--gray_04); text-align:left;}
+.main .community_board_section h2{color:var(--gray_02); text-align:left;}
 .main .community_board_section .board_list{display:flex; gap:24px;}
 .main .community_board_section .board_list>li{width:calc((100% - 24px)/3); flex:1;}
 .main .community_board_section .board_list>li>a{width:100%;}
-.main .community_board_section .board_list>li .thumb_wrap{border-radius:12px; overflow:hidden;}
-.main .community_board_section .board_list>li .thumb_wrap>img{display:block; width:100%;}
+.main .community_board_section .board_list>li .thumb_wrap{width:100%; height:200px; border-radius:12px; overflow:hidden;}
+.main .community_board_section .board_list>li .thumb_wrap>img{display:block; width:100%; height:100%; object-fit:cover; object-position:center;}
 .main .community_board_section .board_list>li .title_wrap{margin-top:12px;}
-.main .community_board_section .board_list>li .title_wrap>.board_title{display:block; color:var(--gray_01);}
-.main .community_board_section .board_list>li .title_wrap>.board_txt{display:block; margin-top:8px; color:var(--gray_01); font-size:14px; line-height:1.5;}
+.main .community_board_section .board_list>li .title_wrap>.board_title{white-space:nowrap; overflow:hidden; text-overflow:ellipsis; color:var(--gray_01);}
+.main .community_board_section .board_list>li .title_wrap>.write_date{display:block; margin-top:8px; color:var(--gray_01); font-size:14px; line-height:1.5;}
