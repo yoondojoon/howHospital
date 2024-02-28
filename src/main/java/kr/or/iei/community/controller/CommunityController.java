@@ -36,7 +36,7 @@ public class CommunityController {
 	public String communityMain(String keyword, int reqPage, Model model) {
 		CommunityListData cld = communityService.selectCommunityList(keyword, reqPage);
 		if(!cld.getList().isEmpty()) {
-			model.addAttribute("boardList", cld.getList());			
+			model.addAttribute("boardList", cld.getList());
 			model.addAttribute("pageNavi", cld.getPageNavi());
 		}
 		return "community/communityMain";
@@ -75,7 +75,7 @@ public class CommunityController {
 		int result = communityService.insertCommunityBoard(c, fileList);		
 		if(result == (fileList.size()+1)) {
 			model.addAttribute("titleMsg","게시물이 등록되었습니다.");
-			model.addAttribute("msg","건강 매거진 페이지에서 내 글을 확인하세요.");
+			model.addAttribute("msg","건강 매거진 페이지에서 작성된 글을 확인하세요.");
 			model.addAttribute("loc", "/community/communityMain?reqPage=1");
 		}else {
 			model.addAttribute("titleMsg","게시물 등록에 실패했습니다.");
@@ -98,6 +98,7 @@ public class CommunityController {
 			model.addAttribute("loc", "/community/communityMain?reqPage=1");
 			return "common/modalMsg";
 		}else {
+			c.setMemberNo(memberNo);
 			model.addAttribute("c", c);
 			return "community/communityView";
 		}
@@ -131,11 +132,8 @@ public class CommunityController {
 	}
 	
 	@GetMapping(value="/updateFrm")
-	public String updateFrm(int boardNo, @SessionAttribute(required=false) Member member, Model model) {
+	public String updateFrm(int boardNo, Model model) {
 		int memberNo = 0;
-		if(member != null) {
-			memberNo = member.getMemberNo();
-		}
 		Community c = communityService.getOneBoard(boardNo);
 		model.addAttribute("c", c);
 		return "community/communityUpdateFrm";
@@ -174,10 +172,11 @@ public class CommunityController {
 	@GetMapping(value="/communityView2")
 	public String communityView2(int boardNo, @SessionAttribute(required=false) Member member, Model model) {
 		int memberNo = 0;
+		Community c = communityService.getOneBoard(boardNo);
 		if(member != null) {
 			memberNo = member.getMemberNo();
+			c.setMemberNo(memberNo);
 		}
-		Community c = communityService.getOneBoard(boardNo);
 		if(c == null) {
 			model.addAttribute("titleMsg","조회 실패");
 			model.addAttribute("msg","이미 삭제된 게시물입니다.");
@@ -185,7 +184,7 @@ public class CommunityController {
 			return "common/modalMsg";
 		}else {
 			model.addAttribute("c", c);
-			return "community/communityView2";
+			return "community/communityView";
 		}
 	}
 }

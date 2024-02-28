@@ -1,92 +1,181 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<th:block th:include="common/header"></th:block>
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-<link rel="stylesheet" href="/css/member/myReviewFrm.css">
+<head>
+    <meta charset="UTF-8">
+    <title>나의 리뷰 작성하기</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="/css/member/myReviewFrm.css">
+</head>
+<body>
+    <header th:include="common/header"></header>
 
-
-	<!-- container -->
+    <!-- container -->
     <main id="container" class="container">
-
-		<!-- contents -->
+        <!-- contents -->
         <section id="contents" class="contents myInfo">
-        	<div class="mypageWrap">
-        	
-        		<!-- 메뉴 -->            
-            	<div class="menuBox">	
-                	<div class="mypageMenu">
-                		<ul>
-                			<li><a href="/member/myInfo">내 정보 보기</a></li>
-                			<li><a href="/member/myChildren">내 자녀 보기</a></li>
-                			<li><a href="/member/myChildAddFrm">내 자녀 추가</a></li>
-                			<li><a href="/member/myMedicalHistory">내 진료내역 보기</a></li>
-                			<li><a href="/member/myReview">나의 리뷰 보기</a></li>
-                			<li><a href="#">즐겨찾기</a></li>
-                			<li><a href="/member/memberDelete">회원 탈퇴</a></li>
-                		</ul>
-                	</div>
-            	</div>
-           
-           
-           <!-- 내 정보 내용 -->
-           <div class="myReviewWrap">
-           		<div class="myReviewBox">
-           			<h2>나의 리뷰 작성하기</h2>
-           			        <div class="textBox">   			
-	           			<h3>대학/종합병원, 요양병원, 보건소 리뷰는 받지 않아요.</h3>
-	           			<h4>업로드한 사진은 진료 확인 목적으로만 사용되며, 외부로는 공개되지 않습니다.</h4>
-           					</div>
-           					
-           					<div class="hospitalInfo">
-           					<span class="material-icons" id="building" >domain_add</span>
-           						<h2><span th:text="${hospitalName}"></span></h2>
-           						
-           						
-           						
-           						
-           					</div>
-           					
-           					<div class="reviewtitle">
-           					<h3>상세한 리뷰를 써주세요</h3>
-           					</div>
-           					
-           					<div class="textarea reviewForm">
-           						
-           						<textarea>
-           						
-           						</textarea>
-           					
-           					</div>
-           					
-           					<div class="danger">
-           					
-           					<span class=" material-icons warning" id="warning">error_outline</span>
-           					<h5>부적절한 단어 및 비속어 사용 시 통보없이 삭제될 수 있으니 유의해주세요.</h5>
-           					</div>
-           					
-           					<div class="imgBox">
-           					
-           					
-           					</div>
-           				
-           				
-           				<div class="subBtn">
-           				<a href="#"><button type="button" class="btn_primary lg">작성 완료</button></a>
-           				</div>
-           			
-           		</div>
-           </div>
-           
-           
-           </div>
+            <div class="mypageWrap">
+                <!-- 메뉴 -->
+                <div class="menuBox">
+                    <div class="mypageMenu">
+                        <ul>
+                            <li><a href="/member/myInfo">내 정보 보기</a></li>
+                            <li><a href="/member/myChildren">내 자녀 보기</a></li>
+                            <li><a href="/member/myChildAddFrm">내 자녀 추가</a></li>
+                            <li><a href="/member/myMedicalHistory">내 진료내역 보기</a></li>
+                            <li><a href="/member/myReview">나의 리뷰 보기</a></li>
+                            <li><a href="/member/favorites">즐겨찾기</a></li>
+                            <li><a href="/member/memberDelete">회원 탈퇴</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- 내 정보 내용 -->
+                <div class="myReviewWrap">
+                    <div class="myReviewBox">
+                        <h2>나의 리뷰 작성하기</h2>
+                        <div class="textBox">
+                            <h3>대학/종합병원, 요양병원, 보건소 리뷰는 받지 않아요.</h3>
+                            <h4>업로드한 사진은 진료 확인 목적으로만 사용되며, 외부로는 공개되지 않습니다.</h4>
+                        </div>
+
+                        <form action="/member/submitReview" method="post" enctype="multipart/form-data">
+                            <div class="hospitalInfo">
+                               <div id="hBox"> 
+                                <span class="material-icons" id="building">domain_add</span>
+                               
+                                <div th:each="hospital : ${hospital}">
+                                    <span class= "hName" th:text="${hospital.hospitalName}"></span>
+                                </div>
+                                <div class="star-wrap star-wrap2">
+                                    <span class="material-icons">star</span>
+                                    <span class="material-icons">star</span>
+                                    <span class="material-icons">star</span>
+                                    <span class="material-icons">star</span>
+                                    <span class="material-icons">star</span>
+                                    <div class="star-on">
+                                        <div class="star-wrap star-on-wrap">
+                                            <span class="material-icons">star</span>
+                                            <span class="material-icons">star</span>
+                                            <span class="material-icons">star</span>
+                                            <span class="material-icons">star</span>
+                                            <span class="material-icons">star</span>
+                                        </div>
+                                    </div>
+                                </div>
+                              
+                                <input type="text" id="score" name="reviewRating" placeholder="입력">
+                                <button id="btn" class="btn_primary" type="button">평점입력</button>
+                            </div>
+						</div>
+						
+							<input type="hidden" name="hospitalNo" th:value="${hospitalNo}">
+							<input type="hidden" name="memberNo" th:value="${memberNo}">
+							<input type="hidden" name="reservationNo" th:value="${reservationNo}">
+                            
+                            
+                            
+
+                            <div class="reviewtitle">
+                                <h3>상세한 리뷰를 써주세요</h3>
+                            </div>
+
+                            <div class="input_wrap">
+                                <div class="input_item">
+                                    <input type="text" name="reviewTitle" id="reviewTitle" placeholder="제목을 입력하세요">
+                                </div>
+                            </div>
+
+                            <div class="textarea reviewForm">
+                                <textarea id="reviewContent" name="reviewContent"></textarea>
+                            </div>
+
+                            <div class="danger">
+                                <span class="material-icons warning" id="warning">error_outline</span>
+                                <h5>부적절한 단어 및 비속어 사용 시 통보없이 삭제될 수 있으니 유의해주세요.</h5>
+                            </div>
+
+                            <div class="imgBox">
+                                <input type="file" name="imageFile" accept=".jpg,.png,.jpeg" onchange="loadImg(this);">
+                            </div>
+                            <div class="tr-1">
+                                <p class="imgPrev"></p>
+                                <div id="img-viewer">
+                                    <img id="img-view" width="100px">
+                                </div>
+                            </div>
+
+                            <div class="subBtn">
+                                <button type="submit" class="btn_primary lg submitReview">작성 완료</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </section>
-	    <!--// contents -->
-        
+        <!--// contents -->
     </main>
     <!--// container -->
-	
-<th:block th:include="common/footer"></th:block>
-<script src="/js/member/myChildren.js"></script>
-<!-- js 링크 -->
+
+    <footer th:include="common/footer"></footer>
+    
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        function loadImg(obj) {
+            if (obj.files.length != 0 && obj.files[0] != 0) {
+                const reader = new FileReader();
+                reader.readAsDataURL(obj.files[0]);
+                reader.onload = function (e) {
+                    $("#img-view").attr("src", e.target.result);
+                }
+            } else {
+                $("#img-view").attr("src", "");
+            }
+        }
+
+        $("#btn").on("click", function () {
+            $(".star-on").css("width", "0px");
+            const score = $("#score").val();
+            const changeWidth = score * 30;
+            $(".star-on").animate({ "width": changeWidth + "px" }, 3000);
+        });
+        $("#btn").on("click", function () {
+            $(".star-on").css("width", "0px");
+            var score = $("#score").val();
+            // 입력된 값이 숫자이고 0에서 5 사이의 값인지 확인하여 범위를 벗어나면 0으로 설정
+            if (/^[0-5]$/.test(score)) {
+                var changeWidth = score * 30;
+                $(".star-on").animate({ "width": changeWidth + "px" }, 3000);
+            } else {
+                $("#score").val("0"); // 널값이면 0으로 설정
+                $(".star-on").animate({ "width": "0px" }, 3000);
+            }
+        });
+
+        $(document).ready(function() {
+            // 페이지 로드 시 별점 조회하여 채워진 별표 표시
+            var starRating = parseInt($("#score").val()) || 0; // 널값이면 0으로 처리
+            fillStars(starRating);
+        });
+
+        // 별점이 인풋에서 변경될 때 별표 채우기
+        $("#score").on("input", function() {
+            var score = $(this).val();
+            // 입력된 값이 숫자이고 0에서 5 사이의 값인지 확인하여 범위를 벗어나면 0으로 설정
+            if (/^[0-5]$/.test(score)) {
+                fillStars(score);
+            } else {
+                $(this).val(""); // 숫자가 아닌 값이 입력되면 빈 값으로 설정
+            }
+        });
+
+        // 별표 채우기 함수
+        function fillStars(starRating) {
+            $(".star-on").css("width", starRating * 30 + "px");
+        }
+        
+        
+        
+        
+    </script>
 </body>
 </html>

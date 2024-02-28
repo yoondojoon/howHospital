@@ -27,14 +27,19 @@
 	font-weight:bold;
 	width:100%;
 	
+	
 }
-
+.menuBox{
+	
+	box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+}
 
 .mypageMenu li{
 	display:flex;
 	list-style :none;
 	font-color : #222222;
 	justify-content: flex-start;
+	
 	
 }
 
@@ -66,7 +71,7 @@
 .mypageMenu {
 	
 	display: flex;
-	flex-direction: column
+	flex-direction: column;
 	
 	
 }
@@ -77,3 +82,103 @@
 	color:var(--main_03);
 	
 }
+
+
+#close{
+	
+	
+	position: relative;
+    top: -40px;
+    left: 305px;
+    font-size: 20px;
+    color :#D6D6D6;
+    
+}
+
+.box{
+	display: flex;
+	flex-direction: row;
+	position: relative;
+	top: 10px;
+	left: 240px;
+	padding-bottom : 30px;
+
+}
+.childInfo{
+	
+	
+	
+}
+
+
+.childWrap{
+	
+	
+	width:300px;
+}
+
+.material-icons{
+	
+	font : 100px;
+	
+	
+	
+	
+}
+
+.box>span{
+	
+font-size :80px;
+}
+
+.box>h3{
+	
+	padding-top:28px;
+}
+
+
+.material-icons{
+	
+	
+}
+#baby{
+	
+	font-size : 50px;
+	
+}
+
+/* 이미지 아이콘 크기 조정 */
+.material-icons {
+    font-size: 100px;
+    justify-content: center;  
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* 자녀 정보 아이콘 배경색과 정렬 설정 */
+.childInfo {
+    background-color: #000001A;
+    text-align: center;
+    padding: 20px;
+    margin: 10px auto;
+    width: 80%;
+    
+    
+	box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+	border-radius: 6px;
+	margin: 0 auto;
+	margin-bottom: 20px !important;
+	padding-bottom:25px;
+}
+
+#childName{
+	
+	position: relative;
+    top: -17px;
+	
+	
+	
+}
+
+
