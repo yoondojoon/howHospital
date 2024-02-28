@@ -1,4 +1,4 @@
-package kr.or.iei.admin.model.dto;
+package kr.or.iei.hospital.model.dto;
 
 import java.util.List;
 
@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class HospitalReportListData {
+public class HospitalMemberReportListData {
 	private List list;
 	private String pageNavi;
 }
