@@ -238,6 +238,18 @@ public class MemberService {
 		return reviewTitle;
 	}
 
+	public List reviewList(int memberNo) {
+		
+		
+		List list = memberDao.reviewList(memberNo);
+		
+		
+		
+		
+		
+		return list;
+	}
+
 
 	
 

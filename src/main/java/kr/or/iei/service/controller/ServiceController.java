@@ -191,6 +191,18 @@ public class ServiceController {
 		System.out.println(file.getPrescriptionName());
 		System.out.println(file.getPrescriptionPath());
 	}
+	
+	@ResponseBody
+	@GetMapping(value="/selectResList")
+	public List selectResList(int hospitalNo, @SessionAttribute(required=false) Member member) {
+		if(member != null) {
+			int memberNo = member.getMemberNo();
+			List resList = reservationService.selectResList(memberNo, hospitalNo);
+			return resList;
+		}else {
+			return null;
+		}
+	}
 }
 
 

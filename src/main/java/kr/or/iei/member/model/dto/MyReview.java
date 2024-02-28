@@ -20,5 +20,8 @@ public class MyReview {
 	private String reviewImg;
 	private String reservation_time;
 	
+	private String hospitalName;
+	private String hospitalAddrMain;
+	
 
 }
