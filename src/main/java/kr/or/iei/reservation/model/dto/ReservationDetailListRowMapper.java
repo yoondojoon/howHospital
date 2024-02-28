@@ -23,6 +23,8 @@ public class ReservationDetailListRowMapper implements RowMapper<ReservationDeta
 		rdl.setHospitalNo(rs.getInt("hospital_no"));
 		rdl.setPrescriptionStatus(rs.getInt("prescription_status"));
 		rdl.setDoctorName(rs.getString("doctor_name"));
+		rdl.setChildName(rs.getString("child_name"));
+		rdl.setChildNo(rs.getInt("child_no"));
 		return rdl;
 	}
 

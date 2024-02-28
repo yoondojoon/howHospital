@@ -23,4 +23,6 @@ public class ReservationDetailList {
 	private List doctorList;
 	private int hospitalNo;
 	private String doctorName;
+	private int childNo;
+	private String childName;
 }
