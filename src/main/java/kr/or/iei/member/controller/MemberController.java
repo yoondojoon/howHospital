@@ -418,41 +418,28 @@ public class MemberController {
 		
 	}
 	
-	/*
+	
 	
 	//나의 리뷰 보기
 	@GetMapping(value="/myReview")
 	public String myReview(HttpSession session, Review review ,Model model) {
 		
 		
-		int hospitalNo = review.getHospitalNo();
-		int reviewNo = review.getReviewNo();
-		
-		
-		
-		
-		
 		
 		int memberNo = (int)session.getAttribute("memberNo");
 		
+		List list = memberService.reviewList(memberNo);
 		
 		
-		System.out.println(memberNo);
+		model.addAttribute("list",list);
 		
-		
-		model.addAttribute(hospitalName,"hospitalName");
-		model.addAttribute(hospitalAddrMain,"hospitalAddrMain");
-		model.addAttribute(reviewRating, "reviewRating");
-		model.addAttribute(reviewTitle,"reviewTitle");
-		model.addAttribute(review,"review");
-		
-		
+		System.out.println(list);
 		return "/member/myReview";
 		
 		
 	}
 	
-	*/
+	
 	//나의 리뷰 작성(예약 번호 가져오기)
 	@GetMapping(value="myReviewFrm")
 	public String myReviewFrm(int reservationNo, Model model, HttpSession session) {

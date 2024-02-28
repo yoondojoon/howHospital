@@ -34,16 +34,15 @@
            			<h2>나의 리뷰</h2>
            			         <th:block th:each="review : ${list}">
            			         	<span id="memberNo" th:text="${session.member.memberNo}" style="display:none;"></span><!-- 뷰에 세션으로 주민번호 꺼내오 -->
-           			         <th:block th:each="hospital : ${hospital}">
-           			          	<span class="reviewNo" id="reviewNo" th:text="${review.reviewNo}" style="display:none;"></span><!-- 뷰에 세션으로 주민번호 꺼내오 -->
+           			          	<span class="reviewNo" id="reviewNo" th:text="${reviewNo}" style="display:none;"></span><!-- 뷰에 세션으로 주민번호 꺼내오 -->
            			          
            			          
            			          <div class="reviewListBox">
            			          	<button type="button" class="closeBtn"><span class="material-icons close">close</span></button>
-           			          		<p>병원 : <span th:text="${hospitalName}"></span></p>
-           			          		<p>주소 : <span th:text="${hospitalAddrMain}"></span></p>
-           			          		<p>리뷰 제목: <span th:text="${reviewTitle}"></span></p>
-        							<p>평점: <span id="reviewRating" th:value="${reviewRating}"></span>
+           			          		<p>병원 : <span th:text="${review.hospitalName}"></span></p>
+           			          		<p>주소 : <span th:text="${review.hospitalAddrMain}"></span></p>
+           			          		<p>리뷰 제목: <span th:text="${review.reviewTitle}"></span></p>
+        							<p>평점: <span id="reviewRating" th:value="${review.reviewRating}"></span>
         								<div class="star-wrap star-wrap2">
         <span class="material-icons">star</span>
         <span class="material-icons">star</span>
@@ -62,15 +61,15 @@
     </div>
         							
         							
-									<input type="hidden" id="score" value="${reviewRating}">
+									<input type="hidden" id="score" value="${review.reviewRating}">
         							<p>내용: <span th:text="${review.reviewContent}"></span></p>
         							<p>작성일자: <span th:text="${review.reviewDate}"></span></p>
-           			        		<p>작성일자: <span th:text="${review.reviewImg}"></span></p>
+           			        		<p>이미지: <span th:text="${review.reviewImg}"></span></p>
            			          </div>
            			          
            			          
            			          </th:block>
-           			          </th:block>
+           			          
            			           			
 	           			
            			
