@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<link rel="stylesheet" href="/css/etc/receipt.css">
+<script src="https://cdn.iamport.kr/v1/iamport.js"></script>
+<th:block th:include="common/header"></th:block>
+
+<!-- <link rel="stylesheet" href=""> 이 자리에 자기 css 넣기-->
+
+	<!-- container -->
+    <main id="container" class="container">
+
+		<!-- contents -->
+        <section id="contents" class="contents">
+            <div class="inner_wrap">
+                <h2>수납하기</h2>
+                <div class="receipt_msg">
+                    <p>우리 병원을 찾아주셔서 진심으로 감사드립니다.</p>
+                    <p>쾌차를 바라며, 빠른 회복과 밝은 미소 짓게 될 그 날을 기대하겠습니다</p>
+                </div>
+                <div class="receipt_wrap">
+                    <table class="receipt_tbl">
+                        <tr class="receipt_tr">
+                            <th>성함</th>
+                            <td><span th:text="${receipt.memberName}"></span></td>
+                        </tr>
+                        <tr class="receipt_tr">
+                            <th>전화번호</th>
+                            <td><span th:text="${receipt.memberPhone}"></span></td>
+                        </tr>
+                        <tr class="receipt_tr">
+                            <th>주소</th>
+                            <td><span th:text="${receipt.memberAddress}"></span></td>
+                        </tr>
+                        <tr class="receipt_tr">
+                            <th>예약 일시</th>
+                            <td><span th:text="${receipt.regReservation}"></span></td>
+                        </tr>
+                        <tr class="receipt_tr">
+                            <th>병원명</th>
+                            <td><span th:text="${receipt.hospitalName}"></span></td>
+                        </tr>
+                        <tr class="receipt_tr">
+                            <th>의사명</th>
+                            <td><span th:text="${receipt.doctorName}"></span></td>
+                        </tr>
+                        <tr class="receipt_tr">
+                            <th>진료비</th>
+                            <td><span th:text="${receipt.costOne}"></span></td>
+                        </tr>
+                    </table>
+                    <div class="receipt_btn_wrap">
+                        <button type="button" id="receipt_btn" class="badge blue">수납하기</button>
+                    </div>
+                    <input type="hidden" id="costOne" class="costOne" name="costOne" th:value="${receipt.costOne}">
+                    <input type="hidden" id="memberName" class="memberName" name="memberName" th:value="${receipt.memberName}">
+                    <input type="hidden" id="memberPhone" class="memberPhone" name="memberPhone" th:value="${receipt.memberPhone}">
+                    <input type="hidden" id="reservationNo" class="reservationNo" name="reservationNo" th:value="${receipt.reservationNo}">
+                </div>
+            </div>
+        </section>
+	    <!--// contents -->
+    </main>
+    <!--// container -->
+<script>
+    $("#receipt_btn").on("click",function(){
+        const costOne = $("#costOne").val();
+        const memberName = $("#memberName").val();
+        const memberPhone = $("#memberPhone").val();
+        const reservationNo = $("#reservationNo").val();
+        const obj = $(this);
+        const date = new Date();
+        const dateString =  date.getFullYear()+""+(date.getMonth()+1)+""+date.getDate()
+                            +""+date.getHours()+""+date.getMinutes()+""+date.getSeconds();
+        //포트원 라이브러리 시작
+        IMP.init('imp82445436');        
+        //결제창 연동            
+        IMP.request_pay(
+            {
+                pg: "danal_tpay.9810030929",
+                pay_method: "card",
+                merchant_uid: "product_no_"+dateString, // 상점에서 생성한 고유 주문번호
+                name: "주문명:결제테스트",
+                amount: costOne,                   //결제금액
+                buyer_email: "test@portone.io",
+                buyer_name: memberName,
+                buyer_tel: memberPhone,
+                buyer_addr: "서울특별시 강남구 삼성동",
+                buyer_postcode: "123-456",
+            },
+            function (rsp) {
+                if(rsp.success){
+                    alert("결제성공");
+                    //db작업
+                    $.ajax({
+                       url : "/reservation/updateReservationStatus",
+                       type : "get",
+                       data : {reservationNo : reservationNo},
+                       success : function(data){
+                            console.log(data);
+                            if(data == 1){
+                                $(obj).text("수납완료");
+                                $(obj).prop("disabled",true);
+                            }
+                       },
+                       error : function(){
+                        console.log("에러발생");
+                       } 
+                    });
+                }else{
+                    alert("결제실패");
+                }
+            }
+        );
+    });
+</script>
+<th:block th:include="common/footer"></th:block>
+</html>

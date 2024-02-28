@@ -16,6 +16,8 @@ import kr.or.iei.reservation.model.dto.H_Reservation;
 import kr.or.iei.reservation.model.dto.H_ReservationRowMapper;
 import kr.or.iei.reservation.model.dto.MyReservationDetailRowMapper;
 import kr.or.iei.reservation.model.dto.MyReservationHistoryRowMapper;
+import kr.or.iei.reservation.model.dto.ReceiptData;
+import kr.or.iei.reservation.model.dto.ReceiptDataRowMapper;
 import kr.or.iei.reservation.model.dto.Reservation;
 import kr.or.iei.reservation.model.dto.ReservationDetail;
 import kr.or.iei.reservation.model.dto.ReservationFile;
@@ -38,16 +40,20 @@ public class ReservationDao {
 	private ReservationFileRowMapper reservationFileRowMapper;
 	@Autowired
 	private PrescriptionFileRowMapper prescriptionFileRowMapper;
+	@Autowired
+	private ReceiptDataRowMapper receiptDataRowMapper;
 	public List selectReservation(int startPage, int endPage,int memberNo) {
 		String query = 
 				"select * from\r\n" + 
 				"            (select rownum as rnum, res.* from\r\n" + 
 				"                (select reservation_no,reservation_status,reg_reservation,RESERVATION_TIME,reservation_type,(select member_name from member_tbl where member_no=r.member_no) as member_name,\r\n" + 
 				"                (select DOCTOR_NAME from DOCTOR_TBL where doctor_no = (select doctor_no from reservation_detail_tbl where reservation_no=r.reservation_no)) as doctor_name,\r\n" + 
-				"                (select count(*) from prescription_tbl where reservation_no = r.reservation_no) as prescription_status\r\n" + 
+				"                (select count(*) from prescription_tbl where reservation_no = r.reservation_no) as prescription_status,\r\n" + 
+				"                (select hospital_no from hospital_tbl where r.member_no = member_no) as hospital_no\r\n" + 
 				"FROM \r\n" + 
 				"reservation_tbl r \r\n" + 
-				"where hospital_no in (select hospital_no from hospital_tbl where member_no= ?)\r\n" + 
+				"where hospital_no in (select hospital_no from hospital_tbl where member_no=?)\r\n" + 
+				"\r\n" + 
 				"ORDER BY 1 DESC)RES) WHERE Rnum BETWEEN ? AND ?";
 		Object[] params = {memberNo,startPage, endPage};
 		List list = jdbc.query(query, h_ReservationRowMapper, params);
@@ -97,7 +103,8 @@ public class ReservationDao {
 				"            (select rownum as rnum, res.* from\r\n" + 
 				"                (select reservation_no,reservation_status,reg_reservation,RESERVATION_TIME,reservation_type,(select member_name from member_tbl where member_no=r.member_no) as member_name,\r\n" + 
 				"                (select DOCTOR_NAME from DOCTOR_TBL where doctor_no = (select doctor_no from reservation_detail_tbl where reservation_no=r.reservation_no)) as doctor_name,\r\n" + 
-				"                (select count(*) from prescription_tbl where reservation_no = r.reservation_no) as prescription_status\r\n" + 
+				"                (select count(*) from prescription_tbl where reservation_no = r.reservation_no) as prescription_status,\r\n" + 
+				"                (select hospital_no from hospital_tbl where r.member_no = member_no) as hospital_no\r\n" + 
 				"FROM \r\n" + 
 				"reservation_tbl r \r\n" + 
 				"where hospital_no in (select hospital_no from hospital_tbl where member_no=?)\r\n" + 
@@ -185,9 +192,9 @@ public class ReservationDao {
 		String query = "select substr(reg_reservation,1,instr(reg_reservation,' ',1,1)-1) reg_date,\r\n" + 
 				"to_char(to_date(substr(reg_reservation,1,instr(reg_reservation,' ',1,1)-1),'yyyy-mm-dd'),'dy') reg_day,\r\n" + 
 				"substr(reg_reservation,instr(reg_reservation,' ',1,1)+1) reg_time,\r\n" + 
-				"(select doctor_name from doctor_tbl where doctor_no in(select doctor_no from reservation_detail_tbl where reservation_no=r.reservation_no)) doctor_name,\r\n" + 
-				"(select subject_name from subject_tbl where subject_no in (select subject_no from doctor_tbl where doctor_no in (select doctor_no from reservation_detail_tbl where reservation_no=r.reservation_no))) subject_name,\r\n" + 
-				"(select symptom from reservation_detail_tbl where reservation_no=r.reservation_no) symptom\r\n" + 
+				"nvl((select doctor_name from doctor_tbl where doctor_no in(select doctor_no from reservation_detail_tbl where reservation_no=r.reservation_no)),'미정') doctor_name,\r\n" + 
+				"nvl((select subject_name from subject_tbl where subject_no in (select subject_no from reservation_detail_tbl where reservation_no=r.reservation_no)),(select subject_name from subject_tbl where subject_no in (select subject_no from doctor_tbl where doctor_no in (select doctor_no from reservation_detail_tbl where reservation_no=r.reservation_no)))) subject_name,\r\n" + 
+				"nvl((select symptom from reservation_detail_tbl where reservation_no=r.reservation_no),' ') symptom\r\n" + 
 				"from reservation_tbl r where reservation_no=?";
 		Object[] params = {reservationNo};
 		List list = jdbc.query(query, myReservationDetailRowMapper, params);
@@ -221,6 +228,34 @@ public class ReservationDao {
 		}else {
 			return (PrescriptionFile)list.get(0);
 		}
+	}
+
+	public ReceiptData getReceipt(int reservationNo) {
+		String query = "SELECT \r\n" + 
+				"    R.RESERVATION_NO,R.MEMBER_NO,R.REG_RESERVATION,H.HOSPITAL_NO,M.MEMBER_NAME,M.MEMBER_ADDRESS,RD.DOCTOR_NO,D.DOCTOR_NAME,H.HOSPITAL_NAME,H.COST_ONE,M.MEMBER_PHONE\r\n" + 
+				"FROM RESERVATION_TBL R \r\n" + 
+				"JOIN HOSPITAL_TBL H ON R.HOSPITAL_NO = H.HOSPITAL_NO\r\n" + 
+				"JOIN MEMBER_TBL M ON R.MEMBER_NO = M.MEMBER_NO\r\n" + 
+				"left JOIN RESERVATION_DETAIL_TBL RD ON R.RESERVATION_NO = RD.RESERVATION_NO\r\n" + 
+				"left JOIN DOCTOR_TBL D ON RD.DOCTOR_NO = D.DOCTOR_NO\r\n" + 
+				"WHERE R.RESERVATION_NO=?";
+		Object[] params = {reservationNo};
+		List list = jdbc.query(query, receiptDataRowMapper,params);
+		return (ReceiptData)list.get(0);
+	}
+
+	public int updateReservationStatus(int reservationNo) {
+		String query = "update reservation_tbl set reservation_status=5 where reservation_no=?";
+		Object[] params = {reservationNo};
+		int result = jdbc.update(query,params);
+		return result;
+	}
+
+	public int updateDoctorSelect(H_Reservation hr) {
+		String query = "update reservation_detail_tbl set doctor_no = ? where reservation_no=?";
+		Object[] params = {hr.getDoctorNo(),hr.getReservationNo()};
+		int result = jdbc.update(query, params);
+		return result;
 	}
 
 	

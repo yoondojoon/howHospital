@@ -14,6 +14,7 @@ import com.google.gson.JsonObject;
 import kr.or.iei.admin.model.dto.AdminBusinessAuth;
 import kr.or.iei.admin.model.dto.AdminBusinessAuthListData;
 import kr.or.iei.admin.model.dto.FaqListData;
+import kr.or.iei.admin.model.dto.HospitalReport;
 import kr.or.iei.admin.model.dto.HospitalReportListData;
 import kr.or.iei.admin.model.dto.MemberReport;
 import kr.or.iei.admin.model.dto.MemberReportListData;
@@ -136,7 +137,7 @@ public class AdminController {
 	}
 
 	@GetMapping(value = "/reportConfirm")
-	public String reportDetail(int reportNo) {
+	public String reportConfirm(int reportNo) {
 		int result = adminService.confirmReport(reportNo);
 		return "redirect:/admin/manageReport?reqPage=1";
 	}
@@ -197,6 +198,15 @@ public class AdminController {
 		model.addAttribute("loc", "/");
 		return "common/msg";
 	}
+	
+	@GetMapping("/hospitalMsg")
+	public String hospitalMsg(Model model) {
+		model.addAttribute("title", "병원 관계자 외 이용불가");
+		model.addAttribute("msg", "병원관계자만이 이용가능한 페이지입니다.");
+		model.addAttribute("icon", "warning");
+		model.addAttribute("loc", "/");
+		return "common/msg";
+	}
 
 	@GetMapping("/manageReview")
 	public String manageReview(Model model) {
@@ -236,5 +246,27 @@ public class AdminController {
 		model.addAttribute("hospitalReportList", hrld.getList());
 		model.addAttribute("pageNavi", hrld.getPageNavi());
 		return "admin/manageHospitalReport";
+	}
+	
+	//병원신고 상세 가져오는 코드
+	@GetMapping(value = "/hospitalReportDetail")
+	public String hospitalReportDetail(int reportNo, Model model) {
+		HospitalReport hr = adminService.selectOneHospitalReport(reportNo);
+		model.addAttribute("hr", hr);
+		return "admin/hospitalReportDetail";
+	}
+	
+	//병원신고 거부
+	@GetMapping(value = "/hospitalReportDelete")
+	public String hospitalReportDelete(int reportNo) {
+		int result = adminService.deleteHospitalReport(reportNo);
+		return "redirect:/admin/manageHospitalReport?reqPage=1";
+	}
+	
+	//병원신고 확인
+	@GetMapping(value = "/hospitalReportConfirm")
+	public String hospitalReportConfirm(int reportNo) {
+		int result = adminService.confirmHospitalReport(reportNo);
+		return "redirect:/admin/manageHospitalReport?reqPage=1";
 	}
 }

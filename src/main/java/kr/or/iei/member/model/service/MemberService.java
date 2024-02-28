@@ -178,6 +178,38 @@ public class MemberService {
 	}
 
 
+
+	//예약번호 가져오기
+	public int reservationNo(int memberNo) {
+
+		int reservationNo = memberDao.reservationNo(memberNo);
+		
+		
+		return reservationNo;
+	}
+
+	public int hospitalNo(int reservationNo) {
+		
+		int hospitalNo = memberDao.hospitalNo(reservationNo);
+		
+		
+		return hospitalNo;
+	}
+	
+	@Transactional
+	public int submit(Review review) {
+		
+		int result = memberDao.submit(review);
+		
+		return result;
+	}
+
+
+	
+
+	
+
+
 	
 	
 	}

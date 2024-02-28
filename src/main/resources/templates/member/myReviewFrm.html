@@ -67,9 +67,13 @@
                                 <button id="btn" class="btn_primary" type="button">평점입력</button>
                             </div>
 						</div>
-                            <input type="hidden" name="hospitalNo" th:each="hospitalItem : ${hospital}" th:if="${hospitalItem != null}" th:value="${hospitalItem.hospitalNo}" th:remove="tag">
-                            <input type="hidden" name="reservationNo" th:each="reservationItem : ${reservation}" th:if="${reservationItem != null}" th:value="${reservationItem.reservationNo}" th:remove="tag">
-                            <input type="hidden" name="memberNo" th:value="${session.member.memberNo}">
+						
+							<input type="hidden" name="hospitalNo" th:value="${hospitalNo}">
+							<input type="hidden" name="memberNo" th:value="${memberNo}">
+							<input type="hidden" name="reservationNo" th:value="${reservationNo}">
+                            
+                            
+                            
 
                             <div class="reviewtitle">
                                 <h3>상세한 리뷰를 써주세요</h3>

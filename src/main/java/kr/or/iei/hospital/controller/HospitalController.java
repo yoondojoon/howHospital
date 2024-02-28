@@ -330,6 +330,7 @@ public class HospitalController {
 	@GetMapping("/detailReservation")
 	public String detailReservation(H_Reservation hr, Model model) {
 		ReservationDetailList rdl = reservationDetailService.selectOneReservation(hr);
+		System.out.println(hr.toString());
 		model.addAttribute("reservationDetailList", rdl);
 		return "hospital/detailReservationFrm";
 	}

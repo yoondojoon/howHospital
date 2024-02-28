@@ -1,0 +1,43 @@
+.receipt_tbl{
+  width: 100%;
+  
+}
+.receipt_tr{
+  margin: 50px 0px;
+}
+.receipt_tr>*{
+  padding: 30px;
+  font-size: 18px;
+}
+.receipt_btn_wrap{
+  text-align: center;
+}
+.receipt_btn_wrap>#receipt_btn{
+  width: 200px;
+  height: 50px;
+  margin: 40px 0px;
+}
+.receipt_btn_wrap>#receipt_btn:hover{
+  background-color: #0081B4;
+  color: #fff;
+}
+.receipt_wrap{
+  margin-top: 30px;
+  border: 1px solid var(--line_02);
+	border-radius: 10px;
+	box-sizing: border-box;
+}
+.receipt_msg{
+  margin: 30px 0px;
+}
+.receipt_msg>p{
+  font-size: 19px;
+}
+.receipt_msg>:first-child{
+  font-size: 20px;
+  font-weight: bold;
+}
+.receipt_msg>:last-child{
+  font-size: 16px;
+
+}

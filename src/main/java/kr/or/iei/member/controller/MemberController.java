@@ -452,11 +452,18 @@ public class MemberController {
 	
 	//나의 리뷰 작성(예약 번호 가져오기)
 	@GetMapping(value="myReviewFrm")
-	public String myReviewFrm(int memberNo, Model model, HttpSession session) {
-		
-		List reservationNo = memberService.reservationNo(memberNo); 
+	public String myReviewFrm(int reservationNo, Model model, HttpSession session) {
 		
 		
+		int memberNo = (int)session.getAttribute("memberNo");
+		
+		int hospitalNo = memberService.hospitalNo(reservationNo); 
+		
+		
+		
+		model.addAttribute("memberNo",memberNo);
+		model.addAttribute("hospitalNo",hospitalNo);
+		model.addAttribute("reservationNo",reservationNo);
 		
 		
 		return "/member/myReviewFrm";
@@ -466,8 +473,10 @@ public class MemberController {
 	
 	// 나의 리뷰 작성 전송
 	@PostMapping(value="/submitReview")
-	public String submitReview(Review review,int reservationNo, int memberNo, int hospitalNo,MultipartFile imageFile,Model model,HttpSession session) {
+	public String submitReview(Review review,MultipartFile imageFile,Model model,HttpSession session) {
 		
+		
+		System.out.println(review);
 		
 		
 		// 파일 저장 경로 설정
@@ -476,12 +485,18 @@ public class MemberController {
 	    
 	    
 	    String filepath = fileUtils.hyokyungUpLoad(savepath, imageFile);
-	    review.setReviewImg(filepath);
+	    
+	    if(filepath != null) {
+	    	
+	    	review.setReviewImg(filepath);
+	    
+	    }	
+	    
 	    
 
 
 
-	    int result = memberService.submit(hospitalNo, memberNo, review, reservationNo);
+	    int result = memberService.submit(review);
 
 
 	    

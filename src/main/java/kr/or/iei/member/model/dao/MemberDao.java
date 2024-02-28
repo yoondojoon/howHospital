@@ -235,17 +235,42 @@ public class MemberDao {
 		return result;
 	}
 
+	
 	public int reservationNo(int memberNo) {
+	
+		String query = "select reservation_no from reservation_tbl where member_no=?";
 		
-		String query = "select * from reservation_tbl where member_no=?";
-		
+				
 		Object[] params = {memberNo};
 		
-		int reservationNo = jdbc.query(query, reservationRowMapper, params);
+		int reservationNo =jdbc.queryForObject(query, Integer.class,memberNo);
+		
+		
+		return reservationNo;
+	}
+
+	public int hospitalNo(int reservationNo) {
+		
+		String query = "select hospital_no from reservation_tbl where reservation_no =?";
 		
 		
 		
-		return 0;
+		int hospitalNo = jdbc.queryForObject(query, Integer.class,reservationNo);
+		
+		return hospitalNo;
+	}
+
+	public int submit(Review review) {
+		
+		String query ="insert into review_tbl values(review_seq.nextval,?,?,?,?,?,?,to_char(sysdate,'yyyy-mm-dd'),?)";
+		
+		Object[] params = {review.getReservationNo(), review.getMemberNo(),review.getHospitalNo(), review.getReviewTitle(),review.getReviewContent(), review.getReviewRating(),review.getReviewImg()};
+		
+		
+		int result = jdbc.update(query,params);
+		
+		
+		return result;
 	}
 
 

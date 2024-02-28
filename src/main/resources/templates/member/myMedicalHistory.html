@@ -208,11 +208,14 @@
                         resStatus.addClass("gray");
                         resStatus.text("진료완료");
                         if(item.reservationType == 2){
-                            const ctaBtn = $("<a href='#' class='btn_primary outline'>수납하기</a>");
+                            const ctaBtn = $("<a href='/etc/receipt?reservationNo="+item.reservationNo+"' class='btn_primary outline'>수납하기</a>");
                             btnArea.append(ctaBtn);
+                            ctaBtn.on("click", function(e){
+                                e.stopPropagation();
+                            })
                         }else{
                             if(item.reviewCount == 0){
-                                const ctaBtn = $("<a href='#' class='btn_primary outline'>리뷰 작성</a>");
+                                const ctaBtn = $("<a href='/member/myReviewFrm?reservationNo="+item.reservationNo+"' class='btn_primary outline'>리뷰 작성</a>");
                                 btnArea.append(ctaBtn);
                                 ctaBtn.on("click", function(e){
                                     e.stopPropagation();
@@ -229,7 +232,7 @@
                             showPreScription();
                         });
                         if(item.reviewCount == 0){
-                            const ctaBtn2 = $("<a href='#' class='btn_primary outline'>리뷰 작성</a>");
+                            const ctaBtn2 = $("<a href='/member/myReviewFrm?reservationNo="+item.reservationNo+"' class='btn_primary outline'>리뷰 작성</a>");
                             btnArea.append(ctaBtn2);
                             ctaBtn2.on("click", function(e){
                                 e.stopPropagation();
@@ -296,7 +299,8 @@
                                                         "<li><span>진료대상</span><strong>"+memberName.text()+"</strong></li>",
                                                         "<li><span>진료과</span><strong>"+data.subjectName+"</strong></li>",
                                                         "<li><span>담당의사</span><strong>"+data.doctorName+"</strong></li>",
-                                                        "<li><span>병원명</span><strong>"+item.hospitalName+"</strong></li>",
+                                                        "<li><span>병원명</span><a class='btn_link' href='/service/hospitalDetail?hospitalNo="+item.hospitalNo+"'><strong>"+item.hospitalName+"</strong></a></li>",
+                                                        "<li><span>증상</span><strong>"+data.symptom+"</strong></li>",
                                                     "</ul>",
                                                 "</div>",
                                             "</div>",
@@ -357,8 +361,9 @@
                                             "<div class='modal_container'>",
                                                 "<div class='modal_content'>",
                                                     "<div class='img_wrap'>",
-                                                        "<img src='/reservation/"+data.prescriptionPath+"' alt='처방전 사진'>",
+                                                        "<i class='icon prescription'></i>",
                                                     "</div>",
+                                                    "<p>"+data.prescriptionName+"</p>",
                                                 "</div>",
                                             "</div>",
                                             "<div class='modal_footer'>",
