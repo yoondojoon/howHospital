@@ -10,15 +10,58 @@
 		<!-- contents -->
         <section id="contents" class="contents community">
             <div class="inner_wrap">
-                <h2>커뮤니티</h2>
+                <div class="title_wrap">
+                    <h2>건강 매거진</h2>
+                    <p class="title_sub">병원어때 건강 매거진을 통해 다양한 건강 정보를 얻어보세요!</p>
+                </div>
+                
+                <div class="community_board_area">
+                    <div class="board_top_area" th:if="${session.member != null}">
+                        <a href="/community/communityWriteFrm" class="btn_primary outline">글쓰기</a>
+                    </div>
+                    <div class="board_list_area">
+                        <div class="no_data_wrap" th:if="${boardList == null}">
+                            <i class="icon no_data"></i>
+                            <p>검색 결과가 없습니다.</p>
+                            <div class="btn_area">
+                                <a href="/community/communityMain?reqPage=1" class="btn_primary">건강 매거진 전체보기</a>
+                            </div>
+                        </div>
+                        <ul class="board_list" th:if="${boardList}">
+                            <li th:each="b : ${boardList}">
+                                <a th:href="@{/community/communityView(boardNo=${b.boardNo})}">
+                                    <div class="thumb_wrap">
+                                        <img src="/images/img_hospital.svg" alt="병원사진아무거나">
+                                    </div>
+                                    <div class="content_wrap">
+                                        <div class="board_title" th:text="${b.boardTitle}"></div>
+                                        <div class="board_txt" th:utext="${b.boardContent}"></div>
+                                        <span class="write_date" th:text="${b.writeDate}"></span>
+                                    </div>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="pagination_wrap" th:if="${pageNavi}">
+                        <div id="pageNavi" th:utext="${pageNavi}"></div>
+                    </div>
+                </div>
             </div>
         </section>
-	    <!--// contents -->
+        <!--// contents -->
         
     </main>
     <!--// container -->
 	
 <th:block th:include="common/footer"></th:block>
 <!-- js 링크 -->
+<script>
+    function checkKeyword(obj){
+		if($(obj).parent("form").find("[name=keyword]").val() == ""){
+			alert("검색어를 입력하세요.");
+			return false;
+		}
+	}
+</script>
 </body>
 </html>

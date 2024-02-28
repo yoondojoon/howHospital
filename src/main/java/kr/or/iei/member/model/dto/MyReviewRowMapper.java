@@ -11,8 +11,6 @@ public class MyReviewRowMapper implements RowMapper<MyReview>{
 	
 	@Override
 	public MyReview mapRow(ResultSet rs, int rowNum) throws SQLException{
-		
-		
 		MyReview myReview = new MyReview();
 		myReview.setReviewNo(rs.getInt("review_no"));
 		myReview.setReservationNo(rs.getInt("reservation_no"));

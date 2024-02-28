@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<th:block th:include="common/header"></th:block>
+<script src="/summernote/summernote-lite.js"></script>
+<script src="/summernote/lang/summernote-ko-KR.js"></script>
+<link rel="stylesheet" href="/summernote/summernote-lite.css">
+<link rel="stylesheet" href="/css/community/community.css">
+
+	<!-- container -->
+    <main id="container" class="container">
+
+		<!-- contents -->
+        <section id="contents" class="contents community">
+            <div class="inner_wrap">
+                <h2>건강 매거진</h2>
+                
+                <div class="community_board_area view">
+                    <div class="communityView">
+                        <div class="view_content_area">
+                            <h3 class="board_title" th:text="${c.boardTitle}"></h3>
+
+                            <div class="info_wrap">
+                                <div>
+                                    <h4>작성자</h4>
+                                    <strong th:text="${c.boardWriter}"></strong>
+                                </div>
+                                <div>
+                                    <h4>작성일</h4>
+                                    <strong th:text="${c.writeDate}"></strong>
+                                </div>
+                                <div>
+                                    <h4>조회수</h4>
+                                    <span class="read_count" th:text="${c.readCount}"></span>
+                                </div>
+                                <div>
+                                    <h4>첨부파일</h4>
+                                    <div class="input_wrap">
+                                        <th:block th:each="file : ${c.fileList}">
+                                            <img src="/img/file.png" style="width:16px;">
+                                            <a th:href="@{/community/filedown(filename=${file.filename},filepath=${file.filepath})}" th:text="${file.filename}"></a>
+                                        </th:block>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="content_wrap">
+                                <div class="boardContent" th:utext="${c.boardContentBr}"></div>
+                            </div>
+
+                        </div>
+                    </div>
+                    
+                    <div class="btn_area" th:if="${session.member != null && session.member.memberNo == c.memberNo}">
+                        <a th:href="@{/community/updateFrm(boardNo=${c.boardNo})}" class="btn_primary">수정</a>
+                        <button type="button" class="btn_secondary" th:onclick="boardDelete([[${c.boardNo}]])">삭제</button>
+                    </div>
+    
+                    <div class="btn_area">
+                        <a href="/community/communityMain?reqPage=1" class="btn_secondary">목록</a>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+        <!--// contents -->
+        
+    </main>
+    <!--// container -->
+	
+<th:block th:include="common/footer"></th:block>
+<!-- js 링크 -->
+<script>
+
+</script>
+</body>
+</html>

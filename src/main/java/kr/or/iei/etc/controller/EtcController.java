@@ -8,16 +8,22 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.or.iei.etc.model.dto.Pharmacy;
+import kr.or.iei.reservation.model.dto.ReceiptData;
+import kr.or.iei.reservation.model.service.ReservationService;
 
 @Controller
 @RequestMapping("/etc")
 public class EtcController {
+	@Autowired
+	private ReservationService reservationService;
 	@GetMapping("/pharmacy")
 	public String pharmacy() {
 		return "etc/searchPharmacy";
@@ -28,7 +34,7 @@ public class EtcController {
 	@GetMapping("/pharmacyInfo")
 	public List pharmacyInfo(String pageNo, String sidoCode, String sigoonCode, String pharmName) {
 		String url = "https://apis.data.go.kr/B552657/ErmctInsttInfoInqireService/getParmacyListInfoInqire";
-		String serviceKey = "LxQKysMvvVlGF+KIGwFiZBiZMmIHlq8evNwirB1BUJ/2EXczsoGjLsX4u41ITvSzySrmEvTrQ443KgTEL9JOSQ==";
+		String serviceKey = "UFGrd/O5mTNg+TYGZxNFlnlBLQCKvE9E+GsHp90xe1s3LU0qkZCyFHnPx7d2RFhY2PX97qRd4q5a1gXeOlR/lA==";
 		String numOfRows = "10";
 		String resultType = "xml";
 		ArrayList<Pharmacy> list = new ArrayList<Pharmacy>();
@@ -61,6 +67,13 @@ public class EtcController {
 			e.printStackTrace();
 		}
 		return list;
+	}
+	
+	@GetMapping("/receipt")
+	public String receipt(int reservationNo, Model model) {
+		ReceiptData list = reservationService.getReceipt(reservationNo);
+		model.addAttribute("receipt", list);
+		return "etc/receipt";
 	}
 
 }
