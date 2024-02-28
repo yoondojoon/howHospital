@@ -4,78 +4,67 @@
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <link rel="stylesheet" href="/css/member/myInfo.css">
 
-	<!-- container -->
-    <main id="container" class="container">
+<!-- container -->
+<main id="container" class="container">
 
-		<!-- contents -->
-        <section id="contents" class="contents myInfo">
-        	<div class="mypageWrap">
-        	
-        		<!-- 메뉴 -->            
-            	<div class="menuBox">	
-                	<div class="mypageMenu">
-                		<ul>
-                			<li><a href="/member/myInfo">내 정보 보기</a></li>
-                			<li><a href="/member/myChildren">내 자녀 보기</a></li>
-                			<li><a href="/member/myChildAddFrm">내 자녀 추가</a></li>
-                			<li><a href="/member/myMedicalHistory">내 진료내역 보기</a></li>
-                			<li><a href="/member/myReview">나의 리뷰 보기</a></li>
-                			<li><a href="/member/favorites">즐겨찾기</a></li>
-                			<li><a href="/member/memberDelete">회원 탈퇴</a></li>
-                		</ul>
-                	</div>
-            	</div>
-           
-           
-           <!-- 내 정보 내용 -->
-           <div class="myInfoWrap">
-           		<div class="myInfoBox">
-           			<h2>즐겨찾기</h2>
-           			           			
-	           			<div class="myInfoContents">
-           				
-           				<th:block >
-           					<p>병원 이름 :<span ></span></p>
-           					<p>리뷰 수 :<span ></span></p>
-           					<p>병원 주소 :<span ></span></p>
-           					<p><button>병원 페이지로 이동</button></p>
-           					<span class="material-icons" id="like">favorite</span>
-           					
-           					
-           					
-           						
-           				
-           				</th:block> 
-           					
-           				
-           				
-           				
-           				
-           				
-						
-           				</div>
-           				
-           				
-           				
-           				
-           				<form action="/member/updateMyInfo" method="post">
-           					<button type="submit" class="btn_primary lg">내 정보 수정하기</button>
-           				</form>
-           				
-           			</div>
-           		</div>
-           </div>
-           
-           
-           </div>
-        </section>
-	    <!--// contents -->
-        
-    </main>
-    <!--// container -->
-	
+	<!-- contents -->
+	<section id="contents" class="contents myInfo">
+		<div class="mypageWrap">
+
+			<!-- 메뉴 -->
+			<th:block th:include="member/myPageMenu"></th:block>
+
+
+			<!-- 내 정보 내용 -->
+			<div class="myInfoWrap">
+				<div class="myInfoBox">
+					<h2>즐겨찾기</h2>
+
+					<div class="myInfoContents">
+
+						<th:block>
+							<p>병원 이름 :<span></span></p>
+							<p>리뷰 수 :<span></span></p>
+							<p>병원 주소 :<span></span></p>
+							<p><button>병원 페이지로 이동</button></p>
+							<span class="material-icons" id="like">favorite</span>
+
+
+
+
+
+						</th:block>
+
+
+
+
+
+
+
+					</div>
+
+
+
+
+					<form action="/member/updateMyInfo" method="post">
+						<button type="submit" class="btn_primary lg">내 정보 수정하기</button>
+					</form>
+
+				</div>
+			</div>
+		</div>
+
+
+		</div>
+	</section>
+	<!--// contents -->
+
+</main>
+<!--// container -->
+
 <th:block th:include="common/footer"></th:block>
 <script src="/js/member/myInfo.js"></script>
 <!-- js 링크 -->
 </body>
+
 </html>

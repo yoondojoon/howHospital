@@ -4,99 +4,114 @@
 <link rel="stylesheet" href="/css/hospital/myHospitalReservationList.css">
 <link rel="stylesheet" href="/css/reservation/reservationPaginavi.css">
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link rel="stylesheet" href="/css/hospital/myHospitalFrm.css">
 
 <!-- container -->
-    <main id="container" class="container">
-		<!-- contents -->
-        <section id="contents" class="contents main">
-            <div class="inner_wrap">
-            	<div class="reservation_title">
-            		<h2>내 병원 예약목록</h2>
-            	</div>
-	            <div class="hospital_reservation_wrap">
-	            <div class="msg"><span>*</span>의사 선택</div>
-	          	<div class="select">
-	          		<select class="doctor_select">
-	          			<option value="0">전체</option>
-	          			<option th:each="doctor : ${doctorList}" th:text="${doctor.doctorName}" th:value="${doctor.doctorNo}" th:selected="${doctor.doctorNo == doctorNo}"></option>
-	          		</select>
-	          	</div>
-	          	<div class="hospital_reservation_list">
-	            <th:block th:each="reservation : ${reservation}">
-		            <div class="hospital_reservation">
-		            	<div class="reservation_wrap_content top">
-		            	<th:block th:switch="${reservation.reservationType}">
-		            		<span th:case="1" class="res_type badge contact">대면진료</span>
-		            		<span th:case="2" class="res_type badge contactless">비대면진료</span>
-		            	</th:block>
-		            	<th:block th:switch="${reservation.reservationStatus}">
-		            		<span th:case="1" class="badge blue outline">접수대기</span>
-		            		<span th:case="2" class="badge red outline">예약취소</span>
-		            		<span th:case="3" class="badge blue">예약확정</span>
-		            		<span th:case="4" class="badge gray">진료완료</span>
-		            		<span th:case="5" class="badge gray">수납완료</span>
-		            	</th:block>
-		          			<span class="reservationTime" th:text="${reservation.reservationTime}" style="width:40px;"></span>	
-		            	</div>
-		            	<div class="reservation_wrap_content midle">
-		            		<a th:href="@{/hospital/detailReservation(reservationNo=${reservation.reservationNo})}"class="reservationName" th:text="${reservation.memberName}"></a>
-		            	</div>
-		            	<div class="reservation_wrap_content bottom">
-		            		<span class="chargeDoctor">진료선생님</span>
-		            		<span class="chargeDoctorName" th:text="${reservation.doctorName}"></span>
-		            	</div>
-		            	<!-- 
-		            	<th:block th:switch="${reservation.reservationStatus}">
-		            	<div class="select" th:case="1">
-		            		<select class="hospital_reservation_type">
-		            			<option value="1" th:selected="${reservation.reservationStatus == 1}">선택</option>
-								<option value="2" th:selected="${reservation.reservationStatus == 2}">예약거부</option>
-								<option value="3" th:selected="${reservation.reservationStatus == 3}">예약확정</option>
-								<option value="4" th:selected="${reservation.reservationStatus == 4}">진료완료</option>
+<main id="container" class="container">
+	<!-- contents -->
+	<section id="contents" class="contents main">
+		<div id="hospital_wrap">
+			<div class="side_menu">
+				<ul class="side_list">
+					<li><a href="/hospital/myHospitalDetail">병원정보</a></li>
+					<li><a href="/hospital/myHospitalReservation?reqPage=1&doctorNo=0">예약관리</a></li>
+					<li><a href="/hospital/myHospitalReviewList">리뷰관리</a></li>
+				</ul>
+			</div>
+			<div class="main_content">
+				<div class="hospital_info_form">
+					<div class="reservation_title">
+						<h2>내 병원 예약목록</h2>
+					</div>
+					<div class="hospital_reservation_wrap">
+						<div class="msg"><span>*</span>의사 선택</div>
+						<div class="select">
+							<select class="doctor_select">
+								<option value="0">전체</option>
+								<option th:each="doctor : ${doctorList}" th:text="${doctor.doctorName}"
+									th:value="${doctor.doctorNo}" th:selected="${doctor.doctorNo == doctorNo}"></option>
 							</select>
 						</div>
-						<div class="prescription_btn btn_wrap" th:case="4" th:if="${reservation.reservationType == 2 && reservation.prescriptionStatus == 0}">
-							<button type="button" class="btn_secondary hospital_reservation_type">처방전 등록</button>
+						<div class="hospital_reservation_list">
+							<th:block th:each="reservation : ${reservation}">
+								<div class="hospital_reservation">
+									<div class="reservation_wrap_content top">
+										<th:block th:switch="${reservation.reservationType}">
+											<span th:case="1" class="res_type badge contact">대면진료</span>
+											<span th:case="2" class="res_type badge contactless">비대면진료</span>
+										</th:block>
+										<th:block th:switch="${reservation.reservationStatus}">
+											<span th:case="1" class="badge blue outline">접수대기</span>
+											<span th:case="2" class="badge red outline">예약취소</span>
+											<span th:case="3" class="badge blue">예약확정</span>
+											<span th:case="4" class="badge gray">진료완료</span>
+											<span th:case="5" class="badge gray">수납완료</span>
+										</th:block>
+										<span class="reservationTime" th:text="${reservation.reservationTime}"
+											style="width:40px;"></span>
+									</div>
+									<div class="reservation_wrap_content midle">
+										<a th:href="@{/hospital/detailReservation(reservationNo=${reservation.reservationNo})}"
+											class="reservationName" th:text="${reservation.memberName}"></a>
+									</div>
+									<div class="reservation_wrap_content bottom">
+										<span class="chargeDoctor">진료선생님</span>
+										<span class="chargeDoctorName" th:text="${reservation.doctorName}"></span>
+									</div>
+									<!-- 
+								<th:block th:switch="${reservation.reservationStatus}">
+								<div class="select" th:case="1">
+									<select class="hospital_reservation_type">
+										<option value="1" th:selected="${reservation.reservationStatus == 1}">선택</option>
+										<option value="2" th:selected="${reservation.reservationStatus == 2}">예약거부</option>
+										<option value="3" th:selected="${reservation.reservationStatus == 3}">예약확정</option>
+										<option value="4" th:selected="${reservation.reservationStatus == 4}">진료완료</option>
+									</select>
+								</div>
+								<div class="prescription_btn btn_wrap" th:case="4" th:if="${reservation.reservationType == 2 && reservation.prescriptionStatus == 0}">
+									<button type="button" class="btn_secondary hospital_reservation_type">처방전 등록</button>
+								</div>
+								</th:block>	
+								<input type="hidden" id="reservationNo" name="reservationNo" class="reservationNo" th:value="${reservation.reservationNo}">
+								-->
+								</div>
+							</th:block>
 						</div>
-						</th:block>	
-						 <input type="hidden" id="reservationNo" name="reservationNo" class="reservationNo" th:value="${reservation.reservationNo}">
-						 -->
-		            </div>
-	            </th:block>	
-	            </div>
-	            <div id="pageNavi" th:utext="${pageNavi}"></div>	
-	            </div>
-            </div>
-        </section>
-	    <!--// contents -->
-    </main>
-    <!--// container -->
-    
-    <!--// container -->
-
-	<div id="popup_01" class="modal" style="display:none;">
-		<div class="modal_wrap">
-			
-			<div class="modal_header">
-				<div class="modal_title">처방전 등록하기</div>
-			</div>
-	
-			<div class="modal_container">
-				<div class="modal_content">
-					<input type="file" name="prescription_file" accept=".pdf">
+						<div id="pageNavi" th:utext="${pageNavi}"></div>
+					</div>
 				</div>
 			</div>
-			
-			<div class="modal_footer">
-				<div class="btn_area">
-					<button type="button" onclick="closeModal(this);" class="btn_secondary lg">취소</button>
-					<button type="button" class="btn_primary lg submit_btn">등록하기</button>
-				</div>
-			</div>
-			<button type="button" onclick="closeModal(this);" class="btn_close"><span class="blind">닫기</span></button>
-	
 		</div>
+	</section>
+	<!--// contents -->
+</main>
+<!--// container -->
+
+<!--// container -->
+
+<div id="popup_01" class="modal" style="display:none;">
+	<div class="modal_wrap">
+
+		<div class="modal_header">
+			<div class="modal_title">처방전 등록하기</div>
+		</div>
+
+		<div class="modal_container">
+			<div class="modal_content">
+				<input type="file" name="prescription_file" accept=".pdf">
+			</div>
+		</div>
+
+		<div class="modal_footer">
+			<div class="btn_area">
+				<button type="button" onclick="closeModal(this);" class="btn_secondary lg">취소</button>
+				<button type="button" class="btn_primary lg submit_btn">등록하기</button>
+			</div>
+		</div>
+		<button type="button" onclick="closeModal(this);" class="btn_close"><span class="blind">닫기</span></button>
+
 	</div>
+</div>
 <th:block th:include="common/footer"></th:block>
 <script th:inline="javascript">
 	/*
@@ -187,10 +202,11 @@
 		}
 	});
 	*/
-	$(".doctor_select").on("change",function(){
+	$(".doctor_select").on("change", function () {
 		const doctorNo = $(this).val();
-		location.href="/hospital/myHospitalReservation?reqPage=1&doctorNo="+doctorNo;
+		location.href = "/hospital/myHospitalReservation?reqPage=1&doctorNo=" + doctorNo;
 	});
 
 </script>
+
 </html>

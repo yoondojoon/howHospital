@@ -33,7 +33,7 @@
 .mypageMenu li{
 	display:flex;
 	list-style :none;
-	font-color : #222222;
+	color : #222222;
 	justify-content: flex-start;
 	
 }
@@ -52,10 +52,13 @@
     width:1000px;
 	
 }
+.myInfoWrap>form{
+	width:100%;
+}
 
 
 .myInfoBox{
-	width:750px;
+	width:100%;
     
     padding:30px;
 }

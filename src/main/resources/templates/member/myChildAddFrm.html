@@ -6,68 +6,57 @@
 
 
 
-	<!-- container -->
-    <main id="container" class="container">
+<!-- container -->
+<main id="container" class="container">
 
-		<!-- contents -->
-        <section id="contents" class="contents myInfo">
-        	<div class="mypageWrap">
-        	
-        		<!-- 메뉴 -->            
-            	<div class="menuBox">	
-                	<div class="mypageMenu">
-                		<ul>
-                			<li><a href="/member/myInfo">내 정보 보기</a></li>
-                			<li><a href="/member/myChildren">내 자녀 보기</a></li>
-                			<li><a href="/member/myChildAddFrm">내 자녀 추가</a></li>
-                			<li><a href="/member/myMedicalHistory">내 진료내역 보기</a></li>
-                			<li><a href="/member/myReview">나의 리뷰 보기</a></li>
-                			<li><a href="/member/favorites">즐겨찾기</a></li>
-                			<li><a href="/member/memberDelete">회원 탈퇴</a></li>
-                		</ul>
-                	</div>
-            	</div>
-           
-           
-           <!-- 내 정보 내용 -->
-           <div class="myInfoWrap">
-           		<form action="/member/myChildAdd" method="post">
-           			<div class="myInfoBox">
-           
-           		 	  			
-	           		<div class="childContents">
-           				<h2>자녀의 정보를 입력해주세요</h2>
-           				<div class="paddingBox">
-           				<div class="textBox">
-           					<h4>만 18세 이하의 미성년 자녀만 등록할 수 있습니다.</h4>
-           					<h4>입력한 정보와 다른 경우 개인정보보호법에 위배되어 법적 책임이 발생할 수 있습니다.</h4>
-           				</div>
-           				</div>
-           				
+	<!-- contents -->
+	<section id="contents" class="contents myInfo">
+		<div class="mypageWrap">
 
-           				</div>
-           				<div class="childAddBtn">
-           					<button onclick="addChildForm()" type="button" class="btn_primary addChild">자녀 추가 +</button>
-           					
-           			<button  type="submit" class="btn_primary">완료</button>	
-           			</div>
-           			
-           		</div>
-           		
-           	</form>
-           			
-           			
-           		</div>
-           </div>
-           
-        </section>
-	    <!--// contents -->
-        
-    </main>
-    <!--// container -->
-	
+			<!-- 메뉴 -->
+			<th:block th:include="member/myPageMenu"></th:block>
+
+
+			<!-- 내 정보 내용 -->
+			<div class="myInfoWrap">
+				<form action="/member/myChildAdd" method="post">
+					<div class="myInfoBox">
+
+
+						<div class="childContents">
+							<h2>자녀의 정보를 입력해주세요</h2>
+							<div class="paddingBox">
+								<div class="textBox">
+									<h4>만 18세 이하의 미성년 자녀만 등록할 수 있습니다.</h4>
+									<h4>입력한 정보와 다른 경우 개인정보보호법에 위배되어 법적 책임이 발생할 수 있습니다.</h4>
+								</div>
+							</div>
+
+
+						</div>
+						<div class="childAddBtn">
+							<button onclick="addChildForm()" type="button" class="btn_primary addChild">자녀 추가 +</button>
+
+							<button type="submit" class="btn_primary">완료</button>
+						</div>
+
+					</div>
+
+				</form>
+
+
+			</div>
+		</div>
+
+	</section>
+	<!--// contents -->
+
+</main>
+<!--// container -->
+
 <th:block th:include="common/footer"></th:block>
 <script src="/js/member/myChildAddFrm.js"></script>
 <!-- js 링크 -->
 </body>
+
 </html>

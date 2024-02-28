@@ -43,7 +43,7 @@ public class WebConfig implements WebMvcConfigurer{
 		
 		//차단자 
 		registry.addInterceptor(new BlockInterceptor())
-		.addPathPatterns("/admin/**","/etc/**","/hospital/**")
+		.addPathPatterns("/admin/**","/etc/receipt","/hospital/**")
 		.excludePathPatterns("/admin/blockMsg","/admin/faqList","/admin/noticeList*");
 		
 		//병원
