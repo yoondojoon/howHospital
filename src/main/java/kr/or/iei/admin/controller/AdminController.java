@@ -198,6 +198,15 @@ public class AdminController {
 		model.addAttribute("loc", "/");
 		return "common/msg";
 	}
+	
+	@GetMapping("/hospitalMsg")
+	public String hospitalMsg(Model model) {
+		model.addAttribute("title", "병원 관계자 외 이용불가");
+		model.addAttribute("msg", "병원관계자만이 이용가능한 페이지입니다.");
+		model.addAttribute("icon", "warning");
+		model.addAttribute("loc", "/");
+		return "common/msg";
+	}
 
 	@GetMapping("/manageReview")
 	public String manageReview(Model model) {

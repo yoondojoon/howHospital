@@ -33,11 +33,18 @@ public class WebConfig implements WebMvcConfigurer{
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
 		
-		
+		//차단자 
 		registry.addInterceptor(new BlockInterceptor())
 		.addPathPatterns("/admin/**","/etc/**","/hospital/**")
 		.excludePathPatterns("/admin/adminMsg","/admin/blockMsg","/admin/faqList","/admin/noticeList*");
 		
+		//병원
+		registry.addInterceptor(new HospitalInterceptor())
+		.addPathPatterns("/hospital/**")
+		.excludePathPatterns("/admin/adminMsg","/admin/blockMsg","/admin/hospitalMsg");
+		
+		
+		//관리자
 		registry.addInterceptor(new AdminInterceptor())
 		.addPathPatterns("/admin/**")
 		.excludePathPatterns("/admin/adminMsg","/admin/blockMsg","/admin/faqList","/admin/noticeList*");
