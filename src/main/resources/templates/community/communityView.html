@@ -17,42 +17,28 @@
                 <div class="community_board_area view">
                     <div class="communityView">
                         <div class="view_content_area">
-                            <h3 class="board_title" th:text="${c.boardTitle}"></h3>
-
-                            <div class="info_wrap">
-                                <div>
-                                    <h4>작성자</h4>
-                                    <strong th:text="${c.boardWriter}"></strong>
-                                </div>
-                                <div>
-                                    <h4>작성일</h4>
-                                    <strong th:text="${c.writeDate}"></strong>
-                                </div>
-                                <div>
-                                    <h4>조회수</h4>
-                                    <span class="read_count" th:text="${c.readCount}"></span>
-                                </div>
-                                <div>
-                                    <h4>첨부파일</h4>
-                                    <div class="input_wrap">
-                                        <th:block th:each="file : ${c.fileList}">
-                                            <img src="/img/file.png" style="width:16px;">
-                                            <a th:href="@{/community/filedown(filename=${file.filename},filepath=${file.filepath})}" th:text="${file.filename}"></a>
-                                        </th:block>
-                                    </div>
+                            <div class="tit_wrap">
+                                <h3 class="board_title" th:text="${c.boardTitle}"></h3>
+                                <div class="title_info">
+                                    <span class="write_date" th:text="${c.writeDate}"></span>
+                                    <div class="read_count">조회수 <span class="read_count" th:text="${c.readCount}"></span></div>
                                 </div>
                             </div>
-
-                            <div class="content_wrap">
-                                <div class="boardContent" th:utext="${c.boardContentBr}"></div>
+                            <div class="thumb_wrap">
+                                <th:block th:each="file : ${c.fileList}">
+                                    <img th:src="@{/community/}+${file.filepath}">
+                                    <!-- <a th:href="@{/community/filedown(filename=${file.filename},filepath=${file.filepath})}" th:text="${file.filename}"></a> -->
+                                </th:block>
                             </div>
+
+                            <div class="content_wrap" th:utext="${c.boardContentBr}"></div>
 
                         </div>
-                    </div>
-                    
-                    <div class="btn_area" th:if="${session.member != null && session.member.memberNo == c.memberNo}">
-                        <a th:href="@{/community/updateFrm(boardNo=${c.boardNo})}" class="btn_primary">수정</a>
-                        <button type="button" class="btn_secondary" th:onclick="boardDelete([[${c.boardNo}]])">삭제</button>
+                        <!-- <span th:text="${c}"></span> -->
+                        <div class="btn_area" th:if="${session.member != null && session.member.memberNo == c.memberNo}">
+                            <a th:href="@{/community/updateFrm(boardNo=${c.boardNo})}" class="btn_primary">수정</a>
+                            <button type="button" class="btn_secondary" th:onclick="boardDelete([[${c.boardNo}]])">삭제</button>
+                        </div>
                     </div>
     
                     <div class="btn_area">

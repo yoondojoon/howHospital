@@ -42,9 +42,11 @@
     width:1000px;
 }
 
+
+
 #hospital_wrap .main_content .hospital_info_form {
     width:800px;
-    border:1px solid red;
+    
     padding:30px;
 }
 
@@ -214,5 +216,4 @@ table th, table td{
 	color:white;
 	font-size:20px;
 }
-
 

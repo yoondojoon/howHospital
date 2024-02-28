@@ -22,6 +22,9 @@ import kr.or.iei.hospital.model.dto.SubjectDoctorRowMapper;
 import kr.or.iei.hospital.model.dto.SubjectRowMapper;
 import kr.or.iei.hospital.model.dto.Time;
 import kr.or.iei.hospital.model.dto.TimeRowMapper;
+import kr.or.iei.member.model.dto.MemberRowMapper;
+import kr.or.iei.member.model.dto.MyHospitalReviewRowMapper;
+import kr.or.iei.member.model.dto.MyReviewRowMapper;
 
 
 
@@ -49,7 +52,14 @@ public class HospitalDao {
 	private ReviewRowMapper reviewRowMapper;
 	@Autowired
 	private ReviewMemberNameRowMapper reviewMemberNameRowMapper;
-
+	@Autowired
+	private MyReviewRowMapper myReviewRowMapper;
+	@Autowired
+	private MemberRowMapper memberRowMapper;
+	
+	private MyHospitalReviewRowMapper myHospitalReviewRowMapper;
+	
+	
 	public List searchHospital(String keyword) {	
 		String query = "select hospital_no, hospital_name, hospital_tel, hospital_postcode, hospital_addr_main, hospital_addr_sub, lat, lng,\r\n" + 
 				"(select distinct\r\n" + 
@@ -133,6 +143,7 @@ public class HospitalDao {
 	}
 
 	public Time searchHospitalTime(int hospitalNo) {
+		System.out.println("병원번호 다오:" +hospitalNo);
 		String query = "select * from time_tbl where hospital_no=?";
 		Object[] params = {hospitalNo};
 		List list = jdbc.query(query, timeRowMapper, params);
@@ -245,6 +256,7 @@ public class HospitalDao {
 	}
 
 	public Hospital selectHospital(int memberNo) {
+		System.out.println("다오:"+ memberNo);
 		String query = "select * from hospital_tbl where hospital_tbl.member_no = ?";
 		Object[] params = {memberNo};
 		List list = jdbc.query(query, hospitalRowMapper, params);
@@ -302,12 +314,109 @@ public class HospitalDao {
 	    return result;
 	}
 
-	public int selectMyResCount(int memberNo, int hospitalNo) {
-		String query = "select count(*) from reservation_tbl where member_no=? and hospital_no=?";
-		Object[] params = {memberNo, hospitalNo};
+
+	//회원번호 -> 
+	//회원 입장에서 회원이 리뷰한 리뷰 테이블을 조회하기 위해서는 해당 병원의 번호로 조회하고자 하는 리뷰의 회원 번호를 조건으로 사용 
+	//아래는 병원 번호가 1001인 병원의 리뷰들을 조회하는 쿼리
+	//회원번호(member_tbl) -> 병원번호(hostpial_tbl) -> 예약(reservation_tbl) -> 리뷰(review_tbl) 
+	
+	public List selectMyReviewHistory(int memberNo) {
+		String query = "select * from review_tbl where hospital_no = (select hospital_no from hospital_tbl where member_no = ?)";
+		Object[] params = {memberNo};
+		List myReviewList = jdbc.query(query, myReviewRowMapper, params);
+		return myReviewList;
+	}
+
+	public List selectReservationInfo(int memberNo) {
+		String query = "SELECT * \r\n" + 
+				"FROM doctor_tbl \r\n" + 
+				"WHERE doctor_no = (\r\n" + 
+				"    SELECT doctor_no \r\n" + 
+				"    FROM reservation_detail_tbl \r\n" + 
+				"    WHERE reservation_no = (\r\n" + 
+				"        SELECT reservation_no \r\n" + 
+				"        FROM review_tbl \r\n" + 
+				"        WHERE hospital_no = (\r\n" + 
+				"            SELECT hospital_no \r\n" + 
+				"            FROM hospital_tbl \r\n" + 
+				"            WHERE member_no = ?\r\n" + 
+				"        )\r\n" + 
+				"    )\r\n" + 
+				")";
+		Object[] params = {memberNo};
+		List reservationInfo  = jdbc.query(query, doctorRowMapper, params);
+		System.out.println(reservationInfo);
+		return reservationInfo;
+	}
+
+
+	public int myReviewTotalCount(int memberNo) {
+		String query = "SELECT COUNT(r.review_no)\r\n" + 
+				"FROM review_tbl r\r\n" + 
+				"JOIN hospital_tbl h ON r.hospital_no = h.hospital_no\r\n" + 
+				"WHERE h.member_no = ?";
+		Object[] params = {memberNo};
 		int result = jdbc.queryForObject(query, Integer.class, params);
 		return result;
+		}
+
+	
+	public List selectMyHospitalReview(int memberNo, int start, int end) {
+		String query = "SELECT *\r\n" + 
+				"FROM (\r\n" + 
+				"    SELECT\r\n" + 
+				"        r.*,\r\n" + 
+				"        SUBSTR(m.member_name, 1, 1) || LPAD('*', LENGTH(m.member_name) - 1, '*') AS member_name,\r\n" + 
+				"        (select reservation_time from reservation_tbl where reservation_no = r.reservation_no) as reservation_time,\r\n" + 
+				"        ROWNUM rnum\r\n" + 
+				"    FROM\r\n" + 
+				"        review_tbl r\r\n" + 
+				"        JOIN hospital_tbl h ON r.hospital_no = h.hospital_no\r\n" + 
+				"        JOIN member_tbl m ON m.member_no = r.member_no\r\n" + 
+				"    WHERE\r\n" + 
+				"        h.member_no = ?\r\n" + 
+				"    ORDER BY\r\n" + 
+				"        r.review_date DESC\r\n" + 
+				")\r\n" + 
+				"WHERE rnum BETWEEN ? AND ?";
+		Object[] params = {memberNo, start, end};
+		List myHistoryList = jdbc.query(query, myHospitalReviewRowMapper, params);
+		return myHistoryList;
+
 	}
+	
+	
+	public List selectReviewDoctorList(int memberNo, int start, int end) {
+		String query = "SELECT *\r\n" + 
+				"FROM (\r\n" + 
+				"    SELECT d.*, ROWNUM rnum\r\n" + 
+				"    FROM doctor_tbl d\r\n" + 
+				"    JOIN reservation_detail_tbl rd ON d.doctor_no = rd.doctor_no\r\n" + 
+				"    JOIN review_tbl r ON rd.reservation_no = r.reservation_no\r\n" + 
+				"    JOIN hospital_tbl h ON r.hospital_no = h.hospital_no\r\n" + 
+				"    WHERE h.member_no = ?\r\n" + 
+				") \r\n" + 
+				"WHERE rnum BETWEEN ? AND ?";
+		Object[] params = {memberNo, start, end};
+		List myHistoryList = jdbc.query(query, doctorRowMapper, params);
+		return myHistoryList;
+	}
+
+	public int hospitalMemberReport(String goodByeReason, int memberNo, int hospitalNo, int reviewNo) {
+		String query = "INSERT INTO HOSPITAL_MEMBER_REPORT_TBL\r\n" + 
+				"VALUES (HOSPITAL_MEMBER_REPORT_SEQ.NEXTVAL, ?, ?, ?, ?, 0, TO_CHAR(SYSDATE, 'YYYY-MM-DD'))";
+		Object[] params = {hospitalNo, memberNo, reviewNo, goodByeReason};
+		int result = jdbc.update(query, params);
+		return result;
+	}
+
+	public int checkReport(int reviewNo) {
+		String query = "select repo_no from hospital_member_report_tbl where review_no = ?";
+		Object[] params = {reviewNo};
+		int checkRepo = jdbc.queryForObject(query, Integer.class);
+		return checkRepo;
+	}
+
 	
 	public int selectMyReviewCount(int memberNo, int hospitalNo) {
 		String query = "select count(*) from review_tbl where member_no=? and hospital_no=?";
@@ -315,5 +424,15 @@ public class HospitalDao {
 		int result = jdbc.queryForObject(query, Integer.class, params);
 		return result;
 	}
+	
+	public int selectMyResCount(int memberNo, int hospitalNo) {
+		String query = "select count(*) from reservation_tbl where member_no=? and hospital_no=?";
+		Object[] params = {memberNo, hospitalNo};
+		int result = jdbc.queryForObject(query, Integer.class, params);
+		return result;
+	}
+	
+	
+	
 	
 }

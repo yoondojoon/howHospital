@@ -26,7 +26,12 @@
 	          			</div>
 		            	<div class="detail_reservation_top">
 		            		<span id="patientName">환자 이름</span>
-	           				<span th:text="${reservationDetailList.memberName}"></span>
+		            		<th:block th:if="${reservationDetailList.childNo == 0}">
+		            			<span th:text="${reservationDetailList.memberName}"></span>
+		            		</th:block>
+		            		<th:block th:unless="${reservationDetailList.childNo == 0}">
+		            			<span th:text="${reservationDetailList.childName}"></span>
+		            		</th:block>
 		            	</div>
 		            	<div class="detail_reservation_doctor">
 		            		<span id="doctorName">진료선생님</span>

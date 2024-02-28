@@ -128,6 +128,7 @@ public class HospitalController {
 	// hospital enroll 진입: hospitalNo
 	// 마이페이지에서 진입: hospitalNo
 	public String myHospitalDetail(Model model, @SessionAttribute(required = false) Member member) {
+		System.out.println("멤버넘버컨트롤러:"+member.getMemberNo());
 		Hospital h = hospitalService.selectHospital(member.getMemberNo());
 		if (h != null) {
 			model.addAttribute("h", h);
@@ -266,6 +267,15 @@ public class HospitalController {
 			return "redirect:/";
 		}
 	}
+	
+	@GetMapping("/hospitalMsg")
+	public String hospitalMsg(Model model) {
+		model.addAttribute("title", "병원 관계자 외 이용불가");
+		model.addAttribute("msg", "병원관계자만이 이용가능한 페이지입니다.");
+		model.addAttribute("icon", "warning");
+		model.addAttribute("loc", "/");
+		return "common/msg";
+	}
 
 	@GetMapping(value = "/businessAuth")
 	public String businessAuth(Model model, HttpSession session) {
@@ -279,10 +289,7 @@ public class HospitalController {
 		return "hospital/myHospitalFrm";
 	}
 
-	@GetMapping("/myHospitalReviewList")
-	public String myHospitalReivewList() {
-		return "hospital/myHospitalReviewList";
-	}
+
 		
 	
 	
@@ -335,6 +342,62 @@ public class HospitalController {
 		return "hospital/detailReservationFrm";
 	}
 	
+	@ResponseBody
+	@PostMapping(value="/selectMyReviewHistory")
+	public List selectMyResHistory(int memberNo) {
+		List myHistoryList = hospitalService.selectMyReviewHistory(memberNo);
+		System.out.println("리뷰정보:" + myHistoryList);
+		return myHistoryList;
+	}
+	
+
+	@ResponseBody
+	@PostMapping(value="/selectReservationInfo")
+	public List selectReservationInfo(int memberNo) {
+		List reservationInfo = hospitalService.selectReservationInfo(memberNo);
+		System.out.println("예약정보:" + reservationInfo);
+		return reservationInfo;
+	}
+	//내 진료내역 보기= 동기
+	@GetMapping(value="/myHospitalReviewList")
+	public String myMedicalHistory(@SessionAttribute(required=false) Member member, Model model) {
+		int memberNo = member.getMemberNo();
+		int totalCount = hospitalService.myReviewTotalCount(memberNo);
+		System.out.println(totalCount);
+		model.addAttribute("totalCount", totalCount);
+		return "/hospital/myHospitalReviewList";
+	}
+	
+	
+	//비동기
+	@ResponseBody
+	@PostMapping("/selectMyHospitalReview")
+	public List selectMyHospitalReview(int memberNo, int start, int amount) {
+		List myHistoryList = hospitalService.selectMyHospitalReview(memberNo, start, amount);
+		return myHistoryList;
+	}
+	
+	
+	@ResponseBody
+	@PostMapping("/hospitalMemberReport")
+	public int hospitalMemberReport(String goodByeReason, int memberNo, int hospitalNo, int reviewNo) {
+		System.out.println("컨트롤러: "+goodByeReason+ memberNo+ hospitalNo+reviewNo);
+		int hospitalMemberReport = hospitalService.hospitalMemberReport(goodByeReason, memberNo, hospitalNo, reviewNo);
+		System.out.println(hospitalMemberReport);
+		return hospitalMemberReport;
+	}
+	
+	@ResponseBody
+	@PostMapping("/checkReport")
+	public boolean checkReport(int reviewNo) {
+		//신고테이블 내 리뷰번호가 있는지 체크하기 위해 리뷰번호로 신고번호를 가져오고
+		//있으면 신규번호, 없으면 null?인지 체크
+		//있으면 true, 없으면 false처리해서 html쏘기
+		int checkRepo = hospitalService.checkReport(reviewNo);
+		System.out.println("관리자번호: " +reviewNo);
+
+		return false;
+	}
 	
 	
 

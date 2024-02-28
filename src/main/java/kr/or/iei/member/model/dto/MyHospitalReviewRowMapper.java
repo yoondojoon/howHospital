@@ -7,7 +7,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
 
 @Component
-public class MyReviewRowMapper implements RowMapper<MyReview>{
+public class MyHospitalReviewRowMapper implements RowMapper<MyReview>{
 	
 	@Override
 	public MyReview mapRow(ResultSet rs, int rowNum) throws SQLException{
@@ -15,20 +15,14 @@ public class MyReviewRowMapper implements RowMapper<MyReview>{
 		myReview.setReviewNo(rs.getInt("review_no"));
 		myReview.setReservationNo(rs.getInt("reservation_no"));
 		myReview.setMemberNo(rs.getInt("member_no"));
+		myReview.setHospitalNo(rs.getInt("hospital_no"));
 		myReview.setReviewTitle(rs.getString("review_title"));
 		myReview.setReviewContent(rs.getString("review_content"));
 		myReview.setReviewRating(rs.getInt("review_rating"));
 		myReview.setReviewDate(rs.getString("review_date"));
 		myReview.setReviewImg(rs.getString("review_img"));
-
-		myReview.setReviewNo(rs.getInt("review_no"));
-		myReview.setReviewRating(rs.getInt("review_rating"));
-		myReview.setReviewTitle(rs.getString("review_title"));
-		myReview.setHospitalNo(rs.getInt("hospital_no"));
-		
-
-		
-
+		myReview.setMemberName(rs.getString("member_name"));
+		myReview.setReservation_time(rs.getString("reservation_time"));
 		return myReview;
 		
 	}
