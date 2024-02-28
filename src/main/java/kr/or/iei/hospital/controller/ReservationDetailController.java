@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -35,14 +36,4 @@ public class ReservationDetailController {
 		}
 	}
 
-	@ResponseBody
-	@GetMapping("/getDoctorInfo")
-	public List getDoctorInfo(int reservationNo) {
-		List list = reservationDetailService.getDoctorInfo(reservationNo);
-		if(list.isEmpty()) {
-			return null;
-		}else {
-			return list;
-		}
-	}
 }
