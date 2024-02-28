@@ -72,6 +72,7 @@ public class EtcController {
 	@GetMapping("/receipt")
 	public String receipt(int reservationNo, Model model) {
 		ReceiptData list = reservationService.getReceipt(reservationNo);
+		System.out.println("aaaaaaaaa");
 		model.addAttribute("receipt", list);
 		return "etc/receipt";
 	}

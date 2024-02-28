@@ -25,6 +25,7 @@ public class ReservationDetailService {
 	public ReservationDetailList selectOneReservation(H_Reservation hr) {
 		ReservationDetailList rdl = reservationDetailDao.selectOneReservation(hr);
 		hr.setHospitalNo(rdl.getHospitalNo());
+		System.out.println(rdl.toString());
 		List doctorList = reservationDetailDao.getDoctorList(hr);
 		List fileDataList = reservationDetailDao.getSymptomImg(hr);
 		rdl.setFileDataList(fileDataList);
