@@ -273,6 +273,47 @@ public class MemberDao {
 		return result;
 	}
 
+	public String hospitalName(int hospitalNo) {
+		
+		
+		String query = "select hospital_Name from hospital_tbl where hospital_no=";
+		
+		String hospitalName = jdbc.queryForObject(query, String.class , hospitalNo);
+		
+		
+		return hospitalName;
+	}
+
+	public String hospitalAddrMain(int hospitalNo) {
+		
+		String query = "select hospital_Addr_main from hospital_tbl where hospital_no=?";
+		
+		String hospitalAddrMain = jdbc.queryForObject(query, String.class , hospitalNo);	
+				
+		
+		return hospitalAddrMain;
+	}
+
+	public String reivewTitle(int reviewNo) {
+		
+		
+		String query = "select review_rating from review_tbl where review_no=?";
+		
+		String reviewRating = jdbc.queryForObject(query,String.class, reviewNo);
+		
+		return reviewRating;
+	}
+
+	public String reviewTitle(int reviewNo) {
+		
+		
+		String query = "select review_title from review_tbl where review_no=?";
+		
+		String reviewTitle = jdbc.queryForObject(query,String.class, reviewNo);
+		
+		return reviewTitle;
+	}
+
 
 
 	/*

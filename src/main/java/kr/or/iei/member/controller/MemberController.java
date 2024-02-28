@@ -418,30 +418,33 @@ public class MemberController {
 		
 	}
 	
-	
+	/*
 	
 	//나의 리뷰 보기
 	@GetMapping(value="/myReview")
-	public String myReview(HttpSession session, Member member, Reservation reservation ,Model model) {
+	public String myReview(HttpSession session, Review review ,Model model) {
+		
+		
+		int hospitalNo = review.getHospitalNo();
+		int reviewNo = review.getReviewNo();
+		
+		
+		
+		
 		
 		
 		int memberNo = (int)session.getAttribute("memberNo");
 		
+		
+		
 		System.out.println(memberNo);
 		
-		List<Hospital> hospital = memberService.hospitalTbl(memberNo);
 		
-	
-				
-		System.out.println(hospital);
-		
-		
-		List list = memberService.reviewLsit(memberNo);
-		
-		
-		
-		model.addAttribute("list", list);
-		model.addAttribute("hospital", hospital);
+		model.addAttribute(hospitalName,"hospitalName");
+		model.addAttribute(hospitalAddrMain,"hospitalAddrMain");
+		model.addAttribute(reviewRating, "reviewRating");
+		model.addAttribute(reviewTitle,"reviewTitle");
+		model.addAttribute(review,"review");
 		
 		
 		return "/member/myReview";
@@ -449,7 +452,7 @@ public class MemberController {
 		
 	}
 	
-	
+	*/
 	//나의 리뷰 작성(예약 번호 가져오기)
 	@GetMapping(value="myReviewFrm")
 	public String myReviewFrm(int reservationNo, Model model, HttpSession session) {
@@ -490,7 +493,10 @@ public class MemberController {
 	    	
 	    	review.setReviewImg(filepath);
 	    
-	    }	
+	    }else {
+	    	review.setReviewImg(null);
+	    	
+	    }
 	    
 	    
 

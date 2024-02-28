@@ -40,10 +40,10 @@
            			          
            			          <div class="reviewListBox">
            			          	<button type="button" class="closeBtn"><span class="material-icons close">close</span></button>
-           			          		<p>병원 : <span th:text="${hospital.hospitalName}"></span></p>
-           			          		<p>주소 : <span th:text="${hospital.hospitalAddrMain}"></span></p>
-           			          		<p>리뷰 제목: <span th:text="${review.reviewTitle}"></span></p>
-        							<p>평점: <span id="reviewRating" th:text="${review.reviewRating}"></span>
+           			          		<p>병원 : <span th:text="${hospitalName}"></span></p>
+           			          		<p>주소 : <span th:text="${hospitalAddrMain}"></span></p>
+           			          		<p>리뷰 제목: <span th:text="${reviewTitle}"></span></p>
+        							<p>평점: <span id="reviewRating" th:value="${reviewRating}"></span>
         								<div class="star-wrap star-wrap2">
         <span class="material-icons">star</span>
         <span class="material-icons">star</span>
@@ -62,7 +62,7 @@
     </div>
         							
         							
-									<input type="hidden" id="score" value="${review.reviewRating}">
+									<input type="hidden" id="score" value="${reviewRating}">
         							<p>내용: <span th:text="${review.reviewContent}"></span></p>
         							<p>작성일자: <span th:text="${review.reviewDate}"></span></p>
            			        		<p>작성일자: <span th:text="${review.reviewImg}"></span></p>
@@ -73,13 +73,6 @@
            			          </th:block>
            			           			
 	           			
-           					
-           				
-           				
-           				
-           				
-           				<a href="/member/myReviewFrm"><button type="button" class="btn_primary lg">리뷰 작성하기</button></a>
-           				
            			
            		</div>
            </div>

@@ -204,6 +204,40 @@ public class MemberService {
 		return result;
 	}
 
+	
+
+	public String hospitalName(int hospitalNo) {
+		
+		String hospitalName = memberDao.hospitalName(hospitalNo);
+		
+		
+		return hospitalName;
+	}
+
+	public String hospitalAddress(int hospitalNo) {
+		
+		
+		String hospitalAddrMain = memberDao.hospitalAddrMain(hospitalNo);
+		
+		return hospitalAddrMain;
+	}
+
+	public String reviewRating(int reviewNo) {
+		
+		String reviewRating = memberDao.reivewTitle(reviewNo);
+		
+		
+		return reviewRating;
+	}
+
+	public String reviewTitle(int reviewNo) {
+		
+		String reviewTitle = memberDao.reivewTitle(reviewNo);
+		
+		
+		return reviewTitle;
+	}
+
 
 	
 
