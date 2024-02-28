@@ -12,7 +12,6 @@
             <div class="inner_wrap">
                 <h2>비대면 진료 예약</h2>
                 <div class="reserve_area">
-                    <!-- 트리거 만들지? -->
                     <!-- 예약테이블: 예약번호(시퀀스), 병원번호(h.hospitalNo), 회원번호(session), 예약상태(항상 1), 예약접수시간(선택)(sysdate yyyy-mm-dd hh:24:mi:ss), 예약타입(2:비대면), 예약시간(접수시간으로..) -->
                     <!-- 예약상세테이블: 예약상세번호(시퀀스), 예약번호(직전예약테이블번호), 의사번호(선택), 과목번호(null), 증상(null 가능), 자녀번호(null 가능) -->
                     <div class="hospital_name" th:text="${h.hospitalName}"></div>

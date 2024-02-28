@@ -23,7 +23,6 @@
                                 <p class="history_info_txt">진료내역은 최신순으로 노출됩니다.</p>
                                 <ul class="history_list">
                                 </ul>
-
                                 <div class="btn_area">
                                     <button type="button" id="viewMore" class="btn_secondary outline view_more">더보기</button>
                                 </div>
@@ -61,7 +60,24 @@
             },
             success: function(data){
                 console.log(data);
-
+                if($(data).length == 0){
+                    $("#viewMore").parent(".btn_area").hide();
+                    $(".history_info_txt").hide();
+                    let noDataDiv = [
+                        "<li>",
+                            "<div class='no_data_wrap'>",
+                                "<i class='icon no_data'></i>",
+                                "<p>진료내역이 없습니다.</p>",
+                            "</div>",
+                        "</li>"
+                    ].join("");
+                    $(".history_list").append(noDataDiv);
+                    return;
+                }
+                if($(data).length > amount){
+                    $(".history_info_txt").show();
+                    $("#viewMore").parent(".btn_area").show();
+                }
                 $(data).each(function(index, item){
                     console.log(typeof item.reviewCount);
                     const li = $("<li>");
@@ -188,7 +204,10 @@
                                                         "<li><span>진료대상</span><strong>"+memberName.text()+"</strong></li>",
                                                         "<li><span>진료과</span><strong>"+data.subjectName+"</strong></li>",
                                                         "<li><span>담당의사</span><strong>"+data.doctorName+"</strong></li>",
-                                                        "<li><span>병원명</span><a class='btn_link' href='/service/hospitalDetail?hospitalNo="+item.hospitalNo+"'><strong>"+item.hospitalName+"</strong></a></li>",
+                                                        "<li>",
+                                                            "<span>병원명</span>",
+                                                            "<a class='btn_link' href='/service/hospitalDetail?hospitalNo="+item.hospitalNo+"'><strong>"+item.hospitalName+"</strong></a>",
+                                                        "</li>",
                                                         "<li><span>증상</span><strong>"+data.symptom+"</strong></li>",
                                                     "</ul>",
                                                 "</div>",
@@ -203,6 +222,11 @@
                                     "</div>"
                                 ].join("");
                                 $("body").append(modal);
+                                if(item.reservationType == 1 && item.reservationStatus == 4){
+                                    $(".modal .btn_link").parent("li").append("<a class='btn_report' href='/member/reportHospitalFrm?reservationNo="+reservationNo+"'>신고하기</a>");
+                                }else if(item.reservationType == 2 && item.reservationStatus == 5){
+                                    $(".modal .btn_link").parent("li").append("<a class='btn_report' href='/member/reportHospitalFrm?reservationNo="+reservationNo+"'>신고하기</a>");
+                                }
                                 $("html").addClass("scroll_fixed");
                             },
                             error: function(){
@@ -278,7 +302,7 @@
                 start = start+amount;
                 currentCount = currentCount+data.length;
                 if(currentCount == totalCount){
-                    $("#viewMore").parent(".btn_area").remove();
+                    $("#viewMore").parent(".btn_area").hide();
                 }
             },
             error: function(){

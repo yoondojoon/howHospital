@@ -30,7 +30,7 @@ public class HospitalService {
 		if(!hospitalList.isEmpty()) {
 			for(Object o : hospitalList) {
 				Hospital h = (Hospital) o;
-				List subjectList = hospitalDao.searchSubjectList(h.getHospitalNo());
+				List subjectList = hospitalDao.searchSubjectNameList(h.getHospitalNo());
 				List keywordList = hospitalDao.searchKeywordList(h.getHospitalNo());
 				h.setSubjectList(subjectList);
 				h.setKeywordList(keywordList);
@@ -43,7 +43,7 @@ public class HospitalService {
 	public Hospital searchHospitalDetail(int hospitalNo) {
 		Hospital h = hospitalDao.searchHospitalDetail(hospitalNo);
 		if(h != null) {
-			List subjectList = hospitalDao.searchSubjectList(hospitalNo);
+			List subjectList = hospitalDao.searchSubjectNameList(hospitalNo);
 			List keywordList = hospitalDao.searchKeywordList(hospitalNo);
 			Time time = hospitalDao.searchHospitalTime(hospitalNo);
 			List doctorList = hospitalDao.searchSubjectDoctorList(hospitalNo);

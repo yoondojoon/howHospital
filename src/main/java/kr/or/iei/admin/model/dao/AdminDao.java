@@ -293,5 +293,12 @@ public class AdminDao {
 		return result;
 	}
 
+	public int reportHospital(int reservationNo, String reportTitle, String reportContent) {
+		String query = "insert into hospital_report_tbl values(hospital_report_seq.nextval,?,?,?,0)";
+		Object[] params = {reservationNo, reportTitle, reportContent};
+		int result=jdbc.update(query, params);
+		return result;
+	}
+
 	
 }

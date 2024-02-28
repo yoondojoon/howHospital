@@ -261,7 +261,7 @@ public class ReservationDao {
 	}
 
 	public List selectResList(int memberNo, int hospitalNo) {
-		String query = "select * from reservation_tbl where member_no=? and hospital_no=? and reservation_no not in (select reservation_no from review_tbl where member_no=? and hospital_no=?)";
+		String query = "select * from reservation_tbl where (member_no=? and hospital_no=?) and ((reservation_type=1 and reservation_status=4) or (reservation_type=2 and reservation_status=5)) and reservation_no not in (select reservation_no from review_tbl where member_no=? and hospital_no=?)";
 		Object[] params = {memberNo, hospitalNo, memberNo, hospitalNo};
 		List resList = jdbc.query(query, reservationRowMapper, params);
 		return resList;

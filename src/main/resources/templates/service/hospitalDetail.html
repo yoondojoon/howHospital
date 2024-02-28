@@ -2,9 +2,8 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <th:block th:include="common/header"></th:block>
 
-<link rel="stylesheet" href="/css/service/hospitalDetail.css">
 <link rel="stylesheet" href="/css/lib/swiper-bundle.min.css">
-
+<link rel="stylesheet" href="/css/service/hospitalDetail.css">
 <!-- container -->
 <main id="container" class="container">
 
@@ -21,9 +20,6 @@
                     <div class="banner_wrap">
                         <div class="hospitalDetail_banner">
                             <div class="swiper-wrapper">
-                                <div class="swiper-slide">
-                                    <img th:src="@{/hospital/}+@{${h.hospitalPicture}}" alt="병원사진">
-                                </div>
                                 <div class="swiper-slide">
                                     <img th:src="@{/hospital/}+@{${h.hospitalPicture}}" alt="병원사진">
                                 </div>
@@ -87,7 +83,7 @@
                                 </div>
                             </li>
                         </ul>
-                        <div class="btn_area" th:if="${session.member != null}">
+                        <div class="btn_area" th:if="${session.member != null && session.member.memberType == 1}">
                             <a th:href="@{/service/reserveContactFrm(hospitalNo=${h.hospitalNo}, hospitalName=${h.hospitalName})}" class="btn_primary">진료 예약</a>
                             <a th:href="@{/service/reserveContactlessFrm(hospitalNo=${h.hospitalNo}, hospitalName=${h.hospitalName})}" class="btn_primary outline">비대면 진료</a>
                         </div>
@@ -205,7 +201,9 @@
                                             <div class="star_wrap"><span class="star" th:style="${'width:'}+${h.ratingAvg*20}+'%'"></span></div><div class="avg" th:text="${h.ratingAvg}"></div>
                                         </div>
                                     </div>
-                                    <button type="button" th:if="${myResCount > 0 && myResCount != myReviewCount}" class="btn_primary outline btn_write" onclick="selectResList(this);">리뷰 작성하기</button>
+                                    <th:block th:if="${session.member != null}">
+                                        <button type="button" th:if="${myResCount > 0 && myResCount != myReviewCount}" class="btn_primary outline btn_write" onclick="selectResList(this);">리뷰 작성하기</button>
+                                    </th:block>
                                 </div>
                                 <div class="review_main_wrap">
                                     <div class="sorting_wrap">
@@ -260,9 +258,8 @@
 <script src="/js/lib/swiper-bundle.min.js"></script>
 <script th:inline="javascript">
 
-    console.log([[${myResCount}]]);
-    console.log([[${myReviewCount}]]);
-
+    // console.log([[${myResCount}]]);
+    // console.log([[${myReviewCount}]]);
 
     //리뷰
     const hospitalNo = [[${h.hospitalNo}]];
@@ -282,6 +279,7 @@
             "</li>"
         ].join("");
         $(".review_list").append(noDataDiv);
+        $("#viewMore").parent(".btn_area").hide();
     }
 
     $(".review_wrap select[name=review_sort]").on("change", function(){
@@ -289,11 +287,11 @@
         sortValue = $(this).val();
         currentCount = 0;
         start = 1;
-        $(".review_wrap #viewMore").show();
-        $(".review_wrap #viewMore").click();
+        $("#viewMore").parent(".btn_area").show();
+        $("#viewMore").click();
     })
 
-    $(".review_wrap #viewMore").on("click", function(){
+    $("#viewMore").on("click", function(){
         const amount = 3;
         $.ajax({
             url: "/service/selectReviewList",
@@ -317,6 +315,7 @@
                         "</li>"
                     ].join("");
                     $(".review_list").append(noDataDiv);
+                    return;
                 };
                 $(data).each(function(index, item){
                     const starWidth = item.reviewRating*20;
@@ -349,7 +348,7 @@
                 start=start+amount;
                 currentCount = currentCount+data.length;
                 if(currentCount == totalCount){
-                    $(".review_wrap #viewMore").hide();
+                    $("#viewMore").parent(".btn_area").hide();
                 }
             },
             error: function(){
@@ -357,7 +356,7 @@
             }
         });
     })
-    $(".review_wrap #viewMore").click();
+    $("#viewMore").click();
 
     //배너
     const swiper = new Swiper('.hospitalDetail_banner', {
@@ -402,6 +401,7 @@
 
     //진료시간
     const hospital = [[${h}]];
+    // console.log(hospital);
     const holiday = String(hospital.time.holiday);
     const date = new Date();
     const today = date.getDay();//0:일 ~ 6:토
@@ -431,11 +431,7 @@
         }
     })
 
-    // function like(obj){
-    //     $(obj).toggleClass("active");
-    // }
-
-    const memberNo = [[${session.member.memberNo}]];
+    //리뷰 작성 모달
     function selectResList(obj){
         $.ajax({
             url: "/service/selectResList",
@@ -444,6 +440,64 @@
             data: {hospitalNo: hospitalNo},
             success: function(data){
                 console.log(data);
+
+                const modal = $("<div class='modal lg' id='myResListModal'>");
+                const modalWrap = $("<div class='modal_wrap'>");
+                const modalHeader = $("<div class='modal_header'>");
+                const modalTitle = $("<div class='modal_title'>내 진료내역</div>");
+                const modalContainer = $("<div class='modal_container'>");
+                const modalContent = $("<div class='modal_content'>");
+                const historyList = $("<ul class='history_list'>");
+                const btnClose = $("<button type='button' onclick='closeModal(this);' class='btn_close'><span class='blind'>닫기</span></button>");
+
+                $(data).each(function(index, item){
+                    const li = $("<li>");
+                    const badgeArea = $("<div class='badge_area'>");
+                    const badge = $("<span class='badge gray'>");
+                    if(item.reservationStatus == 4){
+                        badge.text("진료완료");
+                    }else if(item.reservationStatus == 5){
+                        badge.text("수납완료");
+                    }
+                    const resType = $("<span class='res_type badge'>");
+                    if(item.reservationType == 1){
+                        resType.addClass("contact");
+                        resType.text("대면진료");
+                    }else{
+                        resType.addClass("contactless");
+                        resType.text("비대면진료");
+                    }
+                    const name = $("<span class='name'>");
+                    name.text([[${session.member.memberName}]]);
+                    badgeArea.append(badge);
+                    badgeArea.append(resType);
+                    badgeArea.append(name);
+
+                    const infoArea = $("<div class='info_area'>");
+                    const strongTag = $("<strong class='hospital_name'>");
+                    strongTag.text([[${h.hospitalName}]]);
+                    infoArea.append(strongTag);
+                    const resTime = $("<div class='res_time'>");
+                    const resSpan = $("<span>");
+                    resSpan.text(item.reserationTime);
+                    resTime.append(resSpan);
+
+                    const btnArea = $("<div class='btn_area'>");
+                    const btnReview = $("<a href='/member/myReviewFrm?reservationNo="+item.reservationNo+"' class='btn_primary outline'>리뷰 작성</a>");
+                    btnArea.append(btnReview);
+
+                    li.append(badgeArea).append(infoArea).append(resTime).append(btnArea);
+                    historyList.append(li);
+                })
+                modalContent.append(historyList);
+                modalContainer.append(modalContent);
+                modalHeader.append(modalTitle);
+                modalWrap.append(modalHeader);
+                modalWrap.append(modalContainer);
+                modalWrap.append(btnClose);
+                modal.append(modalWrap);
+                $("body").append(modal);
+                $("html").addClass("scroll_fixed");
             },
             error: function(){
                 console.log("에러");
