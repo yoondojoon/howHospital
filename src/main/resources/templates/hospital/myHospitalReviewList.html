@@ -107,22 +107,22 @@ $("#viewMore").on("click", function(){
                 badgeArea.append(resStatus).append(resType).append(memberName);
                 //리뷰정보
                 const infoArea = $("<div class='info_area'>");
-                const reviewTitle = $("<span class>"); 
+                const reviewTitle = $("<p class>"); 
                 reviewTitle.text(item.reviewTitle)
                 
                 const reviewContent = $("<p class>"); 
                 reviewContent.text(item.reviewContent);
                 
                 const reviewImg = $("<img class>");
-                reviewImg.attr("src", "/review/"+item.reviewImg)
-                infoArea.append(reviewImg);
+                reviewImg.attr("src", "/review/"+item.reviewImg);
+                reviewImg.css("width", "150px");
                 
+                infoArea.append(reviewImg);
                 infoArea.css("margin-right", "20px");
                 reviewTitle.css({"font-size": "20px",
                 				"font-weight": "bold"});
-           
                 reviewContent.css("padding-top", "10px");
-                
+
                 infoArea.append(reviewTitle);
                 infoArea.append(reviewContent);
                 //합치기
@@ -148,13 +148,13 @@ $("#viewMore").on("click", function(){
                                 "<div class='modal lg' id='detail_"+reservationNo+"'>",
                                     "<div class='modal_wrap'>",
                                         "<div class='modal_header'>",
-                                            "<div class='modal_title'>예약 상세 내역</div>",
+                                            "<div class='modal_title'>진료 상세 내역</div>",
                                         "</div>",
                                         "<div class='modal_container'>",
                                             "<div class='modal_content'>",
                                                 "<ul class='result_info'>",
                                                     "<li><span>예약일시</span><strong><span>"+item.reservation_time+"</span></strong></li>",
-                                                    "<li><span>진료대상</span><strong>"+memberName.text()+"</strong></li>",
+                                                    "<li><span>환자명</span><strong>"+memberName.text()+"</strong></li>",
                                                     "<li><span>진료과</span><strong>"+data.subjectName+"</strong></li>",
                                                     "<li><span>담당의사</span><strong>"+data.doctorName+"</strong></li>",
                                                     "<li><span>증상</span><strong>"+data.symptom+"</strong></li>",
@@ -180,7 +180,6 @@ $("#viewMore").on("click", function(){
                 })
 
                 
-            
                 //회원신고 버튼 클릭시
                 //data: 전체 리뷰
                 //item: 개별 리뷰
@@ -199,6 +198,7 @@ $("#viewMore").on("click", function(){
                             	},
                             success: function(data){
                             	alert("신고가 접수되었습니다.");
+                              	obj.remove();
                             },
                             error: function(){
                                 alert("잠시 후 다시 시도해주세요.");
