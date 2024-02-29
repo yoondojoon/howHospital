@@ -328,9 +328,6 @@
                                 "</div>",
                             "</div>",
                             "<div class='detail_cont_wrap'>",
-                                "<div class='review_thumb'>",
-                                    "<img src='/reservation/review/"+item.reviewImg+"' alt='리뷰 이미지'>",
-                                "</div>",
                                 "<div class='review_txt'>",
                                     item.reviewContent,
                                 "</div>",
@@ -342,6 +339,12 @@
                         "</li>"
                     ].join("");
                     $(".review_list").append(reviewString);
+                    if(item.reviewImg != null){
+                        const reviewThumb = $("<div class='review_thumb'>");
+                        const reviewImg = $("<img src='/reservation/review/"+item.reviewImg+"' alt='리뷰 이미지'>");
+                        reviewThumb.append(reviewImg);
+                        $(".review_list .detail_cont_wrap").preppend(reviewThumb);
+                    }
                 })
                 start=start+amount;
                 currentCount = currentCount+data.length;

@@ -30,22 +30,22 @@
 						<tr>
 							<th>이메일</th>
 							<td th:text="${member.memberEmail}">
-							</th>
+							</td>
 							<th>상태</th>
 							<td th:if="${member.memberStatus == 1}" style="color: blue; cursor:pointer;"
 								th:value="${member.memberNo}" onclick="return block(this)"
 								th:text="이용중">
-							</th>
+							</td>
 							<td th:if="${member.memberStatus == 2}" style="color: green;"
-								th:text="사업자인증 미제출">
-							</th>
+								th:text="사업자인증미제출">
+							</td>
 							<td th:if="${member.memberStatus == 3}"
 								th:value="${member.memberNo}" onclick="return unBlock(this)"
 								style="color: red; cursor: pointer;" th:text="이용정지">
-							</th>
+							</td>
 							<td th:if="${member.memberStatus == 4}" style="color: green;"
 								th:text="승인대기">
-							</th>
+							</td>
 						</tr>
 					</table>
 				</div>
