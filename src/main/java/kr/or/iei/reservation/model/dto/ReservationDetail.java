@@ -28,4 +28,5 @@ public class ReservationDetail {
 	private String doctorName;
 	private String subjectName;
 	private List<ReservationFile> fileList;
+	private int reportCount;
 }

@@ -40,7 +40,7 @@
 				<tr class="tr-content">
 					<th:block th:each="file : ${authInfo.fileList}">
 					
-						<td colspan="2"><img th:src="root+@{/hospital/} + ${file.filepath}">
+						<td colspan="2"><img th:src="root+@{/hospital/image} + ${file.filepath}">
 						</td>
 					</th:block>
 				</tr>
