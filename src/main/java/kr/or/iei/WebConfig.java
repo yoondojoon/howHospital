@@ -20,7 +20,7 @@ public class WebConfig implements WebMvcConfigurer{
 				.addResourceHandler("/doctor/**")
 				.addResourceLocations("file:///C:/Temp/hospital/doctor/");
 			registry
-				.addResourceHandler("/hospital/**")
+				.addResourceHandler("/hospital/image/**")
 				.addResourceLocations("file:///C:/Temp/hospital/hospital/");
 			registry
 			.addResourceHandler("/auth/**")
@@ -46,18 +46,18 @@ public class WebConfig implements WebMvcConfigurer{
 		
 		//로그인
 		registry.addInterceptor(new LoginInterceptor())
-		.addPathPatterns("/admin/**","/service/**","/etc/receipt","/hospital/**")
-		.excludePathPatterns("/admin/blockMsg","/hospital/hospitalMsg","/admin/loginMsg","/admin/faqList","/admin/noticeList*");
+		.addPathPatterns("/admin/**","/etc/receipt","/hospital/**")
+		.excludePathPatterns("/admin/blockMsg","/hospital/hospitalMsg","/hospital/image/*","/admin/loginMsg","/admin/faqList","/admin/noticeList*");
 		
 		//차단자 
 		registry.addInterceptor(new BlockInterceptor())
 		.addPathPatterns("/admin/**","/etc/receipt","/hospital/**")
-		.excludePathPatterns("/admin/blockMsg","/hospital/hospitalMsg","/admin/loginMsg","/admin/blockMsg","/admin/faqList","/admin/noticeList*");
+		.excludePathPatterns("/admin/blockMsg","/hospital/hospitalMsg","/hospital/image/*","/admin/loginMsg","/admin/blockMsg","/admin/faqList","/admin/noticeList*");
 		
 		//병원
 		registry.addInterceptor(new HospitalInterceptor())
 		.addPathPatterns("/hospital/**")
-		.excludePathPatterns("/hospital/hospitalMsg");
+		.excludePathPatterns("/hospital/hospitalMsg","/hospital/image/*");
 		
 		//관리자
 		registry.addInterceptor(new AdminInterceptor())
