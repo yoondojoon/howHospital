@@ -41,4 +41,4 @@
 .community .community_board_area.view .tit_wrap .title_info>.read_count::before{content:''; display:block; position:absolute; left:-10px; top:5px; width:1px; height:10px; background-color:var(--line_02);}
 .community .community_board_area.view .thumb_wrap>img{display:block; width:100%;}
 .community .community_board_area.view .content_wrap{min-height:560px; padding:24px 0; border-bottom:1px solid var(--line_02);}
-.community .community_board_area.view .content_wrap *{font-family:inherit!important; font-size:14px!important;}
+.community .community_board_area.view .content_wrap *{font-family:inherit!important; font-size:16px!important;}

@@ -2,57 +2,66 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <th:block th:include="common/header"></th:block>
 <link rel="stylesheet" href="/css/hospital/businessAuth.css">
-<script type="text/javascript" src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=3jwhpqglw9&submodules=geocoder"></script>
+<script type="text/javascript"
+	src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=3jwhpqglw9&submodules=geocoder"></script>
 
 
 <!-- container -->
 <main id="container" class="container">
 	<!-- contents -->
-<section id="contents" class="contents main">
-	<div class="hospital_wrap">
-		<div class="main_content">
-			<h2>사업자 인증</h2>
-			<form id="uploadForm" action="/hospital/businessAuthEnroll" method="post" enctype="multipart/form-data">
+	<section id="contents" class="contents main">
+		<div class="hospital_wrap">
+			<div class="main_content">
+				<h2>사업자 인증</h2>
+				<form id="uploadForm" action="/hospital/businessAuthEnroll"
+					method="post" enctype="multipart/form-data">
 
-				<div class="input_wrap">
-					<div class="input_title"><label for="id">대표자명</label></div>
-					<div class="input_item">
-						<input type="text" id="representative_name"  th:value="${session.member.memberName}" disabled>
+					<div class="input_wrap">
+						<div class="input_title">
+							<label for="id">대표자명</label>
+						</div>
+						<div class="input_item">
+							<input type="text" id="representative_name"
+								th:value="${session.member.memberName}" disabled>
+						</div>
 					</div>
-				</div>
-					<input type="hidden" name="memberNo" th:value="${session.member.memberNo}">
+					<input type="hidden" name="memberNo"
+						th:value="${session.member.memberNo}">
 
-				<div class="input_wrap">
-					<div class="input_title"><label for="id">사업자등록번호</label></div>
-					<div class="input_item no_check">
-						<input type="text" name="representativeNo" id="representative_no" placeholder="사업자등록번호를 입력하세요." required>
-						<button type="button" class="btn_primary" id="search_btn">상태조회</button>
+					<div class="input_wrap">
+						<div class="input_title">
+							<label for="id">사업자등록번호</label>
+						</div>
+						<div class="input_item no_check">
+							<input type="text" name="representativeNo" id="representative_no"
+								placeholder="사업자등록번호를 입력하세요." required>
+							<button type="button" class="btn_primary" id="search_btn">상태조회</button>
+						</div>
 					</div>
-				</div>
-			
-	
 
 
-				<div class="businessAuth_lable">사업자등록증 및 의사면허증</div>
-				<p class="businessAuth_description">사업자등록증 및 의사 면허증을 업로드해주세요.
-					(*2개 파일 업로드 제한)</p>
 
-				<div class="multiple_file">
-					<label class="file-upload">
-						<input type="file" name="upfile" id="upfile" multiple>
-					</label>
-					<ul id="fileList"></ul>
-				</div>
+					<div class="businessAuth_lable">사업자등록증 및 의사면허증</div>
+					<p class="businessAuth_description">사업자등록증 및 의사 면허증을 업로드해주세요.
+						(*2개 파일 업로드 제한)</p>
 
-				<div class="btn_area">
-					<button type="button" class="btn_secondary lg" onclick="goBack()">이전</button>
-					<button type="submit" class="btn_primary lg" id="enroll_btn">등록</button>
-				</div>
-			</form>
+					<div class="multiple_file">
+						<label class="file-upload"> <input type="file"
+							name="upfile" id="upfile" onchange="loadImg(this)" multiple>
+
+						</label>
+						<ul id="fileList"></ul>
+					</div>
+
+					<div class="btn_area">
+						<button type="button" class="btn_secondary lg" onclick="goBack()">이전</button>
+						<button type="submit" class="btn_primary lg" id="enroll_btn">등록</button>
+					</div>
+				</form>
+			</div>
 		</div>
-	</div>
-</section>
-<!--// contents -->
+	</section>
+	<!--// contents -->
 </main>
 <!--// container -->
 
@@ -106,8 +115,30 @@ document.getElementById('enroll_btn').addEventListener('click', function(event) 
 });
 
 
-	
-	
+
+function loadImg(obj) {
+	console.log(obj.files);
+	  // 파일갯수가 0개가 아니고 && 해당 파일이 정상이면
+	  if (obj.files.length != 0 && obj.files[0] != 0) {
+	    $(obj.files).each(function (index, item) { //item을 한번씩 순회하니 배열처리 제외: 바로 value 접근
+	    	const imgBox = $("<img>");
+		    imgBox.addClass("img-view");
+		    imgBox.css("width", "50%")
+		    $(".file-upload").append(imgBox);
+	      const reader = new FileReader(); //파일 정보를 읽어올 수 있는 js객체
+	      reader.readAsDataURL(obj.files[index]); //파일 정보 읽어옴 (비동기) -> ajax로 요청을 날림
+	      //readAsData는 텍스트 숫자엄청많은 걸 가져옴
+	      //파일 리더가 정보를 다읽어오고 나면 동작할 함수
+	      reader.onload = function (e) { //ajax로 요청날렸을 때 success를 위한 동작
+	        //읽어온 파일정보로 img태그의 src 값 세팅
+	        $(".img-view").eq(index).attr("src", e.target.result);
+	      }
+	    });
+	  } else {
+	    $(".img-view").eq(index).attr("src", "");
+	  }
+	}
+
 </script>
 
 

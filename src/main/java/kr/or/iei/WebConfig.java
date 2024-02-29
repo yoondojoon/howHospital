@@ -57,7 +57,7 @@ public class WebConfig implements WebMvcConfigurer{
 		//병원
 		registry.addInterceptor(new HospitalInterceptor())
 		.addPathPatterns("/hospital/**")
-		.excludePathPatterns("/hospital/hospitalMsg","/hospital/image/*");
+		.excludePathPatterns("/hospital/hospitalMsg","/hospital/image/*", "/hospital/myHospitalReviewList");
 		
 		//관리자
 		registry.addInterceptor(new AdminInterceptor())

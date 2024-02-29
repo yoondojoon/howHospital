@@ -193,7 +193,7 @@ $(document).ready(function() {
 			                <div class="input_item">
 							    <input type="text" class="doc" name="doctor_name" placeholder="이름을 입력하세요." required></li>
 								<input type="file" id="docImgInput" class="doc" name="doctor_picture"  onchange="loadImg(this);" >
-				                <button type="button" class="btn_primary outline sm deleteDoctorBtn">삭제</button>
+				                <button type="button" class="btn_primary outline sm deleteDoctorBtn" onclick="delDoc(this)">삭제</button>
 							</div>
 		                </td>
 		              </tr>
@@ -206,7 +206,7 @@ $(document).ready(function() {
 		                        <tr>
 		                            <th>경력</th>
 		                            <td>
-		                                <input type="text" class="doc" name="doctor_experience" placeholder="예시) 20.03~21.11 강서병원장" required>
+		                                <textarea class="doc" name="doctor_experience" style="width:100%; font-size:16px;" placeholder="예시) 20.03~21.11 강서병원장" required></textarea>
 		                            </td>
 		                        </tr>
 		                        
@@ -337,4 +337,6 @@ doctorExperienceInputs.forEach(input => {
 });
 
   
-    
+function delDoc(btn){
+	 $(btn).closest('.doctor_info').remove();
+};

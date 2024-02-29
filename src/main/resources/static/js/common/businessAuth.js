@@ -1,5 +1,4 @@
 
-
   for (let i = 0; i < files.length; i++) {
     const file = files[i];
     const li = document.createElement('li');
@@ -24,9 +23,9 @@
     li.appendChild(deleteBtn);
     fileList.appendChild(li);
   }
-
   updateFileCount();
-}
+
+
 
 function updateFileCount() {
   const fileList = document.getElementById('fileList');

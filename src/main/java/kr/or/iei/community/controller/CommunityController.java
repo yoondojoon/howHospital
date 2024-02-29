@@ -75,7 +75,7 @@ public class CommunityController {
 		int result = communityService.insertCommunityBoard(c, fileList);		
 		if(result == (fileList.size()+1)) {
 			model.addAttribute("titleMsg","게시물이 등록되었습니다.");
-			model.addAttribute("msg","건강 매거진 페이지에서 작성된 글을 확인하세요.");
+			model.addAttribute("msg","병원어떼 매거진 페이지에서 작성된 글을 확인하세요.");
 			model.addAttribute("loc", "/community/communityMain?reqPage=1");
 		}else {
 			model.addAttribute("titleMsg","게시물 등록에 실패했습니다.");
