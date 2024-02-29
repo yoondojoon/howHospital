@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <th:block th:include="common/header"></th:block>
-
+<link rel="stylesheet" href="/css/member/myChildAddFrm.css">
 <link rel="stylesheet" href="/css/member/myMedicalHistory.css">
 
 	<!-- container -->
@@ -9,141 +9,29 @@
 
 		<!-- contents -->
         <section id="contents" class="contents">
-            <div class="inner_wrap">
-                <h2>내 진료내역</h2>
-                <!-- <p th:if="${session.member != null}" th:text="${session.member.memberName}">세션이 있냐</p> -->
+            <div class="mypageWrap">
 
-                <div class="history_area">
-                    <div class="history_wrap">
-                        <p class="history_info_txt">진료내역은 최신순으로 노출됩니다.</p>
-                        <ul class="history_list">
-                            <!-- <li>
-                                <a href="#">
-                                    <div class="badge_area">
-                                        <span class="badge blue outline">접수대기</span>
-                                        <span class="res_type badge contact">대면진료</span>
-                                        <span class="name">홍길동</span>
-                                    </div>
-                                    <div class="info_area">
-                                        <strong class="hospital_name">강서송도병원</strong>
-                                        <div class="res_time">
-                                            <span class="res_time_date">2024-01-01</span>
-                                            <span class="res_time_day">(목)</span>
-                                            <span class="res_time_time">09:30</span>
-                                        </div>
-                                    </div>
-                                    <div class="btn_area">
-                                        <button type="button" class="btn_secondary">예약 취소</button>
-                                    </div>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <div class="badge_area">
-                                        <span class="badge red outline">예약취소</span>
-                                        <span class="res_type badge contactless">비대면진료</span>
-                                        <span class="name">홍길동</span>
-                                    </div>
-                                    <div class="info_area">
-                                        <strong class="hospital_name">강서송도병원</strong>
-                                        <div class="res_time">
-                                            <span class="res_time_date">2024-01-01</span>
-                                            <span class="res_time_day">(목)</span>
-                                            <span class="res_time_time">09:30</span>
-                                        </div>
-                                    </div>
-                                    <div class="btn_area">
-                                    </div>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <div class="badge_area">
-                                        <span class="badge blue">예약확정</span>
-                                        <span class="res_type badge contact">대면진료</span>
-                                        <span class="name">홍길동</span>
-                                    </div>
-                                    <div class="info_area">
-                                        <strong class="hospital_name">강서송도병원</strong>
-                                        <div class="res_time">
-                                            <span class="res_time_date">2024-01-01</span>
-                                            <span class="res_time_day">(목)</span>
-                                            <span class="res_time_time">09:30</span>
-                                        </div>
-                                    </div>
-                                    <div class="btn_area">
-                                        <button type="button" class="btn_secondary">예약 취소</button>
-                                    </div>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <div class="badge_area">
-                                        <span class="badge gray">진료완료</span>
-                                        <span class="res_type badge contact">대면진료</span>
-                                        <span class="name">홍길동</span>
-                                    </div>
-                                    <div class="info_area">
-                                        <strong class="hospital_name">강서송도병원</strong>
-                                        <div class="res_time">
-                                            <span class="res_time_date">2024-01-01</span>
-                                            <span class="res_time_day">(목)</span>
-                                            <span class="res_time_time">09:30</span>
-                                        </div>
-                                    </div>
-                                    <div class="btn_area">
-                                        <button type="button" class="btn_primary outline">리뷰 작성</button>
-                                    </div>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <div class="badge_area">
-                                        <span class="badge gray">진료완료</span>
-                                        <span class="res_type badge contactless">비대면진료</span>
-                                        <span class="name">홍길동</span>
-                                    </div>
-                                    <div class="info_area">
-                                        <strong class="hospital_name">강서송도병원</strong>
-                                        <div class="res_time">
-                                            <span class="res_time_date">2024-01-01</span>
-                                            <span class="res_time_day">(목)</span>
-                                            <span class="res_time_time">09:30</span>
-                                        </div>
-                                    </div>
-                                    <div class="btn_area">
-                                        <button type="button" class="btn_primary outline">수납하기</button>
-                                    </div>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <div class="badge_area">
-                                        <span class="badge gray">진료완료</span>
-                                        <span class="res_type badge contactless">비대면진료</span>
-                                        <span class="name">홍길동</span>
-                                    </div>
-                                    <div class="info_area">
-                                        <strong class="hospital_name">강서송도병원</strong>
-                                        <div class="res_time">
-                                            <span class="res_time_date">2024-01-01</span>
-                                            <span class="res_time_day">(목)</span>
-                                            <span class="res_time_time">09:30</span>
-                                        </div>
-                                    </div>
-                                    <div class="btn_area">
-                                        <button type="button" class="btn_primary">처방전 보기</button>
-                                        <button type="button" class="btn_primary outline">리뷰 작성</button>
-                                    </div>
-                                </a>
-                            </li> -->
-                        </ul>
+                <th:block th:include="member/myPageMenu"></th:block>
+                
+                <div class="myInfoWrap">
 
-                        <div class="btn_area">
-                            <button type="button" id="viewMore" class="btn_secondary outline view_more">더보기</button>
+                    <div class="myInfoBox">
+                        <h2>내 진료내역</h2>
+
+                        <div class="history_area">
+                            <div class="history_wrap">
+                                <p class="history_info_txt">진료내역은 최신순으로 노출됩니다.</p>
+                                <ul class="history_list">
+                                </ul>
+                                <div class="btn_area">
+                                    <button type="button" id="viewMore" class="btn_secondary outline view_more">더보기</button>
+                                </div>
+                            </div>
                         </div>
                     </div>
+
                 </div>
+
             </div>
         </section>
         <!--// contents -->
@@ -172,7 +60,24 @@
             },
             success: function(data){
                 console.log(data);
-
+                if($(data).length == 0){
+                    $("#viewMore").parent(".btn_area").hide();
+                    $(".history_info_txt").hide();
+                    let noDataDiv = [
+                        "<li>",
+                            "<div class='no_data_wrap'>",
+                                "<i class='icon no_data'></i>",
+                                "<p>진료내역이 없습니다.</p>",
+                            "</div>",
+                        "</li>"
+                    ].join("");
+                    $(".history_list").append(noDataDiv);
+                    return;
+                }
+                if($(data).length > amount){
+                    $(".history_info_txt").show();
+                    $("#viewMore").parent(".btn_area").show();
+                }
                 $(data).each(function(index, item){
                     console.log(typeof item.reviewCount);
                     const li = $("<li>");
@@ -299,7 +204,10 @@
                                                         "<li><span>진료대상</span><strong>"+memberName.text()+"</strong></li>",
                                                         "<li><span>진료과</span><strong>"+data.subjectName+"</strong></li>",
                                                         "<li><span>담당의사</span><strong>"+data.doctorName+"</strong></li>",
-                                                        "<li><span>병원명</span><a class='btn_link' href='/service/hospitalDetail?hospitalNo="+item.hospitalNo+"'><strong>"+item.hospitalName+"</strong></a></li>",
+                                                        "<li>",
+                                                            "<span>병원명</span>",
+                                                            "<a class='btn_link' href='/service/hospitalDetail?hospitalNo="+item.hospitalNo+"'><strong>"+item.hospitalName+"</strong></a>",
+                                                        "</li>",
                                                         "<li><span>증상</span><strong>"+data.symptom+"</strong></li>",
                                                     "</ul>",
                                                 "</div>",
@@ -314,6 +222,11 @@
                                     "</div>"
                                 ].join("");
                                 $("body").append(modal);
+                                if(item.reservationType == 1 && item.reservationStatus == 4){
+                                    $(".modal .btn_link").parent("li").append("<a class='btn_report' href='/member/reportHospitalFrm?reservationNo="+reservationNo+"'>신고하기</a>");
+                                }else if(item.reservationType == 2 && item.reservationStatus == 5){
+                                    $(".modal .btn_link").parent("li").append("<a class='btn_report' href='/member/reportHospitalFrm?reservationNo="+reservationNo+"'>신고하기</a>");
+                                }
                                 $("html").addClass("scroll_fixed");
                             },
                             error: function(){
@@ -332,7 +245,7 @@
                                 data: {reservationNo: reservationNo},
                                 success: function(data){
                                     resStatus.removeClass("blue").addClass("red outline");
-                                    resStatus.text("예약취소야");
+                                    resStatus.text("예약취소");
                                     $(obj).remove();
                                 },
                                 error: function(){
@@ -389,7 +302,7 @@
                 start = start+amount;
                 currentCount = currentCount+data.length;
                 if(currentCount == totalCount){
-                    $("#viewMore").parent(".btn_area").remove();
+                    $("#viewMore").parent(".btn_area").hide();
                 }
             },
             error: function(){

@@ -12,14 +12,14 @@ import kr.or.iei.admin.model.dto.AdminBusinessAuth;
 import kr.or.iei.admin.model.dto.AdminBusinessAuthListData;
 import kr.or.iei.admin.model.dto.Faq;
 import kr.or.iei.admin.model.dto.FaqListData;
-import kr.or.iei.admin.model.dto.HospitalReport;
-import kr.or.iei.admin.model.dto.HospitalReportListData;
 import kr.or.iei.admin.model.dto.MemberReport;
 import kr.or.iei.admin.model.dto.MemberReportListData;
 import kr.or.iei.admin.model.dto.Notice;
 import kr.or.iei.admin.model.dto.NoticeListData;
 import kr.or.iei.admin.model.dto.Review;
 import kr.or.iei.hospital.model.dto.BusinessAuth;
+import kr.or.iei.hospital.model.dto.HospitalMemberReport;
+import kr.or.iei.hospital.model.dto.HospitalMemberReportListData;
 import kr.or.iei.member.model.dto.Member;
 
 @Service
@@ -431,13 +431,13 @@ public class AdminService {
 	}
 
 
-	public HospitalReportListData selectAllHospitalReport(int reqPage) {
+	public HospitalMemberReportListData selectAllHospitalMemberReport(int reqPage) {
 		int numPerPage = 10;
 		
 		int end = reqPage*numPerPage;
 		int start = end - numPerPage + 1;
 		List list = adminDao.selectAllHospitalReport(start,end);
-		int totalCount = adminDao.selectAllHospitalReportCount();
+		int totalCount = adminDao.selectAllHospitalMemberReportCount();
 		
 		
 		int totalPage = 0;
@@ -456,7 +456,7 @@ public class AdminService {
 		String pageNavi = "<ul class='pagination box'>";
 		if(pageNo !=1) {
 			pageNavi += "<li>";
-			pageNavi += "<a class='page-item' href='/admin/manageHospitalReport?reqPage="+ (pageNo-1) +"'>";
+			pageNavi += "<a class='page-item' href='/admin/manageHospitalMemberReport?reqPage="+ (pageNo-1) +"'>";
 			pageNavi += "<span class='material-icons'>chevron_left</span>";
 			pageNavi += "</a></li>";
 		}
@@ -464,12 +464,12 @@ public class AdminService {
 		for(int i = 0;i<pageNaviSize;i++) {
 			if(pageNo == reqPage) {
 				pageNavi += "<li>";
-				pageNavi += "<a class='active' href='/admin/manageHospitalReport?reqPage="+ (pageNo) +"'>";
+				pageNavi += "<a class='active' href='/admin/manageHospitalMemberReport?reqPage="+ (pageNo) +"'>";
 				pageNavi += pageNo;
 				pageNavi += "</a></li>";
 			}else {				
 				pageNavi += "<li>";
-				pageNavi += "<a href='/admin/manageHospitalReport?reqPage="+ (pageNo) +"'>";
+				pageNavi += "<a href='/admin/manageHospitalMemberReport?reqPage="+ (pageNo) +"'>";
 				pageNavi += pageNo;
 				pageNavi += "</a></li>";
 			}
@@ -483,40 +483,47 @@ public class AdminService {
 		
 		if(pageNo <= totalPage) {
 			pageNavi += "<li>";
-			pageNavi += "<a class='page-item' href='/admin/manageHospitalReport?reqPage="+ (pageNo) +"'>";
+			pageNavi += "<a class='page-item' href='/admin/manageHospitalMemberReport?reqPage="+ (pageNo) +"'>";
 			pageNavi += "<span class='material-icons'>chevron_right</span>";
 			pageNavi += "</a></li>";
 		}
 		
 		pageNavi += "</ul>";
 		
-		HospitalReportListData hrld = new HospitalReportListData(list, pageNavi);
-		return hrld;
+		HospitalMemberReportListData hmrld = new HospitalMemberReportListData(list, pageNavi);
+		return hmrld;
 	
 	}
 
 
-	public HospitalReport selectOneHospitalReport(int reportNo) {
-		HospitalReport hr = adminDao.selectOneHospitalReport(reportNo);
-		return hr;
+	public HospitalMemberReport selectOneHospitalMemberReport(int reportNo) {
+		HospitalMemberReport hmr = adminDao.selectOneHospitalMemberReport(reportNo);
+		return hmr;
 	}
 
 
 	@Transactional
-	public int deleteHospitalReport(int reportNo) {
-		int result = adminDao.deleteHospitalReport(reportNo);
+	public int deleteHospitalMemberReport(int reportNo) {
+		int result = adminDao.deleteHospitalMemberReport(reportNo);
 		return result;
 	}
 
 	@Transactional
-	public int confirmHospitalReport(int reportNo) {
-		int result = adminDao.confirmHospitalReport(reportNo);
+	public int confirmHospitalMemberReport(int reportNo) {
+		int result = adminDao.confirmHospitalMemberReport(reportNo);
 		return result;
 	}
 
 	@Transactional
 	public int writeFaq(int memberNo, int category, String title, String content) {
 		int result = adminDao.writeFaq(memberNo, category,title,content);
+		return result;
+	}
+
+
+	@Transactional
+	public int reportHospital(int reservationNo, String reportTitle, String reportContent) {
+		int result = adminDao.reportHospital(reservationNo, reportTitle, reportContent);
 		return result;
 	}
 	

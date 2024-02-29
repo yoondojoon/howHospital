@@ -59,7 +59,7 @@
 .hospitalDetail .doctor_list .title_wrap .doctor_name{color:var(--gray_01);}
 .hospitalDetail .doctor_list .title_wrap .subject_name{margin-left:12px;}
 .hospitalDetail .doctor_list .info_wrap{padding:20px 0;}
-.hospitalDetail .doctor_list .doctor_img_wrap{width:200px; height:257px; background-color:var(--gray_07);}
+.hospitalDetail .doctor_list .doctor_img_wrap{width:200px; height:257px;}
 .hospitalDetail .doctor_list .doctor_img_wrap>img{display:block; width:100%; height:100%; object-fit:cover; object-position:center;}
 .hospitalDetail .doctor_list .doctor_info_wrap{margin-top:12px;}
 .hospitalDetail .doctor_list .info_wrap>p+p{margin-top:12px;}
@@ -71,7 +71,7 @@
 .hospitalDetail .review_wrap .top_title_wrap .review_count{margin-left:4px; color:var(--main_01); font-size:20px; font-weight:bold; line-height:41px;}
 .hospitalDetail .review_wrap .top_title_wrap .rating_wrap{display:flex; align-items:center; gap:8px;}
 .hospitalDetail .review_wrap .top_title_wrap .star_wrap{width:120px; height:24px; margin-left:16px; background:url(/images/icon_star.svg) repeat-x left top;}
-.hospitalDetail .review_wrap .top_title_wrap .star_wrap .star{display:block; width:80%; height:100%; background:url(/images/icon_star_on.svg) repeat-x left top;}
+.hospitalDetail .review_wrap .top_title_wrap .star_wrap .star{display:block; width:0%; height:100%; background:url(/images/icon_star_on.svg) repeat-x left top;}
 .hospitalDetail .review_wrap .top_title_wrap .avg{display:block; font-size:16px; font-weight:bold; line-height:1.5;}
 .hospitalDetail .review_wrap .btn_write{padding-left:36px; background:url(/images/icon_write.svg) no-repeat center left 12px / 20px;}
 .hospitalDetail .review_wrap .review_main_wrap{padding:16px 0;}
@@ -83,7 +83,9 @@
 .hospitalDetail .review_main_wrap .review_list .rating_wrap .rating{display:block; font-size:14px; font-weight:bold; line-height:20px;}
 .hospitalDetail .review_main_wrap .review_list .rating_wrap .star_wrap{width:100px; height:20px; background:url(/images/icon_star.svg) repeat-x left top;}
 .hospitalDetail .review_main_wrap .review_list .rating_wrap .star_wrap .star{display:block; width:0; height:100%; background:url(/images/icon_star_on.svg) repeat-x left top;}
-.hospitalDetail .review_list .detail_cont_wrap{height:110px; margin:12px 0; font-size:15px; line-height:1.5; overflow-y:auto;}
+.hospitalDetail .review_list .detail_cont_wrap{display:flex; gap:12px; height:110px; margin:12px 0; font-size:15px; line-height:1.5; overflow-y:auto;}
+.hospitalDetail .review_list .detail_cont_wrap .review_thumb{position:sticky; top:0; height:100%;}
+.hospitalDetail .review_list .detail_cont_wrap .review_thumb>img{display:block; width:160px; height:100%; object-fit:cover; object-position:center;}
 .hospitalDetail .review_list .detail_btm_wrap{display:flex; align-items:center; gap:20px;}
 .hospitalDetail .review_list .detail_btm_wrap>span{color:var(--gray_04); font-size:14px; line-height:1.5;}
 .hospitalDetail .review_list .detail_btm_wrap>span+span{position:relative;}
@@ -94,3 +96,11 @@
 .title_wrap{position:relative; max-width:1080px; margin:0 auto;}
 .btn_like{position:absolute; right:0; top:0; width:24px; height:24px; margin-left:auto; background:url(/images/icon_like_line.svg) no-repeat center / contain;}
 .btn_like.active{background:url(/images/icon_like_filled.svg) no-repeat center / contain;}
+
+.modal .history_list>li{display:grid; grid-template-columns:auto auto; grid-template-rows:auto auto; column-gap:12px; padding:24px; border:1px solid var(--line_02); background-color:#fff; border-radius:8px; color:var(--gray_01); transition:all 0.2s;}
+.modal .history_list>li+li{margin-top:20px;}
+.modal .info_area{margin-top:8px;}
+.modal .info_area .hospital_name{font-size:16px; line-height:1.5;}
+.modal .info_area .res_time{display:flex; gap:4px; margin-top:4px; color:var(--gray_04); font-size:14px; line-height:1.5;}
+.modal .history_list>li .btn_area{grid-row:1/4; grid-column:2/3; margin:auto 0 auto auto;}
+.modal .history_list>li .btn_area [class^=btn_]{height:41px;}

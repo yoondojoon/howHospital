@@ -14,3 +14,4 @@
 .myMedicalHistory .history_list>li .btn_area [class^=btn_]{height:41px;}
 .modal .icon{display:block; width:60px; height:60px; margin:40px auto;}
 .modal .icon.prescription{background:url(/images/icon_prescription.svg) no-repeat center / contain;}
+.btn_report{margin-left:auto; color:var(--gray_04); font-size:14px; line-height:24px; text-decoration:underline;}

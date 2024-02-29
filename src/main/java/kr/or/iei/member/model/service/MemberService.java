@@ -168,8 +168,10 @@ public class MemberService {
 		return result;
 	}
 	
+	
+	//리뷰삭제
 	@Transactional
-	public int reviewDel(int memberNo, int reviewNo) {
+	public int reviewDel( int reviewNo, int memberNo) {
 		
 		
 		int result = memberDao.reviewDel(memberNo,reviewNo);
@@ -236,6 +238,18 @@ public class MemberService {
 		
 		
 		return reviewTitle;
+	}
+
+	public List reviewList(int memberNo) {
+		
+		
+		List list = memberDao.reviewList(memberNo);
+		
+		
+		
+		
+		
+		return list;
 	}
 
 

@@ -396,7 +396,7 @@ public class MemberController {
 		int memberNo = member.getMemberNo();
 		int totalCount = reservationService.myResTotalCount(memberNo);
 		model.addAttribute("totalCount", totalCount);
-		return "/member/myMedicalHistory";
+		return "member/myMedicalHistory";
 	}
 	
 
@@ -418,41 +418,28 @@ public class MemberController {
 		
 	}
 	
-	/*
+	
 	
 	//나의 리뷰 보기
 	@GetMapping(value="/myReview")
 	public String myReview(HttpSession session, Review review ,Model model) {
 		
 		
-		int hospitalNo = review.getHospitalNo();
-		int reviewNo = review.getReviewNo();
-		
-		
-		
-		
-		
 		
 		int memberNo = (int)session.getAttribute("memberNo");
 		
+		List list = memberService.reviewList(memberNo);
 		
 		
-		System.out.println(memberNo);
+		model.addAttribute("list",list);
 		
-		
-		model.addAttribute(hospitalName,"hospitalName");
-		model.addAttribute(hospitalAddrMain,"hospitalAddrMain");
-		model.addAttribute(reviewRating, "reviewRating");
-		model.addAttribute(reviewTitle,"reviewTitle");
-		model.addAttribute(review,"review");
-		
-		
+		System.out.println(list);
 		return "/member/myReview";
 		
 		
 	}
 	
-	*/
+	
 	//나의 리뷰 작성(예약 번호 가져오기)
 	@GetMapping(value="myReviewFrm")
 	public String myReviewFrm(int reservationNo, Model model, HttpSession session) {
@@ -514,7 +501,7 @@ public class MemberController {
 	
 	@ResponseBody
 	@PostMapping(value="/reviewDel")
-	public int reviewDel(int memberNo , int reviewNo) {
+	public int reviewDel(int reviewNo, int memberNo ) {
 		
 		
 		
@@ -531,24 +518,11 @@ public class MemberController {
 		
 	}
 	
-	
-	
-
-	
-	
-	
-	/*
-
-	//내 진료내역 상세
-	@PostMapping(value="/myMedicalDetail")
-	public String myMedicalDetail(int reservationNo, Model model) {
-		ReservationDetail rd = reservationService.selectMyResDetail(reservationNo);
-		model.addAttribute("rd", rd);
-		return "/member/myMedicalDetail";
+	@GetMapping(value="/reportHospitalFrm")
+	public String reportHospitalFrm(int reservationNo, Model model) {
+		model.addAttribute("reservationNo", reservationNo);
+		return "member/reportHospitalFrm";
 	}
-
-*/
-
 }
 
 

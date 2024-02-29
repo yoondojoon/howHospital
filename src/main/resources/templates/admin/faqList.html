@@ -15,6 +15,12 @@
 	width:400px;
 }
 
+.faq-select{
+	border:1px solid black;
+	outline: #EBF7FF solid 3px;
+	border-radius:5px;
+}
+
 .swal{
 	margin:10px auto;
 	padding:0;
@@ -28,7 +34,7 @@
 	<section id="contents" class="contents adminMain">
 		<div class="inner_wrap">
 			<h2>자주묻는질문</h2>
-			<button id="writeFaq" onclick="showModal()">FAQ 작성</button>
+			<button id="writeFaq" onclick="showModal()" th:if="${session.member != null && session.member.memberType == 3}">FAQ 작성</button>
 			<th:block th:each="category : ${categoryList}">
 				<div class="accordion-item">
 					<div class="accordion-header">
@@ -71,7 +77,7 @@
             title: 'FAQ 작성',
             html:
             	'<div class="swal2-wrap">' +
-            	'<span>범주 : </span><select  class="swal2-select swal" name="category">' +
+            	'<span>범주 : </span><select  class="swal2-select swal faq-select" name="category">' +
             	'<option class="swal" value="1">회원가입 및 이용정지</option>' +
             	'<option class="swal" value="2">병원찾기</option>' +
             	'<option class="swal" value="3">커뮤니티</option>' +

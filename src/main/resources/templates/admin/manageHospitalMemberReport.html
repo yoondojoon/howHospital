@@ -23,24 +23,24 @@
 			</button>
 			<table class="btl">
 				<tr class="tr-header">
-					<th style="width: 10%;">선택</th>
-					<th style="width: 10%;">번호</th>
-					<th style="width: 40%;">신고제목</th>
-					<th style="width: 20%;">피신고자</th>
+					<th style="width: 5%;">선택</th>
+					<th style="width: 15%;">번호</th>
+					<th style="width: 40%;">이름</th>
+					<th style="width: 20%;">신고일자</th>
 					<th style="width: 20%;">처리상태</th>
 				</tr>
-				<tr class="tr-content" th:each="report : ${hospitalReportList}">
+				<tr class="tr-content" th:each="report : ${hospitalMemberReportList}">
 					<td>
 						<input style="appearance:auto; position:relative; width:20px;height:20px; left:40px;" type="checkbox" name="clear" class="chk"> 
 					</td>
-					<td name="reportNo" th:text="${report.reportNo}"></td>
+					<td name="reportNo" th:text="${report.repoNo}"></td>
 					<td name="noticeTitle">
-						<a th:href="@{/admin/hospitalReportDetail(reportNo=${report.reportNo})}" th:text="${report.reportTitle}"></a>
+						<a th:href="@{/admin/hospitalReportDetail(reportNo=${report.repoNo})}" th:text="${report.memberName}"></a>
 					</td>
-					<td name="hospitalName" th:text="${report.hospitalName}"></td>
+					<td name="repoDate" th:text="${report.repoDate}"></td>
 					<td name="reportStatus">
-						<span th:if="${report.reportStatus == 0}">미처리</span> 
-						<span th:if="${report.reportStatus == 1}">처리</span>
+						<span th:if="${report.reviewReportStatus == 0}">미처리</span> 
+						<span th:if="${report.reviewReportStatus == 1}">처리</span>
 					</td>
 				</tr>
 			</table>

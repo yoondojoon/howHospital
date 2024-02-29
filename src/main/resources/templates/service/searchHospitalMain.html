@@ -45,11 +45,11 @@
 <!-- js 링크 -->
 <script type="text/javascript" src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=bizfvb77ie"></script>
 <script>
-$(function(){
-	if($(".search_input").val() != ""){
-		$(".btn_search").eq(1).click();		
-	}
-});
+	$(function(){
+		if($(".search_input").val() != ""){
+			$(".btn_search").eq(1).click();		
+		}
+	});
 	//엔터키 이벤트
 	$(".search_input").on("keyup", function (e) {
 		if (e.keyCode == 13) {
@@ -76,6 +76,8 @@ $(function(){
 			data: {keyword: keyword},
 			success: function (hospitalList) {
 				$(".hospital_list").empty();
+				$(window).scrollTop($(".search_area").offset().top - 72);
+				
 				$(markerArr).each(function (index, item) {
 					item.setMap(null);
 				})
@@ -93,8 +95,8 @@ $(function(){
 				$(".hospital_list_wrap .no_data_wrap").hide();
 				$(".total_count").show();
 				const list = $("<ul class='hospital_list'>");
+				
 				$(hospitalList).each(function (index, item) {
-					$(window).scrollTop($(".search_area").offset().top - 72);
 
 					const latlng = new naver.maps.LatLng(hospitalList[0].lat, hospitalList[0].lng);
 					map.setCenter(latlng);

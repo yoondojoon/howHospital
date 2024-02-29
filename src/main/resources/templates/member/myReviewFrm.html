@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
     <title>나의 리뷰 작성하기</title>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="/css/member/myReviewFrm.css">
 </head>
+
 <body>
     <header th:include="common/header"></header>
 
@@ -40,40 +42,40 @@
 
                         <form action="/member/submitReview" method="post" enctype="multipart/form-data">
                             <div class="hospitalInfo">
-                               <div id="hBox"> 
-                                <span class="material-icons" id="building">domain_add</span>
-                               
-                                <div th:each="hospital : ${hospital}">
-                                    <span class= "hName" th:text="${hospital.hospitalName}"></span>
-                                </div>
-                                <div class="star-wrap star-wrap2">
-                                    <span class="material-icons">star</span>
-                                    <span class="material-icons">star</span>
-                                    <span class="material-icons">star</span>
-                                    <span class="material-icons">star</span>
-                                    <span class="material-icons">star</span>
-                                    <div class="star-on">
-                                        <div class="star-wrap star-on-wrap">
-                                            <span class="material-icons">star</span>
-                                            <span class="material-icons">star</span>
-                                            <span class="material-icons">star</span>
-                                            <span class="material-icons">star</span>
-                                            <span class="material-icons">star</span>
+                                <div id="hBox">
+                                    <span class="material-icons" id="building">domain_add</span>
+
+                                    <div th:each="hospital : ${hospital}">
+                                        <span class="hName" th:text="${hospital.hospitalName}"></span>
+                                    </div>
+                                    <div class="star-wrap star-wrap2">
+                                        <span class="material-icons">star</span>
+                                        <span class="material-icons">star</span>
+                                        <span class="material-icons">star</span>
+                                        <span class="material-icons">star</span>
+                                        <span class="material-icons">star</span>
+                                        <div class="star-on">
+                                            <div class="star-wrap star-on-wrap">
+                                                <span class="material-icons">star</span>
+                                                <span class="material-icons">star</span>
+                                                <span class="material-icons">star</span>
+                                                <span class="material-icons">star</span>
+                                                <span class="material-icons">star</span>
+                                            </div>
                                         </div>
                                     </div>
+
+                                    <input type="text" id="score" name="reviewRating" placeholder="입력">
+                                    <button id="btn" class="btn_primary" type="button">평점입력</button>
                                 </div>
-                              
-                                <input type="text" id="score" name="reviewRating" placeholder="입력">
-                                <button id="btn" class="btn_primary" type="button">평점입력</button>
                             </div>
-						</div>
-						
-							<input type="hidden" name="hospitalNo" th:value="${hospitalNo}">
-							<input type="hidden" name="memberNo" th:value="${memberNo}">
-							<input type="hidden" name="reservationNo" th:value="${reservationNo}">
-                            
-                            
-                            
+
+                            <input type="hidden" name="hospitalNo" th:value="${hospitalNo}">
+                            <input type="hidden" name="memberNo" th:value="${memberNo}">
+                            <input type="hidden" name="reservationNo" th:value="${reservationNo}">
+
+
+
 
                             <div class="reviewtitle">
                                 <h3>상세한 리뷰를 써주세요</h3>
@@ -117,7 +119,7 @@
     <!--// container -->
 
     <footer th:include="common/footer"></footer>
-    
+
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         function loadImg(obj) {
@@ -151,14 +153,14 @@
             }
         });
 
-        $(document).ready(function() {
+        $(document).ready(function () {
             // 페이지 로드 시 별점 조회하여 채워진 별표 표시
             var starRating = parseInt($("#score").val()) || 0; // 널값이면 0으로 처리
             fillStars(starRating);
         });
 
         // 별점이 인풋에서 변경될 때 별표 채우기
-        $("#score").on("input", function() {
+        $("#score").on("input", function () {
             var score = $(this).val();
             // 입력된 값이 숫자이고 0에서 5 사이의 값인지 확인하여 범위를 벗어나면 0으로 설정
             if (/^[0-5]$/.test(score)) {
@@ -172,10 +174,11 @@
         function fillStars(starRating) {
             $(".star-on").css("width", starRating * 30 + "px");
         }
-        
-        
-        
-        
+
+
+
+
     </script>
 </body>
+
 </html>

@@ -171,4 +171,9 @@ public class ReservationService {
 		return result;
 	}
 	
+	public List selectResList(int memberNo, int hospitalNo) {
+		List resList = reservationDao.selectResList(memberNo, hospitalNo);
+		return resList;
+	}
+	
 }

@@ -11,6 +11,7 @@ import kr.or.iei.hospital.model.dto.Hospital;
 import kr.or.iei.hospital.model.dto.HospitalRowMapper;
 import kr.or.iei.member.model.dto.Child;
 import kr.or.iei.member.model.dto.ChildRowMapper;
+import kr.or.iei.member.model.dto.ForReviewRowMapper;
 import kr.or.iei.member.model.dto.Member;
 import kr.or.iei.member.model.dto.MemberRowMapper;
 import kr.or.iei.member.model.dto.MyReviewRowMapper;
@@ -37,6 +38,8 @@ public class MemberDao {
 	@Autowired
 	public ReservationRowMapper reservationRowMapper;
 	
+	@Autowired
+	public ForReviewRowMapper forReviewRowMapper;
 
 	//로그인
 
@@ -222,7 +225,7 @@ public class MemberDao {
 		return result;
 	}
 
-	public int reviewDel(int memberNo, int reviewNo) {
+	public int reviewDel( int reviewNo,int memberNo) {
 		
 		
 		String query = "delete from review_tbl where member_no=? and review_no=?";
@@ -312,6 +315,20 @@ public class MemberDao {
 		String reviewTitle = jdbc.queryForObject(query,String.class, reviewNo);
 		
 		return reviewTitle;
+	}
+
+	public List reviewList(int memberNo) {
+		
+		String query = "select review_no, r.member_no , review_title, review_content, review_rating, review_date ,review_img,hospital_name, hospital_addr_main from review_tbl r join hospital_tbl h on (r.hospital_no = h.hospital_no ) where r.member_no=?";
+
+		
+		Object[] params = {memberNo};
+		
+		List list = jdbc.query(query, forReviewRowMapper, params);
+		
+		
+		
+		return list;
 	}
 
 

@@ -16,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import jakarta.servlet.http.HttpServletResponse;
 import kr.or.iei.FileUtils;
+import kr.or.iei.admin.model.service.AdminService;
 import kr.or.iei.hospital.model.dto.Hospital;
 import kr.or.iei.hospital.model.dto.PrescriptionFile;
 import kr.or.iei.hospital.model.service.HospitalService;
@@ -36,7 +37,12 @@ public class ServiceController {
 	private MemberService memberService;
 	
 	@Autowired
+	private AdminService adminService;
+	
+	@Autowired
 	private ReservationService reservationService;
+	
+	@Autowired
 	
 	@Value("${file.root}")
 	private String root;
@@ -50,7 +56,7 @@ public class ServiceController {
 	@GetMapping(value="/searchHospitalMain")
 	public String searchHospitalMain(String keyword, Model model) {	
 		model.addAttribute("keyword", keyword);
-		return "/service/searchHospitalMain";
+		return "service/searchHospitalMain";
 	}
 	
 	@ResponseBody
@@ -71,7 +77,7 @@ public class ServiceController {
 			model.addAttribute("myReviewCount", myReviewCount);
 		}
 		model.addAttribute("h", h);
-		return "/service/hospitalDetail";
+		return "service/hospitalDetail";
 	}
 	
 	@ResponseBody
@@ -87,7 +93,7 @@ public class ServiceController {
 		h.setHospitalNo(hospitalNo);
 		h.setHospitalName(hospitalName);
 		model.addAttribute("h", h);
-		return "/service/reserveContactFrm";
+		return "service/reserveContactFrm";
 	}
 	
 	@ResponseBody
@@ -103,16 +109,16 @@ public class ServiceController {
 		if(result > 0) {
 			model.addAttribute("titleMsg","예약이 접수되었습니다.");
 			model.addAttribute("titleSub","마이페이지에서 예약 내역을 확인하세요.");
-			model.addAttribute("hospitalName","<li><span>예약한 병원:</span><strong>"+hospitalName+"</strong></li>");
-			model.addAttribute("reservationTime","<li><span>예약 일시:</span><strong>"+r.getReservationTime()+"</strong></li>");
-			model.addAttribute("memberName","<li><span>접수자 성함:</span><strong>"+memberName+"</strong></li>");
+			model.addAttribute("hospitalName","<span>예약한 병원:</span><strong>"+hospitalName+"</strong>");
+			model.addAttribute("reservationTime","<span>예약 일시:</span><strong>"+r.getReservationTime()+"</strong>");
+			model.addAttribute("memberName","<span>접수자 성함:</span><strong>"+memberName+"</strong>");
 			model.addAttribute("loc","/service/hospitalDetail?hospitalNo="+r.getHospitalNo());
 		}else {
 			model.addAttribute("titleMsg","예약에 실패했습니다.");
 			model.addAttribute("titleSub","관리자에게 문의하세요.");
 			model.addAttribute("loc","/");			
 		}
-		return "/common/modalMsg";
+		return "common/modalMsg";
 	}
 	
 	@GetMapping(value="/reserveContactlessFrm")
@@ -121,7 +127,7 @@ public class ServiceController {
 		h.setHospitalNo(hospitalNo);
 		h.setHospitalName(hospitalName);
 		model.addAttribute("h", h);
-		return "/service/reserveContactlessFrm";
+		return "service/reserveContactlessFrm";
 	}
 	
 	@PostMapping(value="/reserveContactless")
@@ -153,7 +159,7 @@ public class ServiceController {
 			model.addAttribute("titleSub","관리자에게 문의하세요.");
 			model.addAttribute("loc","/");			
 		}
-		return "/common/modalMsg";
+		return "common/modalMsg";
 	}
 	
 	@ResponseBody
@@ -190,6 +196,33 @@ public class ServiceController {
 		fileUtils.downloadFile(savepath, file.getPrescriptionName(), file.getPrescriptionPath(), response);
 		System.out.println(file.getPrescriptionName());
 		System.out.println(file.getPrescriptionPath());
+	}
+	
+	@ResponseBody
+	@GetMapping(value="/selectResList")
+	public List selectResList(int hospitalNo, @SessionAttribute(required=false) Member member) {
+		if(member != null) {
+			int memberNo = member.getMemberNo();
+			List resList = reservationService.selectResList(memberNo, hospitalNo);
+			return resList;
+		}else {
+			return null;
+		}
+	}
+	
+	@PostMapping(value="/reportHospital")
+	public String reportHospital(int reservationNo, String reportTitle, String reportContent, Model model) {
+		int result = adminService.reportHospital(reservationNo, reportTitle, reportContent);
+		if(result > 0) {
+			model.addAttribute("titleMsg","신고가 접수되었습니다.");
+			model.addAttribute("msg","메인페이지로 돌아갑니다.");
+			model.addAttribute("loc","/");
+		}else {
+			model.addAttribute("titleMsg","신고 접수에 실패했습니다.");
+			model.addAttribute("msg","관리자에게 문의하세요.");
+			model.addAttribute("loc","/");			
+		}
+		return "common/modalMsg";
 	}
 }
 
