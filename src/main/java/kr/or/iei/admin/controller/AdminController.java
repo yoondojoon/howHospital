@@ -109,7 +109,7 @@ public class AdminController {
 		} else {
 			System.out.println("삭제실패");
 		}
-		return "redirect:/admin/manageReport?reqPage=1";
+		return "redirect:/admin/manageHospitalMemberReport?reqPage=1";
 	}
 
 
