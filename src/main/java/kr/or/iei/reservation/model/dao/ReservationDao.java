@@ -196,7 +196,8 @@ public class ReservationDao {
 				"substr(reg_reservation,instr(reg_reservation,' ',1,1)+1) reg_time,\r\n" + 
 				"nvl((select doctor_name from doctor_tbl where doctor_no in(select doctor_no from reservation_detail_tbl where reservation_no=r.reservation_no)),'미정') doctor_name,\r\n" + 
 				"nvl((select subject_name from subject_tbl where subject_no in (select subject_no from reservation_detail_tbl where reservation_no=r.reservation_no)),(select subject_name from subject_tbl where subject_no in (select subject_no from doctor_tbl where doctor_no in (select doctor_no from reservation_detail_tbl where reservation_no=r.reservation_no)))) subject_name,\r\n" + 
-				"nvl((select symptom from reservation_detail_tbl where reservation_no=r.reservation_no),' ') symptom\r\n" + 
+				"nvl((select symptom from reservation_detail_tbl where reservation_no=r.reservation_no),' ') symptom,\r\n" + 
+				"(select count(*) from hospital_report_tbl where reservation_no=r.reservation_no) report_count\r\n" + 
 				"from reservation_tbl r where reservation_no=?";
 		Object[] params = {reservationNo};
 		List list = jdbc.query(query, myReservationDetailRowMapper, params);

@@ -222,9 +222,9 @@
                                     "</div>"
                                 ].join("");
                                 $("body").append(modal);
-                                if(item.reservationType == 1 && item.reservationStatus == 4){
+                                if(item.reservationType == 1 && item.reservationStatus == 4 && data.reportCount == 0){
                                     $(".modal .btn_link").parent("li").append("<a class='btn_report' href='/member/reportHospitalFrm?reservationNo="+reservationNo+"'>신고하기</a>");
-                                }else if(item.reservationType == 2 && item.reservationStatus == 5){
+                                }else if(item.reservationType == 2 && item.reservationStatus == 5 && data.reportCount == 0){
                                     $(".modal .btn_link").parent("li").append("<a class='btn_report' href='/member/reportHospitalFrm?reservationNo="+reservationNo+"'>신고하기</a>");
                                 }
                                 $("html").addClass("scroll_fixed");

@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class MemberReportListData {
+public class HospitalReportListData {
 	private List list;
 	private String pageNavi;
 }

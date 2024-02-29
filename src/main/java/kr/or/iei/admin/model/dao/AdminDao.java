@@ -10,8 +10,8 @@ import kr.or.iei.admin.model.dto.AdminBusinessAuth;
 import kr.or.iei.admin.model.dto.AdminBusinessAuthRowMapper;
 import kr.or.iei.admin.model.dto.Faq;
 import kr.or.iei.admin.model.dto.FaqRowMapper;
-import kr.or.iei.admin.model.dto.MemberReport;
-import kr.or.iei.admin.model.dto.MemberReportRowMapper;
+import kr.or.iei.admin.model.dto.HospitalReport;
+import kr.or.iei.admin.model.dto.HospitalReportRowMapper;
 import kr.or.iei.admin.model.dto.Notice;
 import kr.or.iei.admin.model.dto.NoticeRowMapper;
 import kr.or.iei.admin.model.dto.Review;
@@ -33,13 +33,8 @@ public class AdminDao {
 	private BusinessAuthRowMapper baRowMapper;
 	
 	@Autowired
-	private MemberRowMapper mRowMapper;
-	
-	@Autowired
 	private NoticeRowMapper noticeRowMapper;
 	
-	@Autowired
-	private MemberReportRowMapper memberReportRowMapper;
 	
 	@Autowired
 	private AdminBusinessAuthRowMapper abaRowMapper;
@@ -51,10 +46,17 @@ public class AdminDao {
 	private FaqRowMapper faqRowMapper;
 	
 	@Autowired
+	private MemberRowMapper mRowMapper;
+	
+	@Autowired
 	private ReviewRowMapper reviewRowMapper;
 	
 	@Autowired
 	private HospitalMemberReportRowMapper hmrRowMapper;
+	
+	@Autowired
+	private HospitalReportRowMapper hrRowMapper;
+	
 
 	public List selectAllNotice(int start, int end) {
 		String query = "SELECT  * FROM (SELECT ROWNUM AS RNUM, N.* FROM (SELECT NOTICE_NO, MEMBER_TBL.MEMBER_NO, NOTICE_TITLE, NOTICE_CONTENT, READ_COUNT, REQ_DATE, MEMBER_NAME FROM MEMBER_TBL RIGHT OUTER JOIN NOTICE_TBL ON MEMBER_TBL.MEMBER_NO = NOTICE_TBL.MEMBER_NO ORDER BY NOTICE_NO DESC)N) WHERE RNUM BETWEEN ? AND ?";
@@ -118,18 +120,6 @@ public class AdminDao {
 		return result;
 	}
 
-	public List selectAllMemberReport(int start, int end) {
-		String query = "SELECT  * FROM (SELECT ROWNUM AS RNUM, N.* FROM (SELECT report_NO, MEMBER_TBL.MEMBER_NO, board_no, report_title, report_content, report_status, MEMBER_NAME FROM MEMBER_TBL RIGHT OUTER JOIN Member_Report_TBL ON MEMBER_TBL.MEMBER_NO = Member_Report_TBL.MEMBER_NO ORDER BY Report_NO DESC)N) WHERE RNUM BETWEEN ? AND ?";
-		Object[] params = {start, end};
-		List list = jdbc.query(query, memberReportRowMapper, params);
-		return list;
-	}
-
-	public int selectAllMemberReportCount() {
-		String query = "select count(*) from Member_report_tbl";
-		int totalCount = jdbc.queryForObject(query, Integer.class);
-		return totalCount;
-	}
 
 	public int deleteChk(int reportNo) {
 		String query = "delete from member_report_tbl where report_no = ?";
@@ -138,12 +128,6 @@ public class AdminDao {
 		return result;
 	}
 
-	public MemberReport searchReportDetail(int reportNo) {
-		String query = "SELECT report_NO, MEMBER_TBL.MEMBER_NO, board_no, report_title, report_content, report_status, MEMBER_NAME FROM MEMBER_TBL RIGHT OUTER JOIN Member_Report_TBL ON MEMBER_TBL.MEMBER_NO = Member_Report_TBL.MEMBER_NO WHERE report_no= ?";
-		Object[] params = {reportNo};
-		MemberReport mr = jdbc.queryForObject(query, memberReportRowMapper,params);
-		return mr;
-	}
 
 	public int deleteReport(int reportNo) {
 		String query = "delete from member_report_tbl where report_no=?";
@@ -252,7 +236,7 @@ public class AdminDao {
 		return result;
 	}
 
-	public List selectAllHospitalReport(int start, int end) {
+	public List selectAllHospitalMemberReport(int start, int end) {
 		String query ="SELECT * FROM (SELECT ROWNUM AS RNUM, N.* FROM(SELECT REPO_NO, MEMBER_TBL.MEMBER_NO, MEMBER_NAME, REPORT_REASON, REVIEW_NO, REVIEW_REPORT_STATUS, REPO_DATE FROM HOSPITAL_MEMBER_REPORT_TBL JOIN MEMBER_TBL ON HOSPITAL_MEMBER_REPORT_TBL.MEMBER_NO = MEMBER_TBL.MEMBER_NO ORDER BY REPO_NO DESC)N)WHERE RNUM BETWEEN ? AND ?";
 		Object[] params = {start, end};
 		List list = jdbc.query(query, hmrRowMapper, params);
@@ -300,5 +284,32 @@ public class AdminDao {
 		return result;
 	}
 
+	public int authConfirmFail(BusinessAuth ba) {
+		String query = "update member_tbl set member_status=2 where member_no = ?";
+		Object[] params = {ba.getMemberNo()};
+		int result = jdbc.update(query,params);
+		return result;
+	}
 	
+	public List selectAllHospitalReport(int start, int end) {
+		String query ="SELECT * FROM (SELECT ROWNUM AS RNUM, N.* FROM(SELECT REPORT_NO, REPORT_TITLE, REPORT_CONTENT,REPORT_STATUS,J_TBL.MEMBER_NO, HOSPITAL_NAME FROM(SELECT * FROM HOSPITAL_REPORT_TBL JOIN RESERVATION_TBL ON HOSPITAL_REPORT_TBL.RESERVATION_NO = RESERVATION_TBL.RESERVATION_NO) J_TBL JOIN HOSPITAL_TBL ON J_TBL.MEMBER_NO = HOSPITAL_TBL.MEMBER_NO ORDER BY REPORT_NO DESC)N) WHERE RNUM BETWEEN ? AND ?";
+		Object[] params = {start, end};
+		List list = jdbc.query(query, hrRowMapper,params);
+		return list;
+	}
+	
+	
+	public int selectAllHospitalReportCount() {
+		String query="select count(*) from hospital_report_tbl";
+		int result = jdbc.queryForObject(query, Integer.class);
+		return result;
+	}
+
+	public HospitalReport selectOneHospitalReport(int reportNo) {
+		String query = "SELECT REPORT_NO, REPORT_TITLE, REPORT_CONTENT,REPORT_STATUS,J_TBL.MEMBER_NO, HOSPITAL_NAME FROM(SELECT * FROM HOSPITAL_REPORT_TBL JOIN RESERVATION_TBL ON HOSPITAL_REPORT_TBL.RESERVATION_NO = RESERVATION_TBL.RESERVATION_NO) J_TBL JOIN HOSPITAL_TBL ON J_TBL.MEMBER_NO = HOSPITAL_TBL.MEMBER_NO WHERE REPORT_NO = ?";
+		Object[] params = {reportNo};
+		HospitalReport hr = jdbc.queryForObject(query, hrRowMapper, params);
+		System.out.println(hr);
+		return hr;
+	}
 }

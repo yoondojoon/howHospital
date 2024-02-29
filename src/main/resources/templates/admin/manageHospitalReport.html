@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<th:block th:include="common/header"></th:block>
+
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+	rel="stylesheet">
+
+<link rel="stylesheet" href="/css/admin/adminMain.css">
+
+
+<!-- container -->
+<main id="container" class="container">
+
+	<!-- contents -->
+	<section id="contents" class="contents adminMain">
+		<div class="inner_wrap">
+			<h2>신고관리</h2>
+		</div>
+		<div class="inner_wrap">
+			<button type="button" class="btn_primary outline lg" name="clear"
+				id="clear" style="cursor: pointer;">선택 신고 일괄삭제</button>
+			<table class="btl">
+				<tr class="tr-header">
+					<th style="width: 10%;">선택</th>
+					<th style="width: 10%;">번호</th>
+					<th style="width: 40%;">신고제목</th>
+					<th style="width: 20%;">피신고자</th>
+					<th style="width: 20%;">처리상태</th>
+				</tr>
+				<tr class="tr-content" th:each="report : ${hospitalReportList}">
+					<td><input
+						style="appearance: auto; position: relative; width: 20px; height: 20px; left: 40px;"
+						type="checkbox" name="clear" class="chk"></td>
+					<td name="reportNo" th:text="${report.reportNo}"></td>
+					<a
+						th:href="@{/admin/hospitalReportDetail(reportNo=${report.reportNo})}"
+						th:text="${report.reportTitle}"></a>
+					<td name="hospitalName" th:text="${report.hospitalName}"></td>
+					<td name="reportStatus"><span
+						th:if="${report.reportStatus == 0}">미처리</span> <span
+						th:if="${report.reportStatus == 1}">처리</span></td>
+				</tr>
+			</table>
+
+
+			<div id="pageNavi" class="pagination" th:utext="${pageNavi}"></div>
+		</div>
+	</section>
+	<!--// contents -->
+
+</main>
+<!--// container -->
+
+
+<!-- js 링크 -->
+<script>
+	$("#clear").click(
+			function() {
+
+				//선택한 행 전부 담을 배열
+				var deleteList = [];
+
+				if ($('.chk:checked').length == 0) {
+					alert("삭제할 신고를 선택해주세요");
+				} else {
+					$(".chk:checked").each(
+							function(i) {
+
+								var reportNo = $(this).parents('tr').find(
+										"[name=reportNo]").text();
+
+								//param 배열에 reportNo을 담는다.
+								deleteList.push(reportNo);
+							});
+				}
+				console.log(deleteList, typeof deleteList);
+				location.href = "/admin/deleteChk?deleteList="
+						+ deleteList.join("/");
+
+			});
+</script>
+
+<th:block th:include="common/footer"></th:block>

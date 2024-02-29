@@ -26,7 +26,7 @@ public class ReservationService {
 		//의사 정보 가져오기
 		List doctorList = reservationDao.selectDoctorInfo(memberNo);
 		//게시물 수 지정
-		int numPerPage = 8;
+		int numPerPage = 6;
 		//시작 페이지 / 끝페이지
 		int endPage = reqPage * numPerPage;
 		int startPage = endPage - numPerPage + 1;
