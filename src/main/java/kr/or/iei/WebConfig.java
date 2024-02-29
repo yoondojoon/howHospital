@@ -57,12 +57,12 @@ public class WebConfig implements WebMvcConfigurer{
 		//병원
 		registry.addInterceptor(new HospitalInterceptor())
 		.addPathPatterns("/hospital/**")
-		.excludePathPatterns("/hospital/hospitalMsg","/hospital/image/*");
+		.excludePathPatterns("/hospital/hospitalMsg","/hospital/image/*", "/hospital/myHospitalReviewList");
 		
 		//관리자
 		registry.addInterceptor(new AdminInterceptor())
 		.addPathPatterns("/admin/**")
-		.excludePathPatterns("/admin/blockMsg","/admin/loginMsg","/admin/blockMsg","/admin/faqList","/admin/noticeList*");
+		.excludePathPatterns("/admin/blockMsg","/admin/manageMember","/admin/loginMsg","/admin/blockMsg","/admin/faqList","/admin/noticeList*");
 		
 	}
 }

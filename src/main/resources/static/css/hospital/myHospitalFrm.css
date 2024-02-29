@@ -188,7 +188,9 @@ table th, table td{
 	width:100%;
 }
 
-
+.doctors th, .doctors td {
+  vertical-align:middle;
+}
 
 .input_value{
 	background-color:var(--gray_07);

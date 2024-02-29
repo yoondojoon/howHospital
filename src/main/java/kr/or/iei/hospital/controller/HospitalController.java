@@ -359,7 +359,7 @@ public class HospitalController {
 		return reservationInfo;
 	}
 	//내 진료내역 보기= 동기
-	@GetMapping(value="/myHospitalReviewList")
+	@RequestMapping(value="/myHospitalReviewList")
 	public String myMedicalHistory(@SessionAttribute(required=false) Member member, Model model) {
 		int memberNo = member.getMemberNo();
 		int totalCount = hospitalService.myReviewTotalCount(memberNo);
@@ -381,7 +381,7 @@ public class HospitalController {
 	
 	
 	@ResponseBody
-	@PostMapping("/hospitalMemberReport")
+	@RequestMapping("/hospitalMemberReport")
 	public int hospitalMemberReport(String goodByeReason, int memberNo, int hospitalNo, int reviewNo) {
 		System.out.println("컨트롤러: "+goodByeReason+ memberNo+ hospitalNo+reviewNo);
 		int hospitalMemberReport = hospitalService.hospitalMemberReport(goodByeReason, memberNo, hospitalNo, reviewNo);
