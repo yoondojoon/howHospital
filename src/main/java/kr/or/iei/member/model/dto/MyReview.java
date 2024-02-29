@@ -18,7 +18,7 @@ public class MyReview {
 	private String reviewDate;
 	private String reviewImg;
 	private String reservation_time;
-	
+	private String memberName;
 	private String hospitalName;
 	private String hospitalAddrMain;
 	
