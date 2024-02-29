@@ -34,7 +34,7 @@
 						<input style="appearance:auto; position:relative; width:20px;height:20px; left:0px" type="checkbox" name="clear" class="chk"> 
 					</td>
 					<td name="reportNo" th:text="${report.repoNo}"></td>
-					<td name="noticeTitle">
+					<td name="reportSTitle">
 						<a th:href="@{/admin/hospitalReportDetail(reportNo=${report.repoNo})}" th:text="${report.memberName}"></a>
 					</td>
 					<td name="repoDate" th:text="${report.repoDate}"></td>
