@@ -75,7 +75,7 @@ public class CommunityController {
 		int result = communityService.insertCommunityBoard(c, fileList);		
 		if(result == (fileList.size()+1)) {
 			model.addAttribute("titleMsg","게시물이 등록되었습니다.");
-			model.addAttribute("msg","병원어떼 매거진 페이지에서 작성된 글을 확인하세요.");
+			model.addAttribute("msg","병원어때 매거진 페이지에서 작성된 글을 확인하세요.");
 			model.addAttribute("loc", "/community/communityMain?reqPage=1");
 		}else {
 			model.addAttribute("titleMsg","게시물 등록에 실패했습니다.");
@@ -88,10 +88,29 @@ public class CommunityController {
 	@GetMapping(value="/communityView")
 	public String communityView(int boardNo, @SessionAttribute(required=false) Member member, Model model) {
 		int memberNo = 0;
+		Community c = communityService.selectOneBoard(boardNo);
 		if(member != null) {
 			memberNo = member.getMemberNo();
 		}
-		Community c = communityService.selectOneBoard(boardNo);
+		if(c == null) {
+			model.addAttribute("titleMsg","조회 실패");
+			model.addAttribute("msg","이미 삭제된 게시물입니다.");
+			model.addAttribute("loc", "/community/communityMain?reqPage=1");
+			return "common/modalMsg";
+		}else {
+			c.setMemberNo(memberNo);
+			model.addAttribute("c", c);
+			return "community/communityView";
+		}
+	}
+	
+	@GetMapping(value="/communityView2")
+	public String communityView2(int boardNo, @SessionAttribute(required=false) Member member, Model model) {
+		int memberNo = 0;
+		Community c = communityService.getOneBoard(boardNo);
+		if(member != null) {
+			memberNo = member.getMemberNo();
+		}
 		if(c == null) {
 			model.addAttribute("titleMsg","조회 실패");
 			model.addAttribute("msg","이미 삭제된 게시물입니다.");
@@ -168,25 +187,7 @@ public class CommunityController {
 			 return "common/modalMsg";
 		 }
 	}
-	
-	@GetMapping(value="/communityView2")
-	public String communityView2(int boardNo, @SessionAttribute(required=false) Member member, Model model) {
-		int memberNo = 0;
-		Community c = communityService.getOneBoard(boardNo);
-		if(member != null) {
-			memberNo = member.getMemberNo();
-			c.setMemberNo(memberNo);
-		}
-		if(c == null) {
-			model.addAttribute("titleMsg","조회 실패");
-			model.addAttribute("msg","이미 삭제된 게시물입니다.");
-			model.addAttribute("loc", "/community/communityMain?reqPage=1");
-			return "common/modalMsg";
-		}else {
-			model.addAttribute("c", c);
-			return "community/communityView";
-		}
-	}
+
 }
 
 
