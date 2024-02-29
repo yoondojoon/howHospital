@@ -13,8 +13,7 @@ import org.springframework.web.bind.annotation.SessionAttribute;
 import kr.or.iei.admin.model.dto.AdminBusinessAuth;
 import kr.or.iei.admin.model.dto.AdminBusinessAuthListData;
 import kr.or.iei.admin.model.dto.FaqListData;
-import kr.or.iei.admin.model.dto.MemberReport;
-import kr.or.iei.admin.model.dto.MemberReportListData;
+import kr.or.iei.admin.model.dto.HospitalReportListData;
 import kr.or.iei.admin.model.dto.Notice;
 import kr.or.iei.admin.model.dto.NoticeListData;
 import kr.or.iei.admin.model.dto.Review;
@@ -43,15 +42,6 @@ public class AdminController {
 		model.addAttribute("contentList", fld.getContentList());
 		System.out.println(fld);
 		return "/admin/faqList";
-	}
-
-	// 신고내역 받아오는 코드
-	@GetMapping(value = "/manageReport")
-	public String adminMain(int reqPage, Model model) {
-		MemberReportListData mrld = adminService.selectAllMemberReport(reqPage);
-		model.addAttribute("reportList", mrld.getList());
-		model.addAttribute("pageNavi", mrld.getPageNavi());
-		return "/admin/manageReport";
 	}
 
 	// 회원정보 전체 받아오는 코드
@@ -120,21 +110,8 @@ public class AdminController {
 			System.out.println("삭제실패");
 		}
 		return "redirect:/admin/manageReport?reqPage=1";
-
 	}
 
-	@GetMapping(value = "/reportDetail")
-	public String reportDetail(int reportNo, Model model) {
-		MemberReport mr = adminService.searchReportDetail(reportNo);
-		model.addAttribute("mr", mr);
-		return "/admin/reportDetail";
-	}
-
-	@GetMapping(value = "/reportDelete")
-	public String reportDelete(int reportNo) {
-		int result = adminService.deleteReport(reportNo);
-		return "redirect:/admin/manageReport?reqPage=1";
-	}
 
 	@GetMapping(value = "/reportConfirm")
 	public String reportConfirm(int reportNo) {
@@ -242,7 +219,7 @@ public class AdminController {
 	
 	//병원신고 페이지 가져오는 코드
 	@GetMapping(value = "/manageHospitalMemberReport")
-	public String manageHospitalReport(int reqPage, Model model) {
+	public String manageHospitalMemberReport(int reqPage, Model model) {
 		HospitalMemberReportListData hmrld = adminService.selectAllHospitalMemberReport(reqPage);
 		model.addAttribute("hospitalMemberReportList", hmrld.getList());
 		model.addAttribute("pageNavi", hmrld.getPageNavi());
@@ -278,5 +255,13 @@ public class AdminController {
 		int memberNo = member.getMemberNo();
 		int result = adminService.writeFaq(memberNo,category,title,content);
 		return result;
+	}
+	
+	@GetMapping(value = "/manageHospitalReport")
+	public String manageHospitalReport(int reqPage, Model model) {
+		HospitalReportListData hrld = adminService.selectAllHospitalReport(reqPage);
+		model.addAttribute("hospitalReportList", hrld.getList());
+		model.addAttribute("pageNavi", hrld.getPageNavi());
+		return "admin/manageHospitalReport";
 	}
 }
