@@ -262,6 +262,7 @@ public class AdminController {
 		HospitalReportListData hrld = adminService.selectAllHospitalReport(reqPage);
 		model.addAttribute("hospitalReportList", hrld.getList());
 		model.addAttribute("pageNavi", hrld.getPageNavi());
+		System.out.println(hrld.getList());
 		return "admin/manageHospitalReport";
 	}
 }
