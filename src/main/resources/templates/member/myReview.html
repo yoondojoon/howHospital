@@ -57,7 +57,7 @@
                             <input type="hidden" id="score" value="${review.reviewRating}">
                             <p>내용: <span th:text="${review.reviewContent}"></span></p>
                             <p>작성일자: <span th:text="${review.reviewDate}"></span></p>
-                            <p>이미지: <img th:src="${review.reviewImg}"></img></p>
+                            <p class="review_img_wrap">이미지: <img th:src="@{/reservation/review/}+${review.reviewImg}" alt="리뷰이미지"></img></p>
                         </div>
 
 

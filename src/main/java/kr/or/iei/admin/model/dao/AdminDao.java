@@ -300,5 +300,12 @@ public class AdminDao {
 		return result;
 	}
 
+	public int authConfirmFail(BusinessAuth ba) {
+		String query = "update member_tbl set member_status=2 where member_no = ?";
+		Object[] params = {ba.getMemberNo()};
+		int result = jdbc.update(query,params);
+		return result;
+	}
+
 	
 }

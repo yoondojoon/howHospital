@@ -21,13 +21,13 @@
                         <div class="hospitalDetail_banner">
                             <div class="swiper-wrapper">
                                 <div class="swiper-slide">
-                                    <img th:src="@{/hospital/}+@{${h.hospitalPicture}}" alt="병원사진">
+                                    <img th:src="@{/hospital/image/}+@{${h.hospitalPicture}}" alt="병원사진">
                                 </div>
                                 <div class="swiper-slide">
-                                    <img th:src="@{/hospital/}+@{${h.hospitalPicture}}" alt="병원사진">
+                                    <img th:src="@{/hospital/image/}+@{${h.hospitalPicture}}" alt="병원사진">
                                 </div>
                                 <div class="swiper-slide">
-                                    <img th:src="@{/hospital/}+@{${h.hospitalPicture}}" alt="병원사진">
+                                    <img th:src="@{/hospital/image/}+@{${h.hospitalPicture}}" alt="병원사진">
                                 </div>
                             </div>
 
@@ -39,7 +39,7 @@
                     </div>
                     <!-- <div class="picture_wrap">
                         <div class="img_wrap">
-                            <img th:src="@{/hospital/}+@{${h.hospitalPicture}}" alt="병원사진">
+                            <img th:src="@{/hospital/image}+@{${h.hospitalPicture}}" alt="병원사진">
                         </div>
                     </div> -->
                     <div class="info_wrap">
@@ -329,7 +329,7 @@
                             "</div>",
                             "<div class='detail_cont_wrap'>",
                                 "<div class='review_thumb'>",
-                                    "<img src='/review/"+item.reviewImg+"' alt='리뷰 이미지'>",
+                                    "<img src='/reservation/review/"+item.reviewImg+"' alt='리뷰 이미지'>",
                                 "</div>",
                                 "<div class='review_txt'>",
                                     item.reviewContent,
@@ -338,8 +338,6 @@
                             "<div class='detail_btm_wrap'>",
                                 "<span>"+item.memberName+"</span>",
                                 "<span>"+item.reviewDate+"</span>",
-                                "<div class='btm_btn_wrap'>",
-                                "</div>",
                             "</div>",
                         "</li>"
                     ].join("");
@@ -431,6 +429,8 @@
         }
     })
 
+    const member = [[${session.member}]];
+    
     //리뷰 작성 모달
     function selectResList(obj){
         $.ajax({
@@ -468,7 +468,9 @@
                         resType.text("비대면진료");
                     }
                     const name = $("<span class='name'>");
-                    name.text([[${session.member.memberName}]]);
+                    if(member != null){
+                        name.text(member.memberName);
+                    }
                     badgeArea.append(badge);
                     badgeArea.append(resType);
                     badgeArea.append(name);
@@ -504,6 +506,7 @@
             }
         })
     }
+    
 
     
 </script>

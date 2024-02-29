@@ -18,6 +18,7 @@ public class MyReservationDetailRowMapper implements RowMapper<ReservationDetail
 		rd.setDoctorName(rs.getString("doctor_name"));
 		rd.setSubjectName(rs.getString("subject_name"));
 		rd.setSymptom(rs.getString("symptom"));
+		rd.setReportCount(rs.getInt("report_count"));
 		return rd;
 	}
 	

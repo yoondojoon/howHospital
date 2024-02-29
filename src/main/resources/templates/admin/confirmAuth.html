@@ -38,9 +38,8 @@
 						th:text="${authInfo.memberPhone}"></span></th>
 				</tr>
 				<tr class="tr-content">
-					<th:block th:each="file : ${authInfo.fileList}">
-					
-						<td colspan="2"><img th:src="root+@{/hospital/} + ${file.filepath}">
+					<th:block th:each="f : ${authInfo.fileList}">
+						<td colspan="2"><img style="width:100%;" th:src="@{/auth/} + ${f.filepath}">
 						</td>
 					</th:block>
 				</tr>
