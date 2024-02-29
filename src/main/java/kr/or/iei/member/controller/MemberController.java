@@ -47,7 +47,7 @@ public class MemberController {
 	@Autowired
 	private FileUtils fileUtils;
 	
-	@Value("${file.hyokyungroot}")
+	@Value("${file.root}")
 	private String root;
 	
 	//회원가입 페이지
@@ -470,7 +470,7 @@ public class MemberController {
 		
 		
 		// 파일 저장 경로 설정
-	    String savepath = root + "/photo/";
+	    String savepath = root + "/reservation/review";
 
 	    
 	    
