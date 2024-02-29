@@ -381,9 +381,13 @@ public class AdminService {
 	@Transactional
 	public boolean authConfirmFail(int businessAuthNo) {
 		boolean result = true;
-		int deleteAuthResult = adminDao.deleteAuthInfo(businessAuthNo);
-		if(deleteAuthResult ==0) {
+		BusinessAuth ba = adminDao.searchMember(businessAuthNo);
+		int changeStatusResult = adminDao.authConfirmFail(ba);
+		
+		if(changeStatusResult ==0) {
 			result = false;
+		}else {
+			int deleteAuthResult = adminDao.deleteAuthInfo(businessAuthNo);
 		}
 		return result;
 	}

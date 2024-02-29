@@ -153,8 +153,8 @@ public class AdminController {
 	@GetMapping(value = "/confirmAuth")
 	public String confirmAuth(int businessAuthNo, Model model) {
 		AdminBusinessAuth aba = adminService.confirmAuth(businessAuthNo);
+		
 		model.addAttribute("authInfo", aba);
-		System.out.println("aaaaaaa : " + aba.getFileList());
 		return "admin/confirmAuth";
 	}
 

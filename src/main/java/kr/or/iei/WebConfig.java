@@ -23,6 +23,9 @@ public class WebConfig implements WebMvcConfigurer{
 				.addResourceHandler("/hospital/**")
 				.addResourceLocations("file:///C:/Temp/hospital/hospital/");
 			registry
+			.addResourceHandler("/auth/**")
+			.addResourceLocations("file:///C:/Temp/hospital/auth/");
+			registry
 				.addResourceHandler("/reservation/**")
 				.addResourceLocations("file:///C:/Temp/hospital/reservation/");
 			registry
