@@ -62,7 +62,7 @@ public class WebConfig implements WebMvcConfigurer{
 		//관리자
 		registry.addInterceptor(new AdminInterceptor())
 		.addPathPatterns("/admin/**")
-		.excludePathPatterns("/admin/blockMsg","/admin/loginMsg","/admin/blockMsg","/admin/faqList","/admin/noticeList*");
+		.excludePathPatterns("/admin/blockMsg","/admin/manageMember","/admin/loginMsg","/admin/blockMsg","/admin/faqList","/admin/noticeList*");
 		
 	}
 }
