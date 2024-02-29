@@ -36,8 +36,8 @@
 								th:value="${member.memberNo}" onclick="return block(this)"
 								th:text="이용중">
 							</td>
-							<td th:if="${member.memberStatus == 2}" style="color: green;">
-							사업자인증 미제출
+							<td th:if="${member.memberStatus == 2}" style="color: green;"
+								th:text="사업자인증미제출">
 							</td>
 							<td th:if="${member.memberStatus == 3}"
 								th:value="${member.memberNo}" onclick="return unBlock(this)"

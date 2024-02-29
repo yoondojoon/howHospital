@@ -122,7 +122,7 @@ public class AdminDao {
 
 
 	public int deleteChk(int reportNo) {
-		String query = "delete from member_report_tbl where report_no = ?";
+		String query = "delete from hospital_member_report_tbl where report_no = ?";
 		Object[] params = {reportNo};
 		int result = jdbc.update(query,params);
 		return result;
